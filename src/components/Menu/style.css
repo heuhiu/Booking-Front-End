@@ -1,0 +1,76 @@
+.nav-link{
+    /* width: 140px;
+    height: 45px;
+    left: 1565px;
+    top: 26px;
+    background: #FF7062;
+    border-radius: 21px;
+    font-family: Arial;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: white; */
+}
+
+.loginbtn {
+    width: 140px;
+    height: 45px;
+    left: 1565px;
+    top: 26px;
+    background: #FF7062;
+    border-radius: 21px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0.5em 0.5em;
+
+  }
+  
+  
+.registerbtn{
+    width: 140px;
+    height: 45px;
+    left: 1716px;
+    top: 26px;
+    border: 2px solid #FF7062;
+    background: #FFFFFF;
+    border-radius: 21px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FF7062;
+    text-align: center;
+    margin: 0.5em 0.5em;
+}
+
+.none{
+    position: relative;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #5B5B5B;
+    margin: 0.5em 0.5em ;
+}
+
+.none1{
+    position: relative;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #5B5B5B;
+    margin: 0.5em 0.5em ;
+}
