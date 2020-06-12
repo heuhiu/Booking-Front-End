@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
 import './style.css';
-import Slick1 from '../../components/HomepageComponents/Carousel/Slick1';
+import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Slick1';
+import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 class HomePage extends Component {
 
     constructor(props) {
@@ -15,6 +16,7 @@ class HomePage extends Component {
         return (
             <div>
                 <Banner />
+                <Slick2 />
                 <Slick1 />
             </div>
         );

@@ -3,12 +3,6 @@
 .owlStyle{
   border: 10px solid white;
   box-sizing: border-box;
-  /* padding: 1em; */
-
-}
-
-.coverImg{
-  width: 100%;
 }
 
 .owlStyleChil{
@@ -64,19 +58,15 @@
   font-size: 24px;
   line-height: 28px;  
   color: #5B5B5B;
-
+  margin-left: 10px;
 }
 
 .desHeaderOwl{
   font-family: Inter;
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 16px;
-/* or 114% */
-
-
-/* A5A5A5 */
-
-color: #A5A5A5;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #A5A5A5;
+  margin-left: 10px;
 }
