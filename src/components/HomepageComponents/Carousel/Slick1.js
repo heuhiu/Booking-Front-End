@@ -70,7 +70,7 @@ class Slick1 extends Component {
           <Slider {...settings}>
             <div className="owlStyle">
               <h3 className="owlStyleChil">
-                <img src={Rectangle} alt="?" />
+                <img className="coverImg" src={Rectangle} alt="?" />
                 <div className="containerOwlChil">
                   <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
                   <p className="owlStyleChil2">đ 100.000</p>
@@ -80,9 +80,8 @@ class Slick1 extends Component {
               </h3>
             </div >
             <div className="owlStyle">
-            <img src={Rectangle} alt="" />
               <h3 className="owlStyleChil">
-                
+                <img className="coverImg" src={Rectangle} alt="?" />
                 <div className="containerOwlChil">
                   <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
                   <p className="owlStyleChil2">đ 100.000</p>
@@ -90,10 +89,10 @@ class Slick1 extends Component {
                   <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
                 </div>
               </h3>
-            </div>
+            </div >
             <div className="owlStyle">
               <h3 className="owlStyleChil">
-                <img src={Rectangle} alt="" />
+                <img className="coverImg" src={Rectangle} alt="?" />
                 <div className="containerOwlChil">
                   <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
                   <p className="owlStyleChil2">đ 100.000</p>
@@ -101,23 +100,43 @@ class Slick1 extends Component {
                   <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
                 </div>
               </h3>
-            </div>
+            </div >
+
+
+          
             <div className="owlStyle">
               <h3 className="owlStyleChil">
-                <img src={Rectangle} alt="" />
-                lmao 4
+                <img className="coverImg" src={Rectangle} alt="?" />
+                <div className="containerOwlChil">
+                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
+                  <p className="owlStyleChil2">đ 100.000</p>
+                  <p className="owlStyleChil3">đ 86.000</p>
+                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                </div>
               </h3>
-            </div><div className="owlStyle">
+            </div >
+            <div className="owlStyle">
               <h3 className="owlStyleChil">
-                <img src={Rectangle} alt="" />
-                lmao 5
+                <img className="coverImg" src={Rectangle} alt="?" />
+                <div className="containerOwlChil">
+                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
+                  <p className="owlStyleChil2">đ 100.000</p>
+                  <p className="owlStyleChil3">đ 86.000</p>
+                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                </div>
               </h3>
-            </div><div className="owlStyle">
+            </div >
+            <div className="owlStyle">
               <h3 className="owlStyleChil">
-                <img src={Rectangle} alt="" />
-                lmao 6
+                <img className="coverImg" src={Rectangle} alt="?" />
+                <div className="containerOwlChil">
+                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội</p>
+                  <p className="owlStyleChil2">đ 100.000</p>
+                  <p className="owlStyleChil3">đ 86.000</p>
+                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                </div>
               </h3>
-            </div>
+            </div >
             
           </Slider>
         </div>
