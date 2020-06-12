@@ -49,16 +49,16 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
                     return (
                         <li className={active}>
                             <Link to={to}>
-                              <button className={style}>{label}</button>  
+                                <button className={style}>{label}</button>
                             </Link>
                         </li>
                     );
-                } 
-                if(style === 'none') {
+                }
+                if (style === 'none') {
                     return (
                         <li className={active}>
                             <Link className={style + " nav-link"} to={to}>
-                            <i className="fas fa-shopping-cart"></i> {label}
+                                <i className="fas fa-shopping-cart"></i> {label}
                             </Link>
                         </li>
                     );
@@ -66,7 +66,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
                     return (
                         <li className={active}>
                             <Link className={style + " nav-link"} to={to}>
-                            <i className="far fa-file-alt"></i> {label}
+                                <i className="far fa-file-alt"></i> {label}
                             </Link>
                         </li>
                     );
@@ -81,23 +81,21 @@ class Menu extends Component {
     render() {
         return (
             <div>
-                {/* <div className="navbar navbar-default">
-                    <a className="navbar-brand" href="/#">Call API</a>
-                    <ul className="nav navbar-nav">
+                <nav class="navbar navbar-light bg-light fixed-top">
+                    <Link className="navbar-brand" to='/'>
+                        <img className="navLogo" src={logo} alt="Fail Loading" /></Link>
+                    <ul className="nav navbar-expand-lg">
                         {this.showMenus(menus)}
                     </ul>
-                </div> */}
-
-                <nav className="navbar 
+                </nav>
+                {/* <nav className="navbar 
                 navbar-expand-lg 
                 navbar-light 
                 bg-white 
                 fixed-top">
                     <div className="container">
-                        {/* <a className="navbar-brand" href="/#">Goboki</a> */}
                         <Link className="navbar-brand" to='/'>
                             <img src={logo} alt="??" /></Link>
-                        {/* <i className="fas fa-user"></i> */}
                         <button className="navbar-toggler"
                             type="button" data-toggle="collapse"
                             data-target="#navbarResponsive"
@@ -109,11 +107,10 @@ class Menu extends Component {
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                             <ul className="navbar-nav ml-auto">
                                 {this.showMenus(menus)}
-
                             </ul>
                         </div>
                     </div>
-                </nav>
+                </nav> */}
 
             </div>
         );

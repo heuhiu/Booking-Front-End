@@ -1,3 +1,93 @@
-/* .container-fluid{
-    padding: 0;
-  } */
+@import url('https://rsms.me/inter/inter.css');
+
+.owlStyle{
+  border: 1px solid #E3E3E3;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.owlStyleChil{
+  /* margin: 5em 5em; */
+}
+
+.owlStyleChil1{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5B5B5B;
+}
+.owlStyleChil2{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  /* identical to box height, or 117% */
+  
+  text-decoration-line: line-through;
+  
+  /* A5A5A5 */
+  
+  color: #A5A5A5;
+}
+.owlStyleChil3{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height, or 122% */
+  
+  
+  /* #FF7062 */
+  
+  color: #FF7062;
+}
+.owlStyleChil4{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  /* identical to box height, or 117% */
+  
+  
+  /* #FF7062 */
+  
+  color: #FF7062;
+}
+
+.containerOwlChil{
+  margin: 1em;
+}
+
+.headerOwl{
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 28px;
+  /* identical to box height, or 117% */
+  
+  
+  /* 5B5B5B */
+  
+  color: #5B5B5B;
+
+}
+
+.desHeaderOwl{
+  font-family: Inter;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+/* or 114% */
+
+
+/* A5A5A5 */
+
+color: #A5A5A5;
+}
