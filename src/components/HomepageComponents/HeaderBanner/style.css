@@ -1,26 +1,27 @@
 @import url('https://rsms.me/inter/inter.css');
 .masthead {
     height: 100vh;
-    min-height: 500px;  
+    min-height: 664px;  
     /* background-image: url('./img/headerbackground.png'); */
     /* background-image: url('../../../img/headerbackground.png'); */
     background:linear-gradient( rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5)100%),
     url("../../../img/headerbackground.png");
     background-size: cover;
-    background-position: center;
+    /* background-position: center; */
     background-repeat: no-repeat;
-    border-radius: 0px 0px 100px 100px;
+    border-radius: 0px 0px 80px 80px;
   }
 
   .mg-10{
-    margin-top: 70px;
+    margin-top: -60px;
   }
 
 .introduction{
+  padding-top: 150px;
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 70px;
+  font-size: 76.8px;
   line-height: 64px;
   text-align: center;
   color: #FFFFFF;

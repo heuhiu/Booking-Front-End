@@ -16,12 +16,6 @@ const menus = [
         style: 'none1'
     },
     {
-        name: 'Giỏ Hàng',
-        to: '/Login',
-        exact: false,
-        style: 'none'
-    },
-    {
         name: 'Đăng nhập',
         to: '/Login',
         exact: false,
@@ -81,9 +75,15 @@ class Menu extends Component {
     render() {
         return (
             <div>
-                <nav class="navbar navbar-light bg-light fixed-top">
+                <nav class="navbar navbar-light bg-light bg-white fixed-top">
                     <Link className="navbar-brand" to='/'>
-                        <img className="navLogo" src={logo} alt="Fail Loading" /></Link>
+                        <img className="navLogo" 
+                        src={logo} 
+                        alt="Fail Loading" 
+                        width="125.608" 
+                        height="38.704"
+                        />
+                        </Link>
                     <ul className="nav navbar-expand-lg">
                         {this.showMenus(menus)}
                     </ul>

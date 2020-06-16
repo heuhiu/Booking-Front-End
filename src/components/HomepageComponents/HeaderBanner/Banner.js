@@ -16,11 +16,11 @@ class Banner extends Component {
         return (
             <header className={classes}>
                 <div className="container h-100">
-                    <div className="row h-100 align-items-center">
+                    <div className="row h-100 align-items-center ">
                         <div className="col-12 text-center">
                             <h1 className="introduction">Some awesome introduction</h1>
                             <p className="des">A great starter layout for a landing page</p>
-                            <div className="block-17 my-4">
+                            <div className="block-17">
                                 <Search />
                             </div>
 

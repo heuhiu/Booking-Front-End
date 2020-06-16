@@ -16,10 +16,11 @@ class Search extends Component {
             <form action="" method="post" className="d-block d-flex">
                 <div className="fields d-block d-flex">
                     <div className="textfield-search two-third">
-                        <img src={LogoSearch} alt="?" />
+                        <img src={LogoSearch} alt="?" width="54.467" height="43.84" />
                     </div>
                     <div className="textfield-search one-third">
-                        <input type="text" className="form-control" placeholder="Ex: food, service, hotel" />
+                        <input type="text" className="form-control" 
+                        placeholder="Ex: food, service, hotel" />
                     </div>
                     <div className="select-wrap one-third">
                         <div className="icon">
@@ -27,7 +28,8 @@ class Search extends Component {
                         </div>
                         <select name="" id="" className="form-control"
                             placeholder="Keyword search">
-                            <option value="">Where</option>
+                            <option value="">Bộ Lọc</option>
+                            <span className="fas fa-arrow-down"></span>
                             <option value="">San Francisco USA</option>
                             <option value="">Berlin Germany</option>
                             <option value="">Lodon United Kingdom</option>
@@ -38,7 +40,11 @@ class Search extends Component {
                 <button type="submit"
                     className="search-submit btn btn-primary ">
                     {/* <i class="fas fa-search"></i>&nbsp;Search */}
-                    <img src={search} alt ="Fail !"/> &nbsp; &nbsp; &nbsp;Tìm Kiếm
+                    <img src={search} 
+                    alt ="Fail !" 
+                    width="17.76" 
+                    height="17.76"
+                    /> &nbsp; Tìm Kiếm
                 </button>
             </form>
         );
