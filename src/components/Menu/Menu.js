@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import './style.css';
 import logo from '../../img/Logo.png';
+import Search from '../HomepageComponents/Search/Search';
+import { connect } from 'react-redux';
+import myPro from '../../img/myPro.jpg';
 
 const menus = [
     // {
@@ -23,14 +26,11 @@ const menus = [
     },
     {
         name: 'Đăng kí',
-        to: '/Login',
+        to: '/Register',
         exact: false,
         style: 'registerbtn'
     }
 ];
-
-
-const classes = "myStyle";
 
 const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
     return (
@@ -43,7 +43,9 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
                     return (
                         <li className={active}>
                             <Link to={to}>
-                                <button className={style}>{label}</button>
+                                <button className={style}>
+                                    {label}
+                                </button>
                             </Link>
                         </li>
                     );
@@ -72,50 +74,96 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
 
 
 class Menu extends Component {
-    render() {
-        return (
-            <div>
-                <nav class="navbar navbar-light bg-light bg-white fixed-top">
-                    <Link className="navbar-brand" to='/'>
-                        <img className="navLogo" 
-                        src={logo} 
-                        alt="Fail Loading" 
-                        width="125.608" 
-                        height="38.704"
-                        />
-                        </Link>
-                    <ul className="nav navbar-expand-lg">
-                        {this.showMenus(menus)}
-                    </ul>
-                </nav>
-                {/* <nav className="navbar 
-                navbar-expand-lg 
-                navbar-light 
-                bg-white 
-                fixed-top">
-                    <div className="container">
-                        <Link className="navbar-brand" to='/'>
-                            <img src={logo} alt="??" /></Link>
-                        <button className="navbar-toggler"
-                            type="button" data-toggle="collapse"
-                            data-target="#navbarResponsive"
-                            aria-controls="navbarResponsive"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarResponsive">
-                            <ul className="navbar-nav ml-auto">
-                                {this.showMenus(menus)}
-                            </ul>
-                        </div>
-                    </div>
-                </nav> */}
+    constructor(props) {
+        super(props);
+        this.state = {
 
-            </div>
-        );
+        }
     }
 
+
+    logOut = () => {
+        localStorage.removeItem('tokenLogin');
+        localStorage.removeItem('USER');
+        localStorage.removeItem('CART');
+        window.location.reload();
+        // this.props.history.push("/");
+    }
+
+    render() {
+        return (
+            <nav
+                className="navbar navbar-light bg-light bg-white fixed-top">
+                <Link className="navbar-brand" to='/'>
+                    <img className="navLogo"
+                        src={logo}
+                        alt="Fail Loading"
+                        width="125.608"
+                        height="38.704"
+                    />
+                </Link>
+
+                <ul className="nav navbar-expand-lg">
+                    {/* {this.showMenus(menus)} */}
+                    <Link to="/Register">
+                        <p className="none1 nav-link">
+                            <i className="far fa-file-alt"></i>{' '}Đặt chỗ của tôi
+                    </p>
+                    </Link>
+                    <Link to="/login">
+                        <button className="loginbtn">Đăng Nhập
+                    </button>
+                    </Link>
+                    <Link to="/Register">
+                        <button className="registerbtn">
+                            Đăng kí
+                    </button>
+                    </Link>
+                    <button className="loginbtn" onClick={this.logOut}>Logout</button>
+                    {/* <div className="nav-link">
+                        <h1 className="userName">Hello ! {this.props.UserDetail.firstName}</h1>
+                        <button onClick={this.logOut}>Logout</button>
+                        <p>Hồ sơ của tôi</p>
+                        <img
+                            style={{ borderRadius: "50%" }}
+                            src={myPro}
+                            alt="Fail Loading"
+                            width="46"
+                            height="46"
+                        />
+                    </div> */}
+                    {/* <div class="nav-link">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <h1 className="userName">Hello ! {this.props.UserDetail.firstName}</h1>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <p onClick={this.logOut}>Logout</p>
+                                <p>Hồ sơ của tôi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <img
+                        style={{ borderRadius: "50%" }}
+                        src={myPro}
+                        alt="Fail Loading"
+                        width="46"
+                        height="46"
+                    /> */}
+
+                </ul>
+
+            </nav>
+
+
+        );
+    }
+    //  <Link to="/login">
+    //     <button className="loginbtn" 
+    //     // onClick={this.onShow}
+    //     >Đăng Nhập
+    //     </button>
+    // </Link> 
     showMenus = (menus) => {
         var result = null;
         if (menus.length > 0) {
@@ -135,4 +183,11 @@ class Menu extends Component {
     }
 }
 
-export default Menu;
+const mapStateToProps = state => {
+    return {
+        UserDetail: state.User,
+    }
+};
+
+// export default Menu;
+export default connect(mapStateToProps, null)(Menu);

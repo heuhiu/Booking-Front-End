@@ -77,7 +77,11 @@
 
 .navbar {
     padding: 0px;
+    /* display: none; */
+    /* visibility:hidden; */
+    /* visibility: visible; */
 }
+
 .navbar-brand{
     padding-top: 0px;
     padding-bottom: 0px;
@@ -88,3 +92,25 @@
     margin-top: 23.2px;
     margin-bottom: 14.096px;
 }
+
+.userName{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14.4px;
+    line-height: 17.6px;
+    text-align: center;
+    color: #FF7062;
+}
+
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+
+  }
+  
+  .dropdown>.dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+      pointer-events: none;
+  }
+  

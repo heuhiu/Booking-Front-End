@@ -29,7 +29,6 @@ class Search extends Component {
                         <select name="" id="" className="form-control"
                             placeholder="Keyword search">
                             <option value="">Bộ Lọc</option>
-                            <span className="fas fa-arrow-down"></span>
                             <option value="">San Francisco USA</option>
                             <option value="">Berlin Germany</option>
                             <option value="">Lodon United Kingdom</option>

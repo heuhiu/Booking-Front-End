@@ -11,7 +11,7 @@ class NotFoundPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <p>This is Not Found Page</p>
                 <p>This is Not Found Page</p>
                 <p>This is Not Found Page</p>
