@@ -129,7 +129,6 @@ class Login extends Component {
                 password: this.state.password.value,
             }).then(res => {
                 alert('Đăng nhập thành công');
-                console.log(res.data);
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data));
                 var decoded = jwtDecode(res.data);
                 //data will be store in localStorage
