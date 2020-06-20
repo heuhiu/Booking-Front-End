@@ -101,21 +101,21 @@ class Login extends Component {
 
                 this.mailInput.focus();
 
-            }, 100);
+            }, 1);
         }
         if (this.pass) {
             setTimeout(() => {
 
                 this.pass.focus();
 
-            }, 100);
+            }, 1);
         } 
         if (this.mailInput) {
             setTimeout(() => {
 
                 this.mailInput.focus();
 
-            }, 100);
+            }, 1);
         }
         if (this.state.email.isInputValid === false ||
             this.state.password.isInputValid === false) {
@@ -228,7 +228,7 @@ class Login extends Component {
                                             <br />
                                             <input
                                                 ref={(input) => { this.pass = input; }}
-                                                type="text"
+                                                type="password"
                                                 name="password"
                                                 // pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                                                 placeholder=" "
