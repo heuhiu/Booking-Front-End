@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import './login2.css'
-import './login.css';
+import './Register.css';
 import callApi from '../../config/utils/apiCaller';
 import { getUserLogin } from '../../actions/index';
-import {Link} from 'react-router-dom';
+
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -15,7 +14,7 @@ function FormError(props) {
     )
 }
 
-class Login extends Component {
+class Register extends Component {
 
     constructor(props) {
         super(props);
@@ -185,30 +184,24 @@ class Login extends Component {
                                 </div>
                             </div>
                             <div className="loginPanel">
-                                Đăng nhập
+                                Đăng ký (Not Done)
                             </div>
                             <div
                             >
                                 <form
                                     noValidate
-                                    // className="needs-validation"
                                     className="was-validated"
-                                    // className={validationClass}
-                                    // className="is-invalid"
-                                    onSubmit={this.onClickRegister}>
+                                    // onSubmit={this.onClickRegister}
+                                >
                                     {/* Email field */}
-                                    <div
-                                        className="col-12 pad-56"
-                                    >
+                                    <div className="col-12 pad-56">
                                         <div className="user-input-wrp">
                                             <br />
                                             <input
                                                 ref={(input) => { this.mailInput = input; }}
-                                                // autoFocus
-                                                // {myboo ? autoFocus : ""}
+                                                // 
                                                 type="text"
                                                 name="email"
-                                                // pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                                                 placeholder=" "
                                                 className="inputText"
                                                 onChange={this.handleInput}
@@ -232,7 +225,6 @@ class Login extends Component {
                                                 ref={(input) => { this.pass = input; }}
                                                 type="password"
                                                 name="password"
-                                                // pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                                                 placeholder=" "
                                                 className="inputText"
                                                 onChange={this.handleInput}
@@ -246,6 +238,81 @@ class Login extends Component {
                                                 errorMessage={this.state.password.errorMessage} />
                                         </div>
                                     </div>
+                                    {/* End password field */}
+
+                                    {/* RePassword field */}
+                                    <div className="col-12 pad-56">
+                                        <div className="user-input-wrp">
+                                            <br />
+                                            <input
+                                                ref={(input) => { this.pass = input; }}
+                                                type="password"
+                                                name="password"
+                                                placeholder=" "
+                                                className="inputText"
+                                                onChange={this.handleInput}
+                                                onBlur={this.handleInputValidation}
+                                                required
+                                            />
+                                            <span className="floating-label">Nhập lại mật khẩu</span>
+                                            <FormError
+                                                type="password"
+                                                isHidden={this.state.password.isInputValid}
+                                                errorMessage={this.state.password.errorMessage} />
+                                        </div>
+                                    </div>
+                                    {/* End repassword field */}
+
+                                    {/* User Full Name field*/}
+                                    <div className="row">
+                                        {/* Last name field */}
+                                        <div className="col-6 pad-56">
+                                            <div className="user-input-wrp">
+                                                <br />
+                                                <input
+                                                    ref={(input) => { this.pass = input; }}
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder=" "
+                                                    className="inputText"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    required
+                                                />
+                                                <span className="floating-label">Mật Khẩu</span>
+                                                <FormError
+                                                    type="password"
+                                                    isHidden={this.state.password.isInputValid}
+                                                    errorMessage={this.state.password.errorMessage} />
+                                            </div>
+                                        </div>
+                                        {/* End password field */}
+
+                                        {/* First name field */}
+                                        <div className="col-6 pad-56">
+                                            <div className="user-input-wrp">
+                                                <br />
+                                                <input
+                                                    ref={(input) => { this.pass = input; }}
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder=" "
+                                                    className="inputText"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    required
+                                                />
+                                                <span className="floating-label">Mật Khẩu</span>
+                                                <FormError
+                                                    type="password"
+                                                    isHidden={this.state.password.isInputValid}
+                                                    errorMessage={this.state.password.errorMessage} />
+                                            </div>
+                                        </div>
+                                        {/* End password field */}
+                                    </div>
+                                    {/* End user Full Name field*/}
+
                                     {/* submit Button */}
                                     <div className="col-12 pad-56">
                                         <button
@@ -273,9 +340,7 @@ class Login extends Component {
                                 <div>
                                     <div className="row det">
                                         <div className="col">
-                                            <p className="det1">Chưa có tài khoản? &emsp;
-                                            <Link to="/Register"><i className="det2">Đăng kí ngay</i></Link>
-                                            </p>
+                                            <p className="det1">Chưa có tài khoản? <i className="det2">Đăng kí ngay</i></p>
                                             <p className="det1">Không thể truy cập?</p>
                                         </div>
                                     </div>
@@ -309,6 +374,6 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Register);
 
 // export default Login;
