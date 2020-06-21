@@ -9,6 +9,12 @@
     /* background-position: center; */
     background-repeat: no-repeat;
 }
+
+.floating-label{
+    margin: 0.5em;
+    margin-left: 0em;
+}
+
 .form-warning{
     font-family: 'Inter';
     font-style: normal;
@@ -25,7 +31,7 @@
 
 .loginPanel{
     padding-bottom: 29.6px;
-    padding-top: 68.24px;
+    padding-top: 65.24px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -34,28 +40,18 @@
     color: #5B5B5B;
 }
 
-.box{
-    padding-top: 92.8px;
-    padding-left: 86.4px;
-    padding-right: 86.4px;
-}
+
 
 .user-input-wrp {
-	position: relative;
-    width: 100%;
     font-size: 20px;
-    padding-bottom: 32.5px;
-    padding-top: 0px;
 }
 
 .user-input-wrp .inputText{
-	width: 100%;
 	outline: none;
 	border:none;
 	border-bottom: 1px solid #E3E3E3;
     box-shadow: none !important;
     border-width: medium medium 2px;
-    padding-left: 10px;
 }
 
 /* stable */
@@ -139,8 +135,7 @@
 }
 
 .pad-56{
-    padding-left: 0px;
-    padding-right: 0px;
+    padding: 0px;
 }
 
 .fbBtn{
@@ -173,7 +168,4 @@
     font-size: 13px;
     line-height: 18px;
     color: #FF7062;
-}
-.det{
-    text-align: center;
 }

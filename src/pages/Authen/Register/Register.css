@@ -42,10 +42,8 @@
 
 .user-input-wrp {
 	position: relative;
-    width: 100%;
     font-size: 20px;
-    /* padding-bottom: 32.5px; */
-    /* padding-top: 0px; */
+    padding-bottom: 10px;
 }
 
 .user-input-wrp .inputText{
@@ -138,10 +136,6 @@
     font-size: 15px;
 }
 
-.pad-56{
-    padding-left: 0px;
-    padding-right: 0px;
-}
 
 .fbBtn{
     border: 1px solid #197ACF;
