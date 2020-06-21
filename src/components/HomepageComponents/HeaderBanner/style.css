@@ -42,17 +42,13 @@
 
 .font-weight-light{
 
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 96px;
   line-height: 64px;
 
-/* or 67% */
-
 text-align: center;
-
-/* FFFFFF */
 
 color: #FFFFFF;
 }

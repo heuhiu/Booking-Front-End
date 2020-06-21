@@ -7,7 +7,8 @@ import Rectangle from './img/Rectangle 17.png';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container, Row, Col} from 'react-bootstrap';
 class App extends Component {
 
     constructor(props) {
@@ -19,38 +20,38 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div className="container-fluid">
-                    {/* <div className="row no-gutters">
-                        <div className="col-12">
-                            <Menu />
-                        </div>
-                    </div> */}
+                {/* <div className="container-fluid">
                     <div className="row no-gutters">
                         <div className="col-12">
                             {this.showContentMenus(routers)}
                         </div>
                     </div>
-                </div >
+                </div > */}
+                <Container style={{padding: "0px"}} fluid={true}>
+                    <Row noGutters={true}>
+                        <Col md={12}>{this.showContentMenus(routers)}</Col>
+                    </Row>
+                </Container>
             </Router >
         );
     }
 
 
-showContentMenus = (routes) => {
-    var result = null;
-    if (routes.length > 0) {
-        result = routes.map((route, index) => {
-            return (<Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                component={route.main}
-            />
-            );
-        });
+    showContentMenus = (routes) => {
+        var result = null;
+        if (routes.length > 0) {
+            result = routes.map((route, index) => {
+                return (<Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.main}
+                />
+                );
+            });
+        }
+        return <Switch>{result}</Switch>
     }
-    return <Switch>{result}</Switch>
-}
 
 }
 

@@ -29,6 +29,26 @@ class Register extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
+            RePassword: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            firstName: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            lastName: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            phoneNumber: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
         }
     }
 
@@ -49,39 +69,105 @@ class Register extends Component {
     }
 
     validateInput = (type, checkingText) => {
-        if (type === "email") {
-            const regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-            const checkingResult = regexp.exec(checkingText);
-            if (checkingResult !== null) {
-                return {
-                    isInputValid: true,
-                    errorMessage: ''
-                };
-            } else {
-                return {
-                    isInputValid: false,
-                    errorMessage: 'Mail format wrong'
-                };
-            }
+        var regexp = '';
+        var checkingResult = '';
+        switch (type) {
+            case "email":
+                regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Mail format wrong'
+                    };
+                }
+            case "password":
+                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Password format wrong'
+                    };
+                }
+            case "RePassword":
+                const { password } = this.state;
+                // regexp = /^.[a-zA-Z ]*$/;
+                // checkingResult = regexp.exec(checkingText);
+                // if (checkingResult !== null) {
+                if (checkingText === password.value && checkingText !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                }
+                if (checkingText !== password.value) {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Password not match1'
+                    };
+                }
+                else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Password not match'
+                    };
+                }
+            case "firstName":
+                regexp = /^.[a-zA-Z ]*$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Must be text & not null'
+                    };
+                }
+            case "lastName":
+                regexp = /.^[a-zA-Z ]*$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Must be text & not null'
+                    };
+                }
+            case "phoneNumber":
+                regexp = /^\d{10,11}$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: '10-11 nums'
+                    };
+                }
+            default:
+                return null;
         }
-
-        if (type === "password") {
-            // const regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/;
-            const regexp = /[^\s]/;
-            const checkingResult = regexp.exec(checkingText);
-            if (checkingResult !== null) {
-                return {
-                    isInputValid: true,
-                    errorMessage: ''
-                };
-            } else {
-                return {
-                    isInputValid: false,
-                    errorMessage: 'Password not null'
-                };
-            }
-        }
-
     }
 
     handleInputValidation = event => {
@@ -191,7 +277,7 @@ class Register extends Component {
                                 <form
                                     noValidate
                                     className="was-validated"
-                                    // onSubmit={this.onClickRegister}
+                                onSubmit={this.onClickRegister}
                                 >
                                     {/* Email field */}
                                     <div className="col-12 pad-56">
@@ -245,73 +331,140 @@ class Register extends Component {
                                         <div className="user-input-wrp">
                                             <br />
                                             <input
-                                                ref={(input) => { this.pass = input; }}
+                                                ref={(input) => { this.RePassword = input; }}
                                                 type="password"
-                                                name="password"
+                                                name="RePassword"
                                                 placeholder=" "
                                                 className="inputText"
                                                 onChange={this.handleInput}
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="floating-label">Nhập lại mật khẩu</span>
+                                            <span className="floating-label">RePassword</span>
                                             <FormError
-                                                type="password"
-                                                isHidden={this.state.password.isInputValid}
-                                                errorMessage={this.state.password.errorMessage} />
+                                                type="RePassword"
+                                                isHidden={this.state.RePassword.isInputValid}
+                                                errorMessage={this.state.RePassword.errorMessage} />
                                         </div>
                                     </div>
                                     {/* End repassword field */}
 
                                     {/* User Full Name field*/}
-                                    <div className="row">
+                                    <div className="row no-gutters">
                                         {/* Last name field */}
                                         <div className="col-6 pad-56">
-                                            <div className="user-input-wrp">
-                                                <br />
-                                                <input
-                                                    ref={(input) => { this.pass = input; }}
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder=" "
-                                                    className="inputText"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                />
-                                                <span className="floating-label">Mật Khẩu</span>
-                                                <FormError
-                                                    type="password"
-                                                    isHidden={this.state.password.isInputValid}
-                                                    errorMessage={this.state.password.errorMessage} />
+                                            <div
+                                                style={{ paddingLeft: "0px", paddingRight: "5px" }}
+                                                className="col-12">
+                                                <div className="user-input-wrp">
+                                                    <br />
+                                                    <input
+                                                        ref={(input) => { this.lastName = input; }}
+                                                        type="text"
+                                                        name="lastName"
+                                                        placeholder=" "
+                                                        className="inputText"
+                                                        onChange={this.handleInput}
+                                                        onBlur={this.handleInputValidation}
+                                                        required
+                                                    />
+                                                    <span className="floating-label">Họ</span>
+                                                    <FormError
+                                                        type="lastName"
+                                                        isHidden={this.state.lastName.isInputValid}
+                                                        errorMessage={this.state.lastName.errorMessage} />
+                                                </div>
                                             </div>
                                         </div>
                                         {/* End password field */}
 
                                         {/* First name field */}
                                         <div className="col-6 pad-56">
-                                            <div className="user-input-wrp">
-                                                <br />
-                                                <input
-                                                    ref={(input) => { this.pass = input; }}
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder=" "
-                                                    className="inputText"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                />
-                                                <span className="floating-label">Mật Khẩu</span>
-                                                <FormError
-                                                    type="password"
-                                                    isHidden={this.state.password.isInputValid}
-                                                    errorMessage={this.state.password.errorMessage} />
+                                            <div
+                                                style={{ paddingLeft: "5px", paddingRight: "0px" }}
+                                                className="col-12">
+                                                <div className="user-input-wrp">
+                                                    <br />
+                                                    <input
+                                                        ref={(input) => { this.firstName = input; }}
+                                                        type="text"
+                                                        name="firstName"
+                                                        placeholder=" "
+                                                        className="inputText"
+                                                        onChange={this.handleInput}
+                                                        onBlur={this.handleInputValidation}
+                                                        required
+                                                    />
+                                                    <span className="floating-label">Tên</span>
+                                                    <FormError
+                                                        type="firstName"
+                                                        isHidden={this.state.firstName.isInputValid}
+                                                        errorMessage={this.state.firstName.errorMessage} />
+                                                </div>
                                             </div>
                                         </div>
                                         {/* End password field */}
                                     </div>
                                     {/* End user Full Name field*/}
+
+                                    {/* User DOB & phone number field*/}
+                                    <div className="row no-gutters">
+                                        {/* DOB field */}
+                                        <div className="col-6 pad-56">
+                                            <div
+                                                style={{ paddingLeft: "0px", paddingRight: "5px" }}
+                                                className="col-12">
+                                                <div className="user-input-wrp">
+                                                    <br />
+                                                    <input
+                                                        ref={(input) => { this.lastName = input; }}
+                                                        type="date"
+                                                        name="lastName"
+                                                        placeholder=" "
+                                                        className="inputText"
+                                                        onChange={this.handleInput}
+                                                        onBlur={this.handleInputValidation}
+                                                        required
+                                                    />
+                                                    <span className="floating-label">Ngày sinh</span>
+                                                    <FormError
+                                                        type="lastName"
+                                                        isHidden={this.state.lastName.isInputValid}
+                                                        errorMessage={this.state.lastName.errorMessage} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* End DOB field */}
+
+                                        {/* Phone number field */}
+                                        <div className="col-6 pad-56">
+                                            <div
+                                                style={{ paddingLeft: "5px", paddingRight: "0px" }}
+                                                className="col-12">
+                                                <div className="user-input-wrp">
+                                                    <br />
+                                                    <input
+                                                        ref={(input) => { this.firstName = input; }}
+                                                        type="text"
+                                                        name="phoneNumber"
+                                                        placeholder=" "
+                                                        className="inputText"
+                                                        onChange={this.handleInput}
+                                                        onBlur={this.handleInputValidation}
+                                                        required
+                                                    />
+                                                    <span className="floating-label">Số điện thoại</span>
+                                                    <FormError
+                                                        type="phoneNumber"
+                                                        isHidden={this.state.phoneNumber.isInputValid}
+                                                        errorMessage={this.state.phoneNumber.errorMessage} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* End Phone number field */}
+                                    </div>
+                                    {/* End user DOB & phone number field*/}
+
 
                                     {/* submit Button */}
                                     <div className="col-12 pad-56">

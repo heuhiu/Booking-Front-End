@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './login.css';
 import callApi from '../../config/utils/apiCaller';
 import { getUserLogin } from '../../actions/index';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -50,39 +50,72 @@ class Login extends Component {
     }
 
     validateInput = (type, checkingText) => {
-        if (type === "email") {
-            const regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-            const checkingResult = regexp.exec(checkingText);
-            if (checkingResult !== null) {
-                return {
-                    isInputValid: true,
-                    errorMessage: ''
-                };
-            } else {
-                return {
-                    isInputValid: false,
-                    errorMessage: 'Mail format wrong'
-                };
-            }
-        }
+        // if (type === "email") {
+        //     const regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+        //     const checkingResult = regexp.exec(checkingText);
+        //     if (checkingResult !== null) {
+        //         return {
+        //             isInputValid: true,
+        //             errorMessage: ''
+        //         };
+        //     } else {
+        //         return {
+        //             isInputValid: false,
+        //             errorMessage: 'Mail format wrong'
+        //         };
+        //     }
+        // }
 
-        if (type === "password") {
-            // const regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/;
-            const regexp = /[^\s]/;
-            const checkingResult = regexp.exec(checkingText);
-            if (checkingResult !== null) {
-                return {
-                    isInputValid: true,
-                    errorMessage: ''
-                };
-            } else {
-                return {
-                    isInputValid: false,
-                    errorMessage: 'Password not null'
-                };
-            }
+        // if (type === "password") {
+        //     // const regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/;
+        //     const regexp = /[^\s]/;
+        //     const checkingResult = regexp.exec(checkingText);
+        //     if (checkingResult !== null) {
+        //         return {
+        //             isInputValid: true,
+        //             errorMessage: ''
+        //         };
+        //     } else {
+        //         return {
+        //             isInputValid: false,
+        //             errorMessage: 'Password not null'
+        //         };
+        //     }
+        // }
+        var regexp = '';
+        var checkingResult = '';
+        switch (type) {
+            case "email":
+                regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Mail format wrong'
+                    };
+                }
+            case "password":
+                regexp = /./;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Password not null'
+                    };
+                }
+                default:
+                    return null;
         }
-
     }
 
     handleInputValidation = event => {
@@ -191,10 +224,7 @@ class Login extends Component {
                             >
                                 <form
                                     noValidate
-                                    // className="needs-validation"
                                     className="was-validated"
-                                    // className={validationClass}
-                                    // className="is-invalid"
                                     onSubmit={this.onClickRegister}>
                                     {/* Email field */}
                                     <div
@@ -204,11 +234,8 @@ class Login extends Component {
                                             <br />
                                             <input
                                                 ref={(input) => { this.mailInput = input; }}
-                                                // autoFocus
-                                                // {myboo ? autoFocus : ""}
                                                 type="text"
                                                 name="email"
-                                                // pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                                                 placeholder=" "
                                                 className="inputText"
                                                 onChange={this.handleInput}
@@ -246,6 +273,8 @@ class Login extends Component {
                                                 errorMessage={this.state.password.errorMessage} />
                                         </div>
                                     </div>
+                                  
+                                  
                                     {/* submit Button */}
                                     <div className="col-12 pad-56">
                                         <button
@@ -255,6 +284,7 @@ class Login extends Component {
                                             Đăng nhập
                                         </button>
                                     </div>
+                                    {/* End submit Button */}
                                 </form>
                                 <div className="col-12 pad-56">
                                     <button
