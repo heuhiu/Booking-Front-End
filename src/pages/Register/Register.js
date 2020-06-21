@@ -34,11 +34,6 @@ class Register extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
-            firstName: {
-                value: '',
-                isInputValid: false,
-                errorMessage: ''
-            },
             lastName: {
                 value: '',
                 isInputValid: false,
@@ -49,6 +44,16 @@ class Register extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
+            myfirstName: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            dob: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            }
         }
     }
 
@@ -114,7 +119,7 @@ class Register extends Component {
                 if (checkingText !== password.value) {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Password not match1'
+                        errorMessage: 'Password not match'
                     };
                 }
                 else {
@@ -123,7 +128,22 @@ class Register extends Component {
                         errorMessage: 'Password not match'
                     };
                 }
-            case "firstName":
+            case "myfirstName":
+                regexp = /^.[a-zA-Z ]*$/;
+                checkingResult = regexp.exec(checkingText);
+                console.log("FN");
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'FN Must be text & not null'
+                    };
+                }
+            case "lastName":
                 regexp = /^.[a-zA-Z ]*$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
@@ -134,21 +154,23 @@ class Register extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Must be text & not null'
+                        errorMessage: 'LN Must be text & not null'
                     };
                 }
-            case "lastName":
-                regexp = /.^[a-zA-Z ]*$/;
+            case "dob":
+                regexp = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
                 checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
+                console.log(checkingText);
+                // if (checkingResult !== null) {
+                    if(true){
+                return {
                         isInputValid: true,
                         errorMessage: ''
                     };
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Must be text & not null'
+                        errorMessage: 'Date format wrong'
                     };
                 }
             case "phoneNumber":
@@ -179,66 +201,57 @@ class Register extends Component {
         this.setState({ [name]: newState })
     }
 
+
     onClickRegister = (e) => {
-        const { email, password } = this.state;
+        const { email, password, 
+            RePassword, lastName, 
+            myfirstName, dob, phoneNumber } = this.state;
         e.preventDefault();
-        if (this.mailInput) {
+        if (
+            this.mailInput || this.pass ||
+            this.RePassword || this.lastName ||
+            this.myfirstName || this.dob || this.phoneNumber) {
             setTimeout(() => {
-
                 this.mailInput.focus();
-
-            }, 1);
-        }
-        if (this.pass) {
-            setTimeout(() => {
-
                 this.pass.focus();
-
-            }, 1);
-        }
-        if (this.mailInput) {
-            setTimeout(() => {
-
+                this.RePassword.focus();
+                this.lastName.focus();
+                this.myfirstName.focus();
+                this.dob.focus();
+                this.phoneNumber.focus();
                 this.mailInput.focus();
-
             }, 1);
         }
-
-        if (email.isInputValid === false ||
-            password.isInputValid === false) {
+        if (
+            email.isInputValid === false ||
+            password.isInputValid === false ||
+            RePassword.isInputValid === false ||
+            lastName.isInputValid === false ||
+            myfirstName.isInputValid === false ||
+            dob.isInputValid === false ||
+            phoneNumber.isInputValid === false 
+            ) {
             e.preventDefault();
             e.stopPropagation();
         } else {
             console.log("GO to susscess")
-            var jwtDecode = require('jwt-decode');
-            callApi('login', 'POST', {
+            callApi('user/register', 'POST', {
                 mail: email.value,
-                password: password.value
+                password: password.value,
+                firstName: myfirstName.value,
+                lastName: lastName.valuem,
+                // dob: dob.value,
+                dob: 15-3-1998,
+                phoneNumber: phoneNumber.value
             }).then(res => {
-                console.log(res);
-                alert('Đăng nhập thành công');
-                localStorage.setItem('tokenLogin', JSON.stringify(res.data));
-                var decoded = jwtDecode(res.data);
-                //data will be store in localStorage
-                this.props.fetchUserDetail(decoded.user);
-                // this.setState({
-                //     userLogin: decoded.user
-                // })
-                // console.log(decoded);
-                // console.log(decoded.user);
-                // console.log(decoded.user.firstName);
-                // console.log(decoded.user.lastName);
-                // console.log(decoded.user.mail);
-                // console.log(decoded.user.password);
-                // console.log(decoded.user.userId);
-                // this.fetchUserDetailF();
-                this.props.history.push("/");
+                alert('To Register confirm');
+                this.props.history.push("/Verify");
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
                     console.log(error.response.data);
                     // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
-                    alert("Wrong User Name or Password");
+                    // alert("Wrong User Name or Password");
                     // }
                     // history.push("/login");
                 }
@@ -249,7 +262,7 @@ class Register extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div style={{ padding: "0px" }} className="container-fluid">
                 <div className="row no-gutters">
                     <div className="leftPart">
                         <div className="container box">
@@ -277,7 +290,7 @@ class Register extends Component {
                                 <form
                                     noValidate
                                     className="was-validated"
-                                onSubmit={this.onClickRegister}
+                                    onSubmit={this.onClickRegister}
                                 >
                                     {/* Email field */}
                                     <div className="col-12 pad-56">
@@ -350,12 +363,12 @@ class Register extends Component {
                                     {/* End repassword field */}
 
                                     {/* User Full Name field*/}
-                                    <div className="row no-gutters">
-                                        {/* Last name field */}
-                                        <div className="col-6 pad-56">
+                                    <div className="col-12 pad-56">
+                                        <div className="row no-gutters">
+                                            {/* Last name field */}
                                             <div
                                                 style={{ paddingLeft: "0px", paddingRight: "5px" }}
-                                                className="col-12">
+                                                className="col-6">
                                                 <div className="user-input-wrp">
                                                     <br />
                                                     <input
@@ -375,20 +388,18 @@ class Register extends Component {
                                                         errorMessage={this.state.lastName.errorMessage} />
                                                 </div>
                                             </div>
-                                        </div>
-                                        {/* End password field */}
+                                            {/* End Last name field */}
 
-                                        {/* First name field */}
-                                        <div className="col-6 pad-56">
+                                            {/* First name field */}
                                             <div
                                                 style={{ paddingLeft: "5px", paddingRight: "0px" }}
-                                                className="col-12">
+                                                className="col-6">
                                                 <div className="user-input-wrp">
                                                     <br />
                                                     <input
-                                                        ref={(input) => { this.firstName = input; }}
+                                                        ref={(input) => { this.myfirstName = input; }}
                                                         type="text"
-                                                        name="firstName"
+                                                        name="myfirstName"
                                                         placeholder=" "
                                                         className="inputText"
                                                         onChange={this.handleInput}
@@ -397,29 +408,29 @@ class Register extends Component {
                                                     />
                                                     <span className="floating-label">Tên</span>
                                                     <FormError
-                                                        type="firstName"
-                                                        isHidden={this.state.firstName.isInputValid}
-                                                        errorMessage={this.state.firstName.errorMessage} />
+                                                        type="myfirstName"
+                                                        isHidden={this.state.myfirstName.isInputValid}
+                                                        errorMessage={this.state.myfirstName.errorMessage} />
                                                 </div>
                                             </div>
+                                            {/* End First name field */}
                                         </div>
-                                        {/* End password field */}
                                     </div>
                                     {/* End user Full Name field*/}
 
                                     {/* User DOB & phone number field*/}
-                                    <div className="row no-gutters">
-                                        {/* DOB field */}
-                                        <div className="col-6 pad-56">
+                                    <div className="col-12 pad-56">
+                                        <div className="row no-gutters">
+                                            {/* DOB field */}
                                             <div
                                                 style={{ paddingLeft: "0px", paddingRight: "5px" }}
-                                                className="col-12">
+                                                className="col-6">
                                                 <div className="user-input-wrp">
                                                     <br />
                                                     <input
-                                                        ref={(input) => { this.lastName = input; }}
+                                                        ref={(input) => { this.dob = input; }}
                                                         type="date"
-                                                        name="lastName"
+                                                        name="dob"
                                                         placeholder=" "
                                                         className="inputText"
                                                         onChange={this.handleInput}
@@ -428,23 +439,21 @@ class Register extends Component {
                                                     />
                                                     <span className="floating-label">Ngày sinh</span>
                                                     <FormError
-                                                        type="lastName"
-                                                        isHidden={this.state.lastName.isInputValid}
-                                                        errorMessage={this.state.lastName.errorMessage} />
+                                                        type="dob"
+                                                        isHidden={this.state.dob.isInputValid}
+                                                        errorMessage={this.state.dob.errorMessage} />
                                                 </div>
                                             </div>
-                                        </div>
-                                        {/* End DOB field */}
+                                            {/* End DOB field */}
 
-                                        {/* Phone number field */}
-                                        <div className="col-6 pad-56">
+                                            {/* Phone number field */}
                                             <div
                                                 style={{ paddingLeft: "5px", paddingRight: "0px" }}
-                                                className="col-12">
+                                                className="col-6">
                                                 <div className="user-input-wrp">
                                                     <br />
                                                     <input
-                                                        ref={(input) => { this.firstName = input; }}
+                                                        ref={(input) => { this.phoneNumber = input; }}
                                                         type="text"
                                                         name="phoneNumber"
                                                         placeholder=" "
@@ -460,11 +469,10 @@ class Register extends Component {
                                                         errorMessage={this.state.phoneNumber.errorMessage} />
                                                 </div>
                                             </div>
+                                            {/*End  Phone number field */}
                                         </div>
-                                        {/* End Phone number field */}
                                     </div>
-                                    {/* End user DOB & phone number field*/}
-
+                                    {/*End User DOB & phone number field*/}
 
                                     {/* submit Button */}
                                     <div className="col-12 pad-56">

@@ -3,6 +3,8 @@ import HomePage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
+import VerifyEmail from '../pages/VerifyEmail/VerifyEmail';
+import CfMail from '../pages/Authen/confirmedMail/CfMail';
 
 
 const routers = [
@@ -16,6 +18,18 @@ const routers = [
         path: '/Register',
         exact: false,
         main: ({ history,location }) => <Register history={history} location={location} />  
+    },
+    {
+        path: '/Verify',
+        exact: false,
+        main: ({ history,location }) => <VerifyEmail history={history} location={location} />  
+
+    },
+    {
+        path: '/confirmMail',
+        exact: false,
+        main: ({ match,history,location }) => 
+        <CfMail history={history} location={location} match={match} />  
 
     },
     {
