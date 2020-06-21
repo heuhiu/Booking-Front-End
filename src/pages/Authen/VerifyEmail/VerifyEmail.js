@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import './login2.css'
 import './verify.css';
-import callApi from '../../config/utils/apiCaller';
-import { getUserLogin } from '../../actions/index';
+import callApi from '../../../config/utils/apiCaller';
+import { getUserLogin } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 
 

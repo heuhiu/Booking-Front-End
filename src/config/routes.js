@@ -1,10 +1,10 @@
 import React from 'react';
 import HomePage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
-import VerifyEmail from '../pages/VerifyEmail/VerifyEmail';
+import Register from '../pages/Authen/Register/Register';
+import VerifyEmail from '../pages/Authen/VerifyEmail/VerifyEmail';
 import CfMail from '../pages/Authen/confirmedMail/CfMail';
+import Login from '../pages/Authen/Login/Login';
 
 
 const routers = [

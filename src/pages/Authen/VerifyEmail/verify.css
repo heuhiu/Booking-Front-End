@@ -2,9 +2,9 @@
 
 
 .rightPart{
-    /* height: 760px; */
+    height: 760px;
     width: 64.4270833%;
-    background:url("../../img/LoginPaper.png");
+    background:url("../../../img/LoginPaper.png");
     background-size: 100%;
     /* background-position: center; */
     background-repeat: no-repeat;
@@ -44,8 +44,8 @@
 	position: relative;
     width: 100%;
     font-size: 20px;
-    /* padding-bottom: 32.5px; */
-    /* padding-top: 0px; */
+    padding-bottom: 32.5px;
+    padding-top: 0px;
 }
 
 .user-input-wrp .inputText{

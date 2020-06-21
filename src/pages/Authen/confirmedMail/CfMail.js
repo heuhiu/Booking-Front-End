@@ -11,12 +11,12 @@ class CfMail extends Component {
     }
 
     componentWillMount = () => {
-        var { match } = this.props;
-        var token = match.params.token;
-        console.log(token);
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('token');
+        console.log(myParam);
         axios.get('http://localhost:8090/user/active', {
             params: {
-                token
+                token: myParam
             }
         }).then(res => {
             //set state
@@ -30,6 +30,7 @@ class CfMail extends Component {
     }
 
     render() {
+
         return (
             <div>
                 Confirm page

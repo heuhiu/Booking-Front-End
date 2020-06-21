@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Register.css';
-import callApi from '../../config/utils/apiCaller';
-import { getUserLogin } from '../../actions/index';
+import callApi from '../../../config/utils/apiCaller';
+import { getUserLogin } from '../../../actions/index';
 
 
 function FormError(props) {
