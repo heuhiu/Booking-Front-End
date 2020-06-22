@@ -241,7 +241,7 @@ class Register extends Component {
                 mail: email.value,
                 password: password.value,
                 firstName: myfirstName.value,
-                lastName: lastName.valuem,
+                lastName: lastName.value,
                 dob: dob.value,
                 // dob: 15 - 3 - 1998,
                 phoneNumber: phoneNumber.value
@@ -356,7 +356,7 @@ class Register extends Component {
                                                     onBlur={this.handleInputValidation}
                                                     required
                                                 />
-                                                <span className="floating-label">RePassword</span>
+                                                <span className="floating-label">Nhập lại mật khẩu</span>
                                                 <FormError
                                                     type="RePassword"
                                                     isHidden={this.state.RePassword.isInputValid}
@@ -477,7 +477,7 @@ class Register extends Component {
                                             </div>
                                         </div>
                                         {/*End User DOB & phone number field*/}
-
+                                        <br></br>
                                         {/* Confirm button */}
                                         <div style={{padding: "0px"}} className="col-12 pad-56">
                                             <button

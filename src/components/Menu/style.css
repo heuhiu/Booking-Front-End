@@ -96,6 +96,7 @@
     border: none;
     background-color: inherit;
     cursor: pointer;  
+    padding-top: 0px;
 }
 
 .userNamebefore{

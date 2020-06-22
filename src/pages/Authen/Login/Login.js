@@ -274,7 +274,6 @@ class Login extends Component {
                                         </div>
                                     </div>
                                     <br></br>
-                                    <br></br>
                                     <div className="row det">
                                         <div className="col">
                                             <p className="det1">Với việc tiếp tục truy cập, bạn sẽ đồng ý với <i className="det2">điều khoản của chúng tôi</i> </p>

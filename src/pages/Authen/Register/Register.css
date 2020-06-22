@@ -2,13 +2,14 @@
 
 
 .rightPart{
-    /* height: 760px; */
+    /* height: auto; */
     width: 64.4270833%;
     background:url("../../../img/LoginPaper.png");
     background-size: 100%;
     /* background-position: center; */
     background-repeat: no-repeat;
 }
+
 .form-warning{
     font-family: 'Inter';
     font-style: normal;
@@ -35,9 +36,9 @@
 }
 
 .box{
-    padding-top: 92.8px;
+    /* padding-top: 92.8px;
     padding-left: 86.4px;
-    padding-right: 86.4px;
+    padding-right: 86.4px; */
 }
 
 .user-input-wrp {

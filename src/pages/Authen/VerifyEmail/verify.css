@@ -1,14 +1,5 @@
 @import url('https://rsms.me/inter/inter.css');
 
-
-.rightPart{
-    height: 760px;
-    width: 64.4270833%;
-    background:url("../../../img/LoginPaper.png");
-    background-size: 100%;
-    /* background-position: center; */
-    background-repeat: no-repeat;
-}
 .form-warning{
     font-family: 'Inter';
     font-style: normal;
@@ -23,7 +14,7 @@
     width: 35.57291667%;
 }
 
-.loginPanel{
+.loginPanelEmail{
     padding-bottom: 29.6px;
     padding-top: 68.24px;
     font-family: 'Inter';
@@ -32,21 +23,15 @@
     font-size: 28.8px;
     line-height: 41px;
     color: #5B5B5B;
+    text-align: center;
 }
 
 .box{
-    padding-top: 92.8px;
+    padding-top: 80.8px;
     padding-left: 86.4px;
     padding-right: 86.4px;
 }
 
-.user-input-wrp {
-	position: relative;
-    width: 100%;
-    font-size: 20px;
-    padding-bottom: 32.5px;
-    padding-top: 0px;
-}
 
 .user-input-wrp .inputText{
 	width: 100%;
@@ -126,16 +111,16 @@
     font-weight: bold;
 }
 
-.submitBtn{
-    width: 100%;
+.resubmitBtn{
     height: 44px;
+    width: 100%;
     font-family: 'Inter';
-    background: #FF7062;
+    background: #ffffff;
     border-radius: 8px;
     margin-top: 10.6px;
-    border: 0px solid;
-    color: #FFFFFF;
+    color: black;
     font-size: 15px;
+    border: 1px solid #FF7062;
 }
 
 .pad-56{
@@ -158,22 +143,16 @@
     color: #197ACF;
 }
 
-.det1{
+
+.det3{
     font-family: 'Inter';
     font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 20px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 28px;
     color: #A5A5A5;
 }
-
-.det2{
-    font-family: 'Inter';
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 18px;
-    color: #FF7062;
-}
+    
 .det{
     text-align: center;
 }

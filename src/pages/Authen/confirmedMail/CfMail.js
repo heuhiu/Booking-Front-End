@@ -22,7 +22,7 @@ class CfMail extends Component {
             //set state
             if (res.data) {
                 alert("will push to home page if sucess");
-                this.props.push('/');
+                this.props.history.push("/");
             }
         }).catch(function (error) {
             console.log(error.response);
@@ -33,7 +33,7 @@ class CfMail extends Component {
 
         return (
             <div>
-                Confirm page
+                <h1>Verify success !</h1>
             </div>
         );
     }
