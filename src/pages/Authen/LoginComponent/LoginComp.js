@@ -29,6 +29,7 @@ class LoginComp extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
+            visibility: true
         }
     }
 
@@ -130,18 +131,6 @@ class LoginComp extends Component {
                 this.props.fetchUserDetail(decoded.user);
                 this.props.history.push("/");
                 console.log("push")
-                // this.setState({
-                //     userLogin: decoded.user
-                // })
-                // console.log(decoded);
-                // console.log(decoded.user);
-                // console.log(decoded.user.firstName);
-                // console.log(decoded.user.lastName);
-                // console.log(decoded.user.mail);
-                // console.log(decoded.user.password);
-                // console.log(decoded.user.userId);
-                // this.fetchUserDetailF();
-                
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
@@ -155,6 +144,13 @@ class LoginComp extends Component {
         }
     }
 
+
+    toggleShow = () => {
+        this.setState({
+            hidden: !this.state.hidden,
+            visibility: !this.state.visibility
+        });
+    }
 
     render() {
         return (
@@ -181,25 +177,14 @@ class LoginComp extends Component {
                                 <path d="M124.404 2.20791C124.404 0.780382 125.185 0 126.612 0H128.877C130.343 0 131.085 0.780382 131.085 2.20791V19.9854H134.397L139.974 11.9912C140.602 10.9444 141.401 10.5256 142.601 10.5256H145.113C146.902 10.5256 147.473 11.7438 146.483 13.1523L139.803 22.5169V22.6311L147.683 34.7175C148.577 36.2402 148.006 37.3441 146.217 37.3441H143.381C142.163 37.3441 141.382 36.8683 140.811 35.8214L134.549 25.6194H131.085V35.1362C131.085 36.6018 130.343 37.3441 128.877 37.3441H126.612C125.185 37.3441 124.404 36.6018 124.404 35.1362V2.20791Z" fill="#5B5B5B" />
                                 <path d="M150.328 3.78771V2.20791C150.328 0.780382 151.07 0 152.479 0H154.801C156.229 0 157.009 0.780382 157.009 2.20791V3.78771C157.009 5.21524 156.229 5.93852 154.801 5.93852H152.479C151.051 5.95755 150.328 5.21524 150.328 3.78771ZM150.328 12.7336C150.328 11.306 151.07 10.5256 152.479 10.5256H154.801C156.229 10.5256 156.952 11.306 156.952 12.7336V35.1362C156.952 36.6018 156.21 37.3441 154.801 37.3441H152.479C151.051 37.3441 150.328 36.6018 150.328 35.1362V12.7336Z" fill="#5B5B5B" />
                             </svg>
-                            {/* <span
-                                className="login100-form-title p-b-43">
-                                Login to continue
-					        </span> */}
+
                             <div className="loginPanel1">
-                                    Đăng nhập
+                                Đăng nhập
                             </div>
 
-
-
-
-                            <div
-                                className="wrap-input100"
-                            >
+                            <div className="wrap-input100">
                                 <input
                                     className="input100"
-                                    // type="text"
-                                    // name="email"
-                                    // required
                                     ref={(input) => { this.mailInput = input; }}
                                     type="text"
                                     name="email"
@@ -209,41 +194,80 @@ class LoginComp extends Component {
                                 />
                                 <span className="focus-input100"></span>
                                 <span className="label-input100">Email</span>
-
                             </div>
                             <FormError
                                 type="email"
                                 isHidden={this.state.email.isInputValid}
                                 errorMessage={this.state.email.errorMessage} />
-
-
                             <br></br>
 
+                            {/* <form>
+                                <input className="input100" />
+                                <button>Go</button>
+                            </form> */}
 
-                            <div
-                                className="wrap-input100"
-                            >
-                                <input
+                            <div className="row no-gutters">
+                                <div className="col wrap-input100">
+                                    {/* <div 
                                     className="input100"
-                                    // type="password"
-                                    // name="pass"
-                                    ref={(input) => { this.pass = input; }}
-                                    type="password"
-                                    name="password"
-                                    placeholder=" "
-                                    // className="inputText"
-                                    onChange={this.handleInput}
-                                    onBlur={this.handleInputValidation}
-                                    required
-                                />
-                                <span className="focus-input100"></span>
-                                <span className="label-input100">Mật khẩu</span>
+                                    > */}
+                                        <input
+                                            className="input100"
+                                            ref={(input) => { this.pass = input; }}
+                                            type={this.state.visibility ? "password" : "text"}
+                                            name="password"
+                                            placeholder=" "
+                                            onChange={this.handleInput}
+                                            onBlur={this.handleInputValidation}
+                                            required
 
+                                        />
+                                        {/* <div className=""
+                                            onClick={this.toggleShow}>
+                                            {this.state.visibility
+                                                ?
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.572 9.14351 13.1984C8.99262 12.8249 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1547 9.88 9.88003M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06003L17.94 17.94ZM9.9 4.24002C10.5883 4.0789 11.2931 3.99836 12 4.00003C19 4.00003 23 12 23 12C22.393 13.1356 21.6691 14.2048 20.84 15.19L9.9 4.24002Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M1 1L23 23" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                :
+                                                <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
+                                                    <path d="M1 9C1 9 5 1 12 1C19 1 23 9 23 9C23 9 19 17 12 17C5 17 1 9 1 9Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            }
+                                        </div> */}
+                                    {/* </div> */}
+                                    <span className="focus-input100"></span>
+                                    <span className="label-input100">Mật khẩu</span>
+                                </div>
+                                {/* <div className="col-1 "
+                                    onClick={this.toggleShow}>
+                                    {this.state.visibility
+                                        ?
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.572 9.14351 13.1984C8.99262 12.8249 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1547 9.88 9.88003M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06003L17.94 17.94ZM9.9 4.24002C10.5883 4.0789 11.2931 3.99836 12 4.00003C19 4.00003 23 12 23 12C22.393 13.1356 21.6691 14.2048 20.84 15.19L9.9 4.24002Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M1 1L23 23" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        :
+                                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
+                                            <path d="M1 9C1 9 5 1 12 1C19 1 23 9 23 9C23 9 19 17 12 17C5 17 1 9 1 9Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" stroke="#E3E3E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    }
+                                </div> */}
                             </div>
+
+
+
+
+
+
                             <FormError
                                 type="password"
                                 isHidden={this.state.password.isInputValid}
                                 errorMessage={this.state.password.errorMessage} />
+
                             <br></br>
                             <div className="flex-sb-m w-full p-t-3 p-b-32">
                                 {/* <div className="contact100-form-checkbox">

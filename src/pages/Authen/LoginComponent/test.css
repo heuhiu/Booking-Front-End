@@ -271,18 +271,15 @@
     /* margin-bottom: 10px; */
     transition: .5s;
   }
-
+  input::-ms-reveal, input::-ms-clear {
+    display: none;
+}
   .wrap-input100:hover{
     border-bottom: 1px solid #FF7062;
     color: #FF7062;
     border-radius: 8px
   }
 
-  .wrap-input100:focus{
-    /* border-bottom: 1px solid #FF7062;
-    border-radius: 8px ;
-    transition: .4s; */
-  }
 
 
   .label-input100 {
@@ -655,4 +652,38 @@
     font-size: 15px;
     line-height: 22px;
     color: #197ACF;
+}
+
+
+/* --------------------------------------- */
+
+form {
+  /* This bit sets up the horizontal layout */
+  display:flex;
+  flex-direction:row;
+  
+  /* This bit draws the box around it */
+  border:1px solid grey;
+
+  /* I've used padding so you can see the edges of the elements. */
+  padding:2px;
+}
+
+input {
+  /* Tell the input to use all the available space */
+  flex-grow:2;
+  /* And hide the input's outline, so the form looks like the outline */
+  border:none;
+}
+
+input:focus {
+  /* removing the input focus blue box. Put this on the form if you like. */
+  outline: none;
+}
+
+button {
+  /* Just a little styling to make it pretty */
+  border:1px solid blue;
+  background:blue;
+  color:white;
 }
