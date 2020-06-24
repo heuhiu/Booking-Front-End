@@ -128,6 +128,8 @@ class LoginComp extends Component {
                 var decoded = jwtDecode(res.data);
                 //data will be store in localStorage
                 this.props.fetchUserDetail(decoded.user);
+                this.props.history.push("/");
+                console.log("push")
                 // this.setState({
                 //     userLogin: decoded.user
                 // })
@@ -139,7 +141,7 @@ class LoginComp extends Component {
                 // console.log(decoded.user.password);
                 // console.log(decoded.user.userId);
                 // this.fetchUserDetailF();
-                this.props.history.push("/");
+                
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded

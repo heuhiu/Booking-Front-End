@@ -267,20 +267,23 @@
     height: 4rem;
     position: relative;
     border-bottom: 1px solid #e6e6e6;
-    /* border-radius: 10px ; */
+    /* border-radius: 8px ; */
     /* margin-bottom: 10px; */
     transition: .5s;
   }
 
   .wrap-input100:hover{
     border-bottom: 1px solid #FF7062;
+    color: #FF7062;
+    border-radius: 8px
   }
+
   .wrap-input100:focus{
-    border-bottom: 1px solid #FF7062;
+    /* border-bottom: 1px solid #FF7062;
+    border-radius: 8px ;
+    transition: .4s; */
   }
-  .wrap-input100:not(:focus){
-    border-bottom: 1px solid #FF7062;
-  }
+
 
   .label-input100 {
     font-family: 'Inter';

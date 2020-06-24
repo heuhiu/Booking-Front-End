@@ -4,6 +4,8 @@ import './test.css';
 import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin } from '../../../actions/index';
 import { Link } from 'react-router-dom';
+import "react-datepicker/dist/react-datepicker.css";
+
 import backG from '../../../img/LoginPaper.png';
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -19,6 +21,7 @@ class RegisterComp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            startDate: '',
             check: false,
             email: {
                 value: '',
@@ -95,14 +98,11 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mật khẩu phài từu 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
+                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
                     };
                 }
             case "RePassword":
                 const { password } = this.state;
-                // regexp = /^.[a-zA-Z ]*$/;
-                // checkingResult = regexp.exec(checkingText);
-                // if (checkingResult !== null) {
                 if (checkingText === password.value && checkingText !== null) {
                     return {
                         isInputValid: true,
@@ -118,13 +118,12 @@ class RegisterComp extends Component {
                 else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Password not match'
+                        errorMessage: 'Mật khẩu không khớp'
                     };
                 }
             case "myfirstName":
                 regexp = /^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
-                console.log("FN");
                 if (checkingResult !== null) {
                     return {
                         isInputValid: true,
@@ -153,16 +152,13 @@ class RegisterComp extends Component {
             case "dob":
                 regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
                 checkingResult = regexp.exec(checkingText.toString());
-
                 if (checkingResult !== null) {
                     // if (true) {
-                    console.log("nice " + checkingText);
                     return {
                         isInputValid: true,
                         errorMessage: ''
                     };
                 } else {
-                    console.log(checkingText);
                     return {
                         isInputValid: false,
                         errorMessage: 'Ngày sinh có dạng Năm/Tháng/Ngày'
@@ -220,97 +216,98 @@ class RegisterComp extends Component {
                 this.mailInput.focus();
             }, 1);
         }
-        switch (true) {
-            case this.mailInput && email.isInputValid === false:
-                setTimeout(() => {
-
-                    this.mailInput.focus();
-
-                }, 1);
-                break;
-            case this.pass && password.isInputValid === false:
-                setTimeout(() => {
-
-                    this.pass.focus();
-
-                }, 1);
-                break;
-            case this.RePassword && RePassword.isInputValid === false:
-                setTimeout(() => {
-
-                    this.RePassword.focus();
-
-                }, 1);
-                break;
-            case this.myfirstName && myfirstName.isInputValid === false:
-                setTimeout(() => {
-
-                    this.myfirstName.focus();
-
-                }, 1);
-                break;
-            case this.lastName && lastName.isInputValid === false:
-                setTimeout(() => {
-
-                    this.lastName.focus();
-
-                }, 1);
-                break;
-            case this.dob && dob.isInputValid === false:
-                setTimeout(() => {
-
-                    this.dob.focus();
-
-
-                }, 1);
-                break;
-            case this.phoneNumber && phoneNumber.isInputValid === false:
-                setTimeout(() => {
-
-                    this.phoneNumber.focus();
-
-                }, 1);
-                break;
-            default:
-                return null;
-        }
-
         if (email.isInputValid === false ||
-            password.isInputValid === false) {
+            password.isInputValid === false ||
+            RePassword.isInputValid === false ||
+            lastName.isInputValid === false ||
+            myfirstName.isInputValid === false ||
+            dob.isInputValid === false ||
+            phoneNumber.isInputValid === false) {
+            switch (true) {
+                case this.mailInput && email.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.mailInput.focus();
+
+                    }, 1);
+                    break;
+                case this.pass && password.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.pass.focus();
+
+                    }, 1);
+                    break;
+                case this.RePassword && RePassword.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.RePassword.focus();
+
+                    }, 1);
+                    break;
+                case this.myfirstName && myfirstName.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.myfirstName.focus();
+
+                    }, 1);
+                    break;
+                case this.lastName && lastName.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.lastName.focus();
+
+                    }, 1);
+                    break;
+                case this.dob && dob.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.dob.focus();
+
+
+                    }, 1);
+                    break;
+                case this.phoneNumber && phoneNumber.isInputValid === false:
+                    setTimeout(() => {
+
+                        this.phoneNumber.focus();
+
+                    }, 1);
+                    break;
+                default:
+                    return null;
+            }
+        }
+        if (
+            email.isInputValid === false ||
+            password.isInputValid === false ||
+            RePassword.isInputValid === false ||
+            lastName.isInputValid === false ||
+            myfirstName.isInputValid === false ||
+            dob.isInputValid === false ||
+            phoneNumber.isInputValid === false
+        ) {
             e.preventDefault();
             e.stopPropagation();
-        }
-        else {
+        } else {
             console.log("GO to susscess")
-            var jwtDecode = require('jwt-decode');
-            callApi('login', 'POST', {
+            callApi('user/register', 'POST', {
                 mail: email.value,
-                password: password.value
+                password: password.value,
+                firstName: myfirstName.value,
+                lastName: lastName.value,
+                dob: dob.value,
+                // dob: 15 - 3 - 1998,
+                phoneNumber: phoneNumber.value
             }).then(res => {
-                console.log(res);
-                alert('Đăng nhập thành công');
-                localStorage.setItem('tokenLogin', JSON.stringify(res.data));
-                var decoded = jwtDecode(res.data);
-                //data will be store in localStorage
-                this.props.fetchUserDetail(decoded.user);
-                // this.setState({
-                //     userLogin: decoded.user
-                // })
-                // console.log(decoded);
-                // console.log(decoded.user);
-                // console.log(decoded.user.firstName);
-                // console.log(decoded.user.lastName);
-                // console.log(decoded.user.mail);
-                // console.log(decoded.user.password);
-                // console.log(decoded.user.userId);
-                // this.fetchUserDetailF();
-                this.props.history.push("/");
+                alert('To Register confirm');
+                this.props.history.push("/Verify");
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
                     console.log(error.response.data);
                     // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
-                    alert("Wrong User Name or Password");
+                    // alert("Wrong User Name or Password");
                     // }
                     // history.push("/login");
                 }
@@ -325,6 +322,15 @@ class RegisterComp extends Component {
                 check: !check
             })
     }
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
+    };
+
+    dateClick = () => {
+
+    }
 
     render() {
         return (
@@ -335,7 +341,6 @@ class RegisterComp extends Component {
                             style={{ backgroundImage: "url(" + backG + ")" }}
                             className="login100-more ">
                         </div>
-
                         <form
                             className="was-validated login100-form validate-form"
                             onSubmit={this.onClickRegister}
@@ -504,13 +509,9 @@ class RegisterComp extends Component {
                                     <div className="wrap-input100">
                                         <input
                                             className="input100"
-                                            // type="text"
-                                            // name="email"
-                                            // required
                                             ref={(input) => { this.dob = input; }}
                                             type={this.state.check ? "date" : "text"}
                                             name="dob"
-                                            data-date-format="mm-dd-yyyy"
                                             onClick={this.showDate}
                                             onChange={this.handleInput}
                                             onBlur={this.handleInputValidation}
@@ -518,7 +519,6 @@ class RegisterComp extends Component {
                                         />
                                         <span className="focus-input100"></span>
                                         <span className="label-input100">Ngày sinh</span>
-
                                     </div>
                                     <FormError
                                         type="dob"
@@ -526,6 +526,7 @@ class RegisterComp extends Component {
                                         errorMessage={this.state.dob.errorMessage} />
                                 </div>
                                 {/* End DOB field */}
+
 
                                 {/* Phone number field */}
                                 <div className="col">

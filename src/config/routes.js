@@ -5,19 +5,21 @@ import Register from '../pages/Authen/Register/Register';
 import VerifyEmail from '../pages/Authen/VerifyEmail/VerifyEmail';
 import CfMail from '../pages/Authen/confirmedMail/CfMail';
 import Login from '../pages/Authen/Login/Login';
+import LoginComp from '../pages/Authen/LoginComponent/LoginComp';
+import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
 
 
 const routers = [
     {
         path: '/Login',
         exact: false,
-        main: ({ history,location }) => <Login history={history} location={location} />  
+        main: ({ history,location }) => <LoginComp history={history} location={location} />  
 
     },
     {
         path: '/Register',
         exact: false,
-        main: ({ history,location }) => <Register history={history} location={location} />  
+        main: ({ history,location }) => <RegisterComp history={history} location={location} />  
     },
     {
         path: '/Verify',

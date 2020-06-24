@@ -106,7 +106,7 @@ class Menu extends Component {
                 </Link>
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
-                    <Link style={{ textDecoration: "none" }} to="/Register">
+                    <Link style={{ textDecoration: "none" }} to="/myOrder">
                         <button style={{ display: tokenLogin ? "" : "none" }} className="none1 nav-link">
                             <i className="far fa-file-alt"></i>{' '}Đặt chỗ của tôi
                         </button>
