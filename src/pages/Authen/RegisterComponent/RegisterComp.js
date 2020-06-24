@@ -62,11 +62,6 @@ class RegisterComp extends Component {
         const { name, value } = event.target;
         const newState = { ...this.state[name] }; /* dummy object */
         newState.value = value;
-        if (name === "dob") {
-            this.setState({
-                check: !this.state.check
-            })
-        }
         this.setState({ [name]: newState });
 
     }
@@ -86,11 +81,11 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mail format wrong'
+                        errorMessage: 'Email có dạng abc@xyz.ghi(.xnh)'
                     };
                 }
             case "password":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/;
+                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -100,7 +95,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Password format wrong'
+                        errorMessage: 'Mật khẩu phài từu 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
                     };
                 }
             case "RePassword":
@@ -117,7 +112,7 @@ class RegisterComp extends Component {
                 if (checkingText !== password.value) {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Password not match'
+                        errorMessage: 'Mật khẩu không khớp'
                     };
                 }
                 else {
@@ -127,7 +122,7 @@ class RegisterComp extends Component {
                     };
                 }
             case "myfirstName":
-                regexp = /^.[a-zA-Z ]*$/;
+                regexp = /^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
                 console.log("FN");
                 if (checkingResult !== null) {
@@ -138,11 +133,11 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'FN Must be text & not null'
+                        errorMessage: 'Không trống - không có kí tự trắng ở đầu và cuối'
                     };
                 }
             case "lastName":
-                regexp = /^.[a-zA-Z ]*$/;
+                regexp = /^^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -152,7 +147,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'LN Must be text & not null'
+                        errorMessage: 'Không trống - không có kí tự trắng ở đầu và cuối'
                     };
                 }
             case "dob":
@@ -170,7 +165,7 @@ class RegisterComp extends Component {
                     console.log(checkingText);
                     return {
                         isInputValid: false,
-                        errorMessage: 'Date format wrong'
+                        errorMessage: 'Ngày sinh có dạng Năm/Tháng/Ngày'
                     };
                 }
             case "phoneNumber":
@@ -184,7 +179,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: '10-11 nums'
+                        errorMessage: 'Số điện thoại chứa 10-11 số'
                     };
                 }
             default:
@@ -210,7 +205,7 @@ class RegisterComp extends Component {
     }
 
     onClickRegister = (e) => {
-        const { check, email, password, myfirstName,
+        const { email, password, myfirstName,
             lastName, RePassword, dob, phoneNumber } = this.state;
         e.preventDefault();
         if (true) {
@@ -515,6 +510,7 @@ class RegisterComp extends Component {
                                             ref={(input) => { this.dob = input; }}
                                             type={this.state.check ? "date" : "text"}
                                             name="dob"
+                                            data-date-format="mm-dd-yyyy"
                                             onClick={this.showDate}
                                             onChange={this.handleInput}
                                             onBlur={this.handleInputValidation}
