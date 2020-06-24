@@ -432,6 +432,7 @@ class Register extends Component {
                                                     <div className="user-input-wrp">
                                                         <br />
                                                         <input
+                                                            style={{fontSize: "16px"}}
                                                             ref={(input) => { this.dob = input; }}
                                                             type="date"
                                                             name="dob"
@@ -454,9 +455,10 @@ class Register extends Component {
                                                 <div
                                                     style={{ paddingLeft: "5px", paddingRight: "0px" }}
                                                     className="col-6">
-                                                    <div className="user-input-wrp">
+                                                    <div  className="user-input-wrp">
                                                         <br />
                                                         <input
+                                                        
                                                             ref={(input) => { this.phoneNumber = input; }}
                                                             type="text"
                                                             name="phoneNumber"

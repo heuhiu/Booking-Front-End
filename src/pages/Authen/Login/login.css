@@ -1,18 +1,18 @@
 @import url('https://rsms.me/inter/inter.css');
 
-
 .rightPart{
-    height: 760px;
+    height: auto;
     width: 64.4270833%;
     background:url("../../../img/LoginPaper.png");
-    background-size: 100%;
-    /* background-position: center; */
+    /* background-size: 100%; */
+    background-position: center;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
 .floating-label{
-    margin: 0.5em;
-    margin-left: 0em;
+    margin: 0.5rem;
+    margin-left: 0rem;
 }
 
 .form-warning{
@@ -30,8 +30,8 @@
 }
 
 .loginPanel{
-    padding-bottom: 29.6px;
-    padding-top: 65.24px;
+    padding-bottom: 4rem;
+    padding-top: 4rem;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -84,6 +84,11 @@
     transition: 1.5s ease all;
 }
 
+.user-input-wrp {
+	position: relative;
+    /* font-size: 20px; */
+    padding-bottom: 0.5rem;
+}
 
 /* no focus */
 .user-input-wrp input:not(:focus) ~ .floating-label{
@@ -93,6 +98,12 @@
 	left: 10px;
     transition: 0.5s ease all;
     color: #A5A5A5;
+}
+
+.box{
+    padding-top: 5rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 .user-input-wrp input:not(:focus):valid
@@ -119,11 +130,11 @@
 
 .submitBtn{
     width: 100%;
-    height: 44px;
+    height: 3rem;
     font-family: 'Inter';
     background: #FF7062;
     border-radius: 8px;
-    margin-top: 10.6px;
+    margin-top: 0.8rem;
     border: 0px solid;
     color: #FFFFFF;
     font-size: 15px;
@@ -141,7 +152,7 @@
     height: 44px;
     font-family: 'Inter';
     background: #ffffff;
-    margin-top: 16.8px;
+    margin-top: 0.5rem;
     font-weight: 500;
     font-size: 15px;
     line-height: 22px;

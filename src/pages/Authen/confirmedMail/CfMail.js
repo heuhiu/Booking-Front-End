@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { getUserLogin } from '../../../actions/index';
 
 class CfMail extends Component {
 
@@ -19,9 +20,15 @@ class CfMail extends Component {
                 token: myParam
             }
         }).then(res => {
+            var jwtDecode = require('jwt-decode');
             //set state
             if (res.data) {
-                alert("will push to home page if sucess");
+                console.log(res.data.token);
+                localStorage.setItem('tokenLogin', JSON.stringify(res.data));
+                var decoded = jwtDecode(res.data.token);
+                this.props.fetchUserDetail(decoded.user);
+                console.log(decoded.user);
+                // alert("will push to home page if sucess");
                 this.props.history.push("/");
             }
         }).catch(function (error) {
@@ -40,4 +47,13 @@ class CfMail extends Component {
 
 }
 
-export default CfMail;
+// export default CfMail;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        fetchUserDetail: (user) => {
+            dispatch(getUserLogin(user))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CfMail);

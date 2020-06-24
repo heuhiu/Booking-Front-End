@@ -169,6 +169,7 @@ class Login extends Component {
                 <div className="row no-gutters">
                     <div className="leftPart">
                         <div className="container">
+
                             <div className="box">
                                 <div className="row">
                                     <div className="col">
@@ -195,7 +196,7 @@ class Login extends Component {
                                     className="was-validated"
                                     onSubmit={this.onClickRegister}>
                                     {/* Email field */}
-                                    <div style={{padding: "0px"}} className="col-12">
+                                    <div style={{padding: "0rem"}} className="col-12">
                                         <div className="user-input-wrp">
                                             <br />
                                             <input
@@ -218,7 +219,7 @@ class Login extends Component {
                                     {/* End email field */}
 
                                     {/* Password field */}
-                                    <div style={{padding: "0px"}} className="col-12">
+                                    <div style={{padding: "0rem"}} className="col-12">
                                         <div className="user-input-wrp">
                                             <br />
                                             <input
