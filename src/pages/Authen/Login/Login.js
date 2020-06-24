@@ -190,7 +190,7 @@ class Login extends Component {
 
                                 <div className="loginPanel">
                                     Đăng nhập
-                            </div>
+                                </div>
                                 <form
                                     noValidate
                                     className="was-validated"

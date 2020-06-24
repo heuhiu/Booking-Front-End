@@ -1,13 +1,14 @@
 @import url('https://rsms.me/inter/inter.css');
 
 .rightPart{
-    height: auto;
+    width: calc(100% - 760px);
     width: 64.4270833%;
     background:url("../../../img/LoginPaper.png");
     /* background-size: 100%; */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    object-fit: cover;
 }
 
 .floating-label{
