@@ -14,7 +14,7 @@ function FormError(props) {
     )
 }
 
-class Test extends Component {
+class LoginComp extends Component {
 
     constructor(props) {
         super(props);
@@ -235,7 +235,7 @@ class Test extends Component {
                                     required
                                 />
                                 <span className="focus-input100"></span>
-                                <span className="label-input100">Password</span>
+                                <span className="label-input100">Mật khẩu</span>
 
                             </div>
                             <FormError
@@ -317,4 +317,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Test);
+export default connect(null, mapDispatchToProps)(LoginComp);

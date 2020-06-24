@@ -5,7 +5,6 @@ import Register from '../pages/Authen/Register/Register';
 import VerifyEmail from '../pages/Authen/VerifyEmail/VerifyEmail';
 import CfMail from '../pages/Authen/confirmedMail/CfMail';
 import Login from '../pages/Authen/Login/Login';
-import Test from '../pages/Authen/testing/Test';
 
 
 const routers = [
@@ -31,13 +30,6 @@ const routers = [
         exact: false,
         main: ({ match,history,location }) => 
         <CfMail history={history} location={location} match={match} />  
-
-    },
-    {
-        path: '/test',
-        exact: false,
-        main: ({ match,history,location }) => 
-        <Test history={history} location={location} match={match} />  
 
     },
     {
