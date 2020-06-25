@@ -287,7 +287,6 @@
     font-size: 18px;
     color: #999999;
     line-height: 1.2;
-  
     display: block;
     position: absolute;
     pointer-events: none;
@@ -295,7 +294,26 @@
     padding-left: 24px;
     left: 0;
     top: 30px;
-  
+    z-index: 0;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+  .label-input99 {
+    font-family: 'Inter';
+    font-size: 18px;
+    color: #999999;
+    line-height: 1.2;
+    display: block;
+    position: absolute;
+    /* pointer-events: none; */
+    width: 30%;
+    padding-left: 24px;
+    left: 0;
+    top: 30px;
+    z-index: 0;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -343,7 +361,7 @@
     height: calc(100% + 2px);
     top: -1px;
     left: -1px;
-    pointer-events: none;
+    /* pointer-events: none; */
     border: 1px solid #FF7062;
     border-radius: 8px;
     transition: .5s;
@@ -398,6 +416,7 @@
     font-size: 13px;
     color: #FF7062;
     border-color: #FF7062;
+
   }
 
   .input100:not(:focus):valid + .focus-input100 + .label-input100 {
@@ -575,7 +594,7 @@
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
     right: 12px;
-    pointer-events: none;
+    /* pointer-events: none; */
   
     font-family: 'Inter';
     color: #c80000;
@@ -655,35 +674,3 @@
 }
 
 
-/* --------------------------------------- */
-
-form {
-  /* This bit sets up the horizontal layout */
-  display:flex;
-  flex-direction:row;
-  
-  /* This bit draws the box around it */
-  border:1px solid grey;
-
-  /* I've used padding so you can see the edges of the elements. */
-  padding:2px;
-}
-
-input {
-  /* Tell the input to use all the available space */
-  flex-grow:2;
-  /* And hide the input's outline, so the form looks like the outline */
-  border:none;
-}
-
-input:focus {
-  /* removing the input focus blue box. Put this on the form if you like. */
-  outline: none;
-}
-
-button {
-  /* Just a little styling to make it pretty */
-  border:1px solid blue;
-  background:blue;
-  color:white;
-}
