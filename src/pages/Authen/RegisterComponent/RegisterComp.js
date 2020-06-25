@@ -132,7 +132,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không trống - không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
                     };
                 }
             case "lastName":
@@ -146,7 +146,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không trống - không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
                     };
                 }
             case "dob":
@@ -161,7 +161,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Ngày sinh có dạng Năm/Tháng/Ngày'
+                        errorMessage: 'Không đúng định dạng'
                     };
                 }
             case "phoneNumber":
@@ -546,8 +546,8 @@ class RegisterComp extends Component {
                                             // style={{visibility: this.state.check ? "hidden" : "visible"}}
                                             className="input100"
                                             ref={(input) => { this.dob = input; }}
-                                            type={this.state.check ? "date" : "text"}
-                                            // type="text"
+                                            // type={this.state.check ? "date" : "text"}
+                                            type="date"
                                             name="dob"
 
                                             onChange={this.handleInput}
@@ -555,7 +555,7 @@ class RegisterComp extends Component {
                                             required
                                         />
                                         <span className="focus-input100"></span>
-                                        <span className="label-input100">Ngày sinh</span>
+                                        <span className="label-input98">Ngày sinh</span>
                                     </div>
                                     <FormError
                                         type="dob"

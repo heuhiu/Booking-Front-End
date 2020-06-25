@@ -63,9 +63,9 @@
   /* input {
       outline: none;
       border: none;
-  } */
+  }
   
-  /* textarea {
+   textarea {
     outline: none;
     border: none;
   }
@@ -98,7 +98,7 @@
   label {
     display: block;
     margin: 0;
-  } */
+  }  */
   
   /*---------------------------------------------*/
   button {
@@ -271,16 +271,35 @@
     /* margin-bottom: 10px; */
     transition: .5s;
   }
+
   input::-ms-reveal, input::-ms-clear {
     display: none;
 }
+
   .wrap-input100:hover{
     border-bottom: 1px solid #FF7062;
     color: #FF7062;
     border-radius: 8px
   }
 
-
+  .label-input98 {
+    font-family: 'Inter';
+    font-size: 18px;
+    color: #999999;
+    line-height: 1.2;
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    padding-left: 24px;
+    left: 0;
+    top: 0px;
+    z-index: 0;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
 
   .label-input100 {
     font-family: 'Inter';
