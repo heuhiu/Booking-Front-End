@@ -1,12 +1,11 @@
 import React from 'react';
 import HomePage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
-import Register from '../pages/Authen/Register/Register';
 import VerifyEmail from '../pages/Authen/VerifyEmail/VerifyEmail';
 import CfMail from '../pages/Authen/confirmedMail/CfMail';
-import Login from '../pages/Authen/Login/Login';
 import LoginComp from '../pages/Authen/LoginComponent/LoginComp';
 import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
+import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
 
 
 const routers = [
@@ -32,7 +31,12 @@ const routers = [
         exact: false,
         main: ({ match,history,location }) => 
         <CfMail history={history} location={location} match={match} />  
-
+    },
+    {
+        path: '/SearchedPlace',
+        exact: false,
+        main: ({ match,history,location }) => 
+        <SearchedPlace history={history} location={location} match={match} />  
     },
     {
         path: '/',

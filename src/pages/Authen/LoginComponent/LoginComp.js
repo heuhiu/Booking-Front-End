@@ -130,7 +130,6 @@ class LoginComp extends Component {
                 //data will be store in localStorage
                 this.props.fetchUserDetail(decoded.user);
                 this.props.history.push("/");
-                console.log("push")
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
