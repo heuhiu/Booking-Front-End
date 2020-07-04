@@ -59,6 +59,8 @@
   /* line 34, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place .place_info {
     padding: 27px 20px 25px 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   
   /* line 36, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
@@ -72,16 +74,83 @@
     -o-transition: 0.3s;
     transition: 0.3s;
   }
+
+  .popular_places_area .single_place .place_info button {
+    background-color: #FF7062;
+    font-size: 22px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 3.5px;
+    margin-bottom: 0;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+  }
+
   
   /* line 43, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
-  .popular_places_area .single_place .place_info p {
-    font-size: 14px;
-    font-weight: 400;
-    color: #7A838B;
+  .popular_places_area .single_place .place_info h5 {
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 28px;
+    color: #5B5B5B;
     margin-top: 2px;
     margin-bottom: 7px;
   }
+
+  .popular_places_area .single_place .place_info .destination {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: #A5A5A5;
+    margin-bottom: 10px;
+  }
+
+  .popular_places_area .single_place .place_info .oldPrice {
+    padding-top: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    color: #A5A5A5;
+    text-decoration-line: line-through;
+    margin-top: 2px;
+    margin-bottom: 0px;
+  }
+
+  .popular_places_area .single_place .place_info .newPrice {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 28px;
+    color: #FF7062;
+    margin-top: 2px;
+    margin-bottom: 0px;
+  }
   
+  .popular_places_area .single_place .place_info .available {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #FF7062;
+    margin-top: 2px;
+    margin-bottom: 0px;
+  }
   /* line 52, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place .place_info .rating_days span i {
     font-size: 12px;

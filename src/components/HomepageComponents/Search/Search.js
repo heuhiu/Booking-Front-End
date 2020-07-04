@@ -5,6 +5,7 @@ import './style.css';
 import LogoSearch from '../../../img/LogoSearch.png';
 import search from '../../../img/search.png';
 import { Form } from 'react-bootstrap';
+import callApi from '../../../config/utils/apiCaller';
 
 class Search extends Component {
 
@@ -15,6 +16,8 @@ class Search extends Component {
             isGoing: true,
             txtParkName: '',
             txtCityID: '',
+            listCity: [],
+            listCategories: []
         }
     }
 
@@ -33,7 +36,7 @@ class Search extends Component {
         })
     }
 
-    handleInputChange(event) {
+    handleInputChange = (event) => {
         const target = event.target;
         const value = target.name === 'isGoing' ? target.checked : target.value;
         const name = target.name;
@@ -47,9 +50,73 @@ class Search extends Component {
         localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
     }
 
+    getCitysAndCategories = () => {
+        //get City list
+        callApi('city', 'GET', null)
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    listCity: res.data
+                })
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+        //get Categories list
+        callApi('categories', 'GET', null)
+            .then(res => {
+                console.log(res.data);
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+    }
+
+    componentWillMount = () => {
+        this.getCitysAndCategories();
+    }
+
+    showList = (list, type) => {
+        var result = null;
+        if (list.length > 0) {
+            result = list.map((data, index) => {
+                if (type === "city") {
+                    return (
+                        //specifire key for each data
+                        <div
+                            style={{ textAlign: "left", border: "1px solid red" }}
+                            key={data.id} className="col-md-3 col-sm-3">
+                            <label
+                            >
+                                <input
+                                    name="isGoing"
+                                    type="checkbox"
+                                    checked={this.state.isGoing}
+                                    onChange={this.handleInputChange}
+                                />
+                                         &nbsp;
+                                         {data.name} {data.id}
+                            </label>
+                        </div>
+                    );
+                }
+                else {
+
+                }
+            });
+        }
+        else if (list.length === 0) {
+            return (
+                <p>Not Found</p>
+            );
+        }
+        return result;
+    }
+
     render() {
         const { toggleFilter, isGoing, txtParkName } = this.state;
-        // console.log(isGoing);
         // console.log(txtParkName);
         return (
             <div>
@@ -75,34 +142,45 @@ class Search extends Component {
                                 onClick={this.toggleFilter}
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
-                                <div>
+                                <div className="filterPanel">
                                     Bộ lọc
                                 </div>
                             </div>
                             <div
                                 style={{ visibility: toggleFilter ? "hidden" : "visible" }}
                                 className="filterBox">
-                                <label>
-                                    Is going:
+                                <div className="row">
+                                    <div className="col-12">
+                                        <h6>Thành Phố</h6>
+                                        <div className="row">
+                                            {this.showList(this.state.listCity,"city")}
+                                            {/* {this.showList(this.state.listCity)} */}
+                                            {/* <div className="col-md-3 col-sm-3">
+                                                <label>
+                                                    Is going:
                                             <input
-                                        name="isGoing"
-                                        type="checkbox"
-                                        checked={this.state.isGoing}
-                                        onChange={this.handleInputChange}
-                                    />
-                                </label>
+                                                        name="isGoing"
+                                                        type="checkbox"
+                                                        checked={this.state.isGoing}
+                                                        onChange={this.handleInputChange}
+                                                    />
+                                                </label>
+                                            </div> */}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                     <Link
-                    onClick={this.onSubmitSearch}
-                    className="search-submit"
-                    to="/SearchedPlace">
+                        onClick={this.onSubmitSearch}
+                        className="search-submit"
+                        to="/SearchedPlace">
                         <button
-                            
+
                             className="searchbtn"
-                            >
+                        >
                             <img src={search}
                                 alt="Fail !"
                                 width="17.76"
