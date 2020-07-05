@@ -27,37 +27,67 @@ class ListPlaceSearched extends Component {
             result = searchList.map((data, index) => {
                 return (
                     //specifire key for each data
-                    <div key={data.id}>
-                        <Link to="/ParkDetail">
-                            <div>
-                                <ul>
-                                    {/* <button onClick={() => this.onGetParkID(data.id)}>X</button> */}
-                                    <li>
-                                        <span >address: {data.address}</span>
-                                        <br></br>
-                                        <span >city ID: {data.cityId}</span>
-                                        <br></br>
-                                        <span >id: {data.id}</span>
-                                        <br></br>
-                                        <span >description: {data.description}</span>
-                                        <br></br>
-                                        <span >mail: {data.mail}</span>
-                                        <br></br>
-                                        <span >name: {data.name}</span>
-                                        <br></br>
-                                        <span >open_hours: {data.open_hours}</span>
-                                        <br></br>
-                                        <span>Closed<br></br>Tuesday: 11:00-21:00<br></br></span>
-                                        <span >park_image: {data.park_image}</span>
-                                        <br></br>
-                                        <span >phoneNumber: {data.phoneNumber}</span>
-                                        <br></br>
-                                    </li>
-                                </ul>
+                    // <div key={data.id}>
+                    //     <Link to="/ParkDetail">
+                    //         <div>
+                    //             <ul>
+                    //                 {/* <button onClick={() => this.onGetParkID(data.id)}>X</button> */}
+                    //                 <li>
+                    //                     <span >address: {data.address}</span>
+                    //                     <br></br>
+                    //                     <span >city ID: {data.cityId}</span>
+                    //                     <br></br>
+                    //                     <span >id: {data.id}</span>
+                    //                     <br></br>
+                    //                     <span >description: {data.description}</span>
+                    //                     <br></br>
+                    //                     <span >mail: {data.mail}</span>
+                    //                     <br></br>
+                    //                     <span >name: {data.name}</span>
+                    //                     <br></br>
+                    //                     <span >open_hours: {data.open_hours}</span>
+                    //                     <br></br>
+                    //                     <span>Closed<br></br>Tuesday: 11:00-21:00<br></br></span>
+                    //                     <span >park_image: {data.park_image}</span>
+                    //                     <br></br>
+                    //                     <span >phoneNumber: {data.phoneNumber}</span>
+                    //                     <br></br>
+                    //                 </li>
+                    //             </ul>
+                    //         </div>
+                    //     </Link>
+                    // </div>
+
+                    <div  key={data.id} className="col-lg-12 col-md-12">
+                        <div className="single_place">
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="thumb">
+                                        <img src={searchPic} alt="" />
+                                        {/* <a href="/#" className="prise">$500</a> */}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="place_info">
+                                        <a href="destination_details.html">
+                                            <button>Điểm tham quan</button>
+                                        </a>
+                                        <h5
+                                            style={{ marginBottom: "-10px" }}
+                                        >{data.name}</h5>
+                                        <p className="destination">{data.address}</p>
+                                        <p className="oldPrice">đ 100.000</p>
+                                        <p className="newPrice">{data.price}</p>
+                                        <p className="available">Có thể đặt ngay hôm nay</p>
+                                    </div>
+                                </div>
                             </div>
-                        </Link>
+                        </div>
                     </div>
-                );
+
+              
+              
+              );
             });
         }
         else if (searchList.length === 0) {
@@ -182,7 +212,7 @@ class ListPlaceSearched extends Component {
                                                                 <button>Điểm tham quan</button>
                                                             </a>
                                                             <h5
-                                                            style={{marginBottom: "-10px"}}
+                                                                style={{ marginBottom: "-10px" }}
                                                             >[SALE 60%] Vé 3D Art In Paradise Danang</h5>
                                                             <p className="destination">Son Tra District, Đà Nẵng</p>
                                                             <p className="oldPrice">đ 100.000</p>
@@ -208,7 +238,7 @@ class ListPlaceSearched extends Component {
                                                                 <button>Điểm tham quan</button>
                                                             </a>
                                                             <h5
-                                                            style={{marginBottom: "-10px"}}
+                                                                style={{ marginBottom: "-10px" }}
                                                             >[SALE 60%] Vé 3D Art In Paradise Danang</h5>
                                                             <p className="destination">Son Tra District, Đà Nẵng</p>
                                                             <p className="oldPrice">đ 100.000</p>
@@ -219,7 +249,6 @@ class ListPlaceSearched extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div className="col-lg-12 col-md-12">
                                             <div className="single_place">
                                                 <div className="row">
@@ -235,7 +264,7 @@ class ListPlaceSearched extends Component {
                                                                 <button>Điểm tham quan</button>
                                                             </a>
                                                             <h5
-                                                            style={{marginBottom: "-10px"}}
+                                                                style={{ marginBottom: "-10px" }}
                                                             >[SALE 60%] Vé 3D Art In Paradise Danang</h5>
                                                             <p className="destination">Son Tra District, Đà Nẵng</p>
                                                             <p className="oldPrice">đ 100.000</p>
@@ -246,14 +275,15 @@ class ListPlaceSearched extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>)
-        } else
+       
+    } else
             return (
 
                 <Container >
@@ -269,7 +299,65 @@ class ListPlaceSearched extends Component {
                             //trigger handle page change
                             onChange={this.handlePageChange.bind(this)}
                         />
-                        {this.showSearchList(searchList)}
+                         <div>
+                    <div className="popular_places_area">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-4">
+                                    <div className="filter_result_wrap">
+                                        <h3>Filter Result</h3>
+                                        <div className="filter_bordered">
+                                            <div className="filter_inner">
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <div className="single_select">
+                                                            <select>
+                                                                <option data-display="Country">Country</option>
+                                                                <option value="1">Africa</option>
+                                                                <option value="2">canada</option>
+                                                                <option value="4">USA</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <div className="single_select">
+                                                            <select>
+                                                                <option data-display="Travel type">Travel type</option>
+                                                                <option value="1">advance</option>
+                                                                <option value="2">advance</option>
+                                                                <option value="4">premium</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <div className="range_slider_wrap">
+                                                            <span className="range">Prise range</span>
+                                                            <div id="slider-range"></div>
+                                                            <p>
+                                                                <input type="text" id="amount" readonly
+                                                                    style={{ border: "0", color: "#7A838B;", fontWeight: "400;" }} />
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="reset_btn">
+                                                <button className="boxed-btn4" type="submit">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-8">
+                                    <div className="row">
+                                        {this.showSearchList(searchList)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>)
+       
+                        
                     </div>
                 </Container>
             );

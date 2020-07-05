@@ -6,6 +6,7 @@ import CfMail from '../pages/Authen/confirmedMail/CfMail';
 import LoginComp from '../pages/Authen/LoginComponent/LoginComp';
 import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
 import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
+import MyMul from '../components/HomepageComponents/Search/MyMul';
 
 
 const routers = [
@@ -37,6 +38,12 @@ const routers = [
         exact: false,
         main: ({ match,history,location }) => 
         <SearchedPlace history={history} location={location} match={match} />  
+    },
+    {
+        path: '/mul',
+        exact: false,
+        main: ({ match,history,location }) => 
+        <MyMul history={history} location={location} match={match} />  
     },
     {
         path: '/',

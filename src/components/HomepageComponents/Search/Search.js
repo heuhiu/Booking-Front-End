@@ -6,6 +6,7 @@ import LogoSearch from '../../../img/LogoSearch.png';
 import search from '../../../img/search.png';
 import { Form } from 'react-bootstrap';
 import callApi from '../../../config/utils/apiCaller';
+import MyMul from './MyMul';
 
 class Search extends Component {
 
@@ -30,6 +31,7 @@ class Search extends Component {
     onChange = (e) => {
         var target = e.target;
         var name = target.name;
+        // var value = target.name === 'isGoing' ? target.checked : target.value;
         var value = target.value;
         this.setState({
             [name]: value
@@ -37,6 +39,7 @@ class Search extends Component {
     }
 
     handleInputChange = (event) => {
+        const { listCity } = this.state;
         const target = event.target;
         const value = target.name === 'isGoing' ? target.checked : target.value;
         const name = target.name;
@@ -91,13 +94,14 @@ class Search extends Component {
                             <label
                             >
                                 <input
-                                    name="isGoing"
+                                    name={data.name + data.id}
                                     type="checkbox"
                                     checked={this.state.isGoing}
-                                    onChange={this.handleInputChange}
+                                    onChange={this.onChange}
                                 />
                                          &nbsp;
-                                         {data.name} {data.id}
+                                         {data.name}
+                                {/* {data.id} */}
                             </label>
                         </div>
                     );
@@ -152,21 +156,10 @@ class Search extends Component {
                                 <div className="row">
                                     <div className="col-12">
                                         <h6>Thành Phố</h6>
-                                        <div className="row">
-                                            {this.showList(this.state.listCity,"city")}
-                                            {/* {this.showList(this.state.listCity)} */}
-                                            {/* <div className="col-md-3 col-sm-3">
-                                                <label>
-                                                    Is going:
-                                            <input
-                                                        name="isGoing"
-                                                        type="checkbox"
-                                                        checked={this.state.isGoing}
-                                                        onChange={this.handleInputChange}
-                                                    />
-                                                </label>
-                                            </div> */}
-                                        </div>
+                                        {/* <div className="row"> */}
+                                            <MyMul />
+                                            {/* {this.showList(this.state.listCity, "city")} */}
+                                        {/* </div> */}
                                     </div>
                                 </div>
                             </div>

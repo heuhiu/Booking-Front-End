@@ -127,9 +127,16 @@
 }
 
 .filterBox{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #5B5B5B;
+
   background-color: greenyellow;
   margin-top: 5%;
-  width: 240%;
+  width: 220%;
   height: 300%;
   position: absolute;
   z-index: 2;
