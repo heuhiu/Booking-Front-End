@@ -39,7 +39,6 @@ class Search extends Component {
     }
 
     handleInputChange = (event) => {
-        const { listCity } = this.state;
         const target = event.target;
         const value = target.name === 'isGoing' ? target.checked : target.value;
         const name = target.name;
@@ -57,7 +56,6 @@ class Search extends Component {
         //get City list
         callApi('city', 'GET', null)
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     listCity: res.data
                 })
@@ -69,7 +67,6 @@ class Search extends Component {
         //get Categories list
         callApi('categories', 'GET', null)
             .then(res => {
-                console.log(res.data);
             }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -120,8 +117,7 @@ class Search extends Component {
     }
 
     render() {
-        const { toggleFilter, isGoing, txtParkName } = this.state;
-        // console.log(txtParkName);
+        const { toggleFilter, txtParkName } = this.state;
         return (
             <div>
                 <form
@@ -155,11 +151,7 @@ class Search extends Component {
                                 className="filterBox">
                                 <div className="row">
                                     <div className="col-12">
-                                        <h6>Thành Phố</h6>
-                                        {/* <div className="row"> */}
-                                            <MyMul />
-                                            {/* {this.showList(this.state.listCity, "city")} */}
-                                        {/* </div> */}
+                                        <MyMul />
                                     </div>
                                 </div>
                             </div>

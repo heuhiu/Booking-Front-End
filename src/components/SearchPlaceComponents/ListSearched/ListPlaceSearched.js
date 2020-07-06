@@ -17,6 +17,7 @@ class ListPlaceSearched extends Component {
             activePage: 1,
             totalPage: 1,
             totalItems: 0,
+            FilterCityID: []
         }
     }
 
@@ -72,21 +73,19 @@ class ListPlaceSearched extends Component {
         })
     }
     //received data from API
-    receivedData(searchName) {
+    receivedData(searchName, IDCityFilter, IDCategoryFilter) {
         const { activePage } = this.state;
-        axios.get('http://localhost:8090/place/searchMul', {
+        axios.get('http://localhost:8090/place/searchClient', {
             params: {
-                //name, address, cityId, categoryId, page, limit
                 //park name
                 name: searchName,
-                // name: "Vinpearl Land",
                 // address: "alololo",
-                // cityId: 1,
-                // categoryId: 1,
+                cityId: IDCityFilter + '',
+                categoryId: IDCategoryFilter + '',
                 //page Number  
                 page: activePage,
                 //limit of page
-                limit: 2,
+                limit: 5,
             }
         }).then(res => {
             console.log(res);
@@ -103,7 +102,10 @@ class ListPlaceSearched extends Component {
 
     componentWillMount = () => {
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
-        this.receivedData(searchName);
+        var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
+        var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
+
+        this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
     }
 
     render() {
@@ -113,7 +115,7 @@ class ListPlaceSearched extends Component {
         if (searchName === "") {
             return (
                 <div>
-                    NONE
+                    NOT FOUND
                 </div>)
         } else
             return (
@@ -153,8 +155,8 @@ class ListPlaceSearched extends Component {
                                                             <span className="range">Prise range</span>
                                                             <div id="slider-range"></div>
                                                             <p>
-                                                                <input type="text" id="amount" readonly
-                                                                    style={{ border: "0", color: "#7A838B;", fontWeight: "400;" }} />
+                                                                <input type="text" id="amount" readOnly
+                                                                    style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
                                                             </p>
                                                         </div>
                                                     </div>
@@ -169,12 +171,12 @@ class ListPlaceSearched extends Component {
 
                                 <div className="col-lg-8">
                                     <Pagination
-                                        hideDisabled
                                         hideNavigation
+                                        hideFirstLastPages
                                         //what number is selected
                                         activePage={activePage}
                                         //the number of items each page
-                                        itemsCountPerPage={2}
+                                        itemsCountPerPage={5}
                                         //total of items in list
                                         totalItemsCount={totalItems}
                                         //trigger handle page change
@@ -189,7 +191,7 @@ class ListPlaceSearched extends Component {
                             </div>
                         </div>
 
-                    </div>)
+                    </div>
                 </Container>
             );
     }
