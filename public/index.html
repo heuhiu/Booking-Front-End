@@ -10,15 +10,48 @@
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 
   <link href="%PUBLIC_URL%/css/all.css" rel="stylesheet">
 
   <title>Goboki</title>
+
 </head>
 
 <body>
+  <style>
+    .page-link {
+      font-family: 'Inter';
+      font-style: normal;
+      font-size: 13px;
+      color: #5B5B5B;
+      font-weight: 600;
+      line-height: 22px;
+      position: relative;
+      display: block;
+      padding: .5rem .75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      margin-right: 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      border: 1px solid #E3E3E3;
+      box-sizing: border-box;
+    }
+    .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FF7062;
+    border-color: #E3E3E3;
+}
+    .page-item.active .page-link {
+      background-color: #FF7062;
+      border-color: none;
+    }
+  </style>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
