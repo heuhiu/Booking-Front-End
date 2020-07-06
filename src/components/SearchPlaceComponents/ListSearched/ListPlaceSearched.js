@@ -17,7 +17,8 @@ class ListPlaceSearched extends Component {
             activePage: 1,
             totalPage: 1,
             totalItems: 0,
-            FilterCityID: []
+            FilterCityID: [],
+            limit : 5
         }
     }
 
@@ -66,10 +67,12 @@ class ListPlaceSearched extends Component {
     //handle changing when user click in "button change number"
     handlePageChange = (pageNumber) => {
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
+        var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
+        var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
         this.setState({
             activePage: pageNumber
         }, () => {
-            this.receivedData(searchName)
+            this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
         })
     }
     //received data from API
@@ -79,13 +82,12 @@ class ListPlaceSearched extends Component {
             params: {
                 //park name
                 name: searchName,
-                // address: "alololo",
                 cityId: IDCityFilter + '',
                 categoryId: IDCategoryFilter + '',
                 //page Number  
                 page: activePage,
                 //limit of page
-                limit: 5,
+                limit: this.state.limit,
             }
         }).then(res => {
             console.log(res);
@@ -104,20 +106,12 @@ class ListPlaceSearched extends Component {
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
         var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
         var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
-
         this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
     }
 
     render() {
         const { activePage, totalItems, searchList } = this.state;
-        // const { searchName } = this.props;
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
-        if (searchName === "") {
-            return (
-                <div>
-                    NOT FOUND
-                </div>)
-        } else
             return (
                 <Container >
                     <p>Search Name: {searchName} </p>
@@ -176,7 +170,7 @@ class ListPlaceSearched extends Component {
                                         //what number is selected
                                         activePage={activePage}
                                         //the number of items each page
-                                        itemsCountPerPage={5}
+                                        itemsCountPerPage={this.state.limit}
                                         //total of items in list
                                         totalItemsCount={totalItems}
                                         //trigger handle page change

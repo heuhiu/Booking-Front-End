@@ -49,70 +49,15 @@ class Search extends Component {
 
     onSubmitSearch = (e) => {
         // e.preventDefault();
-        localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
-    }
+        if (this.state.txtParkName === null) {
+            localStorage.setItem('searchKeyword', JSON.stringify(""));
 
-    getCitysAndCategories = () => {
-        //get City list
-        callApi('city', 'GET', null)
-            .then(res => {
-                this.setState({
-                    listCity: res.data
-                })
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-        //get Categories list
-        callApi('categories', 'GET', null)
-            .then(res => {
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-    }
+        } else if (this.state.txtParkName === '') {
+            localStorage.setItem('searchKeyword', JSON.stringify(""));
+        } else {
+            localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
 
-    componentWillMount = () => {
-        this.getCitysAndCategories();
-    }
-
-    showList = (list, type) => {
-        var result = null;
-        if (list.length > 0) {
-            result = list.map((data, index) => {
-                if (type === "city") {
-                    return (
-                        //specifire key for each data
-                        <div
-                            style={{ textAlign: "left", border: "1px solid red" }}
-                            key={data.id} className="col-md-3 col-sm-3">
-                            <label
-                            >
-                                <input
-                                    name={data.name + data.id}
-                                    type="checkbox"
-                                    checked={this.state.isGoing}
-                                    onChange={this.onChange}
-                                />
-                                         &nbsp;
-                                         {data.name}
-                            </label>
-                        </div>
-                    );
-                }
-                else {
-
-                }
-            });
         }
-        else if (list.length === 0) {
-            return (
-                <p>Not Found</p>
-            );
-        }
-        return result;
     }
 
     render() {
@@ -142,9 +87,9 @@ class Search extends Component {
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
                                 <div className="filterPanel">
-                                    Bộ lọc  <i class="fas fa-chevron-down"></i>
+                                    Bộ lọc  <i className="fas fa-chevron-down"></i>
                                 </div>
-                                
+
                             </div>
                             <div
                                 style={{ visibility: toggleFilter ? "hidden" : "visible" }}

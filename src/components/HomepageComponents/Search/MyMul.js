@@ -108,11 +108,13 @@ class MyMul extends Component {
         this.setState({
             checkedItems: clearCheckedItems,
             checkedItems2: clearCheckedItems,
-            listForSend: []
+            listForSend: [],
+            listForSendCat: []
         });
     };
 
     render() {
+        console.log(this.state.listForSend, this.state.listForSendCat);
         localStorage.setItem('filterCityIDChecked', JSON.stringify(this.state.listForSend));
         localStorage.setItem('filterCategoryIDChecked', JSON.stringify(this.state.listForSendCat));
 
