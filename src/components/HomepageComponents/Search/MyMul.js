@@ -179,29 +179,14 @@ class MyMul extends Component {
         return (
             <div>
                 <h6
-                    style={{
-                        fontFamily: 'Inter',
-                        fontStyle: 'normal',
-                        fontWeight: '600',
-                        fontSize: '18px',
-                        lineHeight: '22px',
-                        textAlign: 'left'
-                    }}
+                    className="typeFilter"
                 >Thành phố</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender}
                     {/* <p onClick={this.clearAllCheckboxes}>clear all</p> */}
                 </div>
-                <br></br>
                 <h6
-                    style={{
-                        fontFamily: 'Inter',
-                        fontStyle: 'normal',
-                        fontWeight: '600',
-                        fontSize: '18px',
-                        lineHeight: '22px',
-                        textAlign: 'left'
-                    }}
+                    className="typeFilter"
                 >Danh mục</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender2}
