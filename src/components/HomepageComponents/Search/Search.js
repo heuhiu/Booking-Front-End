@@ -98,7 +98,6 @@ class Search extends Component {
                                 />
                                          &nbsp;
                                          {data.name}
-                                {/* {data.id} */}
                             </label>
                         </div>
                     );
@@ -143,8 +142,9 @@ class Search extends Component {
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
                                 <div className="filterPanel">
-                                    Bộ lọc
+                                    Bộ lọc  <i class="fas fa-chevron-down"></i>
                                 </div>
+                                
                             </div>
                             <div
                                 style={{ visibility: toggleFilter ? "hidden" : "visible" }}

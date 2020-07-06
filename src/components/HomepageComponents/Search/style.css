@@ -112,9 +112,11 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 22px;
   color: #A5A5A5;
+  text-align: left;
+  padding: 15px;
 }
 .searchbtn{
   font-style: normal;
@@ -125,7 +127,10 @@
   font-size: 20px;
   font-weight: 600;
 }
-
+.itemName{
+  font-size: 13.5px;
+  font-weight: 410;
+}
 .filterBox{
   padding: 20px;
   font-family: 'Inter';
@@ -156,6 +161,7 @@
      } 
      .itemName{
        font-size: 11px;
+       font-Weight: "600"
      }
      .typeFilter{
       font-family: 'Inter';

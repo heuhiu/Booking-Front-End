@@ -107,6 +107,7 @@ class MyMul extends Component {
         const clearCheckedItems = new Map();
         this.setState({
             checkedItems: clearCheckedItems,
+            checkedItems2: clearCheckedItems,
             listForSend: []
         });
     };
@@ -178,20 +179,23 @@ class MyMul extends Component {
 
         return (
             <div>
-                <h6
-                    className="typeFilter"
+                <h6 className="typeFilter"
                 >Thành phố</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender}
-                    {/* <p onClick={this.clearAllCheckboxes}>clear all</p> */}
+                   
                 </div>
-                <h6
-                    className="typeFilter"
+                {/* <p onClick={this.clearAllCheckboxes}></p> */}
+                <h6 className="typeFilter"
                 >Danh mục</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender2}
-                    {/* <p onClick={this.clearAllCheckboxes}>clear all</p> */}
+                    
                 </div>
+                <span
+                style={{color: "#FF7062", fontWeight: "600" }}
+                type="button"
+                onClick={this.clearAllCheckboxes}>Xóa bộ lọc</span>
             </div>
         );
     }
