@@ -6,22 +6,21 @@ import axios from 'axios';
 import Pagination from "react-js-pagination";
 import './ListPlaceSearched.css';
 import searchPic from '../../../img/searchPic.png';
-// import '../../../scss/_popular_place.scss';
 
 class ListPlaceSearched extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            searchList: [],
-            activePage: 1,
-            totalPage: 1,
-            totalItems: 0,
-            FilterCityID: [],
-            limit : 5
+            activePage: 1,      //Current page number
+            totalPage: 1,       //Total page paging
+            totalItems: 0,      //Total item searched
+            limit : 5,          //Number of items appear
+            searchList: [],     //ListSeached temporary
         }
     }
 
+    //Show items searched
     showSearchList = (searchList) => {
         var result = null;
         if (searchList.length > 0) {
@@ -64,7 +63,7 @@ class ListPlaceSearched extends Component {
         return result;
     }
 
-    //handle changing when user click in "button change number"
+    //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = (pageNumber) => {
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
         var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
@@ -75,7 +74,8 @@ class ListPlaceSearched extends Component {
             this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
         })
     }
-    //received data from API
+
+    //Received data from API
     receivedData(searchName, IDCityFilter, IDCategoryFilter) {
         const { activePage } = this.state;
         axios.get('http://localhost:8090/place/searchClient', {
@@ -102,6 +102,7 @@ class ListPlaceSearched extends Component {
         });
     }
 
+    //Get name, cityID. CategoryID from localStorage to filter & get List after filter
     componentWillMount = () => {
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
         var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
@@ -111,6 +112,7 @@ class ListPlaceSearched extends Component {
 
     render() {
         const { activePage, totalItems, searchList } = this.state;
+        //Get Name seached
         var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
             return (
                 <Container >
@@ -167,24 +169,26 @@ class ListPlaceSearched extends Component {
                                     <Pagination
                                         hideNavigation
                                         hideFirstLastPages
-                                        //what number is selected
+                                        //What number is selected
                                         activePage={activePage}
-                                        //the number of items each page
+                                        //The number of items each page
                                         itemsCountPerPage={this.state.limit}
-                                        //total of items in list
+                                        //Total of items in list
                                         totalItemsCount={totalItems}
-                                        //trigger handle page change
+                                        //Set Css of boostrap 4
                                         itemClass="page-item"
+                                        //Set Css of boostrap 4
                                         linkClass="page-link"
+                                        //Trigger handle page change
                                         onChange={this.handlePageChange.bind(this)}
                                     />
+                                    {/* show List item seached & filter */}
                                     <div className="row">
                                         {this.showSearchList(searchList)}
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </Container>
             );

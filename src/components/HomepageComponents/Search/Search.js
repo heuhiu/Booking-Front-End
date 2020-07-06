@@ -13,42 +13,32 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleFilter: true,
-            isGoing: true,
-            txtParkName: '',
-            txtCityID: '',
-            listCity: [],
-            listCategories: []
+            toggleFilter: true, //Boolean handle filter appear or not
+            txtParkName: '',    //Name Seach
+            listCity: [],       //List ID City filter
+            listCategories: []  //List ID Category filter
         }
     }
 
+    //Handle filter appear or not
     toggleFilter = () => {
         this.setState({
             toggleFilter: !this.state.toggleFilter
         })
     }
 
+    //Set value of seach name
     onChange = (e) => {
         var target = e.target;
         var name = target.name;
-        // var value = target.name === 'isGoing' ? target.checked : target.value;
         var value = target.value;
         this.setState({
             [name]: value
         })
     }
 
-    handleInputChange = (event) => {
-        const target = event.target;
-        const value = target.name === 'isGoing' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
-    }
-
+    //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
-        // e.preventDefault();
         if (this.state.txtParkName === null) {
             localStorage.setItem('searchKeyword', JSON.stringify(""));
 
@@ -56,7 +46,6 @@ class Search extends Component {
             localStorage.setItem('searchKeyword', JSON.stringify(""));
         } else {
             localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
-
         }
     }
 
