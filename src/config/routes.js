@@ -7,6 +7,7 @@ import LoginComp from '../pages/Authen/LoginComponent/LoginComp';
 import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
 import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
 import MyMul from '../components/HomepageComponents/Search/MyMul';
+import PlaceDetail from '../pages/Detail/PlaceDetail/PlaceDetail';
 
 
 const routers = [
@@ -44,6 +45,12 @@ const routers = [
         exact: false,
         main: ({ match,history,location }) => 
         <MyMul history={history} location={location} match={match} />  
+    },
+    {
+        path: '/detail',
+        exact: false,
+        main: ({ match,history,location }) => 
+        <PlaceDetail history={history} location={location} match={match} />  
     },
     {
         path: '/',
