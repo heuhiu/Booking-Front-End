@@ -1,0 +1,31 @@
+
+ul.a{
+    list-style: url("../../../img/dots.png");
+    margin-left: 0;
+    padding-left: 2em;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 32px;
+   }
+
+   #inline{
+       width:100%;
+       height:auto;
+       display:flex;
+    }
+   .bulletListCustome{
+        width: 9px;
+        height: 26px;
+       background-color: #FF7062;
+       margin:10px;
+    }
+    .content{
+        width: auto;
+        height: 28px;
+        margin:10px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 28px;
+     }

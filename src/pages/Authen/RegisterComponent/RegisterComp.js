@@ -66,7 +66,6 @@ class RegisterComp extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.value = value;
         this.setState({ [name]: newState });
-
     }
 
     validateInput = (type, checkingText) => {

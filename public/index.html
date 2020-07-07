@@ -12,15 +12,29 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
-
+  <!-- <link href="%PUBLIC_URL%/css/all.css" rel="stylesheet"> -->
   <link href="%PUBLIC_URL%/css/all.css" rel="stylesheet">
-
   <title>Goboki</title>
 
 </head>
 
 <body>
   <style>
+    .react-datepicker {
+      font-family: 'Inter';
+      font-size: 0.8rem;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid red;
+      border-radius: 0.3rem;
+      display: inline-block;
+      position: relative;
+      
+    }
+    .react-datepicker::after {
+      content: "custom able";
+    }
+
     .page-link {
       font-family: 'Inter';
       font-style: normal;
@@ -41,17 +55,20 @@
       border: 1px solid #E3E3E3;
       box-sizing: border-box;
     }
+
     .page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #FF7062;
-    border-color: #E3E3E3;
-}
+      z-index: 3;
+      color: #fff;
+      background-color: #FF7062;
+      border-color: #E3E3E3;
+    }
+
     .page-item.active .page-link {
       background-color: #FF7062;
       border-color: none;
     }
   </style>
+
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

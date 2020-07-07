@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import SliderPic from '../../../img/Slider.png';
 import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
-import Detail from '../../../components/DetailComponents/Detail';
+import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
 
 
 function SampleNextArrow(props) {
@@ -68,7 +68,8 @@ class PlaceDetail extends Component {
                 style={{ marginTop: "100px", padding: "0px" }}>
                 <Menu />
                 <Slider {...settings}>
-                    <div>
+                    <div
+                    >
                         <img
                         style={{borderRadius: "2px"}}
                             width="100%"
