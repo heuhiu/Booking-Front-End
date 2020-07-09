@@ -21,8 +21,8 @@ class Detail extends Component {
                 <div
                     style={{ border: "solid 1px red" }}
                     className="col-9">
-                    <h1>Tour Phố cổ hội An 2 ngày 1 đêm</h1>
-                    <hr style={{ border: "2px solid #E3E3E3", borderRadius: "2px" }} />
+                    <h3>Tour Phố cổ hội An 2 ngày 1 đêm</h3>
+                    <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
                     <div id="inline">
                         <div className="bulletListCustome"></div>
@@ -38,6 +38,7 @@ class Detail extends Component {
                         <div className="content">Các lựa chọn vé</div>
                     </div>
                     <TicketType />
+                    
                 </div>
 
                 <div

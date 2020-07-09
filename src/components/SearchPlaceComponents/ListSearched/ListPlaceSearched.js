@@ -44,6 +44,9 @@ class ListPlaceSearched extends Component {
                                             style={{ marginBottom: "-10px" }}
                                         >{data.name}</h5>
                                         <p className="destination">{data.address}</p>
+                                        <p
+                                        style={{color: "#FF7062"}}
+                                        className="destination">{data.detailDescription}</p>
                                         <p className="oldPrice">đ 100.000</p>
                                         <p className="newPrice">{data.price}</p>
                                         <p className="available">Có thể đặt ngay hôm nay</p>
