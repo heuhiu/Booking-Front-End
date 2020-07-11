@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { format } from "date-fns";
 import vi from "date-fns/locale/vi";
 import AddSub from '../AddSub/AddSub';
+import TotalPayment from '../TotalPayment/TotalPayment';
 registerLocale("vi", vi);
 const radioToolbar = "radio-toolbar";
 
@@ -18,7 +19,8 @@ class TicketType extends Component {
             dob: { value: '1-1-1' },
             startDate: new Date(),
             open: false,
-            apple: "aa"
+            apple: "aa",
+            activeDay: [0, 6]
         }
     }
     setGender(event) {
@@ -36,6 +38,16 @@ class TicketType extends Component {
             startDate: date
         });
     };
+
+    isWeekday = (Date) => {
+        const { activeDay } = this.state;
+        const day = Date.getDay()
+        var fullList = [0, 1, 2, 3, 4, 5, 6];
+        fullList = fullList.filter(val => !activeDay.includes(val));
+        // console.log(fullList);
+        return day !== activeDay[0] && day !== activeDay[1]
+    }
+
     render() {
         console.log(this.state.dob);
         var formattedDate = format(this.state.startDate, "dd/MM/yyyy");
@@ -56,7 +68,7 @@ class TicketType extends Component {
                 style={{ fontFamily: 'Inter' }}
             >
                 <div className="row no-gutters">
-                    <div className="col-4">
+                    <div className="col-5">
                         <div
                             className="datepickerBtn"
                             onClick={() => this.setState({ open: !this.state.open })}
@@ -126,6 +138,7 @@ class TicketType extends Component {
                                 id="example-collapse-text">
                                 <DatePicker
                                     locale="vi"
+                                    filterDate={this.isWeekday}
                                     selected={this.state.startDate}
                                     onChange={this.handleChange}
                                     dateFormat="dd/MM/yyyy"
@@ -153,11 +166,11 @@ class TicketType extends Component {
                         className={`col-12 ${radioToolbar}`}
                         onChange={this.setGender.bind(this)}
                     >
-                        <input type="radio" id="radioApple" name="radioFruit" value={this.state.apple} />
+                        <input
+                            type="radio" id="radioApple" name="radioFruit" value={this.state.apple} />
                         <label htmlFor="radioApple">Tour mở dành cho tối đa 12 khách</label>
 
                         <input
-                            style={{}}
                             type="radio" id="radioBanana" name="radioFruit" value="1s" />
                         <label htmlFor="radioBanana">Couple Tour</label>
 
@@ -166,21 +179,95 @@ class TicketType extends Component {
                     </div>
                 </div>
 
-                <div className="row no-gutters">
-                    <div className="col-2">
+                <div
+                    style={{ paddingTop: "40px" }}
+                    className="row no-gutters">
+                    {/* <div className="col-2">
                         <h3
-                            style={{ paddingLeft: "10px", marginTop: "40px" }}
-                            className="myTitle">Số lượng</h3>
+                            style={{ paddingLeft: "10px", marginTop: "25px", }}
+                            className="myTitle">Số lượng
+                        </h3>
                     </div>
                     <div className="col-3.5">
                         <AddSub />
+                    </div> */}
+                    <div className="col-12">
+                        <div
+                            className="row no-gutters"
+                            style={{
+                                marginBottom: "10px",
+                                background: "#FFFFFF",
+                                border: "2px solid #E3E3E3",
+                                boxSizing: 'border-box',
+                                borderRadius: '10px',
+                            }}
+                        >
+                            <div
+                                className="col-7"
+                                style={{ display: "table" }}
+                            >
+                                <p className="myTitleType">
+                                    Người lớn
+                                </p>
+                            </div>
+
+                            <div
+                                className="col"
+                                style={{ display: "table" }}
+                            >
+                                <p className="myTitlePrice">đ 515.000</p>
+                            </div>
+
+                            <div className="col-3">
+                                <AddSub />
+                            </div>
+                        </div>
+
                     </div>
+                    
+                    <div className="col-12">
+                        <div
+                            className="row no-gutters"
+                            style={{
+                                background: "#FFFFFF",
+                                border: "2px solid #E3E3E3",
+                                boxSizing: 'border-box',
+                                borderRadius: '10px',
+                            }}
+                        >
+                            <div
+                                className="col-7"
+                                style={{ display: "table" }}
+                            >
+                                <p className="myTitleType">
+                                    Trẻ con
+                                </p>
+                            </div>
 
+                            <div
+                                className="col"
+                                style={{ display: "table" }}
+                            >
+                                <p className="myTitlePrice">đ 515.000</p>
+                            </div>
 
+                            <div className="col-3">
+                                <AddSub />
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+                <br></br>
                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                <div className="row">
+                    <div className="col-5">
 
-
+                    </div>
+                    <div className="col-7">
+                        <TotalPayment />
+                    </div>
+                </div>
             </div >
         );
     }

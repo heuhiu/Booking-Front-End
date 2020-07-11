@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Detail.css';
 import TicketType from '../TicketType/TicketType';
+import RightPartDetail from '../../RightPartDetail/RightPartDetail';
 class Detail extends Component {
 
     constructor(props) {
@@ -38,12 +39,11 @@ class Detail extends Component {
                         <div className="content">Các lựa chọn vé</div>
                     </div>
                     <TicketType />
-                    
                 </div>
-
                 <div
                     style={{ border: "solid 1px blue" }}
                     className="col-3">
+                        <RightPartDetail />
                 </div>
 
             </div >

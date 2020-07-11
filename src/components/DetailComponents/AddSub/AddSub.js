@@ -28,28 +28,20 @@ class AddSub extends Component {
 
     render() {
         return (
-
-            // <div className="quantityBox" >
-            //     <button onClick={this.IncrementItem}>Click to increment by 1</button>
-            //     <button onClick={this.DecreaseItem}>Click to decrease by 1</button>
-            //     <button onClick={this.ToggleClick}>
-            //         {this.state.show ? 'Hide number' : 'Show number'}
-            //     </button>
-            //     {this.state.show ? <h2>{this.state.clicks}</h2> : ''}
-            // </div>
-
             <div className="quantityBox">
-                <div 
-                style={{textAlign: "center"}}
-                class="row no-gutters">
-                    <div className="quantityBtn">
+                <div
+                    style={{ textAlign: "center" }}
+                    className="row no-gutters">
+                    <div className="quantityBtn"
+                        onClick={this.DecreaseItem}>
                         <p>-</p>
                     </div>
-                    <div className="quantityBtn">
-
+                    <div className="quantityBtn2">
+                        <p>{this.state.clicks}</p>
                     </div>
-                    <div className="quantityBtn">
-                        +
+                    <div className="quantityBtn"
+                        onClick={this.IncrementItem}>
+                        <p>+</p>
                     </div>
                 </div>
             </div >

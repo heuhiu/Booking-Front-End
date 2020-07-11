@@ -1,15 +1,55 @@
 .quantityBox{
     height: auto;
     width: auto;
-    border: 2px solid red;
-    padding: 1rem;
+    padding: 0.2rem;
+    /* border: 2px solid #E3E3E3;
+    box-sizing: border-box;
+    border-radius: 10px; */
+    color: #FF7062;
 }
 
 .quantityBtn{
     height: 36px;
     width: 36px;
-    border: 1px solid blue;
-    margin: 1rem ;
+    background: #F2F2F2;
+    border-radius: 10px;
+    margin: 0.5rem ;
     text-align: center;
+    cursor: pointer;
 }
 
+.quantityBtn:hover {
+    background-color: #FF7062;
+    transition: ease-in-out 0.5s;
+  }
+
+  .quantityBtn p:hover {
+    text-align: center;
+    line-height: 35px;
+    color: #ffffff;
+    transition: 1s;
+}
+.quantityBtn p {
+    -ms-user-select: none;
+    text-align: center;
+    line-height: 35px;
+}
+
+.quantityBtn2 p {
+    text-align: center;
+    line-height: 35px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    transition: 5s;
+}
+
+.quantityBtn2{
+    height: 36px;
+    width: 36px;
+    border: none;
+    margin: 0.5rem ;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+} 
