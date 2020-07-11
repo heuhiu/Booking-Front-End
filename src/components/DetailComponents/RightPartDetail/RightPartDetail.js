@@ -13,11 +13,9 @@ class RightPartDetail extends Component {
     render() {
         return (
             <div
-            style={{border: "1px solid #FF7062",
-            padding: "1rem", margin: "1rem", position: "fixed", top: "0px"
-            }}
+            className="rightPart"
             >
-                Righrt pảt
+                <p>Sticky Information</p>
             </div>
         );
     }

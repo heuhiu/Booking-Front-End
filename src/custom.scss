@@ -1,0 +1,16 @@
+
+// .nav-pills .nav-link.active,
+// .nav-pills .show>.nav-link {
+//   color: #fff;
+//   background-color: #FF7062;
+// }
+
+// a {
+//   color: #5B5B5B;
+// }
+$theme-colors: (
+    "secondary": tomato,
+    "danger": teal
+);
+
+@import "~bootstrap/scss/bootstrap";

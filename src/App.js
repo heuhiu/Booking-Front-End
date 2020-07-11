@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
+import './custom.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col} from 'react-bootstrap';
 class App extends Component {
 

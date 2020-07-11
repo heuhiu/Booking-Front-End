@@ -1,4 +1,3 @@
-
 ul.a{
     list-style: url("../../../img/dots.png");
     margin-left: 0;
@@ -10,15 +9,17 @@ ul.a{
    }
 
    #inline{
+       
        width:100%;
        height:auto;
        display:flex;
     }
+
    .bulletListCustome{
-        width: 9px;
-        height: 26px;
-       background-color: #FF7062;
-       margin:10px;
+    width: 9px;
+    height: 26px;
+    background-color: #FF7062;
+    margin:10px 10px 10px 0px;
     }
     .content{
         width: auto;
@@ -29,3 +30,18 @@ ul.a{
         font-size: 24px;
         line-height: 28px;
      }
+
+.longDescription{
+    padding-left: 1rem;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 27px;
+    color: #000000;
+}
+
+.placeDetail{
+    width: auto;
+    height: 500px;
+    border: solid 1px black;
+}

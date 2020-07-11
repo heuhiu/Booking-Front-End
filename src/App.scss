@@ -1,3 +1,6 @@
+@import "custom";
+@import "~bootstrap/scss/bootstrap";
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -42,3 +45,12 @@ table {
 	border-spacing: 0;
 }
 
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #FF7062;
+}
+
+a {
+  color: #5B5B5B;
+}
