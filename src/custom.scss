@@ -1,16 +1,10 @@
+/* The following block can be included in a custom.scss */
 
-// .nav-pills .nav-link.active,
-// .nav-pills .show>.nav-link {
-//   color: #fff;
-//   background-color: #FF7062;
-// }
-
-// a {
-//   color: #5B5B5B;
-// }
+/* make the customizations */
 $theme-colors: (
-    "secondary": tomato,
+    "info": tomato,
     "danger": teal
 );
 
+/* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";

@@ -6,6 +6,7 @@ import RightPartDetail from '../RightPartDetail/RightPartDetail';
 import DetailPic from '../../../img/Detailpic.png';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import TabDetail from '../TabDetail/TabDetai';
+import MapComponent from '../MapComponent/MapComponent';
 
 class Detail extends Component {
 
@@ -79,17 +80,21 @@ class Detail extends Component {
                         id="inline">
                         <div className="bulletListCustome"></div>
                         <div className="content">Chi tiết</div>
-                        
                     </div>
                     <div className="placeDetail">
                         <TabDetail />
                     </div>
+
+                    <div
+                        style={{ paddingTop: "40px" }}
+                        id="inline">
+                        <div className="bulletListCustome"></div>
+                        <div className="content">Bản đồ "DEMO" </div>
+                    </div>
+                    <div className="mapComp">
+                        <MapComponent />
+                    </div>
                 </div>
-
-
-
-
-
                 <div
                     style={{ border: "solid 1px blue" }}
                     className="col-3">
