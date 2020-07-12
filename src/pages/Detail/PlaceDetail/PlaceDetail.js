@@ -6,6 +6,7 @@ import SliderPic from '../../../img/Slider.png';
 import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
+import Footer2 from '../../../components/Footer/Footer2/Footer2';
 
 
 function SampleNextArrow(props) {
@@ -63,39 +64,44 @@ class PlaceDetail extends Component {
             prevArrow: <SamplePrevArrow />
         };
         return (
-            <div
-                className="container"
-                style={{ marginTop: "100px", padding: "0px" }}>
-                <Menu />
-                <Slider {...settings}>
-                    <div
-                    >
-                        <img
-                        style={{borderRadius: "2px"}}
-                            width="100%"
-                            height="100%"
-                            src={SliderPic}
-                            alt="Failt to load" />
-                    </div>
-                    <div>
-                        <img
-                        style={{borderRadius: "2px"}}
-                            width="100%"
-                            height="100%"
-                            src={SliderPic}
-                            alt="Failt to load" />
-                    </div>
-                    <div>
-                        <img
-                        style={{borderRadius: "2px"}}
-                            width="100%"
-                            height="100%"
-                            src={SliderPic}
-                            alt="Failt to load" />
-                    </div>
-                    
-                </Slider>
-                <Detail />
+            <div >
+                <div
+                    className="container"
+                    style={{ marginTop: "100px", padding: "0px" }}>
+                    <Menu />
+                    <Slider {...settings}>
+                        <div
+                        >
+                            <img
+                                style={{ borderRadius: "2px" }}
+                                width="100%"
+                                height="100%"
+                                src={SliderPic}
+                                alt="Failt to load" />
+                        </div>
+                        <div>
+                            <img
+                                style={{ borderRadius: "2px" }}
+                                width="100%"
+                                height="100%"
+                                src={SliderPic}
+                                alt="Failt to load" />
+                        </div>
+                        <div>
+                            <img
+                                style={{ borderRadius: "2px" }}
+                                width="100%"
+                                height="100%"
+                                src={SliderPic}
+                                alt="Failt to load" />
+                        </div>
+                    </Slider>
+                    <Detail />
+
+                </div>
+                <div>
+                    <Footer2 />
+                </div>
             </div>
         );
     }

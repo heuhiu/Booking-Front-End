@@ -41,14 +41,13 @@ ul.a{
 }
 
 .placeDetail{
-    margin: 1rem;
     width: auto;
     height: auto;
-    /* border: solid 1px greenyellow; */
     background: #FFFFFF;
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04), 0px 10px 20px rgba(0, 0, 0, 0.04);
 }
 
 .mapComp{
-    border: 1px solid hotpink;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+border-radius: 10px;
 }

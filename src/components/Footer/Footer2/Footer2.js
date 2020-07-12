@@ -13,7 +13,7 @@ class Footer2 extends Component {
     render() {
 
         return (
-          <footer>
+          <footer className="footer">
           <svg viewBox="0 0 120 28">
            <defs> 
               <filter id="goo">

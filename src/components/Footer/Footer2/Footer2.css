@@ -1,7 +1,5 @@
-/* @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700"); */
 
 body {
-  /* font-family: Lato, sans-serif; */
   --col-deepblue: #f7897e;
 }
 
@@ -11,6 +9,7 @@ footer {
   /* position:fixed; */
   /* bottom:0px */
 }
+
 footer div {
   background-color: var(--col-deepblue);
   margin: -5px 0px 0px 0px;
@@ -18,7 +17,7 @@ footer div {
   color: green;
   text-align:center;
 }
-svg {
+footer svg {
   width:100%;
   overflow:visible;
 }
