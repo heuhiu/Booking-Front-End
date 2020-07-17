@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TotalPayment.css';
+import { vi } from 'date-fns/locale';
 
 class TotalPayment extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            totalPrice: 0,
+            discount: 0
         }
     }
+
+    myTotal = (visitorType) => {
+        // const { visitorType } = this.props;
+        // console.log(visitorType);
+        var total = 0;
+        if (visitorType.length >= 0) {
+            for (let index = 0; index < visitorType.length; index++) {
+                const qty = visitorType[index].quantity;
+                const pri = visitorType[index].myPrice;
+                console.log(qty+" "+pri)
+                total = total + (qty * pri)
+                
+            }
+        }
+        console.log(total);
+        return total;
+    }
+
     render() {
+        const { visitorType } = this.props;
+        console.log(visitorType);
         return (
             <div>
                 <div className="row-12 no-gutters">
@@ -20,7 +43,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ 1,100,000</p>
+                            >đ {this.state.totalPrice}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -30,7 +53,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ 70,000</p>
+                            >đ {this.state.discount}</p>
                         </div>
                     </div>
                     <div className="row ">
@@ -40,7 +63,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ 1,030,000</p>
+                            >đ {this.myTotal(visitorType)}</p>
                         </div>
                     </div>
                 </div>
@@ -68,4 +91,18 @@ class TotalPayment extends Component {
 
 }
 
-export default TotalPayment;
+const mapStateToProps = state => {
+    return {
+        visitorType: state.Ticket
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TotalPayment);
+
+// export default TotalPayment;

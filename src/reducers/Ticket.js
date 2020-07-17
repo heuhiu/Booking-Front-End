@@ -65,7 +65,7 @@ var Ticket = (state = initialState, action) => {
         //     // console.log(state.slice(-1)[0]);
         //     console.log("-----------------------------------------------")
         case types.ADD_VISITOR_TYPE_CART:
-            console.log(id + " " + qty + " " + price);
+            // console.log(id + " " + qty + " " + price);
             index = state.findIndex(myItem => myItem.visitorTypeId == id)
             if (index !== -1) { //found
                 state[index].quantity = qty;
@@ -77,7 +77,7 @@ var Ticket = (state = initialState, action) => {
                 })
             }
             localStorage.setItem('visitorTypeList', JSON.stringify(state));
-            console.log("-----------------------------------------------")
+            // console.log("-----------------------------------------------")
             return [...state];
         default: return state;
     }
