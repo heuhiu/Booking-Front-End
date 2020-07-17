@@ -15,12 +15,30 @@ class MyCounter extends Component {
         }
     }
 
-    
+    getMyList = (data) => {
+        var { item } = this.props;
+        // console.log(item.id);
+        // var element = [];
+        var qty = 0;
+        if (data !== null) {
+            const index = data.findIndex(myItem => myItem.visitorTypeId == item.id)
+            if (index !== -1) {
+
+                for (let index = 0; index < data.length; index++) {
+                    qty = data[index].quantity;
+                }
+            }
+        }
+        return qty;
+    }
 
     render() {
         var { item } = this.props;
-        // var data = JSON.parse(localStorage.getItem('visitorTypeList'));
-
+        var data = JSON.parse(localStorage.getItem('visitorTypeList'));
+        if (data !== null) {
+            console.log(data);
+            // console.log(this.getMyList(data));
+        }
         return (
             <div>
                 <div
@@ -35,7 +53,6 @@ class MyCounter extends Component {
                     <div className="quantityBtn2">
                         <p>
                             {this.state.quantity}
-                            {/* {this.iGot(item)} */}
                         </p>
                     </div>
                     <div className="quantityBtn"

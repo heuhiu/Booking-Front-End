@@ -13,6 +13,7 @@ import TotalPayment from '../TotalPayment/TotalPayment';
 // import { id } from 'date-fns/locale';
 import MyCounter from '../AddSub/MyCounter';
 import axios from 'axios';
+import { el } from 'date-fns/locale';
 registerLocale("vi", vi);
 const radioToolbar = "radio-toolbar";
 
@@ -30,71 +31,34 @@ class TicketType extends Component {
         }
     }
 
-    // IncrementItem = () => {
-
-    //     this.setState({
-    //         counters: this.state.counters + 1,
-    //     }, () => {
-    //         this.setState({
-    //             adultTicketTotalPrice: this.state.counters * 100
-    //         })
-    //     }
-    //     );
-
-    // }
-
-    DecreaseItem = () => {
-        if (this.state.counters === 0) {
-            this.setState({ counters: this.state.counters });
-        } else {
-            // this.setState({ counters: this.state.counters - 1 });
-            this.setState({
-                counters: this.state.counters - 1,
-            }, () => {
-                this.setState({
-                    adultTicketTotalPrice: this.state.counters * 100
-                })
-            }
-            );
-        }
-
-    }
-
     componentWillMount = () => {
         var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
-        console.log(placeChoosed.id);
-
         // get Ticket Type
-            axios.get('http://localhost:8090/ticketType', {
-                params: {
-                    //place ID
-                    placeId: placeChoosed.id,
-                }
-            }).then(res => {
-                //set state
-                // this.setState({
-                //     ticketType: res
-                // })
-
+        axios.get('http://localhost:8090/ticketType', {
+            params: {
+                //place ID
+                placeId: placeChoosed.id,
+            }
+        }).then(res => {
+            this.setState({
+                ticketTypeState: res.data.listResult
+            }, () => {
+                // console.log(this.getTicketType().visitorTypes);
                 this.setState({
-                    ticketTypeState: res.data.listResult
-                }, () => {
-                    // console.log(this.getTicketType().visitorTypes);
-                    this.setState({
-                        visitorTypeState: this.getTicketType().visitorTypes
-                    })
-                }
-                )
+                    visitorTypeState: this.getTicketType().visitorTypes
+                })
+            }
+            )
 
 
-                // localStorage.setItem('ticketType', JSON.stringify(res));
+            // localStorage.setItem('ticketType', JSON.stringify(res));
 
-            }).catch(function (error) {
-                console.log(error.response);
-            });
+        }).catch(function (error) {
+            console.log(error.response);
+        });
 
 
-       
+
     }
 
     showVisitorType2 = (type) => {
@@ -118,14 +82,15 @@ class TicketType extends Component {
     getTicketType = () => {
         const { ticketTypeState } = this.state;
         var element = [];
-        for (let index = 0; index < ticketTypeState.length; index++) {
-            element = ticketTypeState[index];
+        if (ticketTypeState !== undefined) {
+            for (let index = 0; index < ticketTypeState.length; index++) {
+                element = ticketTypeState[index];
+            }
         }
         return element;
     }
 
     showVisitorTypes = (ticketTypeState) => {
-        // var { onUpdateProductInCart } = this.props;
         var result = null;
         if (ticketTypeState.length > 0) {
             result = ticketTypeState.map((item, index) => {
@@ -190,7 +155,6 @@ class TicketType extends Component {
                                  */}
                                         <MyCounter
                                             item={item}
-                                        // onUpdateProductInCart={onUpdateProductInCart}
                                         />
                                     </div >
                                     {/* End AddSub comp */}
@@ -247,7 +211,10 @@ class TicketType extends Component {
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
         // console.log(prnDt);
-        const { visitorTypeState } = this.state;
+        const { visitorTypeState, ticketTypeState } = this.state;
+        // console.log(visitorTypeState);
+        // console.log(ticketTypeState);
+        // console.log(this.getTicketType().typeName);
         return (
 
             <div
@@ -352,6 +319,13 @@ class TicketType extends Component {
                         className={`col-12 ${radioToolbar}`}
                         onChange={this.setGender.bind(this)}
                     >
+                        <input
+                            type="radio" id="radioApple" name="radioFruit" value={this.state.apple} />
+                        <label htmlFor="radioApple">
+                            {/* {ticketTypeState[0].typeName} */}
+                            Tour mở dành cho tối đa 12 khách
+                        </label>
+
                         <input
                             type="radio" id="radioApple" name="radioFruit" value={this.state.apple} />
                         <label htmlFor="radioApple">Tour mở dành cho tối đa 12 khách</label>
