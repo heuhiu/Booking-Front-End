@@ -1,13 +1,18 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TicketType.css';
-import { Button, Collapse } from 'react-bootstrap';
+import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from "date-fns";
 import vi from "date-fns/locale/vi";
 import AddSub from '../AddSub/AddSub';
+import { actUpdateProductIncart } from '../../../actions/index';
+import callApi from '../../../config/utils/apiCaller';
 import TotalPayment from '../TotalPayment/TotalPayment';
+import { id } from 'date-fns/locale';
+import MyCounter from '../AddSub/MyCounter';
+
 registerLocale("vi", vi);
 const radioToolbar = "radio-toolbar";
 
@@ -20,12 +25,181 @@ class TicketType extends Component {
             startDate: new Date(),
             open: false,
             apple: "aa",
-            activeDay: [0, 6]
+            activeDay: [0, 6],
+            adultPrice: 500,
+            childPrice: 400,
+            adultQuantity: 0,
+            childQuantity: 0,
+            adultTotalPayment: 0,
+            childTotalPayment: 0,
+            totalPayment: 0,
+            counters: 0,
+            ticketTypeState: [],
+            visitorTypeState: []
         }
     }
+
+    // IncrementItem = () => {
+
+    //     this.setState({
+    //         counters: this.state.counters + 1,
+    //     }, () => {
+    //         this.setState({
+    //             adultTicketTotalPrice: this.state.counters * 100
+    //         })
+    //     }
+    //     );
+
+    // }
+
+    DecreaseItem = () => {
+        if (this.state.counters === 0) {
+            this.setState({ counters: this.state.counters });
+        } else {
+            // this.setState({ counters: this.state.counters - 1 });
+            this.setState({
+                counters: this.state.counters - 1,
+            }, () => {
+                this.setState({
+                    adultTicketTotalPrice: this.state.counters * 100
+                })
+            }
+            );
+        }
+
+    }
+
+    componentWillMount = () => {
+        var ticketType = JSON.parse(localStorage.getItem('ticketType'));
+        // console.log(ticketType);
+        this.setState({
+            ticketTypeState: ticketType.data.listResult
+        }, () => {
+            // console.log(this.getTicketType().visitorTypes);
+            this.setState({
+                visitorTypeState: this.getTicketType().visitorTypes
+            })
+        }
+        )
+    }
+
+    showVisitorType2 = (type) => {
+        console.log(type);
+        var result = null;
+        if (type.length > 0) {
+            result = type.map((item, index) => {
+                return (
+                    <div>{item}</div>
+                );
+            });
+        }
+        else if (type.length === 0) {
+            return (
+                <p>Not Found</p>
+            );
+        }
+        return result;
+    }
+    
+    getTicketType = () => {
+        const { ticketTypeState } = this.state;
+        var element = [];
+        for (let index = 0; index < ticketTypeState.length; index++) {
+            element = ticketTypeState[index];
+        }
+        return element;
+    }
+
+    showVisitorTypes = (ticketTypeState) => {
+        var { onUpdateProductInCart } = this.props;
+        var result = null;
+        if (ticketTypeState.length > 0) {
+            result = ticketTypeState.map((item, index) => {
+                return (
+                    <div
+                        key={index}
+                        style={{ paddingTop: "40px" }}
+                        className="row no-gutters">
+                        <div className="col-12">
+                            <div
+                                className="row no-gutters"
+                                style={{
+                                    marginBottom: "10px",
+                                    background: "#FFFFFF",
+                                    border: "2px solid #E3E3E3",
+                                    boxSizing: 'border-box',
+                                    borderRadius: '10px',
+                                }}
+                            >
+                                <div className="col-5"
+                                    style={{ display: "table" }}
+                                >
+                                    <p className="myTitleType">
+                                        {item.typeName}
+                                    </p>
+                                </div>
+
+                                <div
+                                    className="col"
+                                    style={{ display: "table" }}
+                                >
+                                    <p className="myTitlePrice">đ {item.price}</p>
+                                </div>
+                                <div>còn lại: {item.remaining}</div>
+                                <div className="col-3">
+                                    {/* AddSub comp */}
+                                    <div className="quantityBox">
+                                        {/* <div
+                                            style={{ textAlign: "center" }}
+                                            className="row no-gutters">
+                                            <div className="quantityBtn"
+                                                onClick={this.DecreaseItem}>
+                                                <p>-</p>
+                                            </div>
+                                            <div className="quantityBtn2">
+                                                <p>{item.id}</p>
+                                            </div>
+                                            <div className="quantityBtn"
+                                                onClick={() => this.IncrementItem(
+                                                    this.setState({
+                                                        counters: this.state.counters + 1,
+                                                    }, () => {
+                                                        // this.setState({
+                                                        //     adultTicketTotalPrice: this.state.counters * 100
+                                                        // })
+                                                    }
+                                                    )
+                                                )}>
+                                                <p>+</p>
+                                            </div>
+                                        </div>
+                                 */}
+                                        <MyCounter
+                                            item={item}
+                                            // onUpdateProductInCart={onUpdateProductInCart}
+                                        />
+                                    </div >
+                                    {/* End AddSub comp */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            });
+        }
+        else if (ticketTypeState.length === 0) {
+            return (
+                <p>Not Found</p>
+            );
+        }
+
+        return result;
+    }
+
     setGender(event) {
         console.log(event.target.value);
     }
+
     handleInput = event => {
         const { name, value } = event.target;
         const newState = { ...this.state[name] }; /* dummy object */
@@ -49,9 +223,9 @@ class TicketType extends Component {
     }
 
     render() {
-        console.log(this.state.dob);
+        // console.log(this.state.dob);
         var formattedDate = format(this.state.startDate, "dd/MM/yyyy");
-        console.log(formattedDate);
+        // console.log(formattedDate);
         const ExampleCustomInput = ({ value, onClick }) => (
             <button className="example-custom-input" onClick={onClick}>
                 {value}
@@ -61,8 +235,14 @@ class TicketType extends Component {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
-        console.log(prnDt);
+        // console.log(prnDt);
+
+        const { ticketTypeState, visitorTypeState } = this.state;
+        // console.log(ticketTypeState);
+        // console.log(ticketTypeState[0].visitorTypes);
+        // console.log(visitorTypeState);
         return (
+
             <div
                 className="ticketBox"
                 style={{ fontFamily: 'Inter' }}
@@ -125,7 +305,6 @@ class TicketType extends Component {
 
 
                 </div>
-
                 <div className="row no-gutters"
                     style={{ marginTop: "10px" }}
                 >
@@ -178,91 +357,13 @@ class TicketType extends Component {
                         <label htmlFor="radioOrange">Tour gia đình 4 người</label>
                     </div>
                 </div>
-
-                <div
-                    style={{ paddingTop: "40px" }}
-                    className="row no-gutters">
-                    {/* <div className="col-2">
-                        <h3
-                            style={{ paddingLeft: "10px", marginTop: "25px", }}
-                            className="myTitle">Số lượng
-                        </h3>
-                    </div>
-                    <div className="col-3.5">
-                        <AddSub />
-                    </div> */}
-                    <div className="col-12">
-                        <div
-                            className="row no-gutters"
-                            style={{
-                                marginBottom: "10px",
-                                background: "#FFFFFF",
-                                border: "2px solid #E3E3E3",
-                                boxSizing: 'border-box',
-                                borderRadius: '10px',
-                            }}
-                        >
-                            <div
-                                className="col-7"
-                                style={{ display: "table" }}
-                            >
-                                <p className="myTitleType">
-                                    Người lớn
-                                </p>
-                            </div>
-
-                            <div
-                                className="col"
-                                style={{ display: "table" }}
-                            >
-                                <p className="myTitlePrice">đ 515.000</p>
-                            </div>
-
-                            <div className="col-3">
-                                <AddSub />
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <div className="col-12">
-                        <div
-                            className="row no-gutters"
-                            style={{
-                                background: "#FFFFFF",
-                                border: "2px solid #E3E3E3",
-                                boxSizing: 'border-box',
-                                borderRadius: '10px',
-                            }}
-                        >
-                            <div
-                                className="col-7"
-                                style={{ display: "table" }}
-                            >
-                                <p className="myTitleType">
-                                    Trẻ con
-                                </p>
-                            </div>
-
-                            <div
-                                className="col"
-                                style={{ display: "table" }}
-                            >
-                                <p className="myTitlePrice">đ 515.000</p>
-                            </div>
-
-                            <div className="col-3">
-                                <AddSub />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                {/* Vititor types */}
+                {this.showVisitorTypes(visitorTypeState)}
+                {/* End vititor types */}
                 <br></br>
                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                 <div className="row">
                     <div className="col-5">
-
                     </div>
                     <div className="col-7">
                         <TotalPayment />
@@ -274,4 +375,7 @@ class TicketType extends Component {
 
 }
 
-export default TicketType;
+
+export default connect(null, null)(TicketType);
+
+// export default TicketType;

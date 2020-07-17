@@ -7,26 +7,49 @@ class AddSub extends Component {
         super(props);
         this.state = {
             clicks: 0,
-            show: true
+            clicks2: 0,
+            adultTicketTotalPrice: 0,
+            childTicketTotalPrice: 0,
         };
     }
 
     IncrementItem = () => {
-        this.setState({ clicks: this.state.clicks + 1 });
+        const { adultTicketPrice } = this.props;
+
+        this.setState({
+            clicks: this.state.clicks + 1,
+        }, () => {
+            this.setState({
+                adultTicketTotalPrice: this.state.clicks * adultTicketPrice
+            })
+        }
+        );
+
     }
+
     DecreaseItem = () => {
+        const { adultTicketPrice } = this.props;
         if (this.state.clicks === 0) {
             this.setState({ clicks: this.state.clicks });
+
         } else {
-            this.setState({ clicks: this.state.clicks - 1 });
+            // this.setState({ clicks: this.state.clicks - 1 });
+            this.setState({
+                clicks: this.state.clicks - 1,
+            }, () => {
+                this.setState({
+                    adultTicketTotalPrice: this.state.clicks * adultTicketPrice
+                })
+            }
+            );
         }
 
     }
-    ToggleClick = () => {
-        this.setState({ show: !this.state.show });
-    }
 
     render() {
+        // console.log("==")
+        // console.log("Adult: " + this.state.adultTicketTotalPrice);
+        // console.log("***")
         return (
             <div className="quantityBox">
                 <div

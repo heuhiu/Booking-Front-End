@@ -7,6 +7,7 @@ import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
 import Footer2 from '../../../components/Footer/Footer2/Footer2';
+import { Redirect } from 'react-router-dom';
 
 
 function SampleNextArrow(props) {
@@ -63,7 +64,10 @@ class PlaceDetail extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
         };
+        const { location } = this.props;
+
         return (
+
             <div >
                 <div
                     className="container"
@@ -96,7 +100,7 @@ class PlaceDetail extends Component {
                                 alt="Failt to load" />
                         </div>
                     </Slider>
-                    <Detail />
+                    <Detail place={location.data} />
 
                 </div>
                 <div>

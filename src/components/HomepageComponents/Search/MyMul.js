@@ -117,7 +117,7 @@ class MyMul extends Component {
     };
 
     render() {
-        console.log(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+        // console.log(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
         localStorage.setItem('filterCityIDChecked', JSON.stringify(this.state.ListIDFoSend));
         localStorage.setItem('filterCategoryIDChecked', JSON.stringify(this.state.ListIDFoSendCat));
 

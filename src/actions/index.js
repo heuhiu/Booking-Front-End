@@ -48,3 +48,35 @@ export const getUserLogin = (user) => {
 //         quantity : quantity
 //     }
 // }
+
+export const actUpdateProductIncart = (product, quantity) => {
+  return {
+      type : types.UPDATE_TICKET,
+      product,
+      quantity
+  }
+}
+
+export const addVisitorTypeCart = (item) => {
+  return {
+      type : types.ADD_VISITOR_TYPE_CART,
+      item,
+      
+  }
+}
+
+export const fetchVisitor = (item) => {
+  return {
+      type: types.ADD_VISITOR_TYPE_CART,
+      item
+  }
+}
+
+export const fetchVisitor2 = (id, qty, price) => {
+  return {
+      type: types.ADD_VISITOR_TYPE_CART,
+      id,
+      qty,
+      price
+  }
+}

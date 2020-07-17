@@ -28,53 +28,53 @@ class Footer2 extends Component {
                <path id="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />
             </defs> 
           
-             <use id="wave3" class="wave" href="#wave" x="0" y="-2" ></use> 
-             <use id="wave2" class="wave" href="#wave" x="0" y="0" ></use>
+             <use id="wave3" className="wave" href="#wave" x="0" y="-2" ></use> 
+             <use id="wave2" className="wave" href="#wave" x="0" y="0" ></use>
            
            
-            <g class="gooeff" filter="url(#goo)">
-            <circle class="drop drop1" cx="20" cy="2" r="8.8"  />
-            <circle class="drop drop2" cx="25" cy="2.5" r="7.5"  />
-            <circle class="drop drop3" cx="16" cy="2.8" r="9.2"  />
-            <circle class="drop drop4" cx="18" cy="2" r="8.8"  />
-            <circle class="drop drop5" cx="22" cy="2.5" r="7.5"  />
-            <circle class="drop drop6" cx="26" cy="2.8" r="9.2"  />
-            <circle class="drop drop1" cx="5" cy="4.4" r="8.8"  />
-            <circle class="drop drop2" cx="5" cy="4.1" r="7.5"  />
-            <circle class="drop drop3" cx="8" cy="3.8" r="9.2"  />
-            <circle class="drop drop4" cx="3" cy="4.4" r="8.8"  />
-            <circle class="drop drop5" cx="7" cy="4.1" r="7.5"  />
-            <circle class="drop drop6" cx="10" cy="4.3" r="9.2"  />
+            <g className="gooeff" filter="url(#goo)">
+            <circle className="drop drop1" cx="20" cy="2" r="8.8"  />
+            <circle className="drop drop2" cx="25" cy="2.5" r="7.5"  />
+            <circle className="drop drop3" cx="16" cy="2.8" r="9.2"  />
+            <circle className="drop drop4" cx="18" cy="2" r="8.8"  />
+            <circle className="drop drop5" cx="22" cy="2.5" r="7.5"  />
+            <circle className="drop drop6" cx="26" cy="2.8" r="9.2"  />
+            <circle className="drop drop1" cx="5" cy="4.4" r="8.8"  />
+            <circle className="drop drop2" cx="5" cy="4.1" r="7.5"  />
+            <circle className="drop drop3" cx="8" cy="3.8" r="9.2"  />
+            <circle className="drop drop4" cx="3" cy="4.4" r="8.8"  />
+            <circle className="drop drop5" cx="7" cy="4.1" r="7.5"  />
+            <circle className="drop drop6" cx="10" cy="4.3" r="9.2"  />
             
-            <circle class="drop drop1" cx="1.2" cy="5.4" r="8.8"  />
-            <circle class="drop drop2" cx="5.2" cy="5.1" r="7.5"  />
-            <circle class="drop drop3" cx="10.2" cy="5.3" r="9.2"  />
-              <circle class="drop drop4" cx="3.2" cy="5.4" r="8.8"  />
-            <circle class="drop drop5" cx="14.2" cy="5.1" r="7.5"  />
-            <circle class="drop drop6" cx="17.2" cy="4.8" r="9.2"  />
+            <circle className="drop drop1" cx="1.2" cy="5.4" r="8.8"  />
+            <circle className="drop drop2" cx="5.2" cy="5.1" r="7.5"  />
+            <circle className="drop drop3" cx="10.2" cy="5.3" r="9.2"  />
+              <circle className="drop drop4" cx="3.2" cy="5.4" r="8.8"  />
+            <circle className="drop drop5" cx="14.2" cy="5.1" r="7.5"  />
+            <circle className="drop drop6" cx="17.2" cy="4.8" r="9.2"  />
             
-            <circle class="drop drop1" cx="50" cy="2" r="8.8"  />
-            <circle class="drop drop2" cx="55" cy="2.5" r="7.5"  />
-            <circle class="drop drop3" cx="46" cy="2.8" r="9.2"  />
-            <circle class="drop drop4" cx="48" cy="2" r="8.8"  />
-            <circle class="drop drop5" cx="62" cy="2.5" r="7.5"  />
-            <circle class="drop drop6" cx="66" cy="2.8" r="9.2"  />
-            <circle class="drop drop1" cx="10" cy="4.4" r="8.8"  />
-            <circle class="drop drop2" cx="10" cy="4.1" r="7.5"  />
-            <circle class="drop drop3" cx="12" cy="3.8" r="9.2"  />
-            <circle class="drop drop4" cx="7" cy="4.4" r="8.8"  />
-            <circle class="drop drop5" cx="12" cy="4.1" r="7.5"  />
-            <circle class="drop drop6" cx="14" cy="4.3" r="9.2"  />
+            <circle className="drop drop1" cx="50" cy="2" r="8.8"  />
+            <circle className="drop drop2" cx="55" cy="2.5" r="7.5"  />
+            <circle className="drop drop3" cx="46" cy="2.8" r="9.2"  />
+            <circle className="drop drop4" cx="48" cy="2" r="8.8"  />
+            <circle className="drop drop5" cx="62" cy="2.5" r="7.5"  />
+            <circle className="drop drop6" cx="66" cy="2.8" r="9.2"  />
+            <circle className="drop drop1" cx="10" cy="4.4" r="8.8"  />
+            <circle className="drop drop2" cx="10" cy="4.1" r="7.5"  />
+            <circle className="drop drop3" cx="12" cy="3.8" r="9.2"  />
+            <circle className="drop drop4" cx="7" cy="4.4" r="8.8"  />
+            <circle className="drop drop5" cx="12" cy="4.1" r="7.5"  />
+            <circle className="drop drop6" cx="14" cy="4.3" r="9.2"  />
             
-            <circle class="drop drop1" cx="5.2" cy="5.4" r="8.8"  />
-            <circle class="drop drop2" cx="9.2" cy="5.1" r="7.5"  />
-            <circle class="drop drop3" cx="14.2" cy="5.3" r="9.2"  />
-              <circle class="drop drop4" cx="4.2" cy="5.4" r="8.8"  />
-            <circle class="drop drop5" cx="18.2" cy="5.1" r="7.5"  />
-            <circle class="drop drop6" cx="22.2" cy="4.8" r="9.2"  />
-            <use id="wave1" class="wave" href="#wave" x="0" y="1" />
+            <circle className="drop drop1" cx="5.2" cy="5.4" r="8.8"  />
+            <circle className="drop drop2" cx="9.2" cy="5.1" r="7.5"  />
+            <circle className="drop drop3" cx="14.2" cy="5.3" r="9.2"  />
+              <circle className="drop drop4" cx="4.2" cy="5.4" r="8.8"  />
+            <circle className="drop drop5" cx="18.2" cy="5.1" r="7.5"  />
+            <circle className="drop drop6" cx="22.2" cy="4.8" r="9.2"  />
+            <use id="wave1" className="wave" href="#wave" x="0" y="1" />
            </g>  
-              <path   id="wave1"  class="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />
+              <path   id="wave1"  className="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />
               {/* </g> */}
           
           </svg>
