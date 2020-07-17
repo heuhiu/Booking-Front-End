@@ -73,7 +73,7 @@ class RegisterComp extends Component {
         var checkingResult = '';
         switch (type) {
             case "email":
-                regexp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {

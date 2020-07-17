@@ -80,3 +80,9 @@ export const fetchVisitor2 = (id, qty, price) => {
       price
   }
 }
+
+export const removeVisitorType = () => {
+  return {
+      type: types.REMOVE_VISITORTYPE,
+  }
+}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import './Detail.css';
+// import './RightPartDetail.css';
+import '../RightPartDetail/RightPartDetail.css';
 import TicketType from '../TicketType/TicketType';
 // import RightPartDetail from '../RightPartDetail/RightPartDetail';
 import DetailPic from '../../../img/Detailpic.png';
@@ -10,6 +12,8 @@ import MapComponent from '../MapComponent/MapComponent';
 // import callApi from '../../../config/utils/apiCaller';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+
+
 
 class Detail extends Component {
 
@@ -78,7 +82,6 @@ class Detail extends Component {
 
 
     render() {
-        const { placeChoosed } = this.state;
         var checkPlaceChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
         if (checkPlaceChoosed !== undefined) {
             return (
@@ -175,7 +178,7 @@ class Detail extends Component {
                                     onClick={this.scrollToMyRef}
                                     className="rightPartBtn">
                                     Tìm vé
-                </button>
+                                </button>
                             </div>
 
                             <div

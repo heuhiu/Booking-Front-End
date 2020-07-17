@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TotalPayment.css';
-import { vi } from 'date-fns/locale';
+// import { vi } from 'date-fns/locale';
+import { removeVisitorType } from '../../../actions/index';
 
 class TotalPayment extends Component {
 
@@ -14,25 +15,25 @@ class TotalPayment extends Component {
     }
 
     myTotal = (visitorType) => {
-        // const { visitorType } = this.props;
-        // console.log(visitorType);
         var total = 0;
         if (visitorType.length >= 0) {
             for (let index = 0; index < visitorType.length; index++) {
                 const qty = visitorType[index].quantity;
                 const pri = visitorType[index].myPrice;
-                console.log(qty+" "+pri)
-                total = total + (qty * pri)
-                
+                total = total + (qty * pri);
             }
         }
-        console.log(total);
         return total;
+    }
+
+    reset = () => {
+        localStorage.removeItem("visitorTypeList");
+        this.props.removeVisitorType();
     }
 
     render() {
         const { visitorType } = this.props;
-        console.log(visitorType);
+        // console.log(visitorType);
         return (
             <div>
                 <div className="row-12 no-gutters">
@@ -43,7 +44,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ {this.state.totalPrice}</p>
+                            >đ {this.myTotal(visitorType)}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -63,19 +64,22 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ {this.myTotal(visitorType)}</p>
+                            >
+                                đ {this.myTotal(visitorType)}
+                            </p>
                         </div>
                     </div>
                 </div>
                 <br></br>
                 <div className="row-12 no-gutters">
                     <div className="row no-gutters">
-                        <div
+                        {/* <div
+                            onClick={this.reset}
                             style={{ display: "table" }}
                             className="col-5">
                             <p className="deleteAllTitle"
                             >Xóa tất cả</p>
-                        </div>
+                        </div> */}
                         <div className="col"
                             style={{ padding: "0px" }}
                         >
@@ -99,7 +103,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        removeVisitorType: () => {
+            dispatch(removeVisitorType())
+        }
     }
 }
 

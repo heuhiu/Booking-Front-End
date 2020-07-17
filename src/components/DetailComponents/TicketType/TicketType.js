@@ -4,7 +4,7 @@ import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import vi from "date-fns/locale/vi";
 // import AddSub from '../AddSub/AddSub';
 // import { actUpdateProductIncart } from '../../../actions/index';
@@ -26,15 +26,6 @@ class TicketType extends Component {
             open: false,
             apple: "aa",
             activeDay: [0, 6],
-            adultPrice: 500,
-            childPrice: 400,
-            adultQuantity: 0,
-            childQuantity: 0,
-            adultTotalPayment: 0,
-            childTotalPayment: 0,
-            totalPayment: 0,
-            counters: 0,
-            ticketTypeState: [],
             visitorTypeState: []
         }
     }
@@ -111,7 +102,7 @@ class TicketType extends Component {
     }
 
     showVisitorTypes = (ticketTypeState) => {
-        var { onUpdateProductInCart } = this.props;
+        // var { onUpdateProductInCart } = this.props;
         var result = null;
         if (ticketTypeState.length > 0) {
             result = ticketTypeState.map((item, index) => {
@@ -145,8 +136,8 @@ class TicketType extends Component {
                                 >
                                     <p className="myTitlePrice">đ {item.price}</p>
                                 </div>
-                                <div>còn lại: {item.remaining}</div>
-                                <div className="col-3">
+                                {/* <div>còn lại: {item.remaining}</div> */}
+                                <div className="col-4">
                                     {/* AddSub comp */}
                                     <div className="quantityBox">
                                         {/* <div
@@ -218,14 +209,11 @@ class TicketType extends Component {
         const day = Date.getDay()
         var fullList = [0, 1, 2, 3, 4, 5, 6];
         fullList = fullList.filter(val => !activeDay.includes(val));
-        // console.log(fullList);
         return day !== activeDay[0] && day !== activeDay[1]
     }
 
     render() {
-        // console.log(this.state.dob);
-        var formattedDate = format(this.state.startDate, "dd/MM/yyyy");
-        // console.log(formattedDate);
+        // var formattedDate = format(this.state.startDate, "dd/MM/yyyy");
         const ExampleCustomInput = ({ value, onClick }) => (
             <button className="example-custom-input" onClick={onClick}>
                 {value}
@@ -236,11 +224,7 @@ class TicketType extends Component {
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
         // console.log(prnDt);
-
-        const { ticketTypeState, visitorTypeState } = this.state;
-        // console.log(ticketTypeState);
-        // console.log(ticketTypeState[0].visitorTypes);
-        // console.log(visitorTypeState);
+        const {  visitorTypeState } = this.state;
         return (
 
             <div
