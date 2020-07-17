@@ -43,7 +43,7 @@ class ListPlaceSearched extends Component {
                                     </div>
                                     <div>
                                         <div className="place_info">
-                                            <p href="destination_details.html">
+                                            <p>
                                                 <button>Điểm tham quan</button>
                                             </p>
                                             <p>id: {data.id}</p>

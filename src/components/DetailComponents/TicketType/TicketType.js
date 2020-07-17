@@ -40,6 +40,7 @@ class TicketType extends Component {
                 placeId: placeChoosed.id,
             }
         }).then(res => {
+            console.log(res.data.listResult);
             this.setState({
                 ticketTypeState: res.data.listResult
             }, () => {
