@@ -12,7 +12,7 @@ import vi from "date-fns/locale/vi";
 import TotalPayment from '../TotalPayment/TotalPayment';
 // import { id } from 'date-fns/locale';
 import MyCounter from '../AddSub/MyCounter';
-
+import axios from 'axios';
 registerLocale("vi", vi);
 const radioToolbar = "radio-toolbar";
 
@@ -61,17 +61,40 @@ class TicketType extends Component {
     }
 
     componentWillMount = () => {
-        var ticketType = JSON.parse(localStorage.getItem('ticketType'));
-        // console.log(ticketType);
-        this.setState({
-            ticketTypeState: ticketType.data.listResult
-        }, () => {
-            // console.log(this.getTicketType().visitorTypes);
-            this.setState({
-                visitorTypeState: this.getTicketType().visitorTypes
-            })
-        }
-        )
+        var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
+        console.log(placeChoosed.id);
+
+        // get Ticket Type
+            axios.get('http://localhost:8090/ticketType', {
+                params: {
+                    //place ID
+                    placeId: placeChoosed.id,
+                }
+            }).then(res => {
+                //set state
+                // this.setState({
+                //     ticketType: res
+                // })
+
+                this.setState({
+                    ticketTypeState: res.data.listResult
+                }, () => {
+                    // console.log(this.getTicketType().visitorTypes);
+                    this.setState({
+                        visitorTypeState: this.getTicketType().visitorTypes
+                    })
+                }
+                )
+
+
+                // localStorage.setItem('ticketType', JSON.stringify(res));
+
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+
+
+       
     }
 
     showVisitorType2 = (type) => {
@@ -91,7 +114,7 @@ class TicketType extends Component {
         }
         return result;
     }
-    
+
     getTicketType = () => {
         const { ticketTypeState } = this.state;
         var element = [];
@@ -167,7 +190,7 @@ class TicketType extends Component {
                                  */}
                                         <MyCounter
                                             item={item}
-                                            // onUpdateProductInCart={onUpdateProductInCart}
+                                        // onUpdateProductInCart={onUpdateProductInCart}
                                         />
                                     </div >
                                     {/* End AddSub comp */}
@@ -224,7 +247,7 @@ class TicketType extends Component {
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
         // console.log(prnDt);
-        const {  visitorTypeState } = this.state;
+        const { visitorTypeState } = this.state;
         return (
 
             <div

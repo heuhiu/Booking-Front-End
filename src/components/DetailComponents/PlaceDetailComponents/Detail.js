@@ -31,6 +31,7 @@ class Detail extends Component {
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
 
     componentWillMount = () => {
+        const { place } = this.props;
         var checkPlaceChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
         if (this.props.place === undefined || checkPlaceChoosed === undefined) {
             return (
@@ -40,24 +41,27 @@ class Detail extends Component {
         localStorage.setItem('placeChoosed', JSON.stringify(this.props.place));
         this.setState({
             placeChoosed: this.props.place
-        })
-        
-        //get Ticket Type
-        axios.get('http://localhost:8090/ticketType', {
-            params: {
-                //place ID
-                placeId: this.props.place.id,
-            }
-        }).then(res => {
-            //set state
-            this.setState({
-                ticketType: res
-            })
-            localStorage.setItem('ticketType', JSON.stringify(res));
+        }
+        , () => {
+            //get Ticket Type
+            // axios.get('http://localhost:8090/ticketType', {
+            //     params: {
+            //         //place ID
+            //         placeId: place.id,
+            //     }
+            // }).then(res => {
+            //     //set state
+            //     this.setState({
+            //         ticketType: res
+            //     })
+            //     localStorage.setItem('ticketType', JSON.stringify(res));
 
-        }).catch(function (error) {
-            console.log(error.response);
-        });
+            // }).catch(function (error) {
+            //     console.log(error.response);
+            // });
+        })
+
+
     }
 
     showShortDescrip = (shortDesCrip) => {
@@ -66,9 +70,9 @@ class Detail extends Component {
         if (splitArray.length > 0) {
             result = splitArray.map((item, index) => {
                 return (
-                    <li 
-                    key={index}
-                    className="b">{item}</li>
+                    <li
+                        key={index}
+                        className="b">{item}</li>
                 );
             });
         }
