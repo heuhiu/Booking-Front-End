@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import './MapComponent.css';
 import googleMapDemo from '../../../img/googleMapDemo.png';
 

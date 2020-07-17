@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchVisitor, fetchVisitor2 } from '../../../actions/index';
+import { fetchVisitor2 } from '../../../actions/index';
 
 class MyCounter extends Component {
 
@@ -97,9 +97,9 @@ class MyCounter extends Component {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchVisitor: (item) => {
-            dispatch(fetchVisitor(item))
-        },
+        // fetchVisitor: (item) => {
+        //     dispatch(fetchVisitor(item))
+        // },
         fetchVisitor2: (id, qty, price) => {
             dispatch(fetchVisitor2(id, qty, price))
         }

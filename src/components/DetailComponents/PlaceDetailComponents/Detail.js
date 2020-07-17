@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import './Detail.css';
 import TicketType from '../TicketType/TicketType';
-import RightPartDetail from '../RightPartDetail/RightPartDetail';
+// import RightPartDetail from '../RightPartDetail/RightPartDetail';
 import DetailPic from '../../../img/Detailpic.png';
-import { Tab, Row, Col, Nav } from 'react-bootstrap';
+// import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import TabDetail from '../TabDetail/TabDetai';
 import MapComponent from '../MapComponent/MapComponent';
-import callApi from '../../../config/utils/apiCaller';
+// import callApi from '../../../config/utils/apiCaller';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 

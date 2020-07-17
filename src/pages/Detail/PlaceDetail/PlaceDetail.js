@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Menu from '../../../components/Menu/Menu';
 import Slider from 'react-slick';
 import SliderPic from '../../../img/Slider.png';
@@ -7,7 +7,6 @@ import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
 import Footer2 from '../../../components/Footer/Footer2/Footer2';
-import { Redirect } from 'react-router-dom';
 
 
 function SampleNextArrow(props) {

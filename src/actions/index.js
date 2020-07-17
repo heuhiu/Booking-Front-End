@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionType';
-import callApi from '../config/utils/apiCaller';
-import axios from 'axios';
+// import callApi from '../config/utils/apiCaller';
+// import axios from 'axios';
 
 
 

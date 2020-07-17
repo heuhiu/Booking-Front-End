@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
-import Rectangle from '../../../../img/Rectangle 17.png';
+// import Rectangle from '../../../../img/Rectangle 17.png';
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';

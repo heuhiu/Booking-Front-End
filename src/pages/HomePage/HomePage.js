@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
 import './style.css';
 import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Slick1';

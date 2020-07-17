@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import axios from 'axios';

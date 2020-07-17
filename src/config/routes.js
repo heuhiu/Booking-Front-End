@@ -8,7 +8,6 @@ import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
 import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
 import MyMul from '../components/HomepageComponents/Search/MyMul';
 import PlaceDetail from '../pages/Detail/PlaceDetail/PlaceDetail';
-import ListPlaceSearched from '../components/SearchPlaceComponents/ListSearched/ListPlaceSearched';
 
 
 const routers = [
@@ -47,11 +46,6 @@ const routers = [
         main: ({ match, history, location }) =>
             <MyMul history={history} location={location} match={match} />
     },
-    // {
-    //     path: '/lisSeach',
-    //     exact: true,
-    //     main: ({ history, location }) => <ListPlaceSearched history={history} location={location} />
-    // },
     {
         path: '/PlaceDetail',
         exact: false,

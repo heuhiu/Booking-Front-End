@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './style.css';
 import LogoSearch from '../../../img/LogoSearch.png';
 import search from '../../../img/search.png';
-import { Form } from 'react-bootstrap';
-import callApi from '../../../config/utils/apiCaller';
+// import { Form } from 'react-bootstrap';
+// import callApi from '../../../config/utils/apiCaller';
 import MyMul from './MyMul';
 
 class Search extends Component {

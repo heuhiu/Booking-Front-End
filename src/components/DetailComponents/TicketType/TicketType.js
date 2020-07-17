@@ -6,11 +6,11 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from "date-fns";
 import vi from "date-fns/locale/vi";
-import AddSub from '../AddSub/AddSub';
-import { actUpdateProductIncart } from '../../../actions/index';
-import callApi from '../../../config/utils/apiCaller';
+// import AddSub from '../AddSub/AddSub';
+// import { actUpdateProductIncart } from '../../../actions/index';
+// import callApi from '../../../config/utils/apiCaller';
 import TotalPayment from '../TotalPayment/TotalPayment';
-import { id } from 'date-fns/locale';
+// import { id } from 'date-fns/locale';
 import MyCounter from '../AddSub/MyCounter';
 
 registerLocale("vi", vi);

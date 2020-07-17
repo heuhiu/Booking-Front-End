@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import './MyMul.scss';
 
