@@ -2,196 +2,139 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
 import axios from 'axios';
-import MyCounter2 from '../AddSub/MyCounter2';
-class TicketType extends Component {
-
+import VisitorList from '../AddSub/VisitorTypeList';
+import { removeVisitorType } from '../../../actions/index';
+class ReTicketType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ticketTypeState: []
+            ticketTypeState: [],
+            typeChoosing: 1,
+            orderDetail: [],
+            total: 0,
         }
     }
     componentWillMount = () => {
-        var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
-        axios.get('http://localhost:8090/ticketType', {
-            params: {
-                //place ID
-                placeId: placeChoosed.id,
-            }
-        }).then(res => {
-            // console.log(res.data.listResult);
-            this.setState({
-                ticketTypeState: res.data.listResult
-            }
-                // , () => {
-                //     this.setState({
-                //         visitorTypeState: this.getTicketType().visitorTypes
-                //     })
-                // }
-            )
-        }).catch(function (error) {
-            console.log(error.response);
-        });
+        var { ticketType } = this.props;
+        this.setState({
+            ticketTypeState: ticketType
+        })
+        this.props.removeVisitorType();
+        // , () => {
+        //     this.setState({
+        //         visitorTypeState: this.getTicketType().visitorTypes
+        //     })
+        // }
+        //     )
+        // }).catch(function (error) {
+        //     console.log(error.response);
+        // });
     }
-    showVisitorTypes = (ticketTypeState) => {
-        var result = null;
-        if (ticketTypeState.length > 0) {
-            result = ticketTypeState.map((item, index) => {
-                return (
-                    <div
-                        key={index}
-                        style={{ paddingTop: "40px" }}
-                        className="row no-gutters">
-                        <div className="col-12">
-                            <div
-                                className="row no-gutters"
-                                style={{
-                                    marginBottom: "10px",
-                                    background: "#FFFFFF",
-                                    border: "2px solid #E3E3E3",
-                                    boxSizing: 'border-box',
-                                    borderRadius: '10px',
-                                }}
-                            >
-                                <div className="col-5"
-                                    style={{ display: "table" }}
-                                >
-                                    <p className="myTitleType">
-                                        {item.typeName}
-                                    </p>
-                                </div>
 
-                                <div
-                                    className="col"
-                                    style={{ display: "table" }}
-                                >
-                                    <p className="myTitlePrice">đ {item.price}</p>
-                                </div>
-                                {/* <div>còn lại: {item.remaining}</div> */}
-                                <div className="col-4">
-                                    {/* AddSub comp */}
-                                    <div className="quantityBox">
-                                        {/* <MyCounter
-                                            item={item}
-                                        /> */}
-                                    </div >
-                                    {/* End AddSub comp */}
-                                </div>
-                            </div>
+    resetOrder = () => {
+        this.props.removeVisitorType()
+        this.setState({
+            total: 0
+        })
+    }
+
+    showTicketTypeName = (ticketTypes) => {
+        var result = null;
+        if (ticketTypes.length > 0) {
+            result = ticketTypes.map((ticketType, index) => {
+                if (index == 0) {
+                    return (
+                        <li className="nav-item " >
+                            <a className="nav-link active" href={`#${ticketType.id}`} role="tab" data-toggle="tab">
+                                {ticketType.typeName}
+                            </a>
+                        </li>
+                    );
+                } else {
+                    return (
+                        <li className="nav-item" onClick={this.resetOrder}>
+                            <a className="nav-link" href={`#${ticketType.id}`} role="tab" data-toggle="tab" >
+                                {ticketType.typeName}
+                            </a>
+                        </li>
+                    );
+                }
+            });
+        }
+        return result;
+    }
+
+    showTicketTypeContent = (ticketTypes) => {
+        var result = null;
+        if (ticketTypes.length > 0) {
+            result = ticketTypes.map((ticketType, index) => {
+                if (index == 0) {
+                    return (
+                        <div className="tab-pane active" id={`${ticketType.id}`}>
+                            <VisitorList item={ticketType.visitorTypes} />
                         </div>
-                    </div>
-                );
+                    );
+                } else {
+                    return (
+                        <div className="tab-pane" id={`${ticketType.id}`}>
+                            <VisitorList item={ticketType.visitorTypes} />
+                        </div>
+                    );
+                }
             });
         }
-        else if (ticketTypeState.length === 0) {
-            return (
-                <p>Not Found</p>
-            );
-        }
+        return result;
+    }
 
-        return result;
-    }
-    // cancelPolicy: null
-    // conversionMethod: null
-    // effectiveTime: null
-    // gameId: [1]
-    // id: 1
-    // placeId: 1
-    // reservationInfo: null
-    // ticketDescription: null
-    // typeName: "Vé vào cổng"
-    // visitorTypes: (3) [{…}, {…}, {…}]
-    showTicketTypes = (array) => {
-        var result = null;
-        if (array.length > 0) {
-            result = array.map((item, index) => {
-                return (
-                    <div key={index}>
-                        <div>{item.id}</div>
-                        <div>{item.typeName}</div>
-                        <MyCounter2 item={item} />
-                        {/* <div className="row">
-                            <div className="col-lg-6 col-md-8">
-                                <ul className="nav nav-pills" role="tablist">
-                                    <li className="nav-item">
-                                        <a className="nav-link active" href="#dashboard-1" role="tab" data-toggle="tab">
-                                            {item.id} - {item.typeName}
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div className="tab-content tab-space">
-                                    <div className="tab-pane active" id="dashboard-1">
-                                        <MyCounter2 item={item} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-                        
-                    </div>
-                );
-            });
-        }
-        else if (array.length === 0) {
-            return (
-                <p>Not Found</p>
-            );
+    getTotalMoney = () => {
+        var result = 0;
+        var { ticket } = this.props
+        for (var i = 0; i < ticket.length; i++) {
+            result = result + ticket[i].myPrice*ticket[i].quantity
         }
         return result;
     }
-    
+
     render() {
         // console.log(this.state.ticketTypeState);
+        const { ticketTypeState } = this.state
+        const { ticket } = this.props
+        var total = this.getTotalMoney()
         return (
             <div className="container mt-5">
                 <div className="row">
-                    {this.showTicketTypes(this.state.ticketTypeState)}
-                </div>
-                <div className="row">
                     <div className="col-lg-6 col-md-8">
                         <ul className="nav nav-pills" role="tablist">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#dashboard-1" role="tab" data-toggle="tab">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#schedule-1" role="tab" data-toggle="tab">
-                                    Schedule
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#tasks-1" role="tab" data-toggle="tab">
-                                    Tasks
-                                </a>
-                            </li>
+                            {this.showTicketTypeName(ticketTypeState)}
                         </ul>
                         <div className="tab-content tab-space">
-                            <div className="tab-pane active" id="dashboard-1">
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
-                            <br></br>
-                            Dramatically visualize customer directed convergence without revolutionary ROI.
-                            </div>
-                            <div className="tab-pane" id="schedule-1">
-                                Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                            <br></br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                            </div>
-                            <div className="tab-pane" id="tasks-1">
-                                Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
-                            <br></br>
-                            Dynamically innovate resource-leveling customer service for state of the art customer service.
-                            </div>
+                            {this.showTicketTypeContent(ticketTypeState)}
+
                         </div>
                     </div>
                 </div>
+                {total}
 
             </div>
 
         );
     }
-
 }
 
+const mapStateToProps = state => {
+    return {
+        ticket: state.Ticket
+    }
+}
 
-export default connect(null, null)(TicketType);
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        removeVisitorType: () => {
+            dispatch(removeVisitorType())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReTicketType);
 
 // export default TicketType;

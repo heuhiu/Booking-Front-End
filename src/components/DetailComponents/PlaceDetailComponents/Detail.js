@@ -13,7 +13,6 @@ import MapComponent from '../MapComponent/MapComponent';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import ReTicketType from '../TicketType/ReTicketType';
-import callApi from '../../../config/utils/apiCaller'
 
 
 class Detail extends Component {
@@ -85,18 +84,11 @@ class Detail extends Component {
                             <div className="content">Các lựa chọn vé</div>
                         </div>
                         {/* ticket Type  */}
+                        {/* <div >
+                            <TicketType ticketType={place.ticketTypes}/>
+                        </div> */}
                         <div >
-                            <TicketType />
-
-                        </div>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <div >
-                            <ReTicketType />
-
+                            <ReTicketType ticketType={place.ticketTypes}/>
                         </div>
 
                         <div id="inline">
@@ -124,7 +116,7 @@ class Detail extends Component {
                             <div className="content">Chi tiết</div>
                         </div>
                         <div className="placeDetail">
-                            <TabDetail />
+                            <TabDetail place={place}/>
                         </div>
 
                         <div
@@ -144,7 +136,7 @@ class Detail extends Component {
                         <div className="rightPart"
                         >
                             <p className="p1">Giá từ</p>
-                            <p className="p2">đ {this.state.price}</p>
+                            <p className="p2">{place.basicPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} đ</p>
                             <div className="row">
                                 <button
                                     onClick={this.scrollToMyRef}
@@ -167,7 +159,7 @@ class Detail extends Component {
                                 <div className="col">
                                     <p className="p3">
                                         Vé theo ngày cố định
-                        </p>
+                                    </p>
                                 </div>
                             </div>
 
@@ -182,7 +174,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col">
                                     <p className="p4">
-                                        Giờ mở cửa: 5:00 A.M - 21:00 P.M(Thứ 2 đến Chủ nhật)
+                                       {place.openingHours}
                         </p>
                                 </div>
                             </div>

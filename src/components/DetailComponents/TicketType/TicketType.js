@@ -32,31 +32,31 @@ class TicketType extends Component {
     }
 
     componentWillMount = () => {
-        var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
-        // get Ticket Type
-        axios.get('http://localhost:8090/ticketType', {
-            params: {
-                //place ID
-                placeId: placeChoosed.id,
-            }
-        }).then(res => {
-            // console.log(res.data.listResult);
-            this.setState({
-                ticketTypeState: res.data.listResult
-            }, () => {
-                // console.log(this.getTicketType().visitorTypes);
-                this.setState({
-                    visitorTypeState: this.getTicketType().visitorTypes
-                })
-            }
-            )
+        // var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
+        // // get Ticket Type
+        // axios.get('http://localhost:8090/ticketType', {
+        //     params: {
+        //         //place ID
+        //         placeId: placeChoosed.id,
+        //     }
+        // }).then(res => {
+        //     // console.log(res.data.listResult);
+        //     this.setState({
+        //         ticketTypeState: res.data.listResult
+        //     }, () => {
+        //         // console.log(this.getTicketType().visitorTypes);
+        //         this.setState({
+        //             visitorTypeState: this.getTicketType().visitorTypes
+        //         })
+        //     }
+        //     )
 
 
-            // localStorage.setItem('ticketType', JSON.stringify(res));
+        //     // localStorage.setItem('ticketType', JSON.stringify(res));
 
-        }).catch(function (error) {
-            console.log(error.response);
-        });
+        // }).catch(function (error) {
+        //     console.log(error.response);
+        // });
 
 
 
@@ -205,11 +205,8 @@ class TicketType extends Component {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
-        // console.log(prnDt);
         const { visitorTypeState, ticketTypeState } = this.state;
-        // console.log(visitorTypeState);
-        // console.log(ticketTypeState);
-        // console.log(this.getTicketType().typeName);
+        const { ticketType  } = this.props;
         return (
 
             <div
@@ -334,7 +331,7 @@ class TicketType extends Component {
                     </div>
                 </div>
                 {/* Vititor types */}
-                {this.showVisitorTypes(visitorTypeState)}
+                {this.showVisitorTypes(ticketType)}
                 {/* End vititor types */}
                 <br></br>
                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
