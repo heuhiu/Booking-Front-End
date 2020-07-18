@@ -31,7 +31,6 @@ small {
     padding: 20px;
     margin: 10px;
     text-align: center;
-    /* border-radius: 4px; */
 
     font-family: 'Inter';
     font-style: normal;
@@ -48,6 +47,7 @@ small {
 
 .nav-pills .nav-item .nav-link.active {
     color: #fff;
+    border: 2px solid #FF7062;
     font-family: "Inter";
     font-style: normal;
     font-weight: 600;
@@ -61,6 +61,7 @@ small {
     background-color: #FF7062;
     transition: .2s;
     border-color: #FF7062;
+    color: #fff;
 }
 
 .nav-pills .nav-item .nav-link:not(.active) {
