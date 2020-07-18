@@ -17,7 +17,11 @@ class Search extends Component {
             toggleFilter: true, //Boolean handle filter appear or not
             txtParkName: '',    //Name Seach
             listCity: [],       //List ID City filter
-            listCategories: []  //List ID Category filter
+            listCategories: [],  //List ID Category filter
+            // pathLink: "/SearchedPlace",
+            pathLink: "",
+            cityMul: [],
+            catMul: []
         }
     }
 
@@ -28,30 +32,94 @@ class Search extends Component {
         })
     }
 
+    searchPathLink = () => {
+        const { cityMul, catMul } = this.state;
+        // console.log(cityMul.length);
+        var pathLink = '/SearchedPlace';
+        const pathName = `?name=${this.state.txtParkName}`
+        const pathListCity = `?listCityID=${this.state.cityMul.join()}`
+        const pathListCat = `?listCatID=${this.state.catMul.join()}`
+
+        if (this.state.txtParkName !== "") {
+            // console.log("nhap ten");
+            pathLink += pathName;
+            if (this.state.cityMul.length > 0) {
+                pathLink += pathListCity;
+            }
+            if (this.state.catMul.length > 0) {
+                pathLink += pathListCat;
+            }
+        }
+         else if (this.state.cityMul.length > 0) {
+            pathLink += pathListCity;
+        }
+        else if (this.state.catMul.length > 0) {
+            pathLink += pathListCat;
+        }
+
+        // if (catMul.leng != 0)  {
+        //     pathLink += pathListCat;
+        // }
+
+        // if (this.state.cityMul.leng > 0) {
+        //     pathLink = `/SearchedPlace
+        //         ?name=${""}
+        //         ?cityIdList=${this.state.cityMul.join()}`
+        // }
+        return pathLink;
+    }
     //Set value of seach name
     onChange = (e) => {
         var target = e.target;
         var name = target.name;
         var value = target.value;
-        this.setState({
-            [name]: value
-        })
+        if (value !== "") {
+            this.setState({
+                [name]: value,
+                // pathLink: `/SearchedPlace?name=${value}`
+            })
+        }
     }
 
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
-        if (this.state.txtParkName === null) {
-            localStorage.setItem('searchKeyword', JSON.stringify(""));
+        console.log("s");
+        this.setState({
+            pathLink: `?name=${this.state.txtParkName}`
+        })
+        // if (this.state.txtParkName === null) {
+        //     // localStorage.setItem('searchKeyword', JSON.stringify(""));
 
-        } else if (this.state.txtParkName === '') {
-            localStorage.setItem('searchKeyword', JSON.stringify(""));
-        } else {
-            localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
-        }
+        // } else if (this.state.txtParkName === '') {
+        //     // localStorage.setItem('searchKeyword', JSON.stringify(""));
+        // } else {
+        //     // localStorage.setItem('searchKeyword', JSON.stringify(this.state.txtParkName));
+        // }
+    }
+
+    setmMul = (cityMul, catMul) => {
+        // console.log(cityMul + " " + catMul);
+        // debugger
+        this.setState({
+            cityMul,
+            catMul
+        }, () => {
+            // console.log(this.state.cityMul + " " + this.state.catMul);
+        });
+
     }
 
     render() {
         const { toggleFilter, txtParkName } = this.state;
+        // console.log(this.state.txtParkName);
+        let queryParameters = {
+            sortBy: 'date',
+            sortOrder: 'desc',
+        }
+        const { cityMul, catMul } = this.state;
+        // console.log(cityMul);
+        // console.log("cityID: " + cityMul.join());
+        // console.log("CatID: " + catMul.join());
         return (
             <div>
                 <form
@@ -86,7 +154,7 @@ class Search extends Component {
                                 className="filterBox">
                                 <div className="row">
                                     <div className="col-12">
-                                        <MyMul />
+                                        <MyMul setmMul={this.setmMul} />
                                     </div>
                                 </div>
                             </div>
@@ -94,9 +162,17 @@ class Search extends Component {
 
                     </div>
                     <Link
-                        onClick={this.onSubmitSearch}
+                        // onClick={this.onSubmitSearch}
                         className="search-submit"
-                        to="/SearchedPlace">
+                        // to="/SearchedPlace"
+                        // to={`/SearchedPlace?name=${txtParkName}?name=${txtParkName}?name=${txtParkName}`}
+                        // to={{
+                        //     pathname: '/SearchedPlace',
+                        //     query: queryParameters
+                        //   }}
+                        // to={this.state.pathLink === "" ? "/SearchedPlace" : this.state.pathLink}
+                        to={this.searchPathLink}
+                    >
                         <button
 
                             className="searchbtn"
