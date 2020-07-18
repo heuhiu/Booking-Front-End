@@ -8,6 +8,7 @@ import RegisterComp from '../pages/Authen/RegisterComponent/RegisterComp';
 import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
 import MyMul from '../components/HomepageComponents/Search/MyMul';
 import PlaceDetail from '../pages/Detail/PlaceDetail/PlaceDetail';
+import Payment from '../pages/Payment/Payment';
 
 
 const routers = [
@@ -50,6 +51,11 @@ const routers = [
         path: '/PlaceDetail/:id',
         exact: false,
         main: ({ history, match }) => <PlaceDetail history={history} match={match} />
+    },
+    {
+        path: '/payment',
+        exact: false,
+        main: ({ history, match }) => <Payment history={history} match={match} />
     },
     {
         path: '/',
