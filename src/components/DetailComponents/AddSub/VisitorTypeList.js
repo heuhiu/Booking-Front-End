@@ -19,7 +19,7 @@ class VisitorList extends Component {
             result = arr.map((item, index) => {
                 var updateIndex = visitorType.findIndex(itemUpdate => itemUpdate.visitorTypeId == item.id)
                 return (
-                    <VisitorTypeItem visitorType={visitorType[updateIndex]} index={index} item={item} />
+                    <VisitorTypeItem key={index} visitorType={visitorType[updateIndex]} index={index} item={item} />
                 );
             });
         }
@@ -31,12 +31,6 @@ class VisitorList extends Component {
 
 
         return result;
-    }
-
-    componentWillMount = () => {
-        const { item } = this.props;
-        console.log(item);
-        console.log(item.id);
     }
 
     render() {

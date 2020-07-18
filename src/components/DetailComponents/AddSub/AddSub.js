@@ -55,14 +55,14 @@ class AddSub extends Component {
                 <div
                     style={{ textAlign: "center" }}
                     className="row no-gutters">
-                    <div className="quantityBtn"
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 quantityBtn"
                         onClick={this.DecreaseItem}>
                         <p>-</p>
                     </div>
-                    <div className="quantityBtn2">
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 quantityBtn4">
                         <p>{this.state.clicks}</p>
                     </div>
-                    <div className="quantityBtn"
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 quantityBtn"
                         onClick={this.IncrementItem}>
                         <p>+</p>
                     </div>

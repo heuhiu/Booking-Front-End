@@ -4,13 +4,8 @@ import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// import { format } from "date-fns";
 import vi from "date-fns/locale/vi";
-// import AddSub from '../AddSub/AddSub';
-// import { actUpdateProductIncart } from '../../../actions/index';
-// import callApi from '../../../config/utils/apiCaller';
 import TotalPayment from '../TotalPayment/TotalPayment';
-// import { id } from 'date-fns/locale';
 import MyCounter from '../AddSub/MyCounter';
 import axios from 'axios';
 import { el } from 'date-fns/locale';
@@ -30,38 +25,6 @@ class TicketType extends Component {
             visitorTypeState: []
         }
     }
-
-    componentWillMount = () => {
-        // var placeChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
-        // // get Ticket Type
-        // axios.get('http://localhost:8090/ticketType', {
-        //     params: {
-        //         //place ID
-        //         placeId: placeChoosed.id,
-        //     }
-        // }).then(res => {
-        //     // console.log(res.data.listResult);
-        //     this.setState({
-        //         ticketTypeState: res.data.listResult
-        //     }, () => {
-        //         // console.log(this.getTicketType().visitorTypes);
-        //         this.setState({
-        //             visitorTypeState: this.getTicketType().visitorTypes
-        //         })
-        //     }
-        //     )
-
-
-        //     // localStorage.setItem('ticketType', JSON.stringify(res));
-
-        // }).catch(function (error) {
-        //     console.log(error.response);
-        // });
-
-
-
-    }
-
     showVisitorType2 = (type) => {
         console.log(type);
         var result = null;

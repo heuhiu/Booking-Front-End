@@ -21,16 +21,24 @@ small {
 }
 
 .nav-pills .nav-item .nav-link {
-    line-height: 24px;
+    /* line-height: 24px;
     font-size: 12px;
     font-weight: 500;
     min-width: 100px;
-    color: #555;
+    color: #555; */
     transition: all .3s;
-    border-radius: 30px;
-    padding: 10px 15px;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
     text-align: center;
-    border-radius: 4px;
+    /* border-radius: 4px; */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
 }
 
 
@@ -40,51 +48,38 @@ small {
 
 .nav-pills .nav-item .nav-link.active {
     color: #fff;
-    background-color: #9c27b0;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
-}
-
-
-.nav-pills.nav-pills-info .nav-item .nav-link.active, .nav-pills.nav-pills-info .nav-item .nav-link.active:focus, .nav-pills.nav-pills-info .nav-item .nav-link.active:hover {
-    background-color: #00bcd4;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(0,188,212,.6);
-    color: #fff;
-}
-
-
-.nav-pills.nav-pills-success .nav-item .nav-link.active, .nav-pills.nav-pills-success .nav-item .nav-link.active:focus, .nav-pills.nav-pills-success .nav-item .nav-link.active:hover {
-    background-color: #4caf50;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(76,175,80,.6);
-    color: #fff;
-}
-
-
-.nav-pills.nav-pills-warning .nav-item .nav-link.active, .nav-pills.nav-pills-warning .nav-item .nav-link.active:focus, .nav-pills.nav-pills-warning .nav-item .nav-link.active:hover {
-    background-color: #ff9800;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(255,152,0,.6);
-    color: #fff;
-}
-
-
-.nav-pills.nav-pills-danger .nav-item .nav-link.active, .nav-pills.nav-pills-danger .nav-item .nav-link.active:focus, .nav-pills.nav-pills-danger .nav-item .nav-link.active:hover {
-    background-color: #f44336;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(244,67,54,.6);
-    color: #fff;
-}
-
-.nav-pills.nav-pills-rose .nav-item .nav-link.active, .nav-pills.nav-pills-rose .nav-item .nav-link.active:focus, .nav-pills.nav-pills-rose .nav-item .nav-link.active:hover {
-    background-color: #e91e63;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(233,30,99,.6);
-    color: #fff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    background-color: #FF7062;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,.2), 0 13px 14px -11px rgba(156,39,176,.6);
 }
 
 .nav-pills .nav-item .nav-link:not(.active):hover {
-    background-color: rgba(200,200,200,.2);
+    background-color: #FF7062;
+    transition: .2s;
+    border-color: #FF7062;
+}
+
+.nav-pills .nav-item .nav-link:not(.active) {
+    transition: .2s;
+    background: #FFFFFF;
+    border: 2px solid #E3E3E3;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #5B5B5B;
+
 }
 
 .nav-pills .nav-item i {
     display: block;
-    font-size: 30px;
+    font-size: 18px;
     padding: 15px 0;
 }
 
@@ -99,29 +94,4 @@ small {
 .tab-space {
     padding: 20px 0 50px;
     font-weight: 300;
-}
-
-/* footer */
-
-footer{
-    margin-top: 100px;
-    color: #555;
-    background: #fff;
-    padding: 25px;
-    font-weight: 300;
-    
-}
-.footer p{
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 300;
-}
-footer p a{
-    color: #555;
-    font-weight: 400;
-}
-
-footer p a:hover {
-    color: #9f26aa;
-    text-decoration: none;
 }

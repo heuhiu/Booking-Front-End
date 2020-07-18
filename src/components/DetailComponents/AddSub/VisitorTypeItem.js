@@ -16,10 +16,8 @@ class VisitorTypeItem extends Component {
         }
     }
 
-
     render() {
         const { item, index, visitorType } = this.props;
-        debugger
         var myQuan = 0
         if (visitorType !== undefined) {
             myQuan = visitorType.quantity
@@ -34,15 +32,15 @@ class VisitorTypeItem extends Component {
                         boxSizing: 'border-box',
                         borderRadius: '10px',
                     }}>
-                        <div className="col-5" style={{ display: "table" }} >
+                        <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5" style={{ display: "table" }} >
                             <p className="myTitleType"> {item.typeName} </p>
                         </div>
 
-                        <div className="col" style={{ display: "table" }} >
+                        <div className="col-lg-5 col-md-4 col-sm-3 col-xs-3" style={{ display: "table" }} >
                             <p className="myTitlePrice">đ {item.price}</p>
                         </div>
-                        <div className="col-4">
-                            <div className="quantityBox">
+                        <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                            <div className="row no-gutter quantityBox">
                                 <div style={{ textAlign: "center" }} className="row no-gutters">
                                     <div className="quantityBtn"
                                         onClick={() => this.onUpdateQuantity(item, myQuan - 1)}><p>-</p>
@@ -68,20 +66,8 @@ class VisitorTypeItem extends Component {
         if (quantity >= 0) {
             fetchVisitor2(item.id, quantity, item.price);
             this.forceUpdate()
-            
+
         }
-        // this.setState({
-        //     myId: item.id,
-        //     price: item.price
-        // }
-        //     , () => {
-        //         fetchVisitor2(this.state.myId, quantity, this.state.price);
-        //     }
-        // );
-
-
-
-
     }
 
 }

@@ -27,7 +27,7 @@ class ListPlaceSearched extends Component {
             result = searchList.map((data, index) => {
                 return (
                     <Link
-
+                    key={index}
                         to={{
                             pathname: `/PlaceDetail/${data.id}`
                         }}>
@@ -93,10 +93,10 @@ class ListPlaceSearched extends Component {
     //Received data from API
     receivedData(searchName, IDCityFilter, IDCategoryFilter) {
         const { activePage } = this.state;
-        console.log(searchName);
-        console.log(IDCityFilter);
-        console.log(IDCategoryFilter);
-        console.log(isNaN(parseFloat(IDCategoryFilter)));
+        // console.log(searchName);
+        // console.log(IDCityFilter);
+        // console.log(IDCategoryFilter);
+        // console.log(isNaN(parseFloat(IDCategoryFilter)));
 
         axios.get('http://localhost:8090/place/searchClient', {
             params: {
@@ -128,9 +128,9 @@ class ListPlaceSearched extends Component {
 componentWillMount = () => {
     // var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
     const { searchName, listCtiId, listCatId } = this.props;
-    console.log(searchName);
-    console.log(listCtiId);
-    console.log(listCatId);
+    // console.log(searchName);
+    // console.log(listCtiId);
+    // console.log(listCatId);
     // console.log(searchName);
     // var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
     // var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));

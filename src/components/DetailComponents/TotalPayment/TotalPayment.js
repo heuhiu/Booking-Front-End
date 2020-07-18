@@ -32,7 +32,7 @@ class TotalPayment extends Component {
     }
 
     render() {
-        const { visitorType } = this.props;
+        const { visitorType, totalPayment } = this.props;
         // console.log(visitorType);
         return (
             <div>
@@ -44,7 +44,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ {this.myTotal(visitorType)}</p>
+                            >đ {totalPayment}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -54,7 +54,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ {this.state.discount}</p>
+                            >đ 0</p>
                         </div>
                     </div>
                     <div className="row ">
@@ -62,10 +62,8 @@ class TotalPayment extends Component {
                             <p className="titlePayment">Số tiền thanh toán</p>
                         </div>
                         <div className="col">
-                            <p
-                                className="pPayment"
-                            >
-                                đ {this.myTotal(visitorType)}
+                            <p className="pPayment">
+                                đ {totalPayment}
                             </p>
                         </div>
                     </div>
