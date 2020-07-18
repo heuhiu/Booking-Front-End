@@ -29,8 +29,7 @@ class ListPlaceSearched extends Component {
                     <Link
                     key={data.id}    
                     to={{
-                        pathname: "/PlaceDetail",
-                        data: data
+                        pathname: `/PlaceDetail/${data.id}`
                       }}>
                         <div  className="col-lg-12 col-md-12">
                             <div className="single_place">

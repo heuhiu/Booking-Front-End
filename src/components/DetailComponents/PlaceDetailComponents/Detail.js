@@ -13,7 +13,7 @@ import MapComponent from '../MapComponent/MapComponent';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import ReTicketType from '../TicketType/ReTicketType';
-
+import callApi from '../../../config/utils/apiCaller'
 
 
 class Detail extends Component {
@@ -24,7 +24,7 @@ class Detail extends Component {
         this.state = {
             price: 500,
             ticketTypeArray: [],
-            placeChoosed: [],
+            placeChoosed: null,
             ticketType: []
 
         }
@@ -32,36 +32,6 @@ class Detail extends Component {
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
 
     componentWillMount = () => {
-        const { place } = this.props;
-        var checkPlaceChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
-        if (this.props.place === undefined || checkPlaceChoosed === undefined) {
-            return (
-                <Redirect to='/' />
-            )
-        }
-        localStorage.setItem('placeChoosed', JSON.stringify(this.props.place));
-        this.setState({
-            placeChoosed: this.props.place
-        }
-        , () => {
-            //get Ticket Type
-            // axios.get('http://localhost:8090/ticketType', {
-            //     params: {
-            //         //place ID
-            //         placeId: place.id,
-            //     }
-            // }).then(res => {
-            //     //set state
-            //     this.setState({
-            //         ticketType: res
-            //     })
-            //     localStorage.setItem('ticketType', JSON.stringify(res));
-
-            // }).catch(function (error) {
-            //     console.log(error.response);
-            // });
-        })
-
 
     }
 
@@ -87,9 +57,9 @@ class Detail extends Component {
 
 
     render() {
-        var checkPlaceChoosed = JSON.parse(localStorage.getItem('placeChoosed'));
+        var {place} = this.props
         
-        if (checkPlaceChoosed !== undefined) {
+        if (place !== undefined) {
             return (
                 <div
                     style={{
@@ -100,7 +70,7 @@ class Detail extends Component {
                     <div
                         className="col-8">
 
-                        <h3>{checkPlaceChoosed.name}</h3>
+                        <h3>{place.name}</h3>
                         <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
                         <div id="inline">
@@ -108,7 +78,7 @@ class Detail extends Component {
                             <div className="content">Điểm nổi bật</div>
                         </div>
                         <ul className="a">
-                            {this.showShortDescrip(checkPlaceChoosed.shortDescription)}
+                            {this.showShortDescrip(place.shortDescription)}
                         </ul>
                         <div id="inline">
                             <div className="bulletListCustome"></div>
@@ -134,7 +104,7 @@ class Detail extends Component {
                             <div className="content">Bạn được trải nghiệm những gì?</div>
                         </div>
                         <span className="longDescription">
-                        {checkPlaceChoosed.detailDescription}
+                        {place.detailDescription}
                     </span>
                         <div
                             style={{

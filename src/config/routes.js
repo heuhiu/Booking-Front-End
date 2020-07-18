@@ -47,9 +47,9 @@ const routers = [
             <MyMul history={history} location={location} match={match} />
     },
     {
-        path: '/PlaceDetail',
+        path: '/PlaceDetail/:id',
         exact: false,
-        main: ({ history, location }) => <PlaceDetail history={history} location={location} />
+        main: ({ history, match }) => <PlaceDetail history={history} match={match} />
     },
     {
         path: '/',

@@ -6,6 +6,8 @@ import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Sl
 import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
+
+//Home page
 class HomePage extends Component {
 
     constructor(props) {

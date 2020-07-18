@@ -7,7 +7,7 @@ import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
 import Footer2 from '../../../components/Footer/Footer2/Footer2';
-
+import callApi from '../../../config/utils/apiCaller';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -46,7 +46,18 @@ class PlaceDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            place: null
         }
+    }
+
+    componentWillMount = () => {
+        const { match } = this.props;
+        var id = match.params.id;
+        callApi(`place/${id}`, 'GET', null).then(res => {
+            this.setState({ place: res.data})
+        }).catch(error => {
+           
+        });
     }
 
     render() {
@@ -63,50 +74,54 @@ class PlaceDetail extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
         };
-        const { location } = this.props;
+        const { place } = this.state;
 
-        return (
+        if(place != null){
+            return (
 
-            <div >
-                <div
-                    className="container"
-                    style={{ marginTop: "100px", padding: "0px" }}>
-                    <Menu />
-                    <Slider {...settings}>
-                        <div
-                        >
-                            <img
-                                style={{ borderRadius: "2px" }}
-                                width="100%"
-                                height="100%"
-                                src={SliderPic}
-                                alt="Failt to load" />
-                        </div>
-                        <div>
-                            <img
-                                style={{ borderRadius: "2px" }}
-                                width="100%"
-                                height="100%"
-                                src={SliderPic}
-                                alt="Failt to load" />
-                        </div>
-                        <div>
-                            <img
-                                style={{ borderRadius: "2px" }}
-                                width="100%"
-                                height="100%"
-                                src={SliderPic}
-                                alt="Failt to load" />
-                        </div>
-                    </Slider>
-                    <Detail place={location.data} />
-
+                <div >
+                    <div
+                        className="container"
+                        style={{ marginTop: "100px", padding: "0px" }}>
+                        <Menu />
+                        <Slider {...settings}>
+                            <div
+                            >
+                                <img
+                                    style={{ borderRadius: "2px" }}
+                                    width="100%"
+                                    height="100%"
+                                    src={SliderPic}
+                                    alt="Failt to load" />
+                            </div>
+                            <div>
+                                <img
+                                    style={{ borderRadius: "2px" }}
+                                    width="100%"
+                                    height="100%"
+                                    src={SliderPic}
+                                    alt="Failt to load" />
+                            </div>
+                            <div>
+                                <img
+                                    style={{ borderRadius: "2px" }}
+                                    width="100%"
+                                    height="100%"
+                                    src={SliderPic}
+                                    alt="Failt to load" />
+                            </div>
+                        </Slider>
+                        <Detail  place={place}/>
+    
+                    </div>
+                    <div>
+                        <Footer2 />
+                    </div>
                 </div>
-                <div>
-                    <Footer2 />
-                </div>
-            </div>
-        );
+            );
+        }else{
+            return ""
+        }
     }
 
 }
