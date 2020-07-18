@@ -50,7 +50,7 @@ class Payment extends Component {
                                     transition="scale">
                                     {({ accomplished }) => (
                                         <div
-                                        onClick={() => { this.setState({ myPercen: 100 }) }}
+                                        onClick={() => { this.setState({ myPercen: 0 }) }}
                                         style={{
                                             filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                             border: "1px solid",
@@ -74,7 +74,7 @@ class Payment extends Component {
                                         //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
                                         // />
                                         <div
-                                                onClick={() => { this.setState({ myPercen: 100 }) }}
+                                                onClick={() => { this.setState({ myPercen: 50 }) }}
                                                 style={{
                                                     filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                     border: "1px solid",
