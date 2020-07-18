@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
 import axios from 'axios';
-import VisitorList from '../AddSub/VisitorTypeList';
+import VisitorTypeList from '../AddSub/VisitorTypeList';
 import { removeVisitorType } from '../../../actions/index';
 class ReTicketType extends Component {
     constructor(props) {
@@ -44,7 +44,7 @@ class ReTicketType extends Component {
             result = ticketTypes.map((ticketType, index) => {
                 if (index == 0) {
                     return (
-                        <li className="nav-item " >
+                        <li className="nav-item" onClick={this.resetOrder}>
                             <a className="nav-link active" href={`#${ticketType.id}`} role="tab" data-toggle="tab">
                                 {ticketType.typeName}
                             </a>
@@ -71,13 +71,13 @@ class ReTicketType extends Component {
                 if (index == 0) {
                     return (
                         <div className="tab-pane active" id={`${ticketType.id}`}>
-                            <VisitorList item={ticketType.visitorTypes} />
+                            <VisitorTypeList item={ticketType.visitorTypes} />
                         </div>
                     );
                 } else {
                     return (
                         <div className="tab-pane" id={`${ticketType.id}`}>
-                            <VisitorList item={ticketType.visitorTypes} />
+                            <VisitorTypeList item={ticketType.visitorTypes} />
                         </div>
                     );
                 }

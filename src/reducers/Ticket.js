@@ -2,7 +2,7 @@ import * as types from '../constants/ActionType';
 // var data = JSON.parse(localStorage.getItem('visitorTypeList'));
 // var initialState = data ? data : [];
 
-var initialState = {quantity: 0};
+var initialState = [];
 
 var Ticket = (state = initialState, action) => {
     var {  id, qty, price } = action;
