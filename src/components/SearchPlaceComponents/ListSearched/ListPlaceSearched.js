@@ -27,11 +27,11 @@ class ListPlaceSearched extends Component {
             result = searchList.map((data, index) => {
                 return (
                     <Link
-                    key={data.id}    
-                    to={{
-                        pathname: `/PlaceDetail/${data.id}`
-                      }}>
-                        <div  className="col-lg-12 col-md-12">
+
+                        to={{
+                            pathname: `/PlaceDetail/${data.id}`
+                        }}>
+                        <div key={data.index} className="col-lg-12 col-md-12">
                             <div className="single_place">
                                 <div className="row">
                                     <div className="col-5">
@@ -75,32 +75,42 @@ class ListPlaceSearched extends Component {
 
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = (pageNumber) => {
-        var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
-        var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
-        var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
+        // var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
+        // const {searchName} = this.props;
+        const { searchName, listCtiId, listCatId } = this.props;
+        console.log(searchName);
+        console.log(listCtiId);
+        console.log(listCatId);
+        // var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
+        // var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
         this.setState({
             activePage: pageNumber
         }, () => {
-            this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
+            this.receivedData(searchName, listCtiId, listCatId);
         })
     }
 
     //Received data from API
     receivedData(searchName, IDCityFilter, IDCategoryFilter) {
         const { activePage } = this.state;
+        console.log(searchName);
+        console.log(IDCityFilter);
+        console.log(IDCategoryFilter);
+        console.log(isNaN(parseFloat(IDCategoryFilter)));
+
         axios.get('http://localhost:8090/place/searchClient', {
             params: {
                 //park name
-                name: searchName,
+                name: searchName ? searchName : "",
                 //city list ID
-                cityId: IDCityFilter + '',
+                cityId: isNaN(parseFloat(IDCityFilter)) === false ? IDCityFilter + '' : null,
                 //category List ID
-                categoryId: IDCategoryFilter + '',
-                //page Number  
-                page: activePage,
-                //limit of page
-                limit: this.state.limit,
-            }
+                categoryId: isNaN(parseFloat(IDCategoryFilter)) === false ? IDCategoryFilter + '' : null,
+            //page Number  
+            page: activePage,
+            //limit of page
+            limit: this.state.limit,
+        }
         }).then(res => {
             //set state
             // console.log(res);
@@ -109,103 +119,108 @@ class ListPlaceSearched extends Component {
                 searchList: res.data.listResult,
                 totalItems: res.data.totalItems
             })
-        }).catch(function (error) {
-            console.log(error.response);
-        });
+        }).catch (function (error) {
+    console.log(error.response);
+});
     }
 
-    //Get name, cityID. CategoryID from localStorage to filter & get List after filter
-    componentWillMount = () => {
-        var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
-        var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
-        var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
-        this.receivedData(searchName, filterCityIDChecked, filterCategoryIDChecked);
-    }
+//Get name, cityID. CategoryID from localStorage to filter & get List after filter
+componentWillMount = () => {
+    // var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
+    const { searchName, listCtiId, listCatId } = this.props;
+    console.log(searchName);
+    console.log(listCtiId);
+    console.log(listCatId);
+    // console.log(searchName);
+    // var filterCityIDChecked = JSON.parse(localStorage.getItem('filterCityIDChecked'));
+    // var filterCategoryIDChecked = JSON.parse(localStorage.getItem('filterCategoryIDChecked'));
+    this.receivedData(searchName, listCtiId, listCatId);
+}
 
-    render() {
-        const { activePage, totalItems, searchList } = this.state;
-        //Get Name seached
-        var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
-        
-        return (
-            <Container >
-                <p>Search Name: {searchName} </p>
-                <div className="popular_places_area">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-4">
-                                <div className="filter_result_wrap">
-                                    <h3>Filter Result</h3>
-                                    <div className="filter_bordered">
-                                        <div className="filter_inner">
-                                            <div className="row">
-                                                <div className="col-lg-12">
-                                                    <div className="single_select">
-                                                        <select>
-                                                            <option data-display="Country">Country</option>
-                                                            <option value="1">Africa</option>
-                                                            <option value="2">canada</option>
-                                                            <option value="4">USA</option>
-                                                        </select>
-                                                    </div>
+render() {
+    const { activePage, totalItems, searchList } = this.state;
+    //Get Name seached
+    var searchName = JSON.parse(localStorage.getItem('searchKeyword'));
+
+    return (
+        <Container >
+            <p>Search Name: {searchName} </p>
+            <div className="popular_places_area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-4">
+                            <div className="filter_result_wrap">
+                                <h3>Filter Result</h3>
+                                <div className="filter_bordered">
+                                    <div className="filter_inner">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="single_select">
+                                                    <select>
+                                                        <option data-display="Country">Country</option>
+                                                        <option value="1">Africa</option>
+                                                        <option value="2">canada</option>
+                                                        <option value="4">USA</option>
+                                                    </select>
                                                 </div>
-                                                <div className="col-lg-12">
-                                                    <div className="single_select">
-                                                        <select>
-                                                            <option data-display="Travel type">Travel type</option>
-                                                            <option value="1">advance</option>
-                                                            <option value="2">advance</option>
-                                                            <option value="4">premium</option>
-                                                        </select>
-                                                    </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="single_select">
+                                                    <select>
+                                                        <option data-display="Travel type">Travel type</option>
+                                                        <option value="1">advance</option>
+                                                        <option value="2">advance</option>
+                                                        <option value="4">premium</option>
+                                                    </select>
                                                 </div>
-                                                <div className="col-lg-12">
-                                                    <div className="range_slider_wrap">
-                                                        <span className="range">Prise range</span>
-                                                        <div id="slider-range"></div>
-                                                        <p>
-                                                            <input type="text" id="amount" readOnly
-                                                                style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
-                                                        </p>
-                                                    </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="range_slider_wrap">
+                                                    <span className="range">Prise range</span>
+                                                    <div id="slider-range"></div>
+                                                    <p>
+                                                        <input type="text" id="amount" readOnly
+                                                            style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="reset_btn">
-                                            <button className="boxed-btn4" type="submit">Reset</button>
-                                        </div>
+                                    </div>
+                                    <div className="reset_btn">
+                                        <button className="boxed-btn4" type="submit">Reset</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="col-lg-8">
-                                <Pagination
-                                    hideNavigation
-                                    hideFirstLastPages
-                                    //What number is selected
-                                    activePage={activePage}
-                                    //The number of items each page
-                                    itemsCountPerPage={this.state.limit}
-                                    //Total of items in list
-                                    totalItemsCount={totalItems}
-                                    //Set Css of boostrap 4
-                                    itemClass="page-item"
-                                    //Set Css of boostrap 4
-                                    linkClass="page-link"
-                                    //Trigger handle page change
-                                    onChange={this.handlePageChange.bind(this)}
-                                />
-                                {/* show List item seached & filter */}
-                                <div className="row">
-                                    {this.showSearchList(searchList)}
-                                </div>
+                        <div className="col-lg-8">
+                            <Pagination
+                                hideNavigation
+                                hideFirstLastPages
+                                //What number is selected
+                                activePage={activePage}
+                                //The number of items each page
+                                itemsCountPerPage={this.state.limit}
+                                //Total of items in list
+                                totalItemsCount={totalItems}
+                                //Set Css of boostrap 4
+                                itemClass="page-item"
+                                //Set Css of boostrap 4
+                                linkClass="page-link"
+                                //Trigger handle page change
+                                onChange={this.handlePageChange.bind(this)}
+                            />
+                            {/* show List item seached & filter */}
+                            <div className="row">
+                                {this.showSearchList(searchList)}
                             </div>
                         </div>
                     </div>
                 </div>
-            </Container>
-        );
-    }
+            </div>
+        </Container>
+    );
+}
 
 }
 

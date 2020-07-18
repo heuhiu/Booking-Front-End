@@ -12,6 +12,20 @@ class Checkbox extends React.Component {
             <div
                 style={{ paddingRight: "10px" }}
                 className="box1">
+                {/* <div className="row">
+                    <div className="col">
+                        <input
+                            // id="one"
+                            type={this.props.type}
+                            name={this.props.name}
+                            checked={this.props.checked}
+                            onChange={this.props.onChange}
+                        />
+                    </div>
+                    <div className="col-1">
+                        <span className="check"></span>
+                    </div>
+                </div> */}
                 <input
                     // id="one"
                     type={this.props.type}
@@ -20,6 +34,7 @@ class Checkbox extends React.Component {
                     onChange={this.props.onChange}
                 />
                 <span className="check"></span>
+
             </div>
         );
     }
@@ -76,15 +91,24 @@ class MyMul extends Component {
         if (e.target.checked === true) {
             this.setState({
                 ListIDFoSend: [...this.state.ListIDFoSend, id]
+            },()=>{
+                this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+
             });
         } else {
             this.setState({
                 ListIDFoSend: this.state.ListIDFoSend.filter(temp => temp !== id)
+            }, () => {
+                this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+
             })
         }
         this.setState({
             checkedCity: this.state.checkedCity.set(item, isChecked)
         });
+        // this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+        // localStorage.setItem('filterCityIDChecked', JSON.stringify(this.state.ListIDFoSend));
+        // localStorage.setItem('filterCategoryIDChecked', JSON.stringify(this.state.ListIDFoSendCat));
     };
 
     //Handle set check/checked & add to list of Cate ID
@@ -94,15 +118,21 @@ class MyMul extends Component {
         if (e.target.checked === true) {
             this.setState({
                 ListIDFoSendCat: [...this.state.ListIDFoSendCat, id]
+            }, ()=>{
+                this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
             });
+            
         } else {
             this.setState({
                 ListIDFoSendCat: this.state.ListIDFoSendCat.filter(temp => temp !== id)
+            },()=>{
+                this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
             })
         }
         this.setState({
             checkedCate: this.state.checkedCate.set(item, isChecked)
         });
+        // this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
     };
 
     //Set new map to clear al checkbox
@@ -116,10 +146,44 @@ class MyMul extends Component {
         });
     };
 
+    // showList = (listFilter) => {
+    //     const checkboxesToRender = listFilter.map(item => {
+    //         return (
+    //             <div
+    //                 style={{
+    //                     textAlign: "left",
+    //                 }}
+    //                 key={item.id} className="col-lg-4 col-md-6 col-sm-6 col-sx-12">
+    //                 <label key={item.id}>
+    //                     <div className="row no-gutters filterItem">
+    //                         <div
+    //                             style={{ marginLeft: "10px" }}
+    //                             className="col">
+    //                             <Checkbox
+    //                                 name={item.name}
+    //                                 checked={this.state.checkedCity.get(item.name) || false}
+    //                                 onChange={this.handleChange(item.id)}
+    //                                 type="checkbox"
+    //                             />
+    //                         </div>
+    //                         <div className="itemName"  >
+    //                             {item.name}
+    //                         </div>
+    //                     </div>
+    //                 </label>
+    //             </div>
+    //         );
+    //     });
+    // }
+
     render() {
         // console.log(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
-        localStorage.setItem('filterCityIDChecked', JSON.stringify(this.state.ListIDFoSend));
-        localStorage.setItem('filterCategoryIDChecked', JSON.stringify(this.state.ListIDFoSendCat));
+        // localStorage.setItem('filterCityIDChecked', JSON.stringify(this.state.ListIDFoSend));
+        // localStorage.setItem('filterCategoryIDChecked', JSON.stringify(this.state.ListIDFoSendCat));
+        // this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+
+        // console.log("CityListFrom Mul: " + this.state.ListIDFoSend);
+        // console.log("CatListFrom Mul: " + this.state.ListIDFoSendCat);
 
         const checkboxesToRender = this.state.listCity.map(item => {
             return (
@@ -187,11 +251,13 @@ class MyMul extends Component {
                 >Thành phố</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender}
+                    {/* {this.showList(this.state.listCity)} */}
                 </div>
                 <h6 className="typeFilter"
                 >Danh mục</h6>
                 <div className="row no-gutters">
                     {checkboxesToRender2}
+                    {/* {this.showList(this.state.listCategory)} */}
                 </div>
                 <span
                     style={{ color: "#FF7062", fontWeight: "600" }}
