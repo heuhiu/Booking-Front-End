@@ -36,7 +36,7 @@ class MyCounter extends Component {
         var { item } = this.props;
         var data = JSON.parse(localStorage.getItem('visitorTypeList'));
         if (data !== null) {
-            console.log(data);
+            // console.log(data);
             // console.log(this.getMyList(data));
         }
         return (

@@ -40,7 +40,7 @@ class TicketType extends Component {
                 placeId: placeChoosed.id,
             }
         }).then(res => {
-            console.log(res.data.listResult);
+            // console.log(res.data.listResult);
             this.setState({
                 ticketTypeState: res.data.listResult
             }, () => {
@@ -90,6 +90,25 @@ class TicketType extends Component {
         }
         return element;
     }
+    showTicketTypes = (ticketTypeState) => {
+        var result = null;
+        if (ticketTypeState.length > 0) {
+            result = ticketTypeState.map((item, index) => {
+                return (
+                    <div>
+                        a
+                    </div>
+                );
+            });
+        }
+        else if (ticketTypeState.length === 0) {
+            return (
+                <p>Not Found</p>
+            );
+        }
+
+        return result;
+    }
 
     showVisitorTypes = (ticketTypeState) => {
         var result = null;
@@ -129,31 +148,6 @@ class TicketType extends Component {
                                 <div className="col-4">
                                     {/* AddSub comp */}
                                     <div className="quantityBox">
-                                        {/* <div
-                                            style={{ textAlign: "center" }}
-                                            className="row no-gutters">
-                                            <div className="quantityBtn"
-                                                onClick={this.DecreaseItem}>
-                                                <p>-</p>
-                                            </div>
-                                            <div className="quantityBtn2">
-                                                <p>{item.id}</p>
-                                            </div>
-                                            <div className="quantityBtn"
-                                                onClick={() => this.IncrementItem(
-                                                    this.setState({
-                                                        counters: this.state.counters + 1,
-                                                    }, () => {
-                                                        // this.setState({
-                                                        //     adultTicketTotalPrice: this.state.counters * 100
-                                                        // })
-                                                    }
-                                                    )
-                                                )}>
-                                                <p>+</p>
-                                            </div>
-                                        </div>
-                                 */}
                                         <MyCounter
                                             item={item}
                                         />
@@ -352,7 +346,8 @@ class TicketType extends Component {
                     </div>
                 </div>
             </div >
-        );
+       
+       );
     }
 
 }
