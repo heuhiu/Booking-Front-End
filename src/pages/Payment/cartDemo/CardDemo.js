@@ -84,7 +84,7 @@ class _CardForm extends Component {
         .then(res => {
           console.log(res.token.id);
           // const paymentToken = res.token.id;
-          const paymentToken = "tok_1H6Nz02eZvKYlo2Crnic4k9Q";
+          const paymentToken = res.token.id;
           let data = new FormData();
           data.append('order', JSON.stringify(order));
           data.append('token', paymentToken);
