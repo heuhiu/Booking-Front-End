@@ -6,10 +6,6 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
 import { Accordion, Card, Button } from 'react-bootstrap'
-import Stripe from './StripeCheckoutComponent/Stripe';
-import Stripe2 from './StripeCheckoutComponent/Stripe2';
-import MainStripe from './StripeTest/MainStripe';
-import { CardText } from 'react-bootstrap/Card';
 import CardDemo from './cartDemo/CardDemo';
 
 //Payment
@@ -17,10 +13,14 @@ class Payment extends Component {
 
     constructor(props) {
         super(props);
+        this.myRef1 = React.createRef()
+        this.myRef2 = React.createRef()
         this.state = {
             myPercen: 0
         }
     }
+    scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
+    scrollToStep2 = () => window.scrollTo({ top: this.myRef2.current.offsetTop, behavior: 'smooth' });
 
     render() {
         const { location } = this.props;
@@ -30,7 +30,9 @@ class Payment extends Component {
         const myLocation = location;
         const { accomplished } = this.state;
         return (
-            <div>
+            <div
+                style={{ backgroundColor: "#F2F2F2" }}
+            >
                 <Menu />
                 <br></br>
                 <br></br>
@@ -50,85 +52,103 @@ class Payment extends Component {
                                 height: "auto"
                             }}
                             className="col-8 no-gutters">
-                            <div
-                                style={{
-                                    padding: "0rem 7rem 0rem 7rem"
-                                }}
-                                className="col-12">
-                                <ProgressBar
-                                    percent={this.state.myPercen}
-                                    filledBackground="linear-gradient(to right, #fefb72, #FF7062)"
-                                >
-                                    <Step
-                                        transition="scale">
-                                        {({ accomplished }) => (
-                                            <div
-                                                onClick={() => { this.setState({ myPercen: 0 }) }}
-                                                style={{
-                                                    filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                    border: "1px solid",
-                                                    borderRadius: "50%",
-                                                    width: "30px",
-                                                    height: "30px",
-                                                    background: "#FF7062",
-                                                    textAlign: "center",
-                                                    color: "white"
-                                                }}
-                                            >
-                                                <p>1</p>
-                                            </div>
-                                        )}
-                                    </Step>
-                                    <Step transition="scale">
-                                        {({ accomplished }) => (
-                                            // <img
-                                            //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-                                            //     width="30"
-                                            //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
-                                            // />
-                                            <div
-                                                onClick={() => { this.setState({ myPercen: 50 }) }}
-                                                style={{
-                                                    filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                    border: "1px solid",
-                                                    borderRadius: "50%",
-                                                    width: "30px",
-                                                    height: "30px",
-                                                    background: "#FF7062",
-                                                    textAlign: "center",
-                                                    color: "white"
-                                                }}
-                                            >
-                                                <p>2</p>
-                                            </div>
-                                        )}
-                                    </Step>
-                                    <Step transition="scale">
-                                        {({ accomplished }) => (
-                                            <div>
-                                                <div
-                                                    onClick={() => { this.setState({ myPercen: 100 }) }}
-                                                    style={{
-                                                        filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                        border: "1px solid",
-                                                        borderRadius: "50%",
-                                                        width: "30px",
-                                                        height: "30px",
-                                                        background: "#FF7062",
-                                                        textAlign: "center",
-                                                        color: "white"
-                                                    }}
-                                                >
-                                                    <p>3</p>
-                                                </div>
 
-                                            </div>
-                                        )}
-                                    </Step>
-                                </ProgressBar>
-                            </div>
                             <div>
-                               
+                                <div
+                                    style={{
+                                        padding: "0rem 7rem 0rem 7rem"
+                                    }}
+                                    className="progressbar col-12">
+                                    <ProgressBar
+                                        percent={this.state.myPercen}
+                                        filledBackground="linear-gradient(to right, #fefb72, #FF7062)"
+                                    >
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                <div onClick={this.scrollToStep1}>
+                                                    <div
+                                                        onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>1</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Step>
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                // <img
+                                                //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+                                                //     width="30"
+                                                //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
+                                                // />
+                                                <div onClick={this.scrollToStep2}>
+                                                    <div
+                                                        onClick={() => { this.setState({ myPercen: 50 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>2</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Step>
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                <div>
+                                                    <div
+                                                        onClick={() => { this.setState({ myPercen: 100 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>3</p>
+                                                    </div>
+
+                                                </div>
+                                            )}
+                                        </Step>
+                                    </ProgressBar>
+                                </div>
                             </div>
                             {/* Step 1 */}
                             <form>
@@ -143,7 +163,7 @@ class Payment extends Component {
                                         <h1 className="step1h">Bước 1: Điền thông tin khách du lịch</h1>
                                     </div>
                                     <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
-                                    <div className="col-12 alertStep1">
+                                    <div ref={this.myRef1} className="col-12 alertStep1">
                                         <p>
                                             Xin đảm bảo thông tin điền vào là chính xác.
                                             Bạn sẽ không thể thay đổi thông tin sau khi thanh toán
@@ -239,7 +259,7 @@ class Payment extends Component {
 
                             {/* Step 2 */}
                             <form>
-                                <div
+                                <div ref={this.myRef2}
                                     style={{
 
                                         marginTop: "50px"
@@ -352,10 +372,7 @@ class Payment extends Component {
                                                 <Card.Body>
                                                     <div
                                                         className="paymentMethodBox row">
-                                                        {/* <Stripe /> */}
-                                                        {/* <Stripe2 /> */}
-                                                        <MainStripe orderDetail={myLocation} />
-                                                        
+                                                        <div> <CardDemo orderDetail={myLocation} /></div>
                                                     </div>
                                                 </Card.Body>
                                             </Accordion.Collapse>
@@ -363,19 +380,156 @@ class Payment extends Component {
                                     </Accordion>
                                 </div>
                             </form>
-                            <div> <CardDemo orderDetail={myLocation}/></div>
+
                         </div>
 
-
-                        <div
-                            style={{
-                                border: "solid 1px red",
-                                height: "200px"
-                            }}
-                            className="col-4">
-                            <button onClick={() => { this.setState({ myPercen: 0 }) }}>Step 1</button>
+                        {/* Right part */}
+                        <div className="col">
+                            <div
+                                className="rightPartPayment">
+                                {/* <button onClick={() => { this.setState({ myPercen: 0 }) }}>Step 1</button>
                             <button onClick={() => { this.setState({ myPercen: 50 }) }}>Step 2</button>
-                            <button onClick={() => { this.setState({ myPercen: 100 }) }}>Step 3</button>
+                            <button onClick={() => { this.setState({ myPercen: 100 }) }}>Step 3</button> */}
+                                <h1>Tour phố cổ Hội An 2 ngày 1 đêm</h1>
+                                <p>Tour mở dành cho tối đa 12 khách</p>
+                                <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                                <div className="row no-gutters">
+                                    <div style={{ marginRight: "-15px" }} className="col">
+                                        <p>Ngày tham quan: </p>
+                                    </div>
+                                    <div style={{ textAlign: "right" }} className="col">
+                                        <p>Thứ 06, 03 tháng 07, 2020</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters">
+                                    <div className="col">
+                                        <p>Áp dụng cho: </p>
+                                    </div>
+                                    <div style={{ textAlign: "right" }} className="col">
+                                        <p>Người lớn : 2</p>
+                                    </div>
+                                </div>
+
+                                <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                                <div className="row no-gutters">
+                                    <div className="col-5">
+                                        <p>Tổng: </p>
+                                    </div>
+                                    <div style={{ textAlign: "right" }} className="col">
+                                        <p>đ 4,600,000</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters">
+                                    <div className="col-5">
+                                        <p>Giảm giá: </p>
+                                    </div>
+                                    <div style={{ textAlign: "right" }} className="col">
+                                        <p>đ 2,000,000</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters">
+                                    <div className="col">
+                                        <p>Số tiền thanh toán: </p>
+                                    </div>
+                                    <div style={{ textAlign: "right" }} className="col">
+                                        <span className="totalPaymentRightPart">đ 2,600,000</span>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style={{ marginTop: "20px" }}
+                                    className="progressbar col-12">
+                                    <ProgressBar
+                                        percent={this.state.myPercen}
+                                        filledBackground="linear-gradient(to right, #fefb72, #FF7062)"
+                                    >
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                <div onClick={this.scrollToStep1}>
+                                                    <div
+                                                        onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>1</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Step>
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                // <img
+                                                //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+                                                //     width="30"
+                                                //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
+                                                // />
+                                                <div onClick={this.scrollToStep2}>
+                                                    <div
+                                                        onClick={() => { this.setState({ myPercen: 50 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>2</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Step>
+                                        <Step transition="scale">
+                                            {({ accomplished }) => (
+                                                <div>
+                                                    <div
+                                                        onClick={() => { this.setState({ myPercen: 100 }) }}
+                                                        style={{
+                                                            filter: `grayscale(${accomplished ? 0 : 80}%)`,
+                                                            border: "1px solid",
+                                                            borderRadius: "50%",
+                                                            width: "30px",
+                                                            height: "30px",
+                                                            background: "#FF7062",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            display: "table"
+                                                        }}
+                                                    >
+                                                        <p style={{
+                                                            textAlign: "center",
+                                                            verticalAlign: "middle",
+                                                            display: "table-cell"
+                                                        }}>3</p>
+                                                    </div>
+
+                                                </div>
+                                            )}
+                                        </Step>
+                                    </ProgressBar>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -51,6 +51,7 @@ class PlaceDetail extends Component {
     }
 
     componentWillMount = () => {
+        // debugger
         const { match } = this.props;
         var id = match.params.id;
         callApi(`placeClient/${id}`, 'GET', null).then(res => {

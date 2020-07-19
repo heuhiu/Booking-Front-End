@@ -3,7 +3,7 @@
   top: 90px;
   padding: 1rem;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .rightPart p{
@@ -88,7 +88,3 @@ border-radius: 10px;
   margin: auto;
 }
 
-
-.rightPart row {
-  
-}
