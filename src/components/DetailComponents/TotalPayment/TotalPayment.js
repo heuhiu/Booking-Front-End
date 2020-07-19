@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TotalPayment.css';
+import {Link} from 'react-router-dom';
 // import { vi } from 'date-fns/locale';
 import { removeVisitorType } from '../../../actions/index';
 
@@ -32,8 +33,9 @@ class TotalPayment extends Component {
     }
 
     render() {
-        const { visitorType, totalPayment } = this.props;
-        // console.log(visitorType);
+        const { visitorType, totalPayment, ticketTypeID, ticketName } = this.props;
+        console.log(ticketTypeID);
+        console.log(ticketName);
         return (
             <div>
                 <div className="row-12 no-gutters">
@@ -81,9 +83,14 @@ class TotalPayment extends Component {
                         <div className="col"
                             style={{ padding: "0px" }}
                         >
-                            <button className="bookingBtn">
-                                Đặt vé ngay
+                            <Link to={{
+                                pathname: "/payment",
+                                state: { ticketTypeID, ticketName, totalPayment } }} >
+                            
+                                <button className="bookingBtn">
+                                    Đặt vé ngay
                             </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

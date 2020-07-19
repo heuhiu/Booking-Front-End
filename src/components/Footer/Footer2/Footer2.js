@@ -33,7 +33,7 @@ class Footer2 extends Component {
            
            
             <g className="gooeff" filter="url(#goo)">
-            <circle className="drop drop1" cx="20" cy="2" r="8.8"  />
+            {/* <circle className="drop drop1" cx="20" cy="2" r="8.8"  />
             <circle className="drop drop2" cx="25" cy="2.5" r="7.5"  />
             <circle className="drop drop3" cx="16" cy="2.8" r="9.2"  />
             <circle className="drop drop4" cx="18" cy="2" r="8.8"  />
@@ -71,7 +71,7 @@ class Footer2 extends Component {
             <circle className="drop drop3" cx="14.2" cy="5.3" r="9.2"  />
               <circle className="drop drop4" cx="4.2" cy="5.4" r="8.8"  />
             <circle className="drop drop5" cx="18.2" cy="5.1" r="7.5"  />
-            <circle className="drop drop6" cx="22.2" cy="4.8" r="9.2"  />
+            <circle className="drop drop6" cx="22.2" cy="4.8" r="9.2"  /> */}
             <use id="wave1" className="wave" href="#wave" x="0" y="1" />
            </g>  
               <path   id="wave1"  className="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />

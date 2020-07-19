@@ -13,6 +13,7 @@ import MapComponent from '../MapComponent/MapComponent';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import ReTicketType from '../TicketType/ReTicketType';
+import { pl } from 'date-fns/locale';
 
 
 class Detail extends Component {
@@ -29,10 +30,6 @@ class Detail extends Component {
         }
     }
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
-
-    componentWillMount = () => {
-
-    }
 
     showShortDescrip = (shortDesCrip) => {
         const splitArray = shortDesCrip.split('<br><br>');
@@ -57,7 +54,8 @@ class Detail extends Component {
 
     render() {
         var {place} = this.props
-        
+        console.log(place);
+
         if (place !== undefined) {
             return (
                 <div

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
 import VisitorTypeList from '../AddSub/VisitorTypeList';
-import { removeVisitorType } from '../../../actions/index';
+import { removeVisitorType, fetchVisitor2 } from '../../../actions/index';
 import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -25,7 +25,8 @@ class ReTicketType extends Component {
             open: false,
             apple: "aa",
             activeDay: [0, 6],
-
+            ticketTypeId: 0,
+            ticketName: 'ok',
 
             ticketTypeState: [],
             typeChoosing: 1,
@@ -57,30 +58,46 @@ class ReTicketType extends Component {
 
     componentWillMount = () => {
         var { ticketType } = this.props;
+        console.log(ticketType);
         this.setState({
             ticketTypeState: ticketType
         })
         this.props.removeVisitorType();
     }
 
-    resetOrder = () => {
+    resetOrder = (e) => {
         this.props.removeVisitorType()
         this.setState({
             total: 0
         })
+        // console.log(e.target);
+        // console.log(e.target.innerHTML);
+        // console.log(e.target.href.split('#')[1]);
+        var ticketTypeId = e.target.href.split('#')[1];
+        var ticketName = e.target.innerHTML + "";
+        // console.log(ticketName);
+        if (ticketTypeId) {
+            this.setState({
+                ticketTypeId: ticketTypeId,
+                ticketName: ticketName
+            })
+        }
+
     }
 
     showTicketTypeName = (ticketTypes) => {
         var result = null;
+
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
                 if (index == 0) {
                     return (
-                            <li key={index} className="nav-item" onClick={this.resetOrder}>
-                                <a className="nav-link active" href={`#${ticketType.id}`} role="tab" data-toggle="tab">
-                                    {ticketType.typeName}
-                                </a>
-                            </li>
+                        <li key={index} className="nav-item"
+                            onClick={this.resetOrder}>
+                            <a className="nav-link active" data-id={`#${ticketType.id}`} href={`#${ticketType.id}`} role="tab" data-toggle="tab">
+                                {ticketType.typeName}
+                            </a>
+                        </li>
                     );
                 } else {
                     return (
@@ -103,13 +120,13 @@ class ReTicketType extends Component {
                 if (index == 0) {
                     return (
                         <div key={index} className="tab-pane active" id={`${ticketType.id}`}>
-                            <VisitorTypeList item={ticketType.visitorTypes} />
+                            <VisitorTypeList id={ticketType.id} item={ticketType.visitorTypes} />
                         </div>
                     );
                 } else {
                     return (
                         <div key={index} className="tab-pane" id={`${ticketType.id}`}>
-                            <VisitorTypeList item={ticketType.visitorTypes} />
+                            <VisitorTypeList id={ticketType.id} item={ticketType.visitorTypes} />
                         </div>
                     );
                 }
@@ -137,8 +154,9 @@ class ReTicketType extends Component {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
-        const { ticketTypeState } = this.state;
-        const { ticket } = this.props;
+        const { ticketTypeId, ticketName } = this.state;
+        console.log(ticketName);
+        const { ticketType } = this.props;
         var total = this.getTotalMoney()
         return (
             <div>
@@ -243,10 +261,10 @@ class ReTicketType extends Component {
                             <div className="row">
                                 <div className="col-12">
                                     <ul className="nav nav-pills" role="tablist">
-                                        {this.showTicketTypeName(ticketTypeState)}
+                                        {this.showTicketTypeName(ticketType)}
                                     </ul>
                                     <div className="tab-content tab-space">
-                                        {this.showTicketTypeContent(ticketTypeState)}
+                                        {this.showTicketTypeContent(ticketType)}
                                     </div>
                                 </div>
                             </div>
@@ -260,27 +278,14 @@ class ReTicketType extends Component {
                         </div>
                         <div className="col-7">
                             {/* {total} */}
-                            <TotalPayment totalPayment={total} />
+                            <TotalPayment
+                                ticketTypeID={ticketTypeId}
+                                ticketName={ticketName}
+                                totalPayment={total}
+                            />
                         </div>
                     </div>
                 </div >
-
-                {/* <div className="container mt-5">
-                    <div className="row">
-                        <div className="col-lg-6 col-md-8">
-                            <ul className="nav nav-pills" role="tablist">
-                                {this.showTicketTypeName(ticketTypeState)}
-                            </ul>
-                            <div className="tab-content tab-space">
-                                {this.showTicketTypeContent(ticketTypeState)}
-
-                            </div>
-                        </div>
-                    </div>
-                    {total}
-
-                </div> */}
-
             </div>
 
 
@@ -298,6 +303,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         removeVisitorType: () => {
             dispatch(removeVisitorType())
+        },
+        fetchVisitor2: (id, qty, price) => {
+            dispatch(fetchVisitor2(id, qty, price))
         }
     }
 }

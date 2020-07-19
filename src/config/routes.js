@@ -55,7 +55,7 @@ const routers = [
     {
         path: '/payment',
         exact: false,
-        main: ({ history, match }) => <Payment history={history} match={match} />
+        main: ({ history, match, location }) => <Payment location={location} history={history} match={match} />
     },
     {
         path: '/',

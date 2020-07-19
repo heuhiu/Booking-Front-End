@@ -54,9 +54,10 @@ class PlaceDetail extends Component {
         const { match } = this.props;
         var id = match.params.id;
         callApi(`placeClient/${id}`, 'GET', null).then(res => {
+            // console.log(res);
             this.setState({ place: res.data})
         }).catch(error => {
-           
+           console.log(error);
         });
     }
 
@@ -75,7 +76,7 @@ class PlaceDetail extends Component {
             prevArrow: <SamplePrevArrow />
         };
         const { place } = this.state;
-
+        // console.log(place);
         if(place != null){
             return (
 
