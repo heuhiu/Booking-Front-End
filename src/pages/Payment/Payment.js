@@ -505,7 +505,21 @@ class Payment extends Component {
                                             </Accordion.Toggle>
                                             <Accordion.Collapse eventKey="0">
                                                 <Card.Body>
+                                                    <h1>NOT AVAIABLE YET</h1>
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
+                                        <Card id="cardHeade">
+                                            <Accordion.Toggle id="cardHeade2" as={Card.Header} eventKey="1">
+                                                Thẻ Credit/Debit
+                                            </Accordion.Toggle>
+                                            <Accordion.Collapse eventKey="1">
+                                                <Card.Body>
                                                     <div
+                                                        className="paymentMethodBox row">
+                                                        <div> <CardDemo orderDetail={myLocation} /></div>
+                                                    </div>
+                                                    {/* <div
                                                         className="paymentMethodBox row">
                                                         <div className="row">
                                                             <div className="col">
@@ -578,19 +592,7 @@ class Payment extends Component {
 
                                                         </div>
                                                     </div>
-                                                </Card.Body>
-                                            </Accordion.Collapse>
-                                        </Card>
-                                        <Card id="cardHeade">
-                                            <Accordion.Toggle id="cardHeade2" as={Card.Header} eventKey="1">
-                                                Thẻ Credit/Debit
-                                            </Accordion.Toggle>
-                                            <Accordion.Collapse eventKey="1">
-                                                <Card.Body>
-                                                    <div
-                                                        className="paymentMethodBox row">
-                                                        <div> <CardDemo orderDetail={myLocation} /></div>
-                                                    </div>
+                                                */}
                                                 </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>

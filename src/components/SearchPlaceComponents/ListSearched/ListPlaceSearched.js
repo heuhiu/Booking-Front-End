@@ -15,8 +15,11 @@ class ListPlaceSearched extends Component {
             activePage: 1,      //Current page number
             totalPage: 1,       //Total page paging
             totalItems: 0,      //Total item searched
-            limit: 5,          //Number of items appear
+            limit: 2,          //Number of items appear
             searchList: [],     //ListSeached temporary
+            searchName: "",
+            listCtiId: "",
+            listCatId: ""
         }
     }
 
@@ -44,8 +47,8 @@ class ListPlaceSearched extends Component {
                                         // style={{backgroundImage: `url(${searchPic})`}} 
                                         className="backgroupPresent col">
                                         <div className="thumb">
-                                            {/* <img src={data.placeImageLink[0]} alt="" /> */}
-                                            <img style={{ objectFit: "cover" }} src={searchPic} alt="" />
+                                            <img src={data.placeImageLink[0]} alt="" />
+                                            {/* <img style={{ objectFit: "cover" }} src={searchPic} alt="" /> */}
                                             {/* <a href="/#" className="prise">$500</a> */}
                                         </div>
                                     </div>
@@ -88,15 +91,19 @@ class ListPlaceSearched extends Component {
 
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = (pageNumber) => {
+        const { newDecode, listCtiIdNumber, listCatIdNumber } = this.state;
         // const { searchName, listCtiId, listCatId } = this.props;
         // console.log(searchName);
         // console.log(listCtiId);
         // console.log(listCatId);;
-        // this.setState({
-        //     activePage: pageNumber
-        // }, () => {
-        //     this.receivedData(searchName, listCtiId, listCatId);
-        // })
+        this.setState({
+            activePage: pageNumber
+        }
+            , () => {
+                this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
+            }
+        )
+        // this.forceUpdate();
     }
 
     //Received data from API
@@ -117,11 +124,11 @@ class ListPlaceSearched extends Component {
             }
         }).then(res => {
             //set state
-            // console.log(res);
+            console.log(res);
             this.setState({
                 totalPage: res.data.totalPage,
                 searchList: res.data.listResult,
-                totalItems: res.data.totalItems
+                totalItems: res.data.totalItems,
             })
         }).catch(function (error) {
             console.log(error.response);
@@ -133,13 +140,11 @@ class ListPlaceSearched extends Component {
     //     debugger
     //     const { searchName, listCtiId, listCatId } = this.props;
     //     console.log(searchName);
-
-        
     //     this.receivedData(searchName, listCtiId, listCatId);
     // }
 
     componentDidMount = () => {
-        debugger
+        // debugger
         var { location } = this.props;
         const answer_array = location.search.split('?');
         var name = '';
@@ -166,17 +171,20 @@ class ListPlaceSearched extends Component {
         // console.log(name.replace(/%20/g, ' '));
         var newDecode = decodeURIComponent(name);
         var oldDecode = name.replace(/%20/g, ' ');
-        console.log(oldDecode+" vs "+newDecode);
-        this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
-        // this.setState({
-        //     searchedName: name.replace(/%20/g, ' '),
-        //     // searchName: myDecoedName,
-        //     listCtiId: listCtiIdNumber,
-        //     listCatId: listCatIdNumber
-        // })
+        console.log(oldDecode + " vs " + newDecode);
+
+        this.setState({
+            // searchedName: name.replace(/%20/g, ' '),
+            searchName: newDecode,
+            listCtiId: listCtiIdNumber,
+            listCatId: listCatIdNumber
+        }, () => {
+            this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
+        })
     }
+
     render() {
-        debugger
+        // debugger
         const { activePage, totalItems, searchList } = this.state;
         const { searchName, listCtiId, listCatId } = this.props;
         return (

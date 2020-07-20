@@ -50,17 +50,53 @@ class PlaceDetail extends Component {
         }
     }
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         // debugger
         const { match } = this.props;
         var id = match.params.id;
         callApi(`placeClient/${id}`, 'GET', null).then(res => {
             // console.log(res);
-            this.setState({ place: res.data})
+            this.setState({ place: res.data })
         }).catch(error => {
-           console.log(error);
+            console.log(error);
         });
     }
+
+    renderSlider = (array) => {
+        var result = null;
+        if (array.length > 0) {
+            result = array.map((item, index) => {
+                return (
+                    <div
+                    style={{
+                        maxWidth: "400px",
+                        overflow: "hidden"
+                    }}
+                    >
+                        <img
+                            style={{ borderRadius: "2px",
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                            margin: "auto",
+                            display: "block",
+                            width: "100%",
+                            objectFit: "contain"
+                        }}
+                            width="100%"
+                            height="100%"
+                            src={item}
+                            alt="Failt to load" />
+                    </div>
+                );
+            })
+        } else if (array.length === 0) {
+            return (
+                <p>Not Found</p>
+            );
+        }
+        return result;
+    }
+
 
     render() {
         const settings = {
@@ -77,8 +113,15 @@ class PlaceDetail extends Component {
             prevArrow: <SamplePrevArrow />
         };
         const { place } = this.state;
-        // console.log(place);
-        if(place != null){
+        if (place !== null) {
+            console.log(place.placeImageLink);
+            // {this.renderSlider2}
+            for (let index = 0; index < place.placeImageLink.length; index++) {
+                const element = place.placeImageLink[index];
+                console.log(element);
+            }
+        }
+        if (place != null) {
             return (
 
                 <div >
@@ -87,8 +130,8 @@ class PlaceDetail extends Component {
                         style={{ marginTop: "100px", padding: "0px" }}>
                         <Menu />
                         <Slider {...settings}>
-                            <div
-                            >
+                            {this.renderSlider(place.placeImageLink)}
+                            {/* <div>
                                 <img
                                     style={{ borderRadius: "2px" }}
                                     width="100%"
@@ -111,17 +154,17 @@ class PlaceDetail extends Component {
                                     height="100%"
                                     src={SliderPic}
                                     alt="Failt to load" />
-                            </div>
+                            </div> */}
                         </Slider>
-                        <Detail  place={place}/>
-    
+                        <Detail place={place} />
+
                     </div>
                     <div>
                         <Footer2 />
                     </div>
                 </div>
             );
-        }else{
+        } else {
             return ""
         }
     }

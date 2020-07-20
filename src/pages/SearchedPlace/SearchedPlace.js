@@ -49,7 +49,7 @@ class SearchedPlace extends Component {
     // }
     
     render() {
-        debugger
+        // debugger
         const { searchedName, listCtiId, listCatId } = this.state;
         console.log(searchedName);
         return (
