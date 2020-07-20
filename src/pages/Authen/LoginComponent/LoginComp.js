@@ -5,6 +5,7 @@ import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
+
 function FormError(props) {
     if (props.isHidden) { return null; }
     return (
@@ -127,6 +128,7 @@ class LoginComp extends Component {
                 alert('Đăng nhập thành công');
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data));
                 var decoded = jwtDecode(res.data);
+                console.log(decoded.user);
                 //data will be store in localStorage
                 this.props.fetchUserDetail(decoded.user);
                 this.props.history.push("/");

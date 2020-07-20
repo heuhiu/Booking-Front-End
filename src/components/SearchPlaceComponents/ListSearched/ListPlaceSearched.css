@@ -111,10 +111,10 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 20px;
-    color: #FFFFFF;
-    margin-bottom: 10px;
+    color: #A5A5A5;
+    margin-top: 10px;
   }
 
   .popular_places_area .single_place .place_info .oldPrice {
@@ -137,7 +137,7 @@
     font-size: 24px;
     line-height: 28px;
     color: #FF7062;
-    margin-top: 2px;
+    margin-top: 50px;
     margin-bottom: 0px;
   }
   
@@ -184,11 +184,16 @@
   
   /* line 76, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place:hover {
+    -webkit-box-shadow: 0 30px 30px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 30px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .popular_places_area .single_place {
     -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   }
-  
   /* line 79, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place:hover .place_info h3 {
     color: #FF4A52;
@@ -485,3 +490,6 @@
     width: 100%;
   }
 
+.backgroupPresent{
+  overflow: hidden;
+}

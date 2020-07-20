@@ -9,7 +9,6 @@ class MyCounter extends Component {
         super(props);
         this.state = {
             quantity: 0,
-            totalPrice: 0,
             myId: 0,
             price: 0,
         }

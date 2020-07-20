@@ -37,7 +37,7 @@ class VisitorTypeItem extends Component {
                         </div>
 
                         <div className="col-lg-5 col-md-4 col-sm-3 col-xs-3" style={{ display: "table" }} >
-                            <p className="myTitlePrice">đ {item.price}</p>
+                            <p className="myTitlePrice"> {item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</p>
                         </div>
                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                             <div className="row no-gutter quantityBox">

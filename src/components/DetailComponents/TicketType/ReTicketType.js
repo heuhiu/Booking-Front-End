@@ -9,6 +9,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import vi from "date-fns/locale/vi";
 import TotalPayment from '../TotalPayment/TotalPayment';
+// import format from 'react';
 import MyCounter from '../AddSub/MyCounter';
 import axios from 'axios';
 import { el } from 'date-fns/locale';
@@ -26,7 +27,7 @@ class ReTicketType extends Component {
             apple: "aa",
             activeDay: [0, 6],
             ticketTypeId: 0,
-            ticketName: 'ok',
+            ticketName: 'default',
 
             ticketTypeState: [],
             typeChoosing: 1,
@@ -63,6 +64,7 @@ class ReTicketType extends Component {
             ticketTypeState: ticketType
         })
         this.props.removeVisitorType();
+        this.setDefaultTicketType(ticketType);
     }
 
     resetOrder = (e) => {
@@ -85,16 +87,32 @@ class ReTicketType extends Component {
 
     }
 
+    setDefaultTicketType = (ticketTypes) => {
+        var result = null;
+        if (ticketTypes.length > 0) {
+            result = ticketTypes.map((ticketType, index) => {
+                if (index == 0) {
+                    console.log(ticketType.id);
+                    console.log(ticketType.typeName);
+                    this.setState({
+                        ticketTypeId: ticketType.id,
+                        ticketName: ticketType.typeName
+                    })
+                } 
+            });
+        }
+    }
+    
     showTicketTypeName = (ticketTypes) => {
         var result = null;
-
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
                 if (index == 0) {
                     return (
                         <li key={index} className="nav-item"
                             onClick={this.resetOrder}>
-                            <a className="nav-link active" data-id={`#${ticketType.id}`} href={`#${ticketType.id}`} role="tab" data-toggle="tab">
+                            <a className="nav-link active" 
+                            href={`#${ticketType.id}`} role="tab" data-toggle="tab">
                                 {ticketType.typeName}
                             </a>
                         </li>
@@ -150,14 +168,20 @@ class ReTicketType extends Component {
                 {value}
             </button>
         );
+        console.log(this.state.startDate);
+
         var dateType = {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
-        const { ticketTypeId, ticketName } = this.state;
+        const { ticketTypeId, ticketName, startDate } = this.state;
+        console.log(ticketTypeId);
         console.log(ticketName);
+        // console.log(prnDt);
+        
+
         const { ticketType } = this.props;
-        var total = this.getTotalMoney()
+        var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
         return (
             <div>
                 <div
@@ -282,6 +306,7 @@ class ReTicketType extends Component {
                                 ticketTypeID={ticketTypeId}
                                 ticketName={ticketName}
                                 totalPayment={total}
+                                redemptionDate={startDate}
                             />
                         </div>
                     </div>

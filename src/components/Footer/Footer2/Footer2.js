@@ -78,7 +78,7 @@ class Footer2 extends Component {
               {/* </g> */}
           
           </svg>
-            <h1>Food ter</h1>
+            {/* <h1>Food ter</h1> */}
           </footer>
         );
     }

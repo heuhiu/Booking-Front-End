@@ -41,13 +41,14 @@ class _CardForm extends Component {
   handleSubmit = (evt) => {
     debugger
     evt.preventDefault();
-    const { orderDetail, visitorType } = this.props;
+    const { orderDetail, visitorType, loggedUser } = this.props;
     // console.log(orderDetail.state.ticketTypeID);
     // console.log(orderDetail.state.ticketName);
     // const ticketName = orderDetail.state.ticketName;
     // console.log(orderDetail.state.totalPayment);
     // const totalPayment = orderDetail.state.totalPayment;
     // console.log(visitorType);
+    // console.log(loggedUser);
 
     var orderItems = [];
     var item = {
@@ -67,13 +68,13 @@ class _CardForm extends Component {
       ticketTypeId: orderDetail.state.ticketTypeID,
       ticketTypeName: orderDetail.state.ticketName,
       userId: 1,
-      firstName: "Hiu",
-      lastName: "Vuong",
-      mail: "hieuvmse05869@fpt.edu.vn",
-      phoneNumber: "01231231",
+      firstName: loggedUser.firstName,
+      lastName: loggedUser.lastName,
+      mail: loggedUser.mail,
+      phoneNumber: loggedUser.phoneNumber,
       totalPayment: orderDetail.state.totalPayment,
       purchaseDay: new Date(),
-      redemptionDate: new Date(),
+      redemptionDate: orderDetail.state.redemptionDate,
       orderItems: orderItems
     }
 
@@ -104,9 +105,11 @@ class _CardForm extends Component {
   };
 
   render() {
+    console.log(this.props.loggedUser);
     return (
+      
       <div className="CardDemo">
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        {/* <form onSubmit={this.handleSubmit.bind(this)}> */}
 
           Card details
             <CardElement
@@ -117,8 +120,8 @@ class _CardForm extends Component {
           <div className="error" role="alert">
             {this.state.errorMessage}
           </div>
-          <button>Pay</button>
-        </form>
+          <button onClick={this.handleSubmit.bind(this)}>Pay</button>
+        {/* </form> */}
       </div>
     );
   }
@@ -128,14 +131,15 @@ const CardForm = injectStripe(_CardForm);
 
 class CardDemo extends Component {
   render() {
-    const { orderDetail, visitorType } = this.props;
+    const { orderDetail, visitorType, loggedUser } = this.props;
     console.log(orderDetail);
     console.log(visitorType);
+    console.log(loggedUser)
     return (
 
       <StripeProvider apiKey='pk_test_51Gs1CYGtpdysubsWvXC2vynpAmqeGq1vGggeXCHQsepXXX5TOxNBKlLFHBsar57TIkYsMYWuTSFg5H40uHBL4TW200nIV10yG5'>
         <Elements>
-          <CardForm orderDetail={orderDetail} visitorType={visitorType} />
+          <CardForm loggedUser={loggedUser} orderDetail={orderDetail} visitorType={visitorType} />
         </Elements>
       </StripeProvider>
     );
@@ -145,7 +149,8 @@ class CardDemo extends Component {
 
 const mapStateToProps = state => {
   return {
-    visitorType: state.Ticket
+      visitorType: state.Ticket,
+      loggedUser: state.User
   }
 }
 

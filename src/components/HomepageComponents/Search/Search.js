@@ -87,6 +87,7 @@ class Search extends Component {
     render() {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
+        console.log(txtParkName);
         return (
             <div>
                 <form
@@ -101,7 +102,7 @@ class Search extends Component {
                                 className="form-control"
                                 placeholder="Ex: food, service, hotel"
                                 name="txtParkName"
-                                value={txtParkName}
+                                // value={txtParkName}
                                 onChange={this.onChange}
                             />
                         </div>

@@ -33,9 +33,10 @@ class TotalPayment extends Component {
     }
 
     render() {
-        const { visitorType, totalPayment, ticketTypeID, ticketName } = this.props;
+        const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate } = this.props;
         console.log(ticketTypeID);
         console.log(ticketName);
+        console.log(redemptionDate);
         return (
             <div>
                 <div className="row-12 no-gutters">
@@ -46,7 +47,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ {totalPayment}</p>
+                            > {totalPayment}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -56,7 +57,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            >đ 0</p>
+                            > 0 đ</p>
                         </div>
                     </div>
                     <div className="row ">
@@ -65,7 +66,7 @@ class TotalPayment extends Component {
                         </div>
                         <div className="col">
                             <p className="pPayment">
-                                đ {totalPayment}
+                                 {totalPayment}
                             </p>
                         </div>
                     </div>
@@ -85,7 +86,7 @@ class TotalPayment extends Component {
                         >
                             <Link to={{
                                 pathname: "/payment",
-                                state: { ticketTypeID, ticketName, totalPayment } }} >
+                                state: { ticketTypeID, ticketName, totalPayment, redemptionDate} }} >
                             
                                 <button className="bookingBtn">
                                     Đặt vé ngay
