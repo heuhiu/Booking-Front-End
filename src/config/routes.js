@@ -13,18 +13,18 @@ import Payment from '../pages/Payment/Payment';
 
 const routers = [
     {
-        path: '/Login',
+        path: '/login',
         exact: false,
         main: ({ history, location }) => <LoginComp history={history} location={location} />
 
     },
     {
-        path: '/Register',
+        path: '/register',
         exact: false,
         main: ({ history, location }) => <RegisterComp history={history} location={location} />
     },
     {
-        path: '/Verify',
+        path: '/verify',
         exact: false,
         main: ({ history, location }) => <VerifyEmail history={history} location={location} />
 
@@ -36,7 +36,7 @@ const routers = [
             <CfMail history={history} location={location} match={match} />
     },
     {
-        path: '/SearchedPlace',
+        path: '/searchedPlace',
         exact: false,
         main: ({ match, history, location }) =>
             <SearchedPlace history={history} location={location} match={match} />
@@ -48,7 +48,7 @@ const routers = [
             <MyMul history={history} location={location} match={match} />
     },
     {
-        path: '/PlaceDetail/:id',
+        path: '/placeDetail/:id',
         exact: false,
         main: ({ history, match }) => <PlaceDetail history={history} match={match} />
     },

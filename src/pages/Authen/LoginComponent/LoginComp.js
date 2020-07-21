@@ -261,7 +261,7 @@ class LoginComp extends Component {
                             <div className="row det">
                                 <div className="col">
                                     <p className="det1">Chưa có tài khoản? &emsp;
-                                            <Link to="/Register"><i className="det2">Đăng kí ngay</i></Link>
+                                            <Link to="/register"><i className="det2">Đăng kí ngay</i></Link>
                                     </p>
                                     <p className="det1">Không thể truy cập?</p>
                                 </div>

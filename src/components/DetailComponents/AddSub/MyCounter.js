@@ -11,12 +11,13 @@ class MyCounter extends Component {
             quantity: 0,
             myId: 0,
             price: 0,
+            name: "",
         }
     }
 
     getMyList = (data) => {
         var { item } = this.props;
-        // console.log(item.id);
+        // console.log(item);
         // var element = [];
         var qty = 0;
         if (data !== null) {
@@ -32,7 +33,9 @@ class MyCounter extends Component {
     }
 
     render() {
+        debugger
         var { item } = this.props;
+        console.log(item);
         var data = JSON.parse(localStorage.getItem('visitorTypeList'));
         if (data !== null) {
             // console.log(data);
@@ -73,10 +76,11 @@ class MyCounter extends Component {
             this.setState({
                 quantity: quantity,
                 myId: item.id,
-                price: item.price
+                price: item.price,
+                name: item.typeName
             }
                 , () => {
-                    fetchVisitor2(this.state.myId, this.state.quantity, this.state.price);
+                    fetchVisitor2(this.state.myId, this.state.quantity, this.state.price, this.state.name);
                 }
             );
 
@@ -94,8 +98,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchVisitor2: (id, qty, price) => {
-            dispatch(fetchVisitor2(id, qty, price))
+        fetchVisitor2: (id, qty, price, name) => {
+            dispatch(fetchVisitor2(id, qty, price, name))
         }
     }
 }

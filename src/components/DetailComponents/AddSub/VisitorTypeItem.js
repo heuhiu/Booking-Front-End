@@ -64,7 +64,7 @@ class VisitorTypeItem extends Component {
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, visitorType } = this.props;
         if (quantity >= 0) {
-            fetchVisitor2(item.id, quantity, item.price);
+            fetchVisitor2(item.id, quantity, item.price, item.typeName);
             this.forceUpdate()
 
         }
@@ -79,8 +79,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchVisitor2: (id, qty, price) => {
-            dispatch(fetchVisitor2(id, qty, price))
+        fetchVisitor2: (id, qty, price, name) => {
+            dispatch(fetchVisitor2(id, qty, price, name))
         }
     }
 }

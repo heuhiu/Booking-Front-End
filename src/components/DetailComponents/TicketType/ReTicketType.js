@@ -181,7 +181,9 @@ class ReTicketType extends Component {
         
 
         const { ticketType } = this.props;
-        var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        // var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        var total = this.getTotalMoney();;
+
         return (
             <div>
                 <div

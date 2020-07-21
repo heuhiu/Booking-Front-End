@@ -32,6 +32,10 @@ class TotalPayment extends Component {
         this.props.removeVisitorType();
     }
 
+    convertCurrecyToVnd = (currency) => {
+        return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+    }
+
     render() {
         const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate } = this.props;
         console.log(ticketTypeID);
@@ -47,7 +51,7 @@ class TotalPayment extends Component {
                         <div className="col">
                             <p
                                 className="pPayment"
-                            > {totalPayment}</p>
+                            > {this.convertCurrecyToVnd(totalPayment)}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -66,7 +70,7 @@ class TotalPayment extends Component {
                         </div>
                         <div className="col">
                             <p className="pPayment">
-                                 {totalPayment}
+                                 {this.convertCurrecyToVnd(totalPayment)}
                             </p>
                         </div>
                     </div>

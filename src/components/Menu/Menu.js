@@ -20,13 +20,13 @@ const menus = [
     },
     {
         name: 'Đăng nhập',
-        to: '/Login',
+        to: '/login',
         exact: false,
         style: 'loginbtn'
     },
     {
         name: 'Đăng kí',
-        to: '/Register',
+        to: '/register',
         exact: false,
         style: 'registerbtn'
     }
@@ -115,7 +115,7 @@ class Menu extends Component {
                         <button style={{ display: tokenLogin ? "none" : "" }} className="loginbtn">Đăng Nhập
                     </button>
                     </Link>
-                    <Link to="/Register">
+                    <Link to="/register">
                         <button style={{ display: tokenLogin ? "none" : "" }} className="registerbtn">
                             Đăng kí
                     </button>

@@ -135,11 +135,23 @@ class Payment extends Component {
         this.setState({ [name]: newState })
     }
 
-    
+    showVisitorTypeNameChoosed = (VisitorTypeArr) => {
+        var result = null;
+        if (VisitorTypeArr.length > 0) {
+            result = VisitorTypeArr.map((item, index) => {
+                console.log(item.visitorTypeName);
+                // <p>{item.visitorTypeName}</p>
+                return(
+                <p>{item.visitorTypeName}: {item.quantity}</p>
+                )
+            });
+        }
+        return result;
+    }
     render() {
-        
-        const { location } = this.props;
 
+        const { location, visitorType } = this.props;
+        console.log(visitorType);
         var dateType = {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
@@ -153,7 +165,7 @@ class Payment extends Component {
         console.log(this.state.email.value);
         // var x = 1000;
         // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-        const totalPayment = location.state.totalPayment.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
 
         const myLocation = location;
         const ticketName = myLocation.state.ticketName;
@@ -289,7 +301,7 @@ class Payment extends Component {
                             <div
                                 className="borderBox col-12">
                                 <div className="col-12">
-                                    <h1 className="step1h">Bước 1: Điền thông tin khách du lịch</h1>
+                                    <h1 className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
                                 </div>
                                 <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
                                 <div ref={this.myRef1} className="col-12 alertStep1">
@@ -329,12 +341,13 @@ class Payment extends Component {
                                             </div>
 
                                         </div>
-                                        {/* <div className="col">
-                                                <label>Họ</label>
-                                                <input type="text" className="inputPayment form-control" placeholder="Họ" />
-
-                                            </div> */}
                                         <div className="col">
+                                            <label>Họ</label>
+                                            <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
+                                                placeholder="Họ" />
+
+                                        </div>
+                                        {/* <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
@@ -348,18 +361,23 @@ class Payment extends Component {
                                                     value={loggedUser.lastName ? loggedUser.lastName : ""}
                                                 />
                                                 <span className="focus-input100"></span>
-                                                {/* <span className="label-input100">Họ</span> */}
+                                                <span className="label-input100">Họ</span>
                                             </div>
                                             <FormError
                                                 type="lastName"
                                                 isHidden={this.state.lastName.isInputValid}
                                                 errorMessage={this.state.lastName.errorMessage} />
+                                        </div> */}
+
+
+                                        <div className="col">
+                                            <label>Tên</label>
+                                            <input type="text"
+                                                disabled
+                                                value={loggedUser.firstName ? loggedUser.firstName : ""}
+                                                className="inputPayment form-control" placeholder="Tên" />
                                         </div>
                                         {/* <div className="col">
-                                                <label>Tên</label>
-                                                <input type="text" className="inputPayment form-control" placeholder="Tên" />
-                                            </div> */}
-                                        <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
@@ -373,15 +391,15 @@ class Payment extends Component {
                                                     value={loggedUser.firstName ? loggedUser.firstName : ""}
                                                 />
                                                 <span className="focus-input100"></span>
-                                                {/* <span className="label-input100">Tên</span> */}
+                                                <span className="label-input100">Tên</span>
                                             </div>
                                             <FormError
                                                 type="firstName"
                                                 isHidden={this.state.firstName.isInputValid}
                                                 errorMessage={this.state.firstName.errorMessage} />
-                                        </div>
+                                        </div> */}
                                     </div>
-                                    <div className="row">
+                                    {/* <div className="row">
                                         <div className="col">
 
                                         </div>
@@ -391,16 +409,19 @@ class Payment extends Component {
                                         <div className="col">
                                             <label className="cmt">Như trên CMND (không dấu)</label>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <div className="mrt-30 col-12">
                                     <div className="row">
-                                        {/* <div className="col">
-                                                <label>Số điện thoại</label>
-                                                <input type="number" className="inputPayment form-control" />
-                                            </div> */}
                                         <div className="col">
+                                            <label>Số điện thoại</label>
+                                            <input type="number"
+                                                disabled
+                                                value={loggedUser.phoneNumber}
+                                                className="inputPayment form-control" />
+                                        </div>
+                                        {/* <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
@@ -414,18 +435,21 @@ class Payment extends Component {
                                                     value={loggedUser.phoneNumber}
                                                 />
                                                 <span className="focus-input100"></span>
-                                                {/* <span className="label-input100">Số điện thoại xác thực</span> */}
+                                                <span className="label-input100">Số điện thoại xác thực</span>
                                             </div>
                                             <FormError
                                                 type="phoneNumb"
                                                 isHidden={this.state.phoneNumb.isInputValid}
                                                 errorMessage={this.state.phoneNumb.errorMessage} />
+                                        </div> */}
+                                        <div className="col">
+                                            <label>Địa chỉ Email</label>
+                                            <input type="text"
+                                                disabled
+                                                value={loggedUser.mail}
+                                                className="inputPayment form-control" placeholder="Email" />
                                         </div>
                                         {/* <div className="col">
-                                                <label>Địa chỉ Email</label>
-                                                <input type="text" className="inputPayment form-control" placeholder="Email" />
-                                            </div> */}
-                                        <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
@@ -440,13 +464,13 @@ class Payment extends Component {
 
                                                 />
                                                 <span className="focus-input100"></span>
-                                                {/* <span className="label-input100">{loggedUser.mail}</span> */}
+                                                <span className="label-input100">{loggedUser.mail}</span>
                                             </div>
                                             <FormError
                                                 type="email"
                                                 isHidden={this.state.email.isInputValid}
                                                 errorMessage={this.state.email.errorMessage} />
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="mrt-30 row">
                                         <div className="col">
@@ -622,7 +646,8 @@ class Payment extends Component {
                                         <p>Áp dụng cho: </p>
                                     </div>
                                     <div style={{ textAlign: "right" }} className="col">
-                                        <p>Người lớn : 2</p>
+                                        {/* <p>Người lớn : 2</p> */}
+                                        {this.showVisitorTypeNameChoosed(visitorType)}
                                     </div>
                                 </div>
 
@@ -632,7 +657,7 @@ class Payment extends Component {
                                         <p>Tổng: </p>
                                     </div>
                                     <div style={{ textAlign: "right" }} className="col">
-                                <p> {totalPayment}</p>
+                                        <p> {totalPayment}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters">
@@ -759,7 +784,8 @@ class Payment extends Component {
 
 const mapStateToProps = state => {
     return {
-        loggedUser: state.User
+        loggedUser: state.User,
+        visitorType: state.Ticket
     }
 }
 

@@ -313,7 +313,7 @@ class RegisterComp extends Component {
                 phoneNumber: phoneNumber.value
             }).then(res => {
                 alert('To Register confirm');
-                this.props.history.push("/Verify");
+                this.props.history.push("/verify");
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded

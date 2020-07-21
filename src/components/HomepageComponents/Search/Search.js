@@ -33,7 +33,7 @@ class Search extends Component {
 
     searchPathLink = () => {
         const { cityMul, catMul } = this.state;
-        var pathLink = '/SearchedPlace';
+        var pathLink = '/searchedPlace';
         const pathName = `?name=${this.state.txtParkName}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
         const pathListCat = `?listCatID=${this.state.catMul.join()}`
@@ -47,7 +47,7 @@ class Search extends Component {
                 pathLink += pathListCat;
             }
         }
-         else if (this.state.cityMul.length > 0) {
+        else if (this.state.cityMul.length > 0) {
             pathLink += pathListCity;
         }
         else if (this.state.catMul.length > 0) {
@@ -69,10 +69,19 @@ class Search extends Component {
 
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
-        console.log("s");
-        this.setState({
-            pathLink: `?name=${this.state.txtParkName}`
-        })
+        e.preventDefault();
+        if (this.state.txtParkName === "") {
+            alert("Lmao");
+        } else {
+            // this.setState({
+            //     // pathLink: `?name=${this.state.txtParkName}`
+            //     pathLink: `${this.searchPathLink}`
+            // })
+            this.props.push({
+                pathname: '/searchedPlace',
+                search: `${this.searchPathLink}`
+              })
+        }
     }
 
     setmMul = (cityMul, catMul) => {
@@ -132,24 +141,26 @@ class Search extends Component {
                     <Link
                         // onClick={this.onSubmitSearch}
                         className="search-submit"
-                        // to="/SearchedPlace"
-                        // to={`/SearchedPlace?name=${txtParkName}?name=${txtParkName}?name=${txtParkName}`}
+                        // to="/searchedPlace"
+                        // to={`/searchedPlace?name=${txtParkName}?name=${txtParkName}?name=${txtParkName}`}
                         // to={{
-                        //     pathname: '/SearchedPlace',
+                        //     pathname: '/searchedPlace',
                         //     query: queryParameters
                         //   }}
-                        // to={this.state.pathLink === "" ? "/SearchedPlace" : this.state.pathLink}
+                        // to={this.state.pathLink === "" ? "/searchedPlace" : this.state.pathLink}
                         to={this.searchPathLink}
                     >
-                        <button
-
-                            className="searchbtn"
-                        >
-                            <img src={search}
-                                alt="Fail !"
-                                width="17.76"
-                                height="17.76"
-                            /> &nbsp; Tìm Kiếm
+                    <button
+                        type="button"
+                        // onClick={this.onSubmitSearch}
+                        className="searchbtn"
+                        // className="search-submit"
+                    >
+                        <img src={search}
+                            alt="Fail !"
+                            width="17.76"
+                            height="17.76"
+                        /> &nbsp; Tìm Kiếm
                         </button>
                     </Link>
                 </form>

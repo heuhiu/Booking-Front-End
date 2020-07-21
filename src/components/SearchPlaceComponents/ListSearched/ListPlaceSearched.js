@@ -38,7 +38,7 @@ class ListPlaceSearched extends Component {
                         style={{ textDecoration: "none" }}
                         key={index}
                         to={{
-                            pathname: `/PlaceDetail/${data.id}`
+                            pathname: `/placeDetail/${data.id}`
                         }}>
                         <div key={data.index} className="col-lg-12 col-md-12">
                             <div className="single_place">

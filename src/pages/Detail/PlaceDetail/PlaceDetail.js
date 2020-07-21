@@ -67,25 +67,24 @@ class PlaceDetail extends Component {
         if (array.length > 0) {
             result = array.map((item, index) => {
                 return (
-                    <div
-                    style={{
-                        maxWidth: "400px",
-                        overflow: "hidden"
-                    }}
-                    >
-                        <img
-                            style={{ borderRadius: "2px",
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            margin: "auto",
-                            display: "block",
-                            width: "100%",
-                            objectFit: "contain"
-                        }}
-                            width="100%"
-                            height="100%"
-                            src={item}
-                            alt="Failt to load" />
+                    <div>
+                        <div>
+                            <img
+                                // style={{ borderRadius: "2px",
+                                // // maxWidth: "200%",
+                                // // maxHeight: "200%",
+                                // // margin: "auto",
+                                // // display: "block",
+                                // // width: "100%",
+                                // // objectFit: "contain"
+                                // width: "100%"
+
+                                // }}
+                                width="100%"
+                                height="600px"
+                                src={item}
+                                alt="Failt to load" />
+                        </div>
                     </div>
                 );
             })

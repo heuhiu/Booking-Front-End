@@ -5,7 +5,7 @@ import * as types from '../constants/ActionType';
 var initialState = [];
 
 var Ticket = (state = initialState, action) => {
-    var {  id, qty, price } = action;
+    var {  id, qty, price, name } = action;
     var index = -1;
     switch (action.type) {
         case types.ADD_VISITOR_TYPE_CART:
@@ -16,7 +16,8 @@ var Ticket = (state = initialState, action) => {
                 state.push({
                     visitorTypeId: id,
                     quantity: qty,
-                    myPrice: price
+                    myPrice: price,
+                    visitorTypeName: name
                 })
             }
             // localStorage.setItem('visitorTypeList', JSON.stringify(state));
