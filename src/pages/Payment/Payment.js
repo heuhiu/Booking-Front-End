@@ -139,10 +139,10 @@ class Payment extends Component {
         var result = null;
         if (VisitorTypeArr.length > 0) {
             result = VisitorTypeArr.map((item, index) => {
-                console.log(item.visitorTypeName);
+                // console.log(item.visitorTypeName);
                 // <p>{item.visitorTypeName}</p>
-                return(
-                <p>{item.visitorTypeName}: {item.quantity}</p>
+                return (
+                    <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
                 )
             });
         }
@@ -647,7 +647,7 @@ class Payment extends Component {
                                     </div>
                                     <div style={{ textAlign: "right" }} className="col">
                                         {/* <p>Người lớn : 2</p> */}
-                                        {this.showVisitorTypeNameChoosed(visitorType)}
+                                        {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType):"Chưa đặt"} vé
                                     </div>
                                 </div>
 

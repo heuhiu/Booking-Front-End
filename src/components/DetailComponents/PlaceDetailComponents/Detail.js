@@ -55,7 +55,7 @@ class Detail extends Component {
     render() {
         var {place} = this.props
         console.log(place);
-
+        console.log(place.weekDays);
         if (place !== undefined) {
             return (
                 <div
@@ -86,7 +86,7 @@ class Detail extends Component {
                             <TicketType ticketType={place.ticketTypes}/>
                         </div> */}
                         <div >
-                            <ReTicketType ticketType={place.ticketTypes}/>
+                            <ReTicketType weekDays={place.weekDays} ticketType={place.ticketTypes}/>
                         </div>
 
                         <div id="inline">

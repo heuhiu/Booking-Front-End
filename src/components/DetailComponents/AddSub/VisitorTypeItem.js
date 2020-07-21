@@ -33,11 +33,14 @@ class VisitorTypeItem extends Component {
                         borderRadius: '10px',
                     }}>
                         <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5" style={{ display: "table" }} >
-                            <p className="myTitleType"> {item.typeName} </p>
+                            <p className="myTitleType">
+                                {item.typeName}
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            Số lượng còn lại: {item.remaining - myQuan}
+                            </p>
                         </div>
-
                         <div className="col-lg-5 col-md-4 col-sm-3 col-xs-3" style={{ display: "table" }} >
-                            <p className="myTitlePrice"> {item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</p>
+                            <p className="myTitlePrice"> {item.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                         </div>
                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                             <div className="row no-gutter quantityBox">
@@ -63,7 +66,7 @@ class VisitorTypeItem extends Component {
 
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, visitorType } = this.props;
-        if (quantity >= 0) {
+        if (quantity >= 0 && (item.remaining - quantity) >=0 ) {
             fetchVisitor2(item.id, quantity, item.price, item.typeName);
             this.forceUpdate()
 

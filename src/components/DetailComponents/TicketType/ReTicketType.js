@@ -22,10 +22,10 @@ class ReTicketType extends Component {
         super(props);
         this.state = {
             dob: { value: '1-1-1' },
-            startDate: new Date(),
+            startDate: null,
             open: false,
             apple: "aa",
-            activeDay: [0, 6],
+            activeDay: [0,1],
             ticketTypeId: 0,
             ticketName: 'default',
 
@@ -51,17 +51,25 @@ class ReTicketType extends Component {
 
     isWeekday = (Date) => {
         const { activeDay } = this.state;
-        const day = Date.getDay()
+        const day = Date.getDay();
         var fullList = [0, 1, 2, 3, 4, 5, 6];
         fullList = fullList.filter(val => !activeDay.includes(val));
-        return day !== activeDay[0] && day !== activeDay[1]
+        console.log(fullList);
+        // for (let index = 0; index < fullList.length; index++) {
+        //     // const element = fullList[index];
+        //     return day !== fullList[index];
+        // }
+        
+        return day !== fullList[0] && day !== fullList[1] && day !== fullList[2] && 
+        day !== fullList[3] && day !== fullList[4] && day !== fullList[5] && day !== fullList[6] 
     }
 
     componentWillMount = () => {
-        var { ticketType } = this.props;
+        var { ticketType, weekDays } = this.props;
         console.log(ticketType);
         this.setState({
-            ticketTypeState: ticketType
+            ticketTypeState: ticketType,
+            activeDay: weekDays
         })
         this.props.removeVisitorType();
         this.setDefaultTicketType(ticketType);
@@ -168,20 +176,20 @@ class ReTicketType extends Component {
                 {value}
             </button>
         );
-        console.log(this.state.startDate);
 
         var dateType = {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
+        if(this.state.startDate!==null)
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
+        console.log(prnDt);
         const { ticketTypeId, ticketName, startDate } = this.state;
         console.log(ticketTypeId);
         console.log(ticketName);
-        // console.log(prnDt);
-        
-
-        const { ticketType } = this.props;
+        const { ticketType, weekDays } = this.props;
+        console.log(weekDays);
         // var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        
         var total = this.getTotalMoney();;
 
         return (
@@ -233,7 +241,7 @@ class ReTicketType extends Component {
                                             className="myTitle"
                                             style={{ marginBottom: "0px" }}
                                         >
-                                            {prnDt}
+                                            {prnDt===undefined?"Bấm để chọn":prnDt}
                                         </h6>
                                     </div>
                                     <div className="col-1">
@@ -268,6 +276,7 @@ class ReTicketType extends Component {
                                         showYearDropdown
                                         yearDropdownItemNumber={15}
                                         scrollableYearDropdown
+                                        minDate={new Date()}
                                         customInput={<ExampleCustomInput />}
                                         inline
                                         calendarClassName="myCalender"
