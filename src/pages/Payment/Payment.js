@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
 import './payment.css';
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
@@ -29,26 +28,26 @@ class Payment extends Component {
         this.state = {
             myPercen: 0,
             nameToCall: "Anh",
-            firstName: {
-                value: '',
-                isInputValid: false,
-                errorMessage: ''
-            },
-            lastName: {
-                value: '',
-                isInputValid: false,
-                errorMessage: ''
-            },
-            phoneNumb: {
-                value: '',
-                isInputValid: false,
-                errorMessage: ''
-            },
-            email: {
-                value: '',
-                isInputValid: false,
-                errorMessage: ''
-            }
+            // firstName: {
+            //     value: '',
+            //     isInputValid: false,
+            //     errorMessage: ''
+            // },
+            // lastName: {
+            //     value: '',
+            //     isInputValid: false,
+            //     errorMessage: ''
+            // },
+            // phoneNumb: {
+            //     value: '',
+            //     isInputValid: false,
+            //     errorMessage: ''
+            // },
+            // email: {
+            //     value: '',
+            //     isInputValid: false,
+            //     errorMessage: ''
+            // }
         }
     }
     scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
@@ -60,7 +59,9 @@ class Payment extends Component {
         newState.value = value;
         this.setState({ [name]: newState });
     }
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     validateInput = (type, checkingText) => {
         var regexp = '';
         var checkingResult = '';
@@ -155,14 +156,15 @@ class Payment extends Component {
         var dateType = {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
-        const prnDt = location.state.redemptionDate.toLocaleDateString('vi', dateType);
+
+        var prnDt = location.state.redemptionDate.toLocaleDateString('vi', dateType);
 
         console.log(location.state);
         console.log(location.state.ticketTypeID);
         console.log(location.state.ticketName);
         console.log(location.state.totalPayment);
         console.log(location.state.redemptionDate);
-        console.log(this.state.email.value);
+        // console.log(this.state.email.value);
         // var x = 1000;
         // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
         const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
@@ -200,6 +202,7 @@ class Payment extends Component {
                             {/* process bar */}
                             <div>
                                 <div
+
                                     style={{
                                         padding: "0rem 7rem 0rem 7rem"
                                     }}
@@ -300,7 +303,7 @@ class Payment extends Component {
                             {/* <form> */}
                             <div
                                 className="borderBox col-12">
-                                <div className="col-12">
+                                <div id="tries" className="col-12">
                                     <h1 className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
                                 </div>
                                 <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
@@ -541,7 +544,8 @@ class Payment extends Component {
                                                 <Card.Body>
                                                     <div
                                                         className="paymentMethodBox row">
-                                                        <div> <CardDemo orderDetail={myLocation} /></div>
+                                                        <div> <CardDemo 
+                                                        history={this.props.history} orderDetail={myLocation} /></div>
                                                     </div>
                                                     {/* <div
                                                         className="paymentMethodBox row">
@@ -647,7 +651,7 @@ class Payment extends Component {
                                     </div>
                                     <div style={{ textAlign: "right" }} className="col">
                                         {/* <p>Người lớn : 2</p> */}
-                                        {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType):"Chưa đặt"} vé
+                                        {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"} vé
                                     </div>
                                 </div>
 
@@ -776,6 +780,7 @@ class Payment extends Component {
                 </div>
                 <Footer2 />
             </div >
+
         );
     }
 

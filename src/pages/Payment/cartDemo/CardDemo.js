@@ -7,6 +7,7 @@ import {
 } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
+import { Link, Redirect } from 'react-router-dom';
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
   return {
@@ -81,6 +82,7 @@ class _CardForm extends Component {
 
 
     if (this.props.stripe) {
+
       this.props.stripe.createToken()
         .then(res => {
           console.log(res.token.id);
@@ -92,6 +94,14 @@ class _CardForm extends Component {
           callApi('payment', 'POST', data)
             .then(res => {
               console.log(res);
+              if (res) {
+                // this.props.history.push("/paymentSucess");
+                this.props.history.push({
+                  pathname: '/paymentSucess',
+                  state: { orderDetail: orderDetail }
+                  // state:  orderDetail
+                })
+              }
             })
             .catch(function (error) {
               if (error.response) {
@@ -102,6 +112,7 @@ class _CardForm extends Component {
     } else {
       console.log("Stripe.js hasn't loaded yet.");
     }
+
   };
 
   render() {
@@ -110,6 +121,7 @@ class _CardForm extends Component {
     var dateType = {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     };
+
     const prnDt = orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
     return (
 
@@ -163,7 +175,7 @@ class _CardForm extends Component {
                 <div className="col">
                   <label>Ngày hết hạn</label>
                   <div>{prnDt}</div> */}
-                  {/* <div className="dropup">
+          {/* <div className="dropup">
                     <button type="button" className="myCall" data-toggle="dropdown">
                       Ngày &nbsp;
                         <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,8 +190,8 @@ class _CardForm extends Component {
                     </div>
                   </div> */}
 
-                </div>
-                {/* <div className="col-3">
+        </div>
+        {/* <div className="col-3">
                   <label>&nbsp;</label>
                   <div className="dropdown">
                     <button type="button" aria-haspopup="true" className="myCall" data-toggle="dropdown">
@@ -197,18 +209,26 @@ class _CardForm extends Component {
                   </div>
                 </div>
                */}
-                {/* <div className="col">
+        {/* <div className="col">
                   <label>Mã bảo mật</label>
                   <input type="number" className="inputPayment form-control" placeholder="Mã bảo mật" />
                 </div> */}
 
-              {/* </div>
+        {/* </div>
             </div> */}
 
-          {/* </div>
+        {/* </div>
         </div> */}
-
-        <button className="proceedPaymentBtn" onClick={this.handleSubmit.bind(this)}>Pay</button>
+        {/* <Link 
+          to={{
+            pathname: '/paymentSucess',
+            state: orderDetail
+          }}> */}
+        <button className="proceedPaymentBtn"
+          onClick={this.handleSubmit.bind(this)}>
+          Pay
+          </button>
+        {/* </Link> */}
         {/* </form> */}
       </div>
     );
@@ -227,7 +247,7 @@ class CardDemo extends Component {
 
       <StripeProvider apiKey='pk_test_51Gs1CYGtpdysubsWvXC2vynpAmqeGq1vGggeXCHQsepXXX5TOxNBKlLFHBsar57TIkYsMYWuTSFg5H40uHBL4TW200nIV10yG5'>
         <Elements>
-          <CardForm loggedUser={loggedUser} orderDetail={orderDetail} visitorType={visitorType} />
+          <CardForm history={this.props.history} loggedUser={loggedUser} orderDetail={orderDetail} visitorType={visitorType} />
         </Elements>
       </StripeProvider>
     );

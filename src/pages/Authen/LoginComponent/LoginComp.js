@@ -87,7 +87,7 @@ class LoginComp extends Component {
         this.setState({ [name]: newState })
     }
 
-    onClickRegister = (e) => {
+    onLogin = (e) => {
         const { email, password } = this.state;
         e.preventDefault();
         if (true) {
@@ -131,6 +131,7 @@ class LoginComp extends Component {
                 console.log(decoded.user);
                 //data will be store in localStorage
                 this.props.fetchUserDetail(decoded.user);
+                console.log(this.props.history);
                 this.props.history.push("/");
             }).catch(function (error) {
                 if (error.response) {
@@ -165,7 +166,7 @@ class LoginComp extends Component {
 
                         <form
                             className="was-validated login100-form validate-form"
-                            onSubmit={this.onClickRegister}
+                            onSubmit={this.onLogin}
                             noValidate
                         >
                             <Link to="/">

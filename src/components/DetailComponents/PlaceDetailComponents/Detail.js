@@ -86,7 +86,8 @@ class Detail extends Component {
                             <TicketType ticketType={place.ticketTypes}/>
                         </div> */}
                         <div >
-                            <ReTicketType weekDays={place.weekDays} ticketType={place.ticketTypes}/>
+                            <ReTicketType 
+                            weekDays={place.weekDays} ticketType={place.ticketTypes}/>
                         </div>
 
                         <div id="inline">

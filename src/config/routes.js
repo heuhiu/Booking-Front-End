@@ -9,6 +9,8 @@ import SearchedPlace from '../pages/SearchedPlace/SearchedPlace';
 import MyMul from '../components/HomepageComponents/Search/MyMul';
 import PlaceDetail from '../pages/Detail/PlaceDetail/PlaceDetail';
 import Payment from '../pages/Payment/Payment';
+import PaymentSucess from '../components/PaymentComponents/PaymentSucess';
+import TotalPayment from '../components/DetailComponents/TotalPayment/TotalPayment';
 
 
 const routers = [
@@ -16,6 +18,12 @@ const routers = [
         path: '/login',
         exact: false,
         main: ({ history, location }) => <LoginComp history={history} location={location} />
+
+    },
+    {
+        path: '/totalPayment',
+        exact: false,
+        main: ({ history, location }) => <TotalPayment history={history} location={location} />
 
     },
     {
@@ -56,6 +64,11 @@ const routers = [
         path: '/payment',
         exact: false,
         main: ({ history, match, location }) => <Payment location={location} history={history} match={match} />
+    },
+    {
+        path: '/paymentSucess',
+        exact: false,
+        main: ({ history, match, location }) => <PaymentSucess location={location} history={history} match={match} />
     },
     {
         path: '/',

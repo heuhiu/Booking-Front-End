@@ -1,8 +1,8 @@
 import * as types from '../constants/ActionType';
-// var data = JSON.parse(localStorage.getItem('visitorTypeList'));
-// var initialState = data ? data : [];
+var data = JSON.parse(localStorage.getItem('visitorTypeList'));
+var initialState = data ? data : [];
 
-var initialState = [];
+// var initialState = [];
 
 var Ticket = (state = initialState, action) => {
     var {  id, qty, price, name } = action;
@@ -20,7 +20,7 @@ var Ticket = (state = initialState, action) => {
                     visitorTypeName: name
                 })
             }
-            // localStorage.setItem('visitorTypeList', JSON.stringify(state));
+            localStorage.setItem('visitorTypeList', JSON.stringify(state));
             return [...state];
         case types.REMOVE_VISITORTYPE:
             state = [];

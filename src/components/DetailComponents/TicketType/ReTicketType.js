@@ -54,7 +54,7 @@ class ReTicketType extends Component {
         const day = Date.getDay();
         var fullList = [0, 1, 2, 3, 4, 5, 6];
         fullList = fullList.filter(val => !activeDay.includes(val));
-        console.log(fullList);
+        // console.log(fullList);
         // for (let index = 0; index < fullList.length; index++) {
         //     // const element = fullList[index];
         //     return day !== fullList[index];
@@ -239,7 +239,7 @@ class ReTicketType extends Component {
                                     <div className="col myTitle">
                                         <h6
                                             className="myTitle"
-                                            style={{ marginBottom: "0px" }}
+                                            style={{ marginBottom: "0px", color: "#FF7062", textAlign:"center" }}
                                         >
                                             {prnDt===undefined?"Bấm để chọn":prnDt}
                                         </h6>
@@ -260,9 +260,10 @@ class ReTicketType extends Component {
                         style={{ marginTop: "10px" }}
                     >
                         <div className="col-4">
-
+                        
                         </div>
                         <div>
+                            
                             <Collapse in={this.state.open}>
                                 <div
                                     id="example-collapse-text">
