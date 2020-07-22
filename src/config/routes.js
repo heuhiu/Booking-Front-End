@@ -11,6 +11,7 @@ import PlaceDetail from '../pages/Detail/PlaceDetail/PlaceDetail';
 import Payment from '../pages/Payment/Payment';
 import PaymentSucess from '../components/PaymentComponents/PaymentSucess';
 import TotalPayment from '../components/DetailComponents/TotalPayment/TotalPayment';
+import UserProfile from '../pages/UserProfile/UserProfile';
 
 
 const routers = [
@@ -69,6 +70,11 @@ const routers = [
         path: '/paymentSucess',
         exact: false,
         main: ({ history, match, location }) => <PaymentSucess location={location} history={history} match={match} />
+    },
+    {
+        path: '/userProfile',
+        exact: false,
+        main: ({ history, match, location }) => <UserProfile location={location} history={history} match={match} />
     },
     {
         path: '/',
