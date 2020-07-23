@@ -21,7 +21,7 @@ const menus = [
     },
     {
         name: 'Đổi mật khẩu',
-        to: '/#',
+        to: '/userProfile/changePassword',
         exact: false
     }
 ];

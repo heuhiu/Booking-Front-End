@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './style.css';
+import { withRouter } from 'react-router-dom';
 import LogoSearch from '../../../img/LogoSearch.png';
 import search from '../../../img/search.png';
 // import { Form } from 'react-bootstrap';
 // import callApi from '../../../config/utils/apiCaller';
 import MyMul from './MyMul';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //search
 class Search extends Component {
@@ -60,28 +63,39 @@ class Search extends Component {
         var target = e.target;
         var name = target.name;
         var value = target.value;
-        if (value !== "") {
-            this.setState({
-                [name]: value,
-            })
-        }
+        // if (value !== "") {
+        this.setState({
+            [name]: value,
+        })
+        // }
     }
 
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
         e.preventDefault();
-        if (this.state.txtParkName === "") {
-            alert("Lmao");
-        } else {
-            // this.setState({
-            //     // pathLink: `?name=${this.state.txtParkName}`
-            //     pathLink: `${this.searchPathLink}`
-            // })
-            this.props.push({
-                pathname: '/searchedPlace',
-                search: `${this.searchPathLink}`
-              })
+        console.log(this.state.cityMul.length);
+        if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
+            this.props.history.push(`${this.searchPathLink()}`);
         }
+
+        if (this.state.txtParkName === "") {
+            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            this.props.history.push(`${this.searchPathLink()}`);
+        }
+
+
+
+
     }
 
     setmMul = (cityMul, catMul) => {
@@ -97,9 +111,12 @@ class Search extends Component {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
         console.log(txtParkName);
+      
         return (
             <div>
+                <ToastContainer />
                 <form
+                    onSubmit={this.onSubmitSearch}
                     className="d-block d-flex">
                     <div className="fields d-block d-flex">
                         <div className="textfield-search two-third">
@@ -111,7 +128,7 @@ class Search extends Component {
                                 className="form-control"
                                 placeholder="Ex: food, service, hotel"
                                 name="txtParkName"
-                                // value={txtParkName}
+                                // defaultValu={txtParkName}
                                 onChange={this.onChange}
                             />
                         </div>
@@ -138,7 +155,7 @@ class Search extends Component {
                         </div>
 
                     </div>
-                    <Link
+                    {/* <Link
                         // onClick={this.onSubmitSearch}
                         className="search-submit"
                         // to="/searchedPlace"
@@ -149,12 +166,12 @@ class Search extends Component {
                         //   }}
                         // to={this.state.pathLink === "" ? "/searchedPlace" : this.state.pathLink}
                         to={this.searchPathLink}
-                    >
+                    > */}
                     <button
-                        type="button"
+                        type="submit"
                         // onClick={this.onSubmitSearch}
                         className="searchbtn"
-                        // className="search-submit"
+                        className="search-submit"
                     >
                         <img src={search}
                             alt="Fail !"
@@ -162,7 +179,7 @@ class Search extends Component {
                             height="17.76"
                         /> &nbsp; Tìm Kiếm
                         </button>
-                    </Link>
+                    {/* </Link> */}
                 </form>
 
             </div >
@@ -171,4 +188,17 @@ class Search extends Component {
 
 }
 
-export default Search;
+// export default Search;
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));

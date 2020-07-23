@@ -6,7 +6,7 @@ import Footer2 from '../../components/Footer/Footer2/Footer2';
 import UserProfileComp from '../../components/UserProfileComponents/UserProfileComp';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import subMenu from '../../components/UserProfileComponents/subMenuRouter';
-import UserMenu from '../../components/UserProfileComponents/UserDetailMenu/UserMenu';
+import UserMenu from '../../components/UserProfileComponents/UserMenu';
 
 class UserProfile extends Component {
 

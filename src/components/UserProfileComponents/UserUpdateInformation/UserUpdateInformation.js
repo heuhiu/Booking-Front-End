@@ -123,18 +123,30 @@ class UserUpdateInformation extends Component {
 
     updateUserDetail = () => {
         const { email, firstName, lastName, phoneNumb } = this.state;
+        const { loggedUser } = this.props;
+        const id = loggedUser.userId;
         console.log(lastName.value);
         console.log(firstName.value);
         console.log(phoneNumb.value);
         console.log(email.value);
-        // callApi('city', 'GET', null)
-        // .then(res => {
+        // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
+        callApi(`/user/${id}`, 'put', {
+            id: id,
+            id: id,
+            id: id,
+            id: id,
+            id: id,
+            id: id,
+            id: id,
 
-        // }).catch(function (error) {
-        //     if (error.response) {
-        //         console.log(error.response.data);
-        //     }
-        // });
+        })
+            .then(res => {
+
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
     }
     render() {
         const { loggedUser } = this.props;
@@ -150,7 +162,7 @@ class UserUpdateInformation extends Component {
                                     <div className="content">Chỉnh sửa tài khoản</div>
                                 </div>
                                 <div className="col-12">
-                                    <p className="attention">Chúng tôi sẽ thông báo mọi thay đổi về đơn hàng cho bạn</p>
+                                    <p className="attention">Thông tin này sẽ được tự động nhập vào đơn hàng của bạn. Thông tin của bạn sẽ được mã hoá và không chia sẻ với bên thứ 3</p>
                                 </div>
                                 <div className="mrt-30 col-12">
                                     <div className="row">
@@ -298,6 +310,7 @@ class UserUpdateInformation extends Component {
                                         </div>
                                     </div>
                                 </div>
+                           
                             </div>
                         </div>
                     </div>

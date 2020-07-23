@@ -146,6 +146,7 @@ class ListPlaceSearched extends Component {
     componentDidMount = () => {
         // debugger
         var { location } = this.props;
+        console.log(location.search);
         const answer_array = location.search.split('?');
         var name = '';
         var listCtiId = '';

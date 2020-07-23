@@ -195,7 +195,7 @@ class PaymentSucess extends Component {
                                 <div
                                     className="borderBox col-12">
                                     <div className="col-12">
-                                        <h1 className="step1h">Bước 4: Xử lý đặt chỗ</h1>
+                                        <h1 className="step1h">Bước 3: Xử lý đặt chỗ</h1>
                                     </div>
                                     <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
                                     <div className="row">
@@ -286,6 +286,7 @@ class PaymentSucess extends Component {
                                         </div>
                                     </div>
                                 </div>
+                              
                                 {/* </form> */}
                             </div>
 
