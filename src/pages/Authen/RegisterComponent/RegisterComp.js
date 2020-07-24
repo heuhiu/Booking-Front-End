@@ -507,6 +507,7 @@ class RegisterComp extends Component {
                                         errorMessage={this.state.myfirstName.errorMessage} />
                                     <br></br>
                                 </div>
+                               
                                 {/* End First name field */}
 
                                 {/* Last Name field */}

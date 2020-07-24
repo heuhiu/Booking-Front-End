@@ -68,7 +68,7 @@ class _CardForm extends Component {
     var order = {
       ticketTypeId: orderDetail.state.ticketTypeID,
       ticketTypeName: orderDetail.state.ticketName,
-      userId: 1,
+      userId: loggedUser.id,
       firstName: loggedUser.firstName,
       lastName: loggedUser.lastName,
       mail: loggedUser.mail,

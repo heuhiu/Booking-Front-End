@@ -12,20 +12,20 @@ class UserOrders extends Component {
         }
     }
 
-    componentDidMount = () => {
-        const { loggedUser } = this.props;
-        const id = loggedUser.userId;
-        console.log(id);
-        callApi(`order/user/${id}`, 'GET', {
-            id: id,
-        }).then(res => {
-            console.log(res)
-        }).catch(function (error) {
-            if (error.response) {
-                console.log(error.response.data);
-            }
-        });
-    }
+    // componentDidMount = () => {
+    //     const { loggedUser } = this.props;
+    //     const id = loggedUser.userId;
+    //     console.log(id);
+    //     callApi(`order/user/${id}`, 'GET', {
+    //         id: id,
+    //     }).then(res => {
+    //         console.log(res)
+    //     }).catch(function (error) {
+    //         if (error.response) {
+    //             console.log(error.response.data);
+    //         }
+    //     });
+    // }
 
     render() {
         return (
