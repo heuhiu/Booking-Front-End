@@ -16,6 +16,15 @@
     text-align: right;
     color: #FF7062;
 }
+.UpdateDetail1:hover{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: right;
+  color: #FF7062;
+  text-decoration: none;
+}
 
 .rightBoxUserDetail{
     background: #FFFFFF;
@@ -101,16 +110,16 @@
     
   }
 
-.detailTicketChild p{
+.detailTicketBoxDetail p{
     padding: 10px 0px 5px 10px;
 }
 
-.detailTicketChild span {
+.detailTicketBoxDetail span {
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
     line-height: 14px;
-    color: #FFFFFF;
+    color:black;
 }
 
 .pushRight{
@@ -132,11 +141,11 @@
 }
 
 .nameDetail{
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: #5B5B5B;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5B5B5B;
 }
 
 .ticketTypeDetail{

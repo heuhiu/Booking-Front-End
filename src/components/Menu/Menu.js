@@ -14,7 +14,7 @@ const menus = [
     // },
     {
         name: 'Đặt chỗ của tôi',
-        to: '/product-list',
+        to: '/userProfile',
         exact: false,
         style: 'none1'
     },
@@ -106,7 +106,7 @@ class Menu extends Component {
                 </Link>
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
-                    <Link style={{ textDecoration: "none" }} to="/myOrder">
+                    <Link style={{ textDecoration: "none" }} to="/userProfile/myOrders">
                         <button style={{ display: tokenLogin ? "" : "none" }} className="none1 nav-link">
                             <i className="far fa-file-alt"></i>{' '}Đặt chỗ của tôi
                         </button>
@@ -141,7 +141,7 @@ class Menu extends Component {
                             >
 
                                 <Dropdown.Item id="dropdown-item " href="#/action-1">
-                                    <Link to="/userProfile">
+                                    <Link to="/userProfile/myProfile">
                                         <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M19 21V18.7778C19 17.599 18.5259 16.4686 17.682 15.6351C16.8381 14.8016 15.6935 14.3333 14.5 14.3333H5.5C4.30653 14.3333 3.16193 14.8016 2.31802 15.6351C1.47411 16.4686 1 17.599 1 18.7778V21" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                             <path d="M10 9.88889C12.4853 9.88889 14.5 7.89904 14.5 5.44444C14.5 2.98985 12.4853 1 10 1C7.51472 1 5.5 2.98985 5.5 5.44444C5.5 7.89904 7.51472 9.88889 10 9.88889Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

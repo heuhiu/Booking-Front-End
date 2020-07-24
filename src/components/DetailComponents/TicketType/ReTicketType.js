@@ -182,6 +182,7 @@ class ReTicketType extends Component {
         };
         if(this.state.startDate!==null)
         var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
+        
         console.log(prnDt);
         const { ticketTypeId, ticketName, startDate } = this.state;
         console.log(ticketTypeId);

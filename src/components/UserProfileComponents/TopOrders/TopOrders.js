@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './UserOrder.css';
 import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
-import TopOrders from '../TopOrders/TopOrders';
-import { Link } from 'react-router-dom';
-class UserOrders extends Component {
+
+class TopOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
         year: "numeric",
         month: "long",
@@ -18,6 +16,7 @@ class UserOrders extends Component {
         super(props);
         this.state = {
             UserOrders: [],
+            topOrders: []
         }
     }
 
@@ -40,6 +39,17 @@ class UserOrders extends Component {
                             console.log(res);
                             this.setState({
                                 UserOrders: res.data
+                            })
+                        }).catch(function (error) {
+                            if (error.response) {
+                                console.log(error.response.data);
+                            }
+                        });
+                    callApi(`order/top3/${res.data.id}`, 'GET', null)
+                        .then(res => {
+                            console.log(res);
+                            this.setState({
+                                topOrders: res.data
                             })
                         }).catch(function (error) {
                             if (error.response) {
@@ -150,37 +160,12 @@ class UserOrders extends Component {
     }
 
     render() {
-        const { UserOrders } = this.state;
+        const { UserOrders, topOrders } = this.state;
         return (
             <div>
-                <div style={{ paddingTop: "0px" }} className="rightBoxUserDetail2">
-                    <div style={{ padding: "30px" }} >
-                        <div className="row">
-                            <div className="col-6">
-                                <div id="inline">
-                                    <div className="bulletListCustome"></div>
-                                    <div className="content">Đặt chỗ gần đây</div>
-                                </div>
-                            </div>
-                        </div>
-                        <TopOrders />
-                    </div>
-                </div>
-                <div className="rightBoxUserDetail2">
-                    <div style={{ padding: "30px" }} >
-                        <div className="row">
-                            <div className="col-6">
-                                <div id="inline">
-                                    <div className="bulletListCustome"></div>
-                                    <div className="content">Lịch sử đặt chỗ</div>
-                                </div>
-                            </div>
-                        </div>
-                        {this.showOrders(UserOrders)}
-                    </div>
-                </div>
+                {/* PAID, UNPAID, SENT, EXPIRED */}
+                {this.showOrders(topOrders)}
             </div>
-
         );
     }
 
@@ -199,4 +184,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(TopOrders);

@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import testImg from '../../../img/Detailpic.png';
 import callApi from '../../../config/utils/apiCaller';
+import TopOrders from '../TopOrders/TopOrders';
+import {Link} from 'react-router-dom';
 
 class UserInformation extends Component {
+
+    formatter = new Intl.DateTimeFormat("vi-VN", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        // hour: 'numeric',
+        // minute: 'numeric',
+        // second: 'numeric'
+      });
 
     constructor(props) {
         super(props);
@@ -12,56 +23,24 @@ class UserInformation extends Component {
         }
     }
 
-    componentDidMount=  ()  =>{
-        const {loggedUser} = this.props;
-        const id = loggedUser.id;
-
-        callApi(`order/top3/${id}`, 'GET', null)
-            .then(res => {
-                console.log(res);
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-            
-    }
-    componentDidMount = () => {
-        var jwtDecode = require('jwt-decode');
-        var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-        if (tokenLogin) {
-            var decoded = jwtDecode(tokenLogin);
-            console.log(decoded);
-            const id = decoded.user.userId;
-            // this.props.fetchUserDetail(decoded.user);
-            callApi(`userClient/${id}`, 'GET', null)
-            .then(res => {
-                console.log(res.data.id);
-                callApi(`order/top3/${res.data.id}`, 'GET', null)
-            .then(res => {
-                console.log(res);
-                this.setState({
-                    topOrders: res.data
-                })
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-        }
-    }
-
     showTopOrder = (topOrders) => {
+        const topOrd= topOrders.orderItems
         var result = null;
         if (topOrders.length > 0) {
             result = topOrders.map((item, index) => {
+                console.log(item);
+                // var dateType = {
+                //     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                // };
+                // console.log(item.redemptionDate);
+                // console.log(new Date())
+                // var prnDt = item.redemptionDate.toLocaleDateString('vi', dateType);
+                // console.log(prnDt);
+                // console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 
+                // '2-digit',day: '2-digit'}).format(new Date()));
+
                 return (
-                    <div
+                    <div key={index}
                     className="detailTicketBoxDetail row no-gutters">
                     <div
                         className="detailTicketBox2Detail col-12">
@@ -72,7 +51,10 @@ class UserInformation extends Component {
                                     <p>Đặt chỗ số: 3485970104 </p>
                                 </div>
                                 <div className="col-4">
-                                    <p>Thời gian: 20/6/2020 16:36</p>
+                                    <p>Thời gian: (thanh toán?) : 
+                                    {this.formatter.format(Date.parse(item.purchaseDay))} 
+                                    </p>
+                                    <p>Temp: {item.status}</p>
                                 </div>
                                 <div className="col-4">
                                     <p className="pushRight">Thành công</p>
@@ -80,7 +62,7 @@ class UserInformation extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-6">
-                                    <p>Số tiền thanh toán: <span>đ 1,030,000</span></p>
+                                    <p>Số tiền thanh toán: {item.totalPayment}</p>
                                 </div>
                                 <div className="col-6">
                                     <p className="pushRight2">Xem chi tiết</p>
@@ -97,14 +79,23 @@ class UserInformation extends Component {
                                 style={{ marginLeft: "20px" }}
                                 className="col">
                                 <div className="row">
-                                    <div className="col"><span className="nameDetail">Vé Vinwonders Nam Hội An</span></div>
+                                <div className="col"><span className="nameDetail">{item.ticketTypeName}</span></div>
                                 </div>
                                 <div className="row">
                                     <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
                                     <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-3"><span className="redemDetail">Thời gian: </span></div>
+                                    <div className="col-3">
+                                        <span className="redemDetail">
+                                        Thời gian:  
+                                        </span>
+                                    </div>
+                                    <div className="col">
+                                        <span className="redemDetail">
+                                        {this.formatter.format(Date.parse(item.redemptionDate))} 
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,6 +116,8 @@ class UserInformation extends Component {
     render() {
         const {loggedUser} = this.props;
         console.log(this.state.topOrders);
+        const dateString = "2019-10-30T14:01:59.689Z";
+      
         return (
             <div
                 className="col">
@@ -134,12 +127,14 @@ class UserInformation extends Component {
                             <div className="col-6">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
-                                    <div className="content">Thông tin tài khoản</div>
+                                    <div className="content">Thông tin tài khoản </div>
                                 </div>
                             </div>
 
                             <div className="col-6">
-                                <div onClick={this.triggerUpdateUserPart} className="UpdateDetail1" >Chỉnh sửa</div>
+                                <div onClick={this.triggerUpdateUserPart} className="UpdateDetail1" >
+                                    <Link className="UpdateDetail1" to="/userProfile/ediProfile">Chỉnh sửa</Link>
+                                </div>
                             </div>
                         </div>
 
@@ -216,61 +211,11 @@ class UserInformation extends Component {
                             </div>
 
                             <div className="col-6">
-                                <div className="UpdateDetail1" >Chỉnh sửa</div>
+                                <div className="UpdateDetail1" ><Link className="UpdateDetail1" to="/userProfile/myOrders">Xem tất cả</Link></div>
                             </div>
                         </div>
-
-                        <div
-                            className="detailTicketBoxDetail row no-gutters">
-                            <div
-                                className="detailTicketBox2Detail col-12">
-
-                                <div className="detailTicketChild col-12">
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <p>Đặt chỗ số: 3485970104 </p>
-                                        </div>
-                                        <div className="col-4">
-                                            <p>Thời gian: 20/6/2020 16:36</p>
-                                        </div>
-                                        <div className="col-4">
-                                            <p className="pushRight">Thành công</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <p>Số tiền thanh toán: <span>đ 1,030,000</span></p>
-                                        </div>
-                                        <div className="col-6">
-                                            <p className="pushRight2">Xem chi tiết</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div style={{ margin: "30px" }} className="row no-gutters">
-                                    <div
-                                        className="col-3">
-                                        <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
-                                    </div>
-                                    <div
-                                        style={{ marginLeft: "20px" }}
-                                        className="col">
-                                        <div className="row">
-                                            <div className="col"><span className="nameDetail">Vé Vinwonders Nam Hội An</span></div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
-                                            <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3"><span className="redemDetail">Thời gian: </span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                        {this.showTopOrder(this.state.topOrders)}
+                        {/* {this.showTopOrder(this.state.topOrders)} */}
+                        <TopOrders />
                     </div>
                 </div>
                             
