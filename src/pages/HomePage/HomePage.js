@@ -7,6 +7,8 @@ import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Sl
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
 import { getUserLogin } from '../../actions/index';
+import callApi from '../../config/utils/apiCaller';
+
 //Home page
 class HomePage extends Component {
 
@@ -16,16 +18,25 @@ class HomePage extends Component {
         }
     }
 
-    // componentDidMount = () => {
-    //     var jwtDecode = require('jwt-decode');
-    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-    //     if (tokenLogin) {
-    //         var decoded = jwtDecode(tokenLogin);
-    //         console.log(decoded.user);
-    //         //data will be store in localStorage
-    //         this.props.fetchUserDetail(decoded.user);
-    //     }
-    // }
+    componentDidMount = () => {
+        var jwtDecode = require('jwt-decode');
+        var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+        if (tokenLogin) {
+            var decoded = jwtDecode(tokenLogin);
+            console.log(decoded);
+            const id = decoded.user.userId;
+            // this.props.fetchUserDetail(decoded.user);
+            callApi(`userClient/${id}`, 'GET', null)
+                .then(res => {
+                    console.log(res);
+                    this.props.fetchUserDetail(res.data);
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+        }
+    }
 
     render() {
         return (

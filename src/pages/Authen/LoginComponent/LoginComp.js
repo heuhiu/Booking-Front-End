@@ -130,7 +130,7 @@ class LoginComp extends Component {
                 var decoded = jwtDecode(res.data);
                 console.log(decoded.user);
                 //data will be store in localStorage
-                this.props.fetchUserDetail(decoded.user);
+                // this.props.fetchUserDetail(decoded.user);s
                 console.log(this.props.history);
                 this.props.history.push("/");
             }).catch(function (error) {

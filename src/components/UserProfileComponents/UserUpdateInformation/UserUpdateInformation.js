@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
+import { getUserLogin } from '../../../actions/index';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -16,31 +19,6 @@ class UserUpdateInformation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // firstName: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // lastName: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // phoneNumb: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // email: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // dob: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // }
             email: {
                 value: '',
                 isInputValid: false,
@@ -58,22 +36,22 @@ class UserUpdateInformation extends Component {
             },
             lastName: {
                 value: '',
-                isInputValid: false,
+                isInputValid: true,
                 errorMessage: ''
             },
             phoneNumber: {
                 value: '',
-                isInputValid: false,
+                isInputValid: true,
                 errorMessage: ''
             },
             myfirstName: {
                 value: '',
-                isInputValid: false,
+                isInputValid: true,
                 errorMessage: ''
             },
             dob: {
                 value: '',
-                isInputValid: false,
+                isInputValid: true,
                 errorMessage: ''
             }
         }
@@ -143,7 +121,7 @@ class UserUpdateInformation extends Component {
             case "myfirstName":
                 regexp = /^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
+                if (checkingResult !== null || this.state.myfirstName.value === '') {
                     return {
                         isInputValid: true,
                         errorMessage: ''
@@ -155,9 +133,9 @@ class UserUpdateInformation extends Component {
                     };
                 }
             case "lastName":
-                regexp = /^^[^\s].+[^\s]$/;
+                regexp = /^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
+                if (checkingResult !== null ) {
                     return {
                         isInputValid: true,
                         errorMessage: ''
@@ -171,7 +149,7 @@ class UserUpdateInformation extends Component {
             case "dob":
                 regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
                 checkingResult = regexp.exec(checkingText.toString());
-                if (checkingResult !== null) {
+                if (checkingResult !== null || this.state.dob.value === '' ) {
                     // if (true) {
                     return {
                         isInputValid: true,
@@ -186,7 +164,7 @@ class UserUpdateInformation extends Component {
             case "phoneNumber":
                 regexp = /^\d{10,11}$/;
                 checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
+                if (checkingResult !== null || this.state.phoneNumber.value === '') {
                     return {
                         isInputValid: true,
                         errorMessage: ''
@@ -234,26 +212,108 @@ class UserUpdateInformation extends Component {
         console.log(myfirstName.value);
         console.log(lastName.value);
         console.log(phoneNumber.value);
-        // console.log(email.value);
         console.log(dob.value);
-        // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
-        callApi(`user/${id}`, 'put', {
-            dob: dob.value,
-        })
-            .then(res => {
-
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
+        if (myfirstName.value === '' && lastName.value === '' &&
+            phoneNumber.value === '' && dob.value === '') {
+            // alert("Dien 1 cai gi do vao di thang lon")
+            toast.error('Vui lòng thay đổi ít nhất một thông tin!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
             });
+        } else if (lastName.isInputValid === false) {
+            // alert("Dien lai Ho di con di~")
+            toast.error('Tên có ít nhất 3 kí tự và khác số!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else if (myfirstName.isInputValid === false) {
+            // alert("Dien lai ten di con di~")
+            toast.error('Tên có ít nhất 3 kí tự và khác số!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else if (phoneNumber.isInputValid === false) {
+            // alert("Dien lai sdt di con di~")
+            toast.error('Số điện thoại chứa 10-11 số!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else if (dob.isInputValid === false) {
+            // alert("Dien lai dob di con di~")
+            toast.error('Không đúng định dạng!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
+            callApi(`userClient/${id}`, 'put',
+                {
+                    firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
+                    lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
+                    dob: dob.value ? dob.value !== '' : loggedUser.dob,
+                    phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
+                })
+                .then(res => {
+                    console.log(res);
+                    this.props.fetchUserDetail(res.data);
+                    toast.success('Thay đổi thông tin thành công!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+        }
     }
 
     render() {
+        const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
+        console.log(myfirstName.value);
+        console.log(lastName.value);
+        console.log(phoneNumber.value);
+        console.log(dob.value);
+        console.log(lastName.isInputValid);
         return (
             <div
                 className="col">
+                {/* <form
+                onSubmit={this.updateUserDetail}
+                > */}                <ToastContainer />
+
                 <div className="rightBoxUserDetail">
                     <div style={{ padding: "30px" }} >
                         <div className="row">
@@ -282,7 +342,7 @@ class UserUpdateInformation extends Component {
                                                     name="lastName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    required
+                                                // required
 
                                                 />
                                                 <span className="focus-input100"></span>
@@ -314,7 +374,7 @@ class UserUpdateInformation extends Component {
                                                     name="myfirstName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    required
+                                                // required
                                                 />
 
                                                 <span className="focus-input100"></span>
@@ -360,7 +420,7 @@ class UserUpdateInformation extends Component {
                                                     name="phoneNumber"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    required
+                                                // required
                                                 />
                                                 <span className="focus-input100"></span>
                                                 <span className="label-input100">Số Điện thoại</span>
@@ -409,7 +469,7 @@ class UserUpdateInformation extends Component {
 
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    required
+                                                // required
                                                 />
                                                 <span className="focus-input100"></span>
                                                 <span className="label-input98">Ngày sinh</span>
@@ -438,7 +498,9 @@ class UserUpdateInformation extends Component {
                                         <div className="col">
                                         </div>
                                         <div className="col">
-                                            <button onClick={this.updateUserDetail} className="proceedPaymentBtn">Lưu thông tin</button>
+                                            <button type="submit"
+                                                onClick={this.updateUserDetail}
+                                                className="proceedPaymentBtn">Lưu thông tin</button>
                                         </div>
                                     </div>
                                 </div>
@@ -447,6 +509,7 @@ class UserUpdateInformation extends Component {
                         </div>
                     </div>
                 </div>
+                {/* </form> */}
             </div>
 
         );
@@ -463,7 +526,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        fetchUserDetail: (user) => {
+            dispatch(getUserLogin(user))
+        }
     }
 }
 
