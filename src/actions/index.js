@@ -67,7 +67,7 @@ export const addVisitorTypeCart = (item) => {
 
 export const fetchVisitor = (item) => {
   return {
-      type: types.ADD_VISITOR_TYPE_CART,
+      type: types.ADD_VISITOR_TYPE_CART_ALL,
       item
   }
 }

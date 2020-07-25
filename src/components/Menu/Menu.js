@@ -140,7 +140,7 @@ class Menu extends Component {
                             // id="dropdown-menu"
                             >
 
-                                <Dropdown.Item id="dropdown-item " href="#/action-1">
+                                <Dropdown.Item id="dropdown-item">
                                     <Link to="/userProfile/myProfile">
                                         <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M19 21V18.7778C19 17.599 18.5259 16.4686 17.682 15.6351C16.8381 14.8016 15.6935 14.3333 14.5 14.3333H5.5C4.30653 14.3333 3.16193 14.8016 2.31802 15.6351C1.47411 16.4686 1 17.599 1 18.7778V21" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

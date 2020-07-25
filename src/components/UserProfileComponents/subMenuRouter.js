@@ -11,7 +11,7 @@ const subMenuRouter = [
     {
         path: '/userProfile/myProfile',
         exact: false,
-        main: ({ history, location }) => <UserInformation history={history} location={location} />
+        main: ({ history, location, match }) => <UserInformation history={history} location={location} match={match}  />
     },
     {
         path: '/userProfile/ediProfile',
@@ -21,7 +21,7 @@ const subMenuRouter = [
     {
         path: '/userProfile/myOrders',
         exact: false,
-        main: ({ history, location }) => <UserOrders history={history} location={location} />
+        main: ({ history, location, match }) => <UserOrders history={history} location={location} match={match} />
     },
     {
         path: '/userProfile/changePassword',
@@ -29,9 +29,9 @@ const subMenuRouter = [
         main: ({ history, location }) => <UserChangePassword history={history} location={location} />
     },
     {
-        path: '/userProfile/myOrder',
+        path: '/userProfile/myOrder/:id',
         exact: false,
-        main: ({ history, location }) => <UserOrderDetail history={history} location={location} />
+        main: ({ history, location, match }) => <UserOrderDetail history={history} location={location} match={match} />
     },
 ];
 export default subMenuRouter;

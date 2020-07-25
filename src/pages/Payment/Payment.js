@@ -8,7 +8,7 @@ import { Accordion, Card, Button } from 'react-bootstrap'
 import CardDemo from './cartDemo/CardDemo';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
+import callApi from '../../config/utils/apiCaller';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -51,12 +51,12 @@ class Payment extends Component {
             // }
         }
     }
-    scrollToStep1 = () =>  window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
+    scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
     // scrollToStep2 = () => window.scrollTo({ top: this.myRef2.current.offsetTop, behavior: 'smooth' });
     scrollToStep2 = () => {
         this.setState({
             myPercen: 50
-        }, ()=>{
+        }, () => {
             window.scrollTo({ top: this.myRef2.current.offsetTop, behavior: 'smooth' })
         })
     }
@@ -156,12 +156,62 @@ class Payment extends Component {
         }
         return result;
     }
+
+    purchaseLater = () => {
+        const { location, visitorType, loggedUser } = this.props;
+        var orderItems = [];
+        var item = {
+            visitorTypeId: null,
+            visitorTypeName: null,
+            quantity: null
+        }
+        for (let index = 0; index < visitorType.length; index++) {
+            item = {
+                visitorTypeId: visitorType[index].visitorTypeId,
+                quantity: visitorType[index].quantity
+            }
+            orderItems.push(item)
+        }
+
+        console.log(location.state.ticketTypeID);
+        console.log(location.state.ticketName);
+        console.log(loggedUser.id);
+        console.log(loggedUser.firstName);
+        console.log(loggedUser.lastName);
+        console.log(loggedUser.mail);
+        console.log(loggedUser.phoneNumber);
+        console.log(location.state.totalPayment);
+        console.log(new Date());
+        console.log(location.state.redemptionDate);
+        console.log(orderItems);
+
+        callApi('order', 'post', {
+            ticketTypeId: location.state.ticketTypeID,
+            ticketTypeName: location.state.ticketName,
+            userId: loggedUser.id,
+            firstName: loggedUser.firstName,
+            lastName: loggedUser.lastName,
+            mail: loggedUser.mail,
+            phoneNumber: loggedUser.phoneNumber,
+            totalPayment: location.state.totalPayment,
+            purchaseDay: new Date(),
+            redemptionDate: location.state.redemptionDate,
+            orderItems: orderItems
+        })
+            .then(res => {
+                console.log(res);
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+    }
     render() {
 
         const { location, visitorType } = this.props;
         console.log(visitorType);
         console.log(location.state);
-        
+
         if (location.state === undefined) {
             return (
                 <Redirect to="/" />
@@ -170,9 +220,9 @@ class Payment extends Component {
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             };
-    
+
             var prnDt = location.state.redemptionDate.toLocaleDateString('vi', dateType);
-    
+
             console.log(location.state);
             console.log(location.state.ticketTypeID);
             console.log(location.state.ticketName);
@@ -182,8 +232,9 @@ class Payment extends Component {
             // var x = 1000;
             // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
-    
+
             const myLocation = location;
+            console.log(myLocation);
             const ticketName = myLocation.state.ticketName;
             const { accomplished } = this.state;
             const { loggedUser } = this.props;
@@ -286,7 +337,7 @@ class Payment extends Component {
                                                 {({ accomplished }) => (
                                                     <div>
                                                         <div
-                                                            
+
                                                             style={{
                                                                 filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                                 border: "1px solid",
@@ -542,11 +593,16 @@ class Payment extends Component {
                                         <Accordion className="pdt-30 pdb-30" defaultActiveKey="0">
                                             <Card id="cardHeade">
                                                 <Accordion.Toggle id="cardHeade2" as={Card.Header} eventKey="0">
-                                                    MoMo E-Wallet
+                                                    Chuyển khoản qua ngân hàng
                                             </Accordion.Toggle>
                                                 <Accordion.Collapse eventKey="0">
                                                     <Card.Body>
                                                         <h1>NOT AVAIABLE YET</h1>
+                                                        <i
+                                                            onClick={this.purchaseLater}
+                                                            style={{ border: "1px solid green" }}>
+                                                            Purchase
+                                                        </i>   
                                                     </Card.Body>
                                                 </Accordion.Collapse>
                                             </Card>
@@ -559,7 +615,8 @@ class Payment extends Component {
                                                         <div
                                                             className="paymentMethodBox row">
                                                             <div> <CardDemo
-                                                                history={this.props.history} orderDetail={myLocation} /></div>
+                                                                history={this.props.history}
+                                                                orderDetail={myLocation} /></div>
                                                         </div>
                                                         {/* <div
                                                         className="paymentMethodBox row">
@@ -763,7 +820,7 @@ class Payment extends Component {
                                                 {({ accomplished }) => (
                                                     <div>
                                                         <div
-                                                            
+
                                                             style={{
                                                                 filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                                 border: "1px solid",

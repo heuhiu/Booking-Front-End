@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
+import { Link } from 'react-router-dom';
 
 class TopOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -34,17 +35,6 @@ class TopOrders extends Component {
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
                     console.log(res.data.id);
-                    callApi(`order/user/${res.data.id}`, 'GET', null)
-                        .then(res => {
-                            console.log(res);
-                            this.setState({
-                                UserOrders: res.data
-                            })
-                        }).catch(function (error) {
-                            if (error.response) {
-                                console.log(error.response.data);
-                            }
-                        });
                     callApi(`order/top3/${res.data.id}`, 'GET', null)
                         .then(res => {
                             console.log(res);
@@ -63,6 +53,7 @@ class TopOrders extends Component {
                 });
         }
     }
+
     showStatus = (status) => {
         /* PAID, UNPAID, SENT, EXPIRED */
         var myStatus = "";
@@ -82,85 +73,96 @@ class TopOrders extends Component {
     }
 
     showOrders = (topOrders) => {
-        const topOrd = topOrders.orderItems
-        var result = null;
-        if (topOrders.length > 0) {
-            result = topOrders.map((item, index) => {
-                return (
-                    <div key={index}
-                        className="detailTicketBoxDetail row no-gutters">
-                        <div
-                            className="detailTicketBox2Detail col-12">
-                            <div className={`detailTicketChild${item.status} col-12`}>
-                                <div className="row">
-                                    <div className="col-4">
-                                        <p>Đặt chỗ số: {item.status} </p>
-                                    </div>
-                                    <div className="col-4">
-                                        <p>Thời gian: (thanh toán?) :
-                                    {this.formatter.format(Date.parse(item.purchaseDay))}
-                                        </p>
-                                    </div>
-                                    <div className="col-4">
-                                        <p className="pushRight">{this.showStatus(item.status)}</p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-6">
-                                        <p>Số tiền thanh toán: {this.convertCurrecyToVnd(item.totalPayment)}</p>
-                                    </div>
-                                    <div className="col-6">
-                                        <p className="pushRight2">Xem chi tiết</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style={{ margin: "30px" }} className="row no-gutters">
-                                <div
-                                    className="col-3">
-                                    <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
-                                </div>
-                                <div
-                                    style={{ marginLeft: "20px" }}
-                                    className="col">
+        if (topOrders !== undefined) {
+            var result = null;
+            if (topOrders.length > 0) {
+                result = topOrders.map((item, index) => {
+                    return (
+                        <div key={index}
+                            className="detailTicketBoxDetail row no-gutters">
+                            <div
+                                className="detailTicketBox2Detail col-12">
+                                <div className={`detailTicketChild${item.status} col-12`}>
                                     <div className="row">
-                                        <div className="col"><h1 className="nameDetail">{item.ticketTypeName}</h1></div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
-                                        <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <span className="redemDetail">
-                                                Thời gian:
-                                        </span>
+                                        <div className="col-4">
+                                            <p>Đặt chỗ số: {item.status} </p>
                                         </div>
-                                        <div className="col">
-                                            <span className="redemDetail">
-                                                {this.formatter.format(Date.parse(item.redemptionDate))}
-                                            </span>
+                                        <div className="col-4">
+                                            <p>Thời gian: (thanh toán?) :
+                                            {/* {item.purchaseDay} */}
+                                                {this.formatter.format(Date.parse(item.purchaseDay))}
+                                            </p>
+                                        </div>
+                                        <div className="col-4">
+                                            <p className="pushRight">{this.showStatus(item.status)}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <p>Số tiền thanh toán: {this.convertCurrecyToVnd(item.totalPayment)}</p>
+                                        </div>
+                                        <div className="col-6">
+                                            <Link to={{
+                                                pathname: `/userProfile/myOrder/${item.id}`
+                                            }}>
+                                                <p className="pushRight2">
+                                                    Xem chi tiết
+                                            </p>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style={{ margin: "30px" }} className="row no-gutters">
+                                    <div
+                                        className="col-3">
+                                        <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                    </div>
+                                    <div
+                                        style={{ marginLeft: "20px" }}
+                                        className="col">
+                                        <div className="row">
+                                            <div className="col"><h1 className="nameDetail">{item.ticketTypeName}</h1></div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
+                                            <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <span className="redemDetail">
+                                                    Thời gian:
+                                        </span>
+                                            </div>
+                                            <div className="col">
+                                                <span className="redemDetail">
+                                                    {this.formatter.format(Date.parse(item.redemptionDate))}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    );
+                });
+
+            }
+
+            else if (topOrders.length === 0) {
+                return (
+                    <p>Not Found</p>
                 );
-            });
-        }
+            }
 
-        else if (topOrders.length === 0) {
-            return (
-                <p>Not Found</p>
-            );
+            return result;
         }
-        return result;
     }
 
     render() {
         const { UserOrders, topOrders } = this.state;
+        // const { topOrders } = this.props;
         return (
             <div>
                 {/* PAID, UNPAID, SENT, EXPIRED */}

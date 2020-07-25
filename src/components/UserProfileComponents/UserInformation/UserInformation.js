@@ -66,6 +66,13 @@ class UserInformation extends Component {
                                 </div>
                                 <div className="col-6">
                                     <p className="pushRight2">Xem chi tiết</p>
+                                    {/* <Link to={{
+                                                pathname: `/userProfile/myOrder/${item.id}`
+                                            }}>
+                                                <p className="pushRight2">
+                                                    Xem chi tiết
+                                            </p>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -113,11 +120,38 @@ class UserInformation extends Component {
         return result;
     }
 
+    componentDidMount = () => {
+        var jwtDecode = require('jwt-decode');
+        var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+        if (tokenLogin) {
+            var decoded = jwtDecode(tokenLogin);
+            console.log(decoded);
+            const id = decoded.user.userId;
+            callApi(`userClient/${id}`, 'GET', null)
+                .then(res => {
+                    console.log(res.data.id);
+                    callApi(`order/top3/${res.data.id}`, 'GET', null)
+                        .then(res => {
+                            console.log(res);
+                            this.setState({
+                                topOrders: res.data
+                            })
+                        }).catch(function (error) {
+                            if (error.response) {
+                                console.log(error.response.data);
+                            }
+                        });
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+        }
+    }
+
     render() {
         const {loggedUser} = this.props;
         console.log(this.state.topOrders);
-        const dateString = "2019-10-30T14:01:59.689Z";
-      
         return (
             <div
                 className="col">
@@ -215,7 +249,9 @@ class UserInformation extends Component {
                             </div>
                         </div>
                         {/* {this.showTopOrder(this.state.topOrders)} */}
-                        <TopOrders />
+                        <TopOrders 
+                        // topOrders={this.state.topOrders} 
+                        />
                     </div>
                 </div>
                             

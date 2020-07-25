@@ -9,26 +9,19 @@
 }
 
 .coffeLogo{
-    /* border: greenyellow 1px solid; */
-    /* display: block; */
     padding: 50px 40px 50px 55px;
-    /* margin: 30px; */
     border-radius: 50%;
     background: #FF7062;
-    /* color: white; */
-    /* display: table; */
-    /* display: inline-block; */
-    /* width: 200px; height: 200px; */
 }
 
 
 .mp1{
-  font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   color: #A5A5A5;
+  margin: 10px;
 }
 
 .mp2{
@@ -37,7 +30,7 @@
   font-size: 24px;
   line-height: 28px;
   color: #A5A5A5;
-}
+  }
 
 .detailTicketBox{
   margin: 10px 30px 30px 30px;

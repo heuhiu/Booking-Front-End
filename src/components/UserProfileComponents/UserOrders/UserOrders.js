@@ -100,7 +100,14 @@ class UserOrders extends Component {
                                         <p>Số tiền thanh toán: {this.convertCurrecyToVnd(item.totalPayment)}</p>
                                     </div>
                                     <div className="col-6">
-                                        <p className="pushRight2">Xem chi tiết</p>
+                                        {/* <p className="pushRight2">Xem chi tiết</p> */}
+                                        <Link to={{
+                                                pathname: `/userProfile/myOrder/${item.id}`
+                                            }}>
+                                                <p className="pushRight2">
+                                                    Xem chi tiết
+                                            </p>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +170,7 @@ class UserOrders extends Component {
                                 </div>
                             </div>
                         </div>
-                        <TopOrders />
+                        <TopOrders UserOrders={UserOrders} />
                     </div>
                 </div>
                 <div className="rightBoxUserDetail2">

@@ -5,7 +5,7 @@ var initialState = data ? data : [];
 // var initialState = [];
 
 var Ticket = (state = initialState, action) => {
-    var {  id, qty, price, name } = action;
+    var { id, qty, price, name, item } = action;
     var index = -1;
     switch (action.type) {
         case types.ADD_VISITOR_TYPE_CART:
@@ -24,6 +24,9 @@ var Ticket = (state = initialState, action) => {
             return [...state];
         case types.REMOVE_VISITORTYPE:
             state = [];
+            return [...state];
+        case types.ADD_VISITOR_TYPE_CART_ALL:
+            state = item;
             return [...state];
         default: return state;
     }
