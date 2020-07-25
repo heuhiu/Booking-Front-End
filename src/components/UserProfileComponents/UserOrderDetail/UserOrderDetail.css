@@ -73,3 +73,31 @@
     color: #FFFFFF;
     padding: 15px;
 }
+
+.reSentBtn{
+    border: 2px solid #FF7062;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FF7062;
+    padding: 10px 30px 10px 30px;
+}
+
+.mp4{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #5B5B5B;
+}
+
+.mailSEND{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #5B5B5B;
+}

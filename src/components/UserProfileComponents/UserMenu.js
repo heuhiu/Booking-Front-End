@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import testImg from '../../img/Detailpic.png'
 
 const menus = [
     {
@@ -61,10 +61,14 @@ class UserMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            file: null
         }
     }
-
+    handleChange = (event) => {
+        this.setState({
+            file: URL.createObjectURL(event.target.files[0])
+        })
+    }
     render() {
         const { loggedUser } = this.props;
 
@@ -78,6 +82,10 @@ class UserMenu extends Component {
                                 <path d="M30.9993 39.625C36.7063 39.625 41.3327 34.924 41.3327 29.125C41.3327 23.326 36.7063 18.625 30.9993 18.625C25.2924 18.625 20.666 23.326 20.666 29.125C20.666 34.924 25.2924 39.625 30.9993 39.625Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
+                        {/* <div>
+                            <input type="file" onChange={this.handleChange} />
+                            <img src={this.state.file} alt="Fail to load" />
+                        </div> */}
                     </div>
                 </div>
                 <div style={{ paddingTop: "0px" }} className="outer row no-gutters">

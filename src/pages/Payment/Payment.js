@@ -172,45 +172,39 @@ class Payment extends Component {
             }
             orderItems.push(item)
         }
-
-        console.log(location.state.ticketTypeID);
-        console.log(location.state.ticketName);
-        console.log(loggedUser.id);
-        console.log(loggedUser.firstName);
-        console.log(loggedUser.lastName);
-        console.log(loggedUser.mail);
-        console.log(loggedUser.phoneNumber);
-        console.log(location.state.totalPayment);
-        console.log(new Date());
-        console.log(location.state.redemptionDate);
-        console.log(orderItems);
-
-        callApi('order', 'post', {
-            ticketTypeId: location.state.ticketTypeID,
-            ticketTypeName: location.state.ticketName,
-            userId: loggedUser.id,
-            firstName: loggedUser.firstName,
-            lastName: loggedUser.lastName,
-            mail: loggedUser.mail,
-            phoneNumber: loggedUser.phoneNumber,
-            totalPayment: location.state.totalPayment,
-            purchaseDay: new Date(),
-            redemptionDate: location.state.redemptionDate,
-            orderItems: orderItems
-        })
-            .then(res => {
-                console.log(res);
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
+            console.log("khong ton tai status");
+            callApi('order', 'post', {
+                // them id order
+                ticketTypeId: location.state.ticketTypeID,
+                ticketTypeName: location.state.ticketName,
+                userId: loggedUser.id,
+                firstName: loggedUser.firstName,
+                lastName: loggedUser.lastName,
+                mail: loggedUser.mail,
+                phoneNumber: loggedUser.phoneNumber,
+                totalPayment: location.state.totalPayment,
+                purchaseDay: new Date(),
+                redemptionDate: location.state.redemptionDate,
+                orderItems: orderItems
+            })
+                .then(res => {
+                    console.log(res);
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+        
     }
     render() {
 
         const { location, visitorType } = this.props;
         console.log(visitorType);
-        console.log(location.state);
+        if (location.state.orderStatus) {
+            console.log(location.state.orderStatus);
+        } else {
+            console.log("khong ton tai status");
+        }
 
         if (location.state === undefined) {
             return (
@@ -235,6 +229,7 @@ class Payment extends Component {
 
             const myLocation = location;
             console.log(myLocation);
+            console.log(myLocation.state);
             const ticketName = myLocation.state.ticketName;
             const { accomplished } = this.state;
             const { loggedUser } = this.props;
@@ -597,12 +592,14 @@ class Payment extends Component {
                                             </Accordion.Toggle>
                                                 <Accordion.Collapse eventKey="0">
                                                     <Card.Body>
-                                                        <h1>NOT AVAIABLE YET</h1>
-                                                        <i
+                                                        <span 
+                                                        style={{visibility: !location.state.orderStatus?"visible":"hidden"}}
+                                                            className="purchaseLaterBtn"
                                                             onClick={this.purchaseLater}
-                                                            style={{ border: "1px solid green" }}>
+                                                        >
                                                             Purchase
-                                                        </i>   
+                                                        </span>
+                                                        <h1>Detail</h1>
                                                     </Card.Body>
                                                 </Accordion.Collapse>
                                             </Card>

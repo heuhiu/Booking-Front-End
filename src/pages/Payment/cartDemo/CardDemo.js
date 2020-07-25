@@ -42,14 +42,15 @@ class _CardForm extends Component {
   handleSubmit = (evt) => {
     // debugger
     evt.preventDefault();
+
     const { orderDetail, visitorType, loggedUser } = this.props;
-    // console.log(orderDetail.state.ticketTypeID);
-    // console.log(orderDetail.state.ticketName);
-    // const ticketName = orderDetail.state.ticketName;
-    // console.log(orderDetail.state.totalPayment);
-    // const totalPayment = orderDetail.state.totalPayment;
-    // console.log(visitorType);
-    // console.log(loggedUser);
+    debugger
+    if (orderDetail.state.orderStatus) {
+      console.log(orderDetail.state.orderStatus);
+
+    } else {
+      console.log("khong ton tai status");
+    }
 
     var orderItems = [];
     var item = {
@@ -76,43 +77,49 @@ class _CardForm extends Component {
       totalPayment: orderDetail.state.totalPayment,
       purchaseDay: new Date(),
       redemptionDate: orderDetail.state.redemptionDate,
-      orderItems: orderItems
+      orderItems: orderItems,
+      id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null
     }
 
-
-
-    if (this.props.stripe) {
-
-      this.props.stripe.createToken()
-        .then(res => {
-          console.log(res.token.id);
-          // const paymentToken = res.token.id;
-          const paymentToken = res.token.id;
-          let data = new FormData();
-          data.append('order', JSON.stringify(order));
-          data.append('token', paymentToken);
-          callApi('payment', 'POST', data)
-            .then(res => {
-              console.log(res);
-              if (res) {
-                // this.props.history.push("/paymentSucess");
-                this.props.history.push({
-                  pathname: '/paymentSucess',
-                  state: { orderDetail: orderDetail }
-                  // state:  orderDetail
-                })
-              }
-            })
-            .catch(function (error) {
-              if (error.response) {
-                console.log(error)
-              }
-            });
-        })
-    } else {
-      console.log("Stripe.js hasn't loaded yet.");
+    debugger
+    if (orderDetail.state.orderStatus) {
+      if (this.props.stripe) {
+        this.props.stripe.createToken()
+          .then(res => {
+            console.log(res.token.id);
+            // const paymentToken = res.token.id;
+            const paymentToken = res.token.id;
+            let data = new FormData();
+            const myStatus = "existed";
+            data.append('order', JSON.stringify(order));
+            data.append('token', paymentToken);
+            data.append('action', myStatus);
+            debugger
+            // if(orderDetail.state.orderStatus) {
+            // data.append('action', "existed");
+            // } else {
+            // data.append('action', "new");
+            // }
+            callApi('payment', 'POST', data)
+              .then(res => {
+                console.log(res);
+                if (res) {
+                  this.props.history.push({
+                    pathname: '/paymentSucess',
+                    state: { orderDetail: orderDetail }
+                  })
+                }
+              })
+              .catch(function (error) {
+                if (error.response) {
+                  console.log(error.response);
+                }
+              });
+          })
+      } else {
+        console.log("Stripe.js hasn't loaded yet.");
+      }
     }
-
   };
 
   render() {

@@ -202,3 +202,8 @@
     outline: none;
     border: none;
 }
+
+.purchaseLaterBtn{
+    padding: 10px;
+    border: 1px solid green;
+}
