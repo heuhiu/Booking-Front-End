@@ -6,6 +6,7 @@ import axios from 'axios';
 import Pagination from "react-js-pagination";
 import './ListPlaceSearched.css';
 import searchPic from '../../../img/searchPic.png';
+import callApi from '../../../config/utils/apiCaller';
 
 class ListPlaceSearched extends Component {
 
@@ -19,7 +20,8 @@ class ListPlaceSearched extends Component {
             searchList: [],     //ListSeached temporary
             searchName: "",
             listCtiId: "",
-            listCatId: ""
+            listCatId: "",
+            listCatName: []
         }
     }
 
@@ -27,12 +29,51 @@ class ListPlaceSearched extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
+    getUsers = async (catId) => {
+        const { listCatName } = this.state;
+        let res = axios.get(`http://localhost:8090/category/${catId}`);
+        // this.setState({
+        //     listCatName: res.data
+        // })
+        listCatName.push(res.data)
+        // return res.data;
+    };
+
+    showPlaceCategory =  (categoryList) => {
+        var result = null;
+        // var listCatName = [];
+        const { listCatName } = this.state;
+        if (categoryList.length > 0) {
+            result = categoryList.map((data, index) => {
+                // const hi = this.getUsers(data);
+                // console.log(hi);
+                // console.log(res.data);
+                // callApi('city', 'GET', null)
+                // .then(res => {
+                //     return (
+                //         <p style={{ color: "red" }}>{data}</p>
+                //     )
+                // }).catch(function (error) {
+                //     if (error.response) {
+                //         console.log(error.response.data);
+                //     }
+                // });
+                let res = axios.get(`http://localhost:8090/category/${data}`);
+                return (
+                    <p style={{ color: "red" }}>a{res.data}</p>
+                )
+            });
+        }
+        return result;
+    }
+
+
     //Show items searched
     showSearchList = (searchList) => {
         var result = null;
         if (searchList.length > 0) {
             result = searchList.map((data, index) => {
-                // console.log(data);
+                // console.log(data.categoryId);
                 return (
                     <Link
                         style={{ textDecoration: "none" }}
@@ -47,9 +88,8 @@ class ListPlaceSearched extends Component {
                                         // style={{backgroundImage: `url(${searchPic})`}} 
                                         className="backgroupPresent col">
                                         <div className="thumb">
-                                            <img src={data.placeImageLink[0]} alt="" />
-                                            {/* <img style={{ objectFit: "cover" }} src={searchPic} alt="" /> */}
-                                            {/* <a href="/#" className="prise">$500</a> */}
+                                            <img src={data.placeImageLink[0]} alt="FAIL TO LOAD" />
+
                                         </div>
                                     </div>
                                     <div className="col">
@@ -57,14 +97,16 @@ class ListPlaceSearched extends Component {
                                             <p>
                                                 <button>Điểm tham quan</button>
                                             </p>
+                                            {this.showPlaceCategory(data.categoryId)}
                                             {/* <p>id: {data.id}</p> */}
                                             <h5
                                                 style={{ marginBottom: "-10px" }}
                                             >{data.name}</h5>
-                                            <p className="destination"><svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg> &nbsp;
+                                            <p className="destination">
+                                                <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg> &nbsp;
                                                 {data.address}</p>
                                             {/* <p
                                         style={{color: "#FF7062"}}
@@ -91,7 +133,7 @@ class ListPlaceSearched extends Component {
 
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = (pageNumber) => {
-        const { newDecode, listCtiIdNumber, listCatIdNumber } = this.state;
+        const { searchName, listCtiId, listCatId } = this.state;
         // const { searchName, listCtiId, listCatId } = this.props;
         // console.log(searchName);
         // console.log(listCtiId);
@@ -100,7 +142,7 @@ class ListPlaceSearched extends Component {
             activePage: pageNumber
         }
             , () => {
-                this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
+                this.receivedData(searchName, listCtiId, listCatId);
             }
         )
         // this.forceUpdate();
@@ -124,7 +166,7 @@ class ListPlaceSearched extends Component {
             }
         }).then(res => {
             //set state
-            console.log(res);
+            // console.log(res);
             this.setState({
                 totalPage: res.data.totalPage,
                 searchList: res.data.listResult,
@@ -135,16 +177,7 @@ class ListPlaceSearched extends Component {
         });
     }
 
-    //Get name, cityID. CategoryID from localStorage to filter & get List after filter
-    // componentDidMount = () => {
-    //     debugger
-    //     const { searchName, listCtiId, listCatId } = this.props;
-    //     console.log(searchName);
-    //     this.receivedData(searchName, listCtiId, listCatId);
-    // }
-
     componentDidMount = () => {
-        // debugger
         var { location } = this.props;
         console.log(location.search);
         const answer_array = location.search.split('?');
@@ -186,17 +219,18 @@ class ListPlaceSearched extends Component {
 
     render() {
         // debugger
-        const { activePage, totalItems, searchList } = this.state;
-        const { searchName, listCtiId, listCatId } = this.props;
+        const { activePage, totalItems, searchList, listCatName, searchName } = this.state;
+        const { listCtiId, listCatId } = this.props;
+        console.log(listCatName);
         return (
             <Container style={{ fontFamily: 'Inter' }} >
-                <p>Search Name: {searchName} </p>
+                {/* <p>Search Name: {searchName} </p> */}
                 <div className="popular_places_area">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="filter_result_wrap">
-                                    <h3>Filter Result</h3>
+                                    <h3 style={{ visibility: searchName ? "visible" : "hidden" }}>Tất cả kết quả với Da Nang: {searchName}</h3>
                                     <div className="filter_bordered">
                                         <div className="filter_inner">
                                             <div className="row">

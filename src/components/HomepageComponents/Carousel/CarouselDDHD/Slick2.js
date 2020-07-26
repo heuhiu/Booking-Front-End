@@ -4,16 +4,13 @@ import Slider from "react-slick";
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
+import callApi from '../../../../config/utils/apiCaller';
+import wtf from '../../../../img/TPHCM.png';
+import { Link } from 'react-router-dom';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
   return (
-    // <div
-    //     className={className}
-    //     style={{ ...style, display: "block", background: "red" }}
-    //     onClick={onClick}>
-    //     <img ></img>
-    // </div>
     <img
       onClick={onClick}
       className={className}
@@ -42,16 +39,61 @@ function SamplePrevArrow(props) {
 }
 
 
+
 class Slick2 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: null
+      selectedOption: null,
+      topCity: []
     }
   }
 
+  componentDidMount = () => {
+    callApi("topCity", 'GET', null)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          topCity: res.data
+        })
+      }).catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+        }
+      });
+  }
+
+  showTopcity = (listTopcity) => {
+    var result = null;
+    if (listTopcity.length > 0) {
+      result = listTopcity.map((item, index) => {
+        return (
+          <Link 
+         className="decoNone"
+          to={`/searchedPlace?listCityID=${item.id}`}>
+            <div className="owlStyle">
+              <h3 className="owlStyleChil">
+                <div
+                  style={{
+                    backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
+                  ,url(${item.imageLink ? item.imageLink : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                  }}
+                  className="owlCom3">{item.name}</div>
+              </h3>
+            </div >
+          </Link>
+        );
+      });
+    } else {
+      return (
+        <div>not found</div>
+      )
+    }
+    return result;
+  }
   render() {
+    const { topCity } = this.state;
     const settings = {
       dots: true,
       infinite: true,
@@ -68,49 +110,34 @@ class Slick2 extends Component {
           <h2 className="headerOwl">Điểm đến hàng đầu</h2>
           <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
           <Slider {...settings}>
-            <div className="owlStyle">
+            {/* <div className="owlStyle">
               <h3 className="owlStyleChil">
-                {/* <img className="lol" className="coverImg" 
-                src={Rectangle} alt="?" /> */}
+
                 <div className="owlCom1">Hà Nội</div>
-                {/* <div className="containerOwlChil">
-                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội 1</p>
-                  <p className="owlStyleChil2">đ 100.000</p>
-                  <p className="owlStyleChil3">đ 86.000</p>
-                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
-                </div> */}
+
               </h3>
             </div >
             <div className="owlStyle">
               <h3 className="owlStyleChil">
-                {/* <img className="lol" className="coverImg" 
-                src={Rectangle} alt="?" /> */}
+
                 <div className="owlCom2">Đà Nẵng</div>
-                {/* <div className="containerOwlChil">
-                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội 1</p>
-                  <p className="owlStyleChil2">đ 100.000</p>
-                  <p className="owlStyleChil3">đ 86.000</p>
-                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
-                </div> */}
-              </h3>
-            </div >
-            
-            <div className="owlStyle">
-              <h3 className="owlStyleChil">
-                {/* <img className="lol" className="coverImg" 
-                src={Rectangle} alt="?" /> */}
-                <div className="owlCom3">TP HCM</div>
-                {/* <div className="containerOwlChil">
-                  <p className="owlStyleChil1">[GIẢM ĐẾN 37%] Vé Jump Arena Big C Thăng Long Hà Nội 1</p>
-                  <p className="owlStyleChil2">đ 100.000</p>
-                  <p className="owlStyleChil3">đ 86.000</p>
-                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
-                </div> */}
+
               </h3>
             </div >
 
-            
-    </Slider>
+            <div className="owlStyle">
+              <h3 className="owlStyleChil">
+                <div
+                  style={{
+                    backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
+                  ,url(${wtf})`
+                  }}
+                  className="owlCom3">TP HCM</div>
+              </h3>
+            </div >
+          */}
+            {this.showTopcity(topCity)}
+          </Slider>
         </div>
       </section>
     );
