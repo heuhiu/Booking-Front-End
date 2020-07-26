@@ -9,7 +9,7 @@ import { getUserLogin } from './actions/index';
 import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import {Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
 
@@ -26,28 +26,31 @@ class App extends Component {
             console.log(decoded);
             const id = decoded.user.userId;
             // this.props.fetchUserDetail(decoded.user);
-            callApi(`userClient/${id}`, 'GET', null)
-            .then(res => {
-                console.log(res);
-                this.props.fetchUserDetail(res.data);
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
+            callApi("login/checkToken", 'POST', null)
+                .then(res => {
+                    console.log(res);
+                    callApi(`userClient/${id}`, 'GET', null)
+                        .then(res => {
+                            console.log(res);
+                            this.props.fetchUserDetail(res.data);
+                        }).catch(function (error) {
+                            if (error.response) {
+                                console.log(error.response.data);
+                            }
+                        });
+                }).catch(function (error) {
+                    if (error.response) {
+                        localStorage.removeItem('tokenLogin');
+                        window.location.reload();
+                    }
+                });
         }
     }
+    
     render() {
         return (
             <Router>
-                {/* <div className="container-fluid">
-                    <div className="row no-gutters">
-                        <div className="col-12">
-                            {this.showContentMenus(routers)}
-                        </div>
-                    </div>
-                </div > */}
-                <Container style={{padding: "0px"}} fluid={true}>
+                <Container style={{ padding: "0px" }} fluid={true}>
                     <Row noGutters={true}>
                         <Col md={12}>{this.showContentMenus(routers)}</Col>
                     </Row>

@@ -5,6 +5,8 @@ import logo from '../../img/Logo.png';
 import { connect } from 'react-redux';
 import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
+import callApi from '../../config/utils/apiCaller';
+import { withRouter } from 'react-router-dom';
 
 const menus = [
     // {
@@ -83,11 +85,19 @@ class Menu extends Component {
 
 
     logOut = () => {
-        localStorage.removeItem('tokenLogin');
-        localStorage.removeItem('USER');
-        localStorage.removeItem('CART');
-        window.location.reload();
         // this.props.history.push("/");
+        callApi("login/logout", 'POST', null)
+            .then(res => {
+                console.log(res);
+                localStorage.removeItem('tokenLogin');
+                localStorage.removeItem('USER');
+                // window.location.reload();
+                this.props.history.push("/login");
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
     }
 
     render() {
@@ -169,7 +179,7 @@ class Menu extends Component {
                             borderRadius: "50%",
                             marginRight: "43.2px",
                             display: tokenLogin ? "" : "none",
-                            visibility: this.props.UserDetail.avatarLink === null ? "hidden":"visible"
+                            visibility: this.props.UserDetail.avatarLink === null ? "hidden" : "visible"
                         }}
                         src={this.props.UserDetail.avatarLink}
                         width="36.8"
@@ -208,4 +218,5 @@ const mapStateToProps = state => {
 };
 
 // export default Menu;
-export default connect(mapStateToProps, null)(Menu);
+// export default connect(mapStateToProps, null)(Menu);
+export default withRouter(connect(mapStateToProps, null)(Menu));

@@ -272,7 +272,7 @@ class UserUpdateInformation extends Component {
         }
         else {
             // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
-            callApi(`userClient/${id}`, 'put',
+            callApi(`userClient/${id}`, 'PUT',
                 {
                     firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
                     lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,

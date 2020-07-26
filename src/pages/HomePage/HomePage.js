@@ -18,6 +18,25 @@ class HomePage extends Component {
         }
     }
 
+    // componentDidMount = () => {
+    //     var jwtDecode = require('jwt-decode');
+    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+    //     if (tokenLogin) {
+    //         var decoded = jwtDecode(tokenLogin);
+    //         console.log(decoded);
+    //         const id = decoded.user.userId;
+    //         // this.props.fetchUserDetail(decoded.user);
+    //         callApi(`userClient/${id}`, 'GET', null)
+    //             .then(res => {
+    //                 console.log(res);
+    //                 this.props.fetchUserDetail(res.data);
+    //             }).catch(function (error) {
+    //                 if (error.response) {
+    //                     console.log(error.response.data);
+    //                 }
+    //             });
+    //     }
+    // }
     componentDidMount = () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
@@ -26,13 +45,22 @@ class HomePage extends Component {
             console.log(decoded);
             const id = decoded.user.userId;
             // this.props.fetchUserDetail(decoded.user);
-            callApi(`userClient/${id}`, 'GET', null)
+            callApi("login/checkToken", 'POST', null)
                 .then(res => {
                     console.log(res);
-                    this.props.fetchUserDetail(res.data);
+                    callApi(`userClient/${id}`, 'GET', null)
+                        .then(res => {
+                            console.log(res);
+                            this.props.fetchUserDetail(res.data);
+                        }).catch(function (error) {
+                            if (error.response) {
+                                console.log(error.response.data);
+                            }
+                        });
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        localStorage.removeItem('tokenLogin');
+                        window.location.reload();
                     }
                 });
         }

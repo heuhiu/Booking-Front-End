@@ -125,7 +125,6 @@ class LoginComp extends Component {
                 password: password.value
             }).then(res => {
                 console.log(res);
-                alert('Đăng nhập thành công');
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data));
                 var decoded = jwtDecode(res.data);
                 console.log(decoded.user);

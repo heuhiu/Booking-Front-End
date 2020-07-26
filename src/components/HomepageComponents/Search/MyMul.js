@@ -140,16 +140,17 @@ class MyMul extends Component {
                     <label key={item.id}>
                         <div className="row no-gutters filterItem">
                             <div
-                                style={{ marginLeft: "10px" }}
-                                className="col">
+                                // style={{ marginLeft: "10px" }}
+                                className="col-2"
+                                >
                                 <Checkbox
                                     name={item.name}
                                     checked={this.state.checkedCity.get(item.name) || false}
                                     onChange={this.handleChange(item.id)}
                                     type="checkbox"
-                                />
+                                />                               
                             </div>
-                            <div className="itemName"  >
+                            <div className="itemName col"  >
                                 {item.name}
                             </div>
                         </div>
@@ -169,8 +170,8 @@ class MyMul extends Component {
                     <label key={item.id}>
                         <div className="row no-gutters filterItem">
                             <div
-                                className="col"
-                                style={{ marginLeft: "10px" }}
+                                className="col-2"
+                                // style={{ marginLeft: "10px" }}
                             >
                                 <Checkbox
                                     name={item.categoryName}
@@ -180,7 +181,7 @@ class MyMul extends Component {
                                 />
 
                             </div>
-                            <div className="itemName"
+                            <div className="itemName col"
                             >
                                 {item.categoryName}
                             </div>
