@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import './style.css';
 import logo from '../../img/Logo.png';
 import { connect } from 'react-redux';
-import myPro from '../../img/myPro.jpg';
+import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 
 const menus = [
@@ -139,7 +139,6 @@ class Menu extends Component {
                             <Dropdown.Menu
                             // id="dropdown-menu"
                             >
-
                                 <Dropdown.Item id="dropdown-item">
                                     <Link to="/userProfile/myProfile">
                                         <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +148,7 @@ class Menu extends Component {
                                     Hồ sơ của tôi
                                     </Link>
                                 </Dropdown.Item>
-                                
+
                                 <Dropdown.Item
                                     onClick={this.logOut}
                                 // id="dropdown-item"
@@ -164,14 +163,15 @@ class Menu extends Component {
                         </Dropdown>
                     </div>
                     <img
+
                         style=
                         {{
                             borderRadius: "50%",
                             marginRight: "43.2px",
-                            display: tokenLogin ? "" : "none"
+                            display: tokenLogin ? "" : "none",
+                            visibility: this.props.UserDetail.avatarLink === null ? "hidden":"visible"
                         }}
-                        src={myPro}
-                        alt="Fail Loading"
+                        src={this.props.UserDetail.avatarLink}
                         width="36.8"
                         height="36.8"
                     />
