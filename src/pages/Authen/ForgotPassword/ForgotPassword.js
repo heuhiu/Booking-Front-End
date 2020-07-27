@@ -30,7 +30,8 @@ class ForgotPassword extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
-            visibility: true
+            visibility: true,
+            checkResent: false
         }
     }
 
@@ -99,10 +100,13 @@ class ForgotPassword extends Component {
         callApi('user/forgotPassword', 'POST', data)
         .then(res => {
             console.log(res);
+            this.setState({
+                checkResent: true
+            })
         }).catch(function (error) {
             if (error.response) {
                 // Request made and server responded
-                console.log(error.response.data);
+                console.log(error.response);
             }
         });
 
@@ -153,6 +157,7 @@ class ForgotPassword extends Component {
 
     render() {
         console.log(this.state.email.value);
+        const {checkResent} = this.state;
         return (
             <div className="limiter">
                 <div className="container-login100">
@@ -206,6 +211,9 @@ class ForgotPassword extends Component {
                                     Gửi email xác thực
 						        </button>
                             </div>
+                            <label className="subHeader">
+                              {checkResent===true?"Vui lòng kiểm tra email, nếu chưa nhận được xin vui lòng |Gửi email xác thực| một lần nữa":""}  
+                            </label>
                         </form>
                     </div>
                 </div>

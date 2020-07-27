@@ -10,6 +10,7 @@ class CfMail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            checkSuccess: true
         }
     }
 
@@ -37,13 +38,15 @@ class CfMail extends Component {
             }
         
         }).catch(error =>  {
-            debugger
             console.log(error.response);
+            this.setState({
+                checkSuccess: false
+            })
         });
     }
 
     render() {
-
+        const {checkSuccess} = this.state;
         return (
             <div className="limiter">
                 <div className="container-login100">
@@ -69,12 +72,14 @@ class CfMail extends Component {
                                 </svg>
                             </Link>
                             <div className="loginPanelEmail">
-                                Xác nhận Email thành công
+                                Xác nhận Email {checkSuccess===false?"Thất bại":"Thành công"}
                             </div>
                             <div className="row det">
                                 <div className="col">
-                                    <p className="det1">Vui lòng chờ trong giây lát &emsp;
-                                                </p>
+                                    <p className="det1">
+                                    {checkSuccess===false?"Vui Lòng kiểm tra lại email mới nhất":"Vui lòng chờ trong giây lát"}
+                                         &emsp;
+                                    </p>
                                 </div>
                             </div>
                         
