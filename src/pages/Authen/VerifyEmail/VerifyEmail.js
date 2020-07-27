@@ -20,9 +20,7 @@ class VerifyEmail extends Component {
         e.preventDefault();
         const { myMail } = this.state;
         console.log(myMail);
-        callApi("user/resent-email", 'POST', {
-            mail: myMail
-        })
+        callApi("user/resent-email", 'POST', myMail)
             .then(res => {
                 console.log(res);
             }).catch(function (error) {

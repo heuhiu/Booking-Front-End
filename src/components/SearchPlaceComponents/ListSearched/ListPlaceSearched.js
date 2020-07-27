@@ -8,6 +8,7 @@ import './ListPlaceSearched.css';
 import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
 import PlaceFilter from '../PlaceFilter/PlaceFilter';
+import MyMul from '../../HomepageComponents/Search/MyMul';
 
 class ListPlaceSearched extends Component {
 
@@ -165,6 +166,9 @@ class ListPlaceSearched extends Component {
                 page: activePage,
                 //limit of page
                 limit: this.state.limit,
+                //
+                // minValue: null,
+                // maxValue: null
             }
         }).then(res => {
             //set state
@@ -218,7 +222,14 @@ class ListPlaceSearched extends Component {
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
     }
+    setmMul = (cityMul, catMul) => {
+        this.setState({
+            cityMul,
+            catMul
+        }, () => {
+        });
 
+    }
     render() {
         // debugger
         const { activePage, totalItems, searchList, listCatName, searchName } = this.state;
@@ -265,6 +276,7 @@ class ListPlaceSearched extends Component {
                                                                 style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
                                                         </p> */}
                                                         <p>Đây là cái Slider Filter by Price nhưng mà không làm đc</p>
+                                                        <MyMul setmMul={this.setmMul} />
                                                     </div>
                                                 </div>
                                             </div>
