@@ -32,7 +32,8 @@ class CfNewPassword extends Component {
                 errorMessage: ''
             },
             visibility: true,
-            show: false
+            show: false,
+            uid: 0
         }
     }
 
@@ -96,7 +97,7 @@ class CfNewPassword extends Component {
     }
 
     onResetPassword = (e) => {
-        const { repassword, password } = this.state;
+        const { repassword, password, uid } = this.state;
         e.preventDefault();
         if (this.password && repassword.isInputValid === false) {
             setTimeout(() => {
@@ -114,40 +115,56 @@ class CfNewPassword extends Component {
             e.stopPropagation();
         }
         else {
+            debugger
             console.log("GO to susscess")
             console.log(repassword.value);
             console.log(password.value);
-            // callApi('login', 'POST', {
+            console.log(uid);
+            const newPass = password.value;
+            const uid = uid;
 
-            // }).then(res => {
-            //     console.log(res);
-            // }).catch(function (error) {
-            //     if (error.response) {
-            //         console.log(error.response.data);
-            //     }
-            // });
+            let data = new FormData();
+            data.append('uid', uid);
+            data.append('newPassword', newPass);
+            callApi('user/changePasswordAfterReset', 'POST', data)
+            .then(res => {
+                console.log(res);
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
         }
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
+        // debugger
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
         console.log(myParam);
+        // debugger
         axios.get('http://localhost:8090/user/verifyChangePasswordToken', {
             params: {
                 token: myParam
             }
         }).then(res => {
             if (res.data) {
-                console.log(res.data.token);
-                alert(res);
+                // debugger
+                console.log(res.data);
+                alert(res.data);
+                this.setState({
+                    uid: res.data
+                })
+
                 this.setState({
                     show: true
                 })
-                // localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
-                // this.props.history.push("/");
+
+                localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
+                this.props.history.push("/");
             }
         }).catch(function (error) {
+            // debugger
             console.log(error.response);
         });
     }
