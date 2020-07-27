@@ -99,6 +99,8 @@ class CfNewPassword extends Component {
     onResetPassword = (e) => {
         const { repassword, password, uid } = this.state;
         e.preventDefault();
+        
+
         if (this.password && repassword.isInputValid === false) {
             setTimeout(() => {
                 this.password.focus();
@@ -120,11 +122,12 @@ class CfNewPassword extends Component {
             console.log(repassword.value);
             console.log(password.value);
             console.log(uid);
+
             const newPass = password.value;
-            const uid = uid;
+            const myId = uid;
 
             let data = new FormData();
-            data.append('uid', uid);
+            data.append('uid', myId);
             data.append('newPassword', newPass);
             callApi('user/changePasswordAfterReset', 'POST', data)
             .then(res => {
@@ -156,12 +159,12 @@ class CfNewPassword extends Component {
                     uid: res.data
                 })
 
-                this.setState({
-                    show: true
-                })
+                // this.setState({
+                //     show: true
+                // })
 
-                localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
-                this.props.history.push("/");
+                // localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
+                // this.props.history.push("/");
             }
         }).catch(function (error) {
             // debugger

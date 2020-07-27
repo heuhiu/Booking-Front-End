@@ -23,6 +23,7 @@ class CfMail extends Component {
                 token: myParam
             }
         }).then(res => {
+            debugger
             var jwtDecode = require('jwt-decode');
             //set state
             if (res.data) {
@@ -34,7 +35,9 @@ class CfMail extends Component {
                 // alert("will push to home page if sucess");
                 this.props.history.push("/");
             }
-        }).catch(function (error) {
+        
+        }).catch(error =>  {
+            debugger
             console.log(error.response);
         });
     }
