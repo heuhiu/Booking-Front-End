@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 // import callApi from '../../config/utils/apiCaller';
 import Select, { components } from "react-select";
 import PropTypes from "prop-types";
-
+import './cat.css'
 
 const Option = props => (
     <div>
       <components.Option {...props}>
+        <label class="container1">
         <input type="checkbox" checked={props.isSelected} onChange={() => null} />{" "}
         <label>{props.label}</label>
+        </label>
       </components.Option>
     </div>
   );
@@ -50,6 +52,16 @@ class CategorySelection extends Component {
         backspaceRemovesValue={false}
         onChange={e => onChangeCallback(e)}
         {...otherProps}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+          ...theme.colors,
+            text: 'orangered',
+            primary25: 'hotpink',
+            primary: 'black',
+          },
+        })}
       />
       
         );
