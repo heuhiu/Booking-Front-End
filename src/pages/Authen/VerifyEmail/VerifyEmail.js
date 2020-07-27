@@ -20,7 +20,10 @@ class VerifyEmail extends Component {
         e.preventDefault();
         const { myMail } = this.state;
         console.log(myMail);
-        callApi("user/resent-email", 'POST', myMail)
+        
+        let data = new FormData();
+        data.append('mail', myMail);
+        callApi("user/resent-email", 'POST', data)
             .then(res => {
                 console.log(res);
             }).catch(function (error) {
