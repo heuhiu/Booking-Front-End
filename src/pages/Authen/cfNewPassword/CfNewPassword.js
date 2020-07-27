@@ -5,6 +5,7 @@ import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
+import axios from 'axios';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -30,7 +31,8 @@ class CfNewPassword extends Component {
                 isInputValid: false,
                 errorMessage: ''
             },
-            visibility: true
+            visibility: true,
+            show: false
         }
     }
 
@@ -106,7 +108,6 @@ class CfNewPassword extends Component {
             }, 1);
         }
 
-
         if (repassword.isInputValid === false ||
             password.isInputValid === false) {
             e.preventDefault();
@@ -128,6 +129,28 @@ class CfNewPassword extends Component {
         }
     }
 
+    componentDidMount = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('token');
+        console.log(myParam);
+        axios.get('http://localhost:8090/user/verifyChangePasswordToken', {
+            params: {
+                token: myParam
+            }
+        }).then(res => {
+            if (res.data) {
+                console.log(res.data.token);
+                alert(res);
+                this.setState({
+                    show: true
+                })
+                // localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
+                // this.props.history.push("/");
+            }
+        }).catch(function (error) {
+            console.log(error.response);
+        });
+    }
 
     toggleShow = () => {
         this.setState({

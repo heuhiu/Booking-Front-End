@@ -275,7 +275,6 @@ class ListPlaceSearched extends Component {
                                                             <input type="text" id="amount" readOnly
                                                                 style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
                                                         </p> */}
-                                                        <p>Đây là cái Slider Filter by Price nhưng mà không làm đc</p>
                                                         <MyMul setmMul={this.setmMul} />
                                                     </div>
                                                 </div>

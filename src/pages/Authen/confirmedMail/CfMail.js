@@ -17,6 +17,7 @@ class CfMail extends Component {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
         console.log(myParam);
+        
         axios.get('http://localhost:8090/user/active', {
             params: {
                 token: myParam
