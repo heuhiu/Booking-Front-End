@@ -9,6 +9,11 @@ import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
 import PlaceFilter from '../PlaceFilter/PlaceFilter';
 import MyMul from '../../HomepageComponents/Search/MyMul';
+import CategorySelect from './reactSelect/CategorySelect';
+import CategorySelection from './reactSelect/CategorySelection';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
+
 
 class ListPlaceSearched extends Component {
 
@@ -23,7 +28,11 @@ class ListPlaceSearched extends Component {
             searchName: "",
             listCtiId: "",
             listCatId: "",
-            listCatName: []
+            listCatName: [],
+            listId: [],
+            listCat: [],
+            listCategoryId: [],
+            value: { min: 50000, max: 150000 },
         }
     }
 
@@ -152,27 +161,30 @@ class ListPlaceSearched extends Component {
     }
 
     //Received data from API
-    receivedData(searchName, IDCityFilter, IDCategoryFilter) {
-        const { activePage } = this.state;
+    receivedData(searchName, IDCityFilter, IDCategoryFilter,) {
+        const { activePage, value } = this.state;
+        console.log(searchName);
+        console.log(IDCityFilter);
+        console.log(IDCategoryFilter);
+        console.log(value.max);
         axios.get('http://localhost:8090/place/searchClient', {
             params: {
                 //park name
                 name: searchName ? searchName : "",
+                //limit of page
+                limit: this.state.limit,
+                //page Number  
+                page: activePage,
                 //city list ID
                 cityId: isNaN(parseFloat(IDCityFilter)) === false ? IDCityFilter + '' : null,
                 //category List ID
                 categoryId: isNaN(parseFloat(IDCategoryFilter)) === false ? IDCategoryFilter + '' : null,
-                //page Number  
-                page: activePage,
-                //limit of page
-                limit: this.state.limit,
-                //
-                // minValue: null,
-                // maxValue: null
+                minValue: value.min,
+                maxValue: value.max
             }
         }).then(res => {
             //set state
-            // console.log(res);
+            console.log(res);
             this.setState({
                 totalPage: res.data.totalPage,
                 searchList: res.data.listResult,
@@ -181,8 +193,21 @@ class ListPlaceSearched extends Component {
         }).catch(function (error) {
             console.log(error.response);
         });
-    }
 
+    }
+    getAllCategories = () => {
+        //get City list
+        callApi('categories', 'GET', null)
+            .then(res => {
+                this.setState({
+                    listCat: res.data
+                })
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+    }
     componentDidMount = () => {
         var { location } = this.props;
         console.log(location.search);
@@ -210,9 +235,7 @@ class ListPlaceSearched extends Component {
         });
         // console.log(name.replace(/%20/g, ' '));
         var newDecode = decodeURIComponent(name);
-        var oldDecode = name.replace(/%20/g, ' ');
-        console.log(oldDecode + " vs " + newDecode);
-
+        console.log(newDecode);
         this.setState({
             // searchedName: name.replace(/%20/g, ' '),
             searchName: newDecode,
@@ -221,20 +244,64 @@ class ListPlaceSearched extends Component {
         }, () => {
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
+        this.getAllCategories();
     }
-    setmMul = (cityMul, catMul) => {
-        this.setState({
-            cityMul,
-            catMul
-        }, () => {
-        });
+    onChangeSlider = (value) => {
+        this.setState({ 
+            value 
+        }, ()=>{
+            this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+        })
+    }
+    onChangeCate = (res) => {
+        let unique = [...new Set()];
+        if (res !== null) {
+            for (let index = 0; index < res.length; index++) {
+                const element = res[index].value;
+                // console.log(element);
+                unique.push(element);
 
+            }
+            // console.log(res);
+            // let unique = [...new Set(this.state.listCategoryId)];
+            // console.log(unique);
+            // console.log(this.state.listCtiId);
+            this.setState({
+                listCatId: unique
+            }, () => {
+                this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+            })
+        }
     }
+
     render() {
         // debugger
-        const { activePage, totalItems, searchList, listCatName, searchName } = this.state;
+        const { activePage, totalItems, searchList, listCatName,
+            searchName, listId, listCat, listCategoryId } = this.state;
         const { listCtiId, listCatId } = this.props;
-        console.log(listCatName);
+
+        // console.log(listCatName);
+        // console.log(listId);
+        // var listCategoryIdtemp = []
+
+        // for (let index = 0; index < listId.length; index++) {
+        //     const element = listId[index].value;
+        //     console.log(element);
+        //     listCategoryId.push(element);
+        // }
+
+        // console.log(listCategoryId);
+        // console.log(listCity);
+        console.log(listCat)
+        var options = []
+        if (listCat.length > 0) {
+            for (let i = 0; i < listCat.length; i++) {
+                var option = { value: listCat[i].id, label: listCat[i].categoryName }
+                options.push(option);
+            }
+        }
+        // console.log(options);
+
         return (
             <Container style={{ fontFamily: 'Inter' }} >
                 {/* <p>Search Name: {searchName} </p> */}
@@ -243,7 +310,7 @@ class ListPlaceSearched extends Component {
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="filter_result_wrap">
-                                    <h3 style={{ visibility: searchName ? "visible" : "hidden" }}>Tất cả kết quả với Da Nang: {searchName}</h3>
+                                    <h3>Tất cả kết quả với : {searchName ? searchName : "Mọi địa điểm"}</h3>
                                     <div className="filter_bordered">
                                         <div className="filter_inner">
                                             <div className="row">
@@ -275,7 +342,23 @@ class ListPlaceSearched extends Component {
                                                             <input type="text" id="amount" readOnly
                                                                 style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
                                                         </p> */}
-                                                        <MyMul setmMul={this.setmMul} />
+                                                        {/* <CategorySelection options={options}
+                                                        onChangeCallback={response => this.setState({
+                                                            listId: response
+                                                        })} /> */}
+                                                        <CategorySelection options={options}
+                                                            onChangeCallback={response => this.onChangeCate(response)} />
+                                                        <br></br>
+                                                        <br></br>
+                                                        <br></br>
+                                                        <InputRange
+                                                            maxValue={500000}
+                                                            minValue={0}
+                                                            value={this.state.value}
+                                                            onChange={value => this.onChangeSlider(value)
+                                                                // this.setState({ value })
+                                                            }
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>

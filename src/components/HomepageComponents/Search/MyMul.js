@@ -205,10 +205,11 @@ class MyMul extends Component {
                     {checkboxesToRender2}
                     {/* {this.showList(this.state.listCategory)} */}
                 </div>
-                <span
+                {/* <span
                     style={{ color: "#FF7062", fontWeight: "600" }}
                     type="button"
-                    onClick={this.clearAllCheckboxes}>Xóa bộ lọc</span>
+                    onClick={this.clearAllCheckboxes}>Xóa bộ lọc
+                    </span> */}
             </div>
         );
     }
