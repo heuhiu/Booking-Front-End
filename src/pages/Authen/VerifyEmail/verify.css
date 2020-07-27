@@ -13,7 +13,29 @@
 .leftPart{
     width: 35.57291667%;
 }
-
+.resent{
+    border: 1px solid #FF7062;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FF7062;
+    padding: 10px 60px 10px 60px;
+}
+.toMain{
+    background: #FF7062;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px 60px 10px 60px;
+}
 .loginPanelEmail{
     padding-bottom: 29.6px;
     padding-top: 68.24px;

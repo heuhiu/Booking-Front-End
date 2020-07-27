@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import './ListPlaceSearched.css';
 import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
+import PlaceFilter from '../PlaceFilter/PlaceFilter';
 
 class ListPlaceSearched extends Component {
 
@@ -235,7 +236,7 @@ class ListPlaceSearched extends Component {
                                     <div className="filter_bordered">
                                         <div className="filter_inner">
                                             <div className="row">
-                                                <div className="col-lg-12">
+                                                {/* <div className="col-lg-12">
                                                     <div className="single_select">
                                                         <select>
                                                             <option data-display="Country">Country</option>
@@ -254,29 +255,23 @@ class ListPlaceSearched extends Component {
                                                             <option value="4">premium</option>
                                                         </select>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 <div className="col-lg-12">
                                                     <div className="range_slider_wrap">
-                                                        <span className="range">Prise range</span>
+                                                        {/* <span className="range">Prise range</span> */}
                                                         <div id="slider-range"></div>
                                                         {/* <p>
                                                             <input type="text" id="amount" readOnly
                                                                 style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
                                                         </p> */}
-                                                        <div class="slidecontainer">
-                                                            <p>Default range slider:</p>
-                                                            <input type="range" min="1" max="100" value="50" />
-
-                                                            <p>Custom range slider:</p>
-                                                            <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
-                                                        </div>
+                                                        <p>Đây là cái Slider Filter by Price nhưng mà không làm đc</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="reset_btn">
+                                        {/* <div className="reset_btn">
                                             <button className="boxed-btn4" type="submit">Reset</button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

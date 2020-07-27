@@ -693,3 +693,17 @@
 }
 
 
+.det2{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #FF7062;
+}
+.det1{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+  color: #A5A5A5;
+}

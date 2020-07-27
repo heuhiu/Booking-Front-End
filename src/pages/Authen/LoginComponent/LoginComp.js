@@ -90,13 +90,13 @@ class LoginComp extends Component {
     onLogin = (e) => {
         const { email, password } = this.state;
         e.preventDefault();
-        if (true) {
-            setTimeout(() => {
-                this.mailInput.focus();
-                this.pass.focus();
-                this.mailInput.focus();
-            }, 1);
-        }
+        // if (true) {
+        //     setTimeout(() => {
+        //         this.mailInput.focus();
+        //         this.pass.focus();
+        //         this.mailInput.focus();
+        //     }, 1);
+        // }
         if (this.mailInput && email.isInputValid === false) {
             setTimeout(() => {
 
@@ -263,9 +263,11 @@ class LoginComp extends Component {
                                     <p className="det1">Chưa có tài khoản? &emsp;
                                             <Link to="/register"><i className="det2">Đăng kí ngay</i></Link>
                                     </p>
-                                    <p className="det1">Không thể truy cập?</p>
+                                    {/* <p className="det1">Không thể truy cập?</p> */}
+                                    <Link><p className="det1">Quên mật khẩu?</p></Link>
                                 </div>
                             </div>
+                            <br></br>
                             <div className="row det">
                                 <div className="col">
                                     <p className="det1">Với việc tiếp tục truy cập, bạn sẽ đồng ý với <i className="det2">điều khoản của chúng tôi</i> </p>
@@ -275,7 +277,8 @@ class LoginComp extends Component {
                     </div>
                 </div>
             </div>
-        );
+   
+   );
     }
 
 }

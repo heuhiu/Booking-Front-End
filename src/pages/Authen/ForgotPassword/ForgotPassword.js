@@ -1,65 +1,157 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import './login2.css'
-import './verify.css';
-// import callApi from '../../../config/utils/apiCaller';
-import { getUserLogin } from '../../../actions/index';
-import { Link, Redirect } from 'react-router-dom';
-import backG from '../../../img/LoginPaper.png';
+import './ForgotPassword.css';
 import callApi from '../../../config/utils/apiCaller';
+import { getUserLogin } from '../../../actions/index';
+import { Link } from 'react-router-dom';
+import backG from '../../../img/LoginPaper.png';
 
-class VerifyEmail extends Component {
+function FormError(props) {
+    if (props.isHidden) { return null; }
+    return (
+        <div style={{ color: "red", position: 'absolute' }} className="form-warning">
+            {props.errorMessage}
+        </div>
+    )
+}
+
+class ForgotPassword extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            myMail: '',
+            email: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            password: {
+                value: '',
+                isInputValid: false,
+                errorMessage: ''
+            },
+            visibility: true
         }
-    }
-    onLogin = (e) => {
-        e.preventDefault();
-        const { myMail } = this.state;
-        console.log(myMail);
-        callApi("user/resent-email", 'POST', {
-            mail: myMail
-        })
-            .then(res => {
-                console.log(res);
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
     }
 
-    componentDidMount = () => {
-        const { location } = this.props;
-        console.log(location);
-        if (location.state !== undefined) {
-            console.log(location.state.mailRegis);
-            this.setState({
-                myMail: location.state.mailRegis
-            })
+    handleInput = event => {
+        const { name, value } = event.target;
+        const newState = { ...this.state[name] }; /* dummy object */
+        newState.value = value;
+        this.setState({ [name]: newState });
+    }
+
+    validateInput = (type, checkingText) => {
+        var regexp = '';
+        var checkingResult = '';
+        switch (type) {
+            case "email":
+                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Email có dạng abc@xyz.ghi(.xnh)'
+                    };
+                }
+            case "password":
+                regexp = /./;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Password not null'
+                    };
+                }
+            default:
+                return null;
         }
+    }
+
+    handleInputValidation = event => {
+        const { name } = event.target;
+        const { isInputValid, errorMessage } = this.validateInput(name, this.state[name].value);
+        const newState = { ...this.state[name] }; /* dummy object */
+        newState.isInputValid = isInputValid;
+        newState.errorMessage = errorMessage;
+        this.setState({ [name]: newState })
+    }
+
+    onLogin = (e) => {
+        const { email, password } = this.state;
+        e.preventDefault();
+        if (this.mailInput && email.isInputValid === false) {
+            setTimeout(() => {
+                this.mailInput.focus();
+            }, 1);
+        } else if (this.pass && password.isInputValid === false) {
+            setTimeout(() => {
+                this.pass.focus();
+            }, 1);
+        }
+
+
+        if (email.isInputValid === false ||
+            password.isInputValid === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else {
+            console.log("GO to susscess")
+            var jwtDecode = require('jwt-decode');
+            callApi('login', 'POST', {
+                mail: email.value,
+                password: password.value
+            }).then(res => {
+                console.log(res);
+                localStorage.setItem('tokenLogin', JSON.stringify(res.data));
+                var decoded = jwtDecode(res.data);
+                console.log(decoded.user);
+                //data will be store in localStorage
+                // this.props.fetchUserDetail(decoded.user);s
+                console.log(this.props.history);
+                this.props.history.push("/");
+            }).catch(function (error) {
+                if (error.response) {
+                    // Request made and server responded
+                    console.log(error.response.data);
+                    // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
+                    alert("Wrong User Name or Password");
+                    // }
+                    // history.push("/login");
+                }
+            });
+        }
+    }
+
+
+    toggleShow = () => {
+        this.setState({
+            visibility: !this.state.visibility
+        });
     }
 
     render() {
-        const { location } = this.props;
-        const { myMail } = this.state;
-        console.log(location.state);
-        if (location.state === undefined) {
-            return (
-                <Redirect to="/" />
-            )
-        } else
             return (
                 <div className="limiter">
                     <div className="container-login100">
                         <div className="wrap-login100">
+
                             <div
                                 style={{ backgroundImage: "url(" + backG + ")" }}
                                 className="login100-more ">
                             </div>
+
                             <form
                                 className="was-validated login100-form validate-form"
                                 onSubmit={this.onLogin}
@@ -76,27 +168,32 @@ class VerifyEmail extends Component {
                                         <path d="M150.328 3.78771V2.20791C150.328 0.780382 151.07 0 152.479 0H154.801C156.229 0 157.009 0.780382 157.009 2.20791V3.78771C157.009 5.21524 156.229 5.93852 154.801 5.93852H152.479C151.051 5.95755 150.328 5.21524 150.328 3.78771ZM150.328 12.7336C150.328 11.306 151.07 10.5256 152.479 10.5256H154.801C156.229 10.5256 156.952 11.306 156.952 12.7336V35.1362C156.952 36.6018 156.21 37.3441 154.801 37.3441H152.479C151.051 37.3441 150.328 36.6018 150.328 35.1362V12.7336Z" fill="#5B5B5B" />
                                     </svg>
                                 </Link>
-                                <div className="loginPanelEmail">
-                                    Xác nhận Email
+                                <div className="loginPanel1">
+                                    Quên mật khẩu
                             </div>
-                                <br></br>
-                                <br></br>
-                                <div className="row det">
-                                    <div className="col">
-                                        <p className="det1">Vui lòng kiểm tra email để xác nhận đăng ký &emsp;
-                                                </p>
-                                        < i className="det3">{myMail}</i>
-                                    </div>
+                                <label className="subHeader">Vui lòng nhập địa chỉ của bạn</label>
+                                <div className="wrap-input100">
+                                    <input
+                                        className="input100"
+                                        ref={(input) => { this.mailInput = input; }}
+                                        type="text"
+                                        name="email"
+                                        onChange={this.handleInput}
+                                        onBlur={this.handleInputValidation}
+                                        required
+                                    />
+                                    <span className="focus-input100"></span>
+                                    <span className="label-input100">Email</span>
                                 </div>
-                                <br></br>
-                                <br></br>
-                                <div className="row no-gutters">
-                                    <div className="col-6">
-                                        <Link to="/" type="button" className="toMain"> Trang Chủ </Link>
-                                    </div>
-                                    <div className="col-6">
-                                        <button type="submit" className="toMain"> Gửi lại </button>
-                                    </div>
+                                <FormError
+                                    type="email"
+                                    isHidden={this.state.email.isInputValid}
+                                    errorMessage={this.state.email.errorMessage} />
+
+                                <div className="container-login100-form-btn">
+                                    <button type="submit" className="login100-form-btn">
+                                        Gửi email xác thực
+						        </button>
                                 </div>
                             </form>
                         </div>
@@ -107,6 +204,7 @@ class VerifyEmail extends Component {
     }
 
 }
+
 const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
@@ -115,6 +213,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(VerifyEmail);
-
-// export default Login;
+export default connect(null, mapDispatchToProps)(ForgotPassword);

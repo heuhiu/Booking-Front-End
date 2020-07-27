@@ -195,7 +195,7 @@ class RegisterComp extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        console.log(check);
+        // console.log(check);
         if (name === "dob" && check === false) {
             this.setState({
                 check: true
@@ -209,25 +209,30 @@ class RegisterComp extends Component {
         this.setState({
             [name]: newState,
         })
-        console.log(check);
+        // console.log(check);
     }
 
     onClickRegister = (e) => {
         const { email, password, myfirstName,
             lastName, RePassword, dob, phoneNumber } = this.state;
         e.preventDefault();
-        if (true) {
-            setTimeout(() => {
-                this.mailInput.focus();
-                this.pass.focus();
-                this.RePassword.focus();
-                this.lastName.focus();
-                this.myfirstName.focus();
-                this.dob.focus();
-                this.phoneNumber.focus();
-                this.mailInput.focus();
-            }, 1);
-        }
+        
+        // this.props.history.push({
+        //     pathname: '/verify',
+        //     state: { mailRegis }
+        // })
+        // if (true) {
+        //     setTimeout(() => {
+        //         this.mailInput.focus();
+        //         this.pass.focus();
+        //         this.RePassword.focus();
+        //         this.lastName.focus();
+        //         this.myfirstName.focus();
+        //         this.dob.focus();
+        //         this.phoneNumber.focus();
+        //         this.mailInput.focus();
+        //     }, 1);
+        // }
         if (email.isInputValid === false ||
             password.isInputValid === false ||
             RePassword.isInputValid === false ||
@@ -302,7 +307,12 @@ class RegisterComp extends Component {
             e.preventDefault();
             e.stopPropagation();
         } else {
-            console.log("GO to susscess")
+            console.log("GO to susscess");
+            const mailRegis = email.value;
+            // this.props.history.push({
+            //     pathname: '/verify',
+            //     state: { mailRegis }
+            // })
             callApi('user/register', 'POST', {
                 mail: email.value,
                 password: password.value,
@@ -312,8 +322,11 @@ class RegisterComp extends Component {
                 // dob: 15 - 3 - 1998,
                 phoneNumber: phoneNumber.value
             }).then(res => {
-                alert('To Register confirm');
-                this.props.history.push("/verify");
+                // this.props.history.push("/verify");
+                this.props.history.push({
+                    pathname: '/verify',
+                    state: { mailRegis }
+                })
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded

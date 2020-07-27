@@ -12,6 +12,8 @@ import Payment from '../pages/Payment/Payment';
 import PaymentSucess from '../components/PaymentComponents/PaymentSucess';
 import TotalPayment from '../components/DetailComponents/TotalPayment/TotalPayment';
 import UserProfile from '../pages/UserProfile/UserProfile';
+import ForgotPassword from '../pages/Authen/ForgotPassword/ForgotPassword';
+import CfNewPassword from '../pages/Authen/cfNewPassword/CfNewPassword';
 
 
 const routers = [
@@ -43,6 +45,16 @@ const routers = [
         exact: false,
         main: ({ match, history, location }) =>
             <CfMail history={history} location={location} match={match} />
+    },
+    {
+        path: '/forgotPassword',
+        exact: false,
+        main: ({ history, match, location }) => <ForgotPassword location={location} history={history} match={match} />
+    },
+    {
+        path: '/newPassword',
+        exact: false,
+        main: ({ history, match, location }) => <CfNewPassword location={location} history={history} match={match} />
     },
     {
         path: '/searchedPlace',
