@@ -55,8 +55,8 @@ class Slick1 extends Component {
     const settings = {
       // dots: true,
       infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 3,
+      slidesToShow: 4,
+      slidesToScroll: 4,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />
 
@@ -101,9 +101,6 @@ class Slick1 extends Component {
                 </div>
               </h3>
             </div >
-
-
-          
             <div className="owlStyle">
               <h3 className="owlStyleChil">
                 <img className="coverImg" src={Rectangle} alt="?" />

@@ -1,6 +1,6 @@
 
 body {
-  --col-deepblue: #f7897e;
+  --col-deepblue: #FF7062;
 }
 
 footer {
@@ -9,24 +9,59 @@ footer {
   /* position:fixed; */
   /* bottom:0px */
 }
+#svgLG2{
+  margin: 0 auto;
+  margin-top: 10%;
+  /* margin-bottom: 50%; */
+  display: block;
+}
 
 footer div {
   background-color: var(--col-deepblue);
-  margin: -5px 0px 0px 0px;
+  margin: -50px 0px 0px 0px;
   padding:0px;
-  color: green;
   text-align:center;
 }
-footer svg {
+.copyRight{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.copyRight{
+  margin-top: 10px;
+}
+.wvSVG {
   width:100%;
+  height: auto;
   overflow:visible;
+}
+.fp1{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+  text-align: left;
+}
+
+.headerFooter{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+  color: #FFFFFF;
+  text-align: left;
 }
 
 .wave {
   animation: wave 3s linear;
   animation-iteration-count:infinite;
-  fill: #f7897e;
+  fill: #FF7062;
 }
+
 .drop {
   fill: var(--col-deepblue);
   animation: drop 3.2s linear infinite normal;

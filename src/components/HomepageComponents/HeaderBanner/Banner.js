@@ -19,8 +19,11 @@ class Banner extends Component {
                 <div className="container h-100">
                     <div className="row h-100 align-items-center ">
                         <div className="col-12 text-center">
-                            <h1 className="introduction">Some awesome introduction</h1>
-                            <p className="des">A great starter layout for a landing page</p>
+                            <h1 className="introduction">
+                            Tự do khám phá trải nghiệm du lịch 
+                            </h1>
+                            <p className="des">Khám phá và đặt trước các hoạt động du lịch đặc sắc với giá độc quyền
+</p>
                             <div className="block-17">
                                 <Search />
                             </div>

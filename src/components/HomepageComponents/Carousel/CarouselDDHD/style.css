@@ -138,3 +138,7 @@ line-height: 16px;
 
 color: #A5A5A5;
 }
+
+.decoNone:hover{
+  text-decoration: none;
+}
