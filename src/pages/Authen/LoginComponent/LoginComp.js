@@ -264,7 +264,7 @@ class LoginComp extends Component {
                                             <Link to="/register"><i className="det2">Đăng kí ngay</i></Link>
                                     </p>
                                     {/* <p className="det1">Không thể truy cập?</p> */}
-                                    <Link><p className="det1">Quên mật khẩu?</p></Link>
+                                    <Link to='/forgotPassword'><p className="det1">Quên mật khẩu?</p></Link>
                                 </div>
                             </div>
                             <br></br>
