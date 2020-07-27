@@ -58,10 +58,6 @@ class SearchedPlace extends Component {
             style={{background: "#F2F2F2"}}
             >
                 <Menu />
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
                 <ListPlaceSearched 
                 // searchName={searchedName} listCtiId={listCtiId} listCatId={listCatId} 
                 />

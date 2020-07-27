@@ -39,7 +39,7 @@ class ListPlaceSearched extends Component {
         // return res.data;
     };
 
-    showPlaceCategory =  (categoryList) => {
+    showPlaceCategory = (categoryList) => {
         var result = null;
         // var listCatName = [];
         const { listCatName } = this.state;
@@ -86,10 +86,12 @@ class ListPlaceSearched extends Component {
                                 <div className="row">
                                     <div
                                         // style={{backgroundImage: `url(${searchPic})`}} 
-                                        className="backgroupPresent col">
+                                        className="col">
                                         <div className="thumb">
-                                            <img src={data.placeImageLink[0]} alt="FAIL TO LOAD" />
-
+                                            <img src={data.placeImageLink[0]}
+                                                width="416px"
+                                                height="216px"
+                                                alt="FAIL TO LOAD" />
                                         </div>
                                     </div>
                                     <div className="col">
@@ -97,11 +99,10 @@ class ListPlaceSearched extends Component {
                                             <p>
                                                 <button>Điểm tham quan</button>
                                             </p>
-                                            {this.showPlaceCategory(data.categoryId)}
-                                            {/* <p>id: {data.id}</p> */}
-                                            <h5
-                                                style={{ marginBottom: "-10px" }}
-                                            >{data.name}</h5>
+                                            {/* {this.showPlaceCategory(data.categoryId)} */}
+                                            <h5>
+                                                {data.name}
+                                            </h5>
                                             <p className="destination">
                                                 <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -258,10 +259,17 @@ class ListPlaceSearched extends Component {
                                                     <div className="range_slider_wrap">
                                                         <span className="range">Prise range</span>
                                                         <div id="slider-range"></div>
-                                                        <p>
+                                                        {/* <p>
                                                             <input type="text" id="amount" readOnly
                                                                 style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
-                                                        </p>
+                                                        </p> */}
+                                                        <div class="slidecontainer">
+                                                            <p>Default range slider:</p>
+                                                            <input type="range" min="1" max="100" value="50" />
+
+                                                            <p>Custom range slider:</p>
+                                                            <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,6 +282,9 @@ class ListPlaceSearched extends Component {
                             </div>
 
                             <div className="col-lg-8">
+                                <div className="row">
+                                    {this.showSearchList(searchList)}
+                                </div>
                                 <Pagination
                                     hideNavigation
                                     hideFirstLastPages
@@ -291,9 +302,7 @@ class ListPlaceSearched extends Component {
                                     onChange={this.handlePageChange.bind(this)}
                                 />
                                 {/* show List item seached & filter */}
-                                <div className="row">
-                                    {this.showSearchList(searchList)}
-                                </div>
+
                             </div>
                         </div>
                     </div>

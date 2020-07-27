@@ -30,11 +30,13 @@
   .popular_places_area .single_place .thumb {
     position: relative;
     overflow: hidden;
+    
   }
   
   /* line 18, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place .thumb img {
     width: 100%;
+    /* height: 100%; */
   }
   
   /* line 21, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
@@ -58,7 +60,7 @@
   
   /* line 34, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place .place_info {
-    padding: 27px 20px 25px 20px;
+    padding: 0px;
     padding-top: 5px;
     padding-bottom: 5px;
   }
@@ -73,6 +75,7 @@
     -moz-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s;
+    padding: 0px;
   }
 
   .popular_places_area .single_place .place_info button {
@@ -94,7 +97,6 @@
     padding: 7px;
   }
   .popular_places_area .single_place .place_info p {
-    
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -103,11 +105,11 @@
     color: #5B5B5B;
     margin-top: 2px;
     margin-bottom: 7px;
-    padding: 10px;
+    padding-top: 7px;
   }
   /* line 43, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
   .popular_places_area .single_place .place_info h5 {
-    
+  
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -116,6 +118,10 @@
     color: #5B5B5B;
     margin-top: 2px;
     margin-bottom: 7px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    width: 300px; 
   }
 
   .popular_places_area .single_place .place_info .destination {
@@ -125,6 +131,7 @@
     font-size: 14px;
     line-height: 20px;
     color: #A5A5A5;
+    padding: 0px;
     margin-top: 10px;
   }
 
@@ -149,7 +156,7 @@
     line-height: 28px;
     color: #FF7062;
     margin-top: 50px;
-    margin-bottom: 0px;
+    padding: 0px;
   }
   
   .popular_places_area .single_place .place_info .available {
@@ -501,6 +508,6 @@
     width: 100%;
   }
 
-.backgroupPresent{
+/* .backgroupPresent{
   overflow: hidden;
-}
+} */
