@@ -10,6 +10,7 @@ import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import FullPageLoader from './components/FullPageLoader/FullPageLoader';
 
 class App extends Component {
 

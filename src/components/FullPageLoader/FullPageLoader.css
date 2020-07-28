@@ -7,9 +7,11 @@
     background-color: #F8f8f8AD;
 }
 
-.loader{
-    left: 45%;
-    top: 30%;
+.loader img{
+    left: 35%;
+    top: 20%;
     z-index: 1000;
     position: absolute;
+    width: 500px;
+    height: 500px;
 }

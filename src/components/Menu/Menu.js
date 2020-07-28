@@ -7,6 +7,7 @@ import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 import callApi from '../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
+import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 
 const menus = [
     // {
@@ -35,6 +36,7 @@ const menus = [
 ];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
+    const { hideLoader } = this.props;
     return (
         <Route
             path={to}
@@ -45,6 +47,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
                     return (
                         <li className={active}>
                             <Link to={to}>
+                                
                                 <button className={style}>
                                     {label}
                                 </button>
@@ -116,7 +119,8 @@ class Menu extends Component {
                 </Link>
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
-                    <Link style={{ textDecoration: "none" }} to="/">
+                    <Link 
+                    style={{ textDecoration: "none" }} to="/">
                         <button style={{ display: tokenLogin ? "" : "none" }} className="none1 nav-link">
                             {/* <svg style={{marginBottom: "8px"}}width="18.2" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 10.625L12.625 1.58337L24.25 10.625V24.8334C24.25 25.5185 23.9778 26.1756 23.4934 26.6601C23.0089 27.1445 22.3518 27.4167 21.6667 27.4167H3.58333C2.89819 27.4167 2.24111 27.1445 1.75664 26.6601C1.27217 26.1756 1 25.5185 1 24.8334V10.625Z" stroke="#5B5B5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -226,6 +230,19 @@ const mapStateToProps = state => {
     }
 };
 
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        fetchUserDetail: (user) => {
+            dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
+    }
+}
 // export default Menu;
 // export default connect(mapStateToProps, null)(Menu);
-export default withRouter(connect(mapStateToProps, null)(Menu));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu));

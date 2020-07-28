@@ -97,7 +97,7 @@ class ListPlaceSearched extends Component {
                 );
             });
         }
-        else if (searchList.length === 0) {
+        else if (searchList.length === 0 && this.props.loader.loading === false) {
             return (
                 <div className="col-lg-12 col-md-12">
                     <div className="single_place">
@@ -252,7 +252,9 @@ class ListPlaceSearched extends Component {
             })
         }
     }
-
+    // urlChange = () => {
+    //     this.props.history.push("/searchedPlace?name=vin");
+    // }
     render() {
         // debugger
         const { activePage, totalItems, searchList, listCatName,
@@ -267,7 +269,8 @@ class ListPlaceSearched extends Component {
         }
         // console.log(options);
         const { loader } = this.props;
-        if (loader.loading === true) {
+        // if (loader.loading === true) {
+        if (false) {
             return (
                 <div>
                     <Container style={{ fontFamily: 'Inter' }} >
@@ -282,7 +285,6 @@ class ListPlaceSearched extends Component {
                         </div>
                     </Container >
                 </div >
-          
             );
         } else
             return (
@@ -298,6 +300,11 @@ class ListPlaceSearched extends Component {
                                             <CategorySelection options={options}
                                                 onChangeCallback={response => this.onChangeCate(response)} />
                                         </div>
+                                        {/* <button
+                                            onClick={this.urlChange}
+                                            className="btn btn-primary">
+                                            Search
+                                        </button> */}
                                     </div>
 
                                     <div className="col-lg-8">
@@ -309,7 +316,6 @@ class ListPlaceSearched extends Component {
                                                     minValue={0}
                                                     value={this.state.value}
                                                     onChange={value => this.onChangeSlider(value)
-                                                        // this.setState({ value })
                                                     }
                                                 />
                                             </div>

@@ -59,9 +59,7 @@ class SearchedPlace extends Component {
             style={{background: "#F2F2F2"}}
             >
                 <Menu />
-                <ListPlaceSearched 
-                // searchName={searchedName} listCtiId={listCtiId} listCatId={listCatId} 
-                />
+                <ListPlaceSearched />
                 <Footer2 />
                 <FullPageLoader />
             </div>

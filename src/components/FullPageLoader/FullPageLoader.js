@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import loadingLG from '../../img/Ellipsis-1.9s-200px.gif';
+// import loadingLG from '../../img/Ellipsis-1.9s-200px.gif';
+
+import loadingLG from '../../img/Loading Goboki.gif';
+
 import './FullPageLoader.css';
 
 class FullPageLoader extends Component {

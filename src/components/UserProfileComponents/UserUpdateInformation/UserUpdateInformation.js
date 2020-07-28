@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
-import { getUserLogin } from '../../../actions/index';
+import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -62,6 +62,7 @@ class UserUpdateInformation extends Component {
         newState.value = value;
         this.setState({ [name]: newState });
     }
+
     componentDidMount = () => {
         window.scrollTo(0, 0)
     }
@@ -129,13 +130,13 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
                     };
                 }
             case "lastName":
                 regexp = /^[^\s].+[^\s]$/;
                 checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null ) {
+                if (checkingResult !== null || this.state.lastName.value === '') {
                     return {
                         isInputValid: true,
                         errorMessage: ''
@@ -143,13 +144,13 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
                     };
                 }
             case "dob":
                 regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
                 checkingResult = regexp.exec(checkingText.toString());
-                if (checkingResult !== null || this.state.dob.value === '' ) {
+                if (checkingResult !== null || this.state.dob.value === '') {
                     // if (true) {
                     return {
                         isInputValid: true,
@@ -216,7 +217,7 @@ class UserUpdateInformation extends Component {
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
             // alert("Dien 1 cai gi do vao di thang lon")
-            toast.error('Vui lòng thay đổi ít nhất một thông tin!', {
+            toast.error('Tên Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -227,7 +228,7 @@ class UserUpdateInformation extends Component {
             });
         } else if (lastName.isInputValid === false) {
             // alert("Dien lai Ho di con di~")
-            toast.error('Tên có ít nhất 3 kí tự và khác số!', {
+            toast.error('Họ có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -271,34 +272,65 @@ class UserUpdateInformation extends Component {
             });
         }
         else {
+            this.callAPIChangeUserInfor(id);
             // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
-            callApi(`userClient/${id}`, 'PUT',
-                {
-                    firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
-                    lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
-                    dob: dob.value ? dob.value !== '' : loggedUser.dob,
-                    phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
-                })
-                .then(res => {
-                    console.log(res);
-                    this.props.fetchUserDetail(res.data);
-                    toast.success('Thay đổi thông tin thành công!', {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                }).catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data);
-                    }
-                });
+            // callApi(`userClient/${id}`, 'PUT',
+            //     {
+            //         firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
+            //         lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
+            //         dob: dob.value ? dob.value !== '' : loggedUser.dob,
+            //         phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
+            //     })
+            //     .then(res => {
+            //         console.log(res);
+            //         this.props.fetchUserDetail(res.data);
+            //         toast.success('Thay đổi thông tin thành công!', {
+            //             position: "bottom-right",
+            //             autoClose: 5000,
+            //             hideProgressBar: false,
+            //             closeOnClick: true,
+            //             pauseOnHover: true,
+            //             draggable: true,
+            //             progress: undefined,
+            //         });
+            //     }).catch(function (error) {
+            //         if (error.response) {
+            //             console.log(error.response.data);
+            //         }
+            //     });
         }
     }
-
+    callAPIChangeUserInfor = async (id) => {
+        const { dob, myfirstName, lastName, phoneNumber } = this.state;
+        const { loggedUser, showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi(`userClient/${id}`, 'PUT',
+            {
+                firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
+                lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
+                dob: dob.value ? dob.value !== '' : loggedUser.dob,
+                phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
+            })
+            .then(res => {
+                console.log(res);
+                this.props.fetchUserDetail(res.data);
+                hideLoader();
+                toast.success('Thay đổi thông tin thành công!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }).catch(function (error) {
+                if (error.response) {
+                    hideLoader();
+                    console.log(error.response.data);
+                }
+            });
+    }
     render() {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
@@ -528,6 +560,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }
