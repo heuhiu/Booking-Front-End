@@ -9,7 +9,6 @@ import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
 import PlaceFilter from '../PlaceFilter/PlaceFilter';
 import MyMul from '../../HomepageComponents/Search/MyMul';
-import CategorySelect from './reactSelect/CategorySelect';
 import CategorySelection from './reactSelect/CategorySelection';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
@@ -32,7 +31,7 @@ class ListPlaceSearched extends Component {
             listId: [],
             listCat: [],
             listCategoryId: [],
-            value: { min: 50000, max: 150000 },
+            value: { min: 0, max: 500000 },
         }
     }
 
@@ -137,7 +136,15 @@ class ListPlaceSearched extends Component {
         }
         else if (searchList.length === 0) {
             return (
-                <p>Not Found</p>
+                <div className="col-lg-12 col-md-12">
+                    <div className="single_place">
+                        <div className="row">
+                            <div className="col-12">
+                                <h1>Không tìm thấy địa điểm phù hợp</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             );
         }
         return result;
@@ -208,7 +215,7 @@ class ListPlaceSearched extends Component {
                 }
             });
     }
-    componentDidMount = () => {
+    componentWillMount = () => {
         var { location } = this.props;
         console.log(location.search);
         const answer_array = location.search.split('?');
@@ -247,9 +254,9 @@ class ListPlaceSearched extends Component {
         this.getAllCategories();
     }
     onChangeSlider = (value) => {
-        this.setState({ 
-            value 
-        }, ()=>{
+        this.setState({
+            value
+        }, () => {
             this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
         })
     }
@@ -311,66 +318,48 @@ class ListPlaceSearched extends Component {
                             <div className="col-lg-4">
                                 <div className="filter_result_wrap">
                                     <h3>Tất cả kết quả với : {searchName ? searchName : "Mọi địa điểm"}</h3>
-                                    <div className="filter_bordered">
+                                    <CategorySelection options={options}
+                                        onChangeCallback={response => this.onChangeCate(response)} />
+
+                                    {/* <div className="filter_bordered">
                                         <div className="filter_inner">
                                             <div className="row">
-                                                {/* <div className="col-lg-12">
-                                                    <div className="single_select">
-                                                        <select>
-                                                            <option data-display="Country">Country</option>
-                                                            <option value="1">Africa</option>
-                                                            <option value="2">canada</option>
-                                                            <option value="4">USA</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                            
                                                 <div className="col-lg-12">
-                                                    <div className="single_select">
-                                                        <select>
-                                                            <option data-display="Travel type">Travel type</option>
-                                                            <option value="1">advance</option>
-                                                            <option value="2">advance</option>
-                                                            <option value="4">premium</option>
-                                                        </select>
-                                                    </div>
-                                                </div> */}
-                                                <div className="col-lg-12">
+                                                    
                                                     <div className="range_slider_wrap">
-                                                        {/* <span className="range">Prise range</span> */}
                                                         <div id="slider-range"></div>
-                                                        {/* <p>
-                                                            <input type="text" id="amount" readOnly
-                                                                style={{ border: "0", color: "#7A838B", fontWeight: "400" }} />
-                                                        </p> */}
-                                                        {/* <CategorySelection options={options}
-                                                        onChangeCallback={response => this.setState({
-                                                            listId: response
-                                                        })} /> */}
                                                         <CategorySelection options={options}
                                                             onChangeCallback={response => this.onChangeCate(response)} />
+                                                      
                                                         <br></br>
                                                         <br></br>
                                                         <br></br>
-                                                        <InputRange
-                                                            maxValue={500000}
-                                                            minValue={0}
-                                                            value={this.state.value}
-                                                            onChange={value => this.onChangeSlider(value)
-                                                                // this.setState({ value })
-                                                            }
-                                                        />
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* <div className="reset_btn">
-                                            <button className="boxed-btn4" type="submit">Reset</button>
-                                        </div> */}
-                                    </div>
+                                        
+                                    </div> */}
+
                                 </div>
                             </div>
 
                             <div className="col-lg-8">
+                                <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
+                                <div className="row">
+                                    <div style={{marginBottom: "50px"}} className="col-4">
+                                        <InputRange
+                                            maxValue={500000}
+                                            minValue={0}
+                                            value={this.state.value}
+                                            onChange={value => this.onChangeSlider(value)
+                                                // this.setState({ value })
+                                            }
+                                        />
+                                    </div>
+                                </div>
                                 <div className="row">
                                     {this.showSearchList(searchList)}
                                 </div>
