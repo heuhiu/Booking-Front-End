@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import './Detail.css';
-// import './RightPartDetail.css';
 import '../RightPartDetail/RightPartDetail.css';
 import TicketType from '../TicketType/TicketType';
 // import RightPartDetail from '../RightPartDetail/RightPartDetail';
@@ -14,7 +13,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import ReTicketType from '../TicketType/ReTicketType';
 import { pl } from 'date-fns/locale';
-
+import { showLoader, hideLoader } from '../../../actions/index';
 
 class Detail extends Component {
 
@@ -32,6 +31,7 @@ class Detail extends Component {
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
 
     showShortDescrip = (shortDesCrip) => {
+        const {showLoader, hideLoader} = this.props;
         const splitArray = shortDesCrip.split('<br><br>');
         var result = null;
         if (splitArray.length > 0) {
@@ -81,10 +81,6 @@ class Detail extends Component {
                             <div className="bulletListCustome"></div>
                             <div className="content">Các lựa chọn vé</div>
                         </div>
-                        {/* ticket Type  */}
-                        {/* <div >
-                            <TicketType ticketType={place.ticketTypes}/>
-                        </div> */}
                         <div >
                             <ReTicketType 
                             weekDays={place.weekDays} ticketType={place.ticketTypes}/>
@@ -244,4 +240,23 @@ class Detail extends Component {
 
 }
 
-export default Detail;
+// export default Detail;
+const mapStateToProps = state => {
+    return {
+        loader: state.Loader
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
+    }
+}
+
+// export default MyCounter;
+export default (connect(mapStateToProps, mapDispatchToProps)(Detail));

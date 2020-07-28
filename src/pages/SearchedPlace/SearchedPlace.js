@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Menu from '../../components/Menu/Menu';
 import ListPlaceSearched from '../../components/SearchPlaceComponents/ListSearched/ListPlaceSearched'
 import Footer2 from '../../components/Footer/Footer2/Footer2';
+import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 class SearchedPlace extends Component {
 
     constructor(props) {
@@ -62,6 +63,7 @@ class SearchedPlace extends Component {
                 // searchName={searchedName} listCtiId={listCtiId} listCatId={listCatId} 
                 />
                 <Footer2 />
+                <FullPageLoader />
             </div>
         );
     }

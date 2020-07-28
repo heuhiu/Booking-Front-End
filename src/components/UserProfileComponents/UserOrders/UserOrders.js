@@ -5,6 +5,8 @@ import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
 import TopOrders from '../TopOrders/TopOrders';
 import { Link } from 'react-router-dom';
+import { showLoader, hideLoader } from '../../../actions/index';
+
 class UserOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
         year: "numeric",
@@ -25,6 +27,24 @@ class UserOrders extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
+    getAllOrder = async (id) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi(`order/user/${id}`, 'GET', null)
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    UserOrders: res.data
+                })
+                hideLoader();
+            }).catch(function (error) {
+                if (error.response) {
+                    hideLoader();
+                    console.log(error.response.data);
+                }
+            });
+    }
+
     componentDidMount = () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
@@ -35,17 +55,18 @@ class UserOrders extends Component {
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
                     console.log(res.data.id);
-                    callApi(`order/user/${res.data.id}`, 'GET', null)
-                        .then(res => {
-                            console.log(res);
-                            this.setState({
-                                UserOrders: res.data
-                            })
-                        }).catch(function (error) {
-                            if (error.response) {
-                                console.log(error.response.data);
-                            }
-                        });
+                    this.getAllOrder(res.data.id);
+                    // callApi(`order/user/${res.data.id}`, 'GET', null)
+                    //     .then(res => {
+                    //         console.log(res);
+                    //         this.setState({
+                    //             UserOrders: res.data
+                    //         })
+                    //     }).catch(function (error) {
+                    //         if (error.response) {
+                    //             console.log(error.response.data);
+                    //         }
+                    //     });
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);
@@ -102,10 +123,10 @@ class UserOrders extends Component {
                                     <div className="col-6">
                                         {/* <p className="pushRight2">Xem chi tiết</p> */}
                                         <Link to={{
-                                                pathname: `/userProfile/myOrder/${item.id}`
-                                            }}>
-                                                <p className="pushRight2">
-                                                    Xem chi tiết
+                                            pathname: `/userProfile/myOrder/${item.id}`
+                                        }}>
+                                            <p className="pushRight2">
+                                                Xem chi tiết
                                             </p>
                                         </Link>
                                     </div>
@@ -150,7 +171,7 @@ class UserOrders extends Component {
 
         else if (topOrders.length === 0) {
             return (
-                <p>Not Found</p>
+                <p style={{visibility: this.props.loader===false?"visible":"hidden"}}>Not Found</p>
             );
         }
         return result;
@@ -196,13 +217,19 @@ class UserOrders extends Component {
 // export default UserOrders;
 const mapStateToProps = state => {
     return {
-        loggedUser: state.User
+        loggedUser: state.User,
+        loader: state.Loader
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        showLoader: () => {
+            dispatch(showLoader())
+          },
+          hideLoader: () => {
+            dispatch(hideLoader())
+          }
     }
 }
 

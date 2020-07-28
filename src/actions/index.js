@@ -87,3 +87,15 @@ export const removeVisitorType = () => {
       type: types.REMOVE_VISITORTYPE,
   }
 }
+
+export const showLoader = () => {
+  return {
+      type: types.SHOW_LOADER,
+  }
+}
+
+export const hideLoader = () => {
+  return {
+      type: types.HIDE_LOADER,
+  }
+}

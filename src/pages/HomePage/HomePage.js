@@ -6,8 +6,9 @@ import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Sl
 import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import { getUserLogin } from '../../actions/index';
+import { getUserLogin, showLoader, hideLoader } from '../../actions/index';
 import callApi from '../../config/utils/apiCaller';
+import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 
 //Home page
 class HomePage extends Component {
@@ -37,6 +38,11 @@ class HomePage extends Component {
     //             });
     //     }
     // }
+    
+    componentWillMount = () => {
+
+    }
+
     componentDidMount = () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
@@ -74,6 +80,7 @@ class HomePage extends Component {
                 <Slick2 />
                 <Slick1 />
                 <Footer2 />
+                <FullPageLoader />
             </div>
         );
     }
@@ -82,12 +89,24 @@ class HomePage extends Component {
 
 // export default HomePage;
 
+const mapStateToProps = state => {
+    return {
+        // visitorType: state.Ticket
+    }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

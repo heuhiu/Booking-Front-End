@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
+import { showLoader, hideLoader } from '../../../actions/index';
 
 class TopOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -25,6 +26,24 @@ class TopOrders extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
+    getTop3Order = async (id) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi(`order/top3/${id}`, 'GET', null)
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    topOrders: res.data
+                })
+                hideLoader();
+            }).catch(function (error) {
+                if (error.response) {
+                    hideLoader();
+                    console.log(error.response.data);
+                }
+            });
+    }
+
     componentDidMount = () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
@@ -35,17 +54,7 @@ class TopOrders extends Component {
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
                     console.log(res.data.id);
-                    callApi(`order/top3/${res.data.id}`, 'GET', null)
-                        .then(res => {
-                            console.log(res);
-                            this.setState({
-                                topOrders: res.data
-                            })
-                        }).catch(function (error) {
-                            if (error.response) {
-                                console.log(error.response.data);
-                            }
-                        });
+                    this.getTop3Order(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);
@@ -152,7 +161,7 @@ class TopOrders extends Component {
 
             else if (topOrders.length === 0) {
                 return (
-                    <p>Not Found</p>
+                    <p style={{visibility: this.props.loader===false?"visible":"hidden"}}>Not Found</p>
                 );
             }
 
@@ -176,13 +185,19 @@ class TopOrders extends Component {
 // export default UserOrders;
 const mapStateToProps = state => {
     return {
-        loggedUser: state.User
+        loggedUser: state.User,
+        loader: state.Loader
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        showLoader: () => {
+            dispatch(showLoader())
+          },
+          hideLoader: () => {
+            dispatch(hideLoader())
+          }
     }
 }
 

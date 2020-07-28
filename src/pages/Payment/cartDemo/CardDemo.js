@@ -8,6 +8,9 @@ import {
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import { Link, Redirect } from 'react-router-dom';
+import { showLoader, hideLoader } from '../../../actions/index';
+import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
   return {
@@ -101,21 +104,23 @@ class _CardForm extends Component {
           data.append('token', paymentToken);
           data.append('action', orderDetail.state.orderStatus ? myStatus : myNewStatus);
 
-          callApi('payment', 'POST', data)
-            .then(res => {
-              console.log(res);
-              if (res) {
-                this.props.history.push({
-                  pathname: '/paymentSucess',
-                  state: { orderDetail: orderDetail }
-                })
-              }
-            })
-            .catch(function (error) {
-              if (error.response) {
-                console.log(error.response);
-              }
-            });
+          //  callApi('payment', 'POST', data) 
+          //   .then (res => {
+          //     console.log(res);
+          //     if (res) {
+          //       this.props.history.push({
+          //         pathname: '/paymentSucess',
+          //         state: { orderDetail: orderDetail }
+          //       })
+          //     }
+          //   })
+          //   .catch(function (error) {
+          //     if (error.response) {
+          //       console.log(error.response);
+          //     }
+          //   });
+          this.callPayment(data, orderDetail);
+
         })
     } else {
       console.log("Stripe.js hasn't loaded yet.");
@@ -123,17 +128,42 @@ class _CardForm extends Component {
 
   };
 
+  callPayment = async (data, orderDetail) => {
+    const { showLoader, hideLoader } = this.props;
+    showLoader();
+    await callApi('payment', 'POST', data)
+      .then(res => {
+        console.log(res);
+        hideLoader();
+        if (res) {
+          this.props.history.push({
+            pathname: '/paymentSucess',
+            state: { orderDetail: orderDetail }
+          })
+        }
+      })
+      .catch(function (error) {
+        if (error.response) {
+          hideLoader();
+          alert("error")
+          console.log(error.response);
+        }
+      });
+  }
+
   render() {
-    const { orderDetail } = this.props;
+    const { orderDetail, showLoader, hideLoader } = this.props;
     console.log(this.props.loggedUser);
     var dateType = {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     };
 
     const prnDt = orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
+    // showLoader();
     return (
 
       <div className="CardDemo">
+        {/* <FullPageLoader /> */}
         {/* <form onSubmit={this.handleSubmit.bind(this)}> */}
 
         {/* <CardElement
@@ -247,7 +277,7 @@ const CardForm = injectStripe(_CardForm);
 
 class CardDemo extends Component {
   render() {
-    const { orderDetail, visitorType, loggedUser } = this.props;
+    const { orderDetail, visitorType, loggedUser,showLoader, hideLoader } = this.props;
     console.log(orderDetail);
     console.log(visitorType);
     console.log(loggedUser)
@@ -255,7 +285,14 @@ class CardDemo extends Component {
 
       <StripeProvider apiKey='pk_test_51Gs1CYGtpdysubsWvXC2vynpAmqeGq1vGggeXCHQsepXXX5TOxNBKlLFHBsar57TIkYsMYWuTSFg5H40uHBL4TW200nIV10yG5'>
         <Elements>
-          <CardForm history={this.props.history} loggedUser={loggedUser} orderDetail={orderDetail} visitorType={visitorType} />
+          <CardForm
+            history={this.props.history}
+            loggedUser={loggedUser}
+            orderDetail={orderDetail}
+            visitorType={visitorType}
+            showLoader={showLoader}
+            hideLoader={hideLoader}
+          />
         </Elements>
       </StripeProvider>
     );
@@ -272,7 +309,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-
+    showLoader: () => {
+      dispatch(showLoader())
+    },
+    hideLoader: () => {
+      dispatch(hideLoader())
+    }
   }
 }
 

@@ -7,6 +7,7 @@ import UserProfileComp from '../../components/UserProfileComponents/UserProfileC
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import subMenu from '../../components/UserProfileComponents/subMenuRouter';
 import UserMenu from '../../components/UserProfileComponents/UserMenu';
+import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 
 class UserProfile extends Component {
 
@@ -41,6 +42,7 @@ class UserProfile extends Component {
             </div>
       
                 <Footer2 />
+                <FullPageLoader />
             </div>
         );
     }

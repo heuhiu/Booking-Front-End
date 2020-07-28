@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import MyMul from '../../HomepageComponents/Search/MyMul';
 import CategorySelection from './reactSelect/CategorySelection';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
+import { showLoader, hideLoader } from '../../../actions';
 
 
 class ListPlaceSearched extends Component {
@@ -38,45 +39,6 @@ class ListPlaceSearched extends Component {
     convertCurrecyToVnd = (currency) => {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
-
-    getUsers = async (catId) => {
-        const { listCatName } = this.state;
-        let res = axios.get(`http://localhost:8090/category/${catId}`);
-        // this.setState({
-        //     listCatName: res.data
-        // })
-        listCatName.push(res.data)
-        // return res.data;
-    };
-
-    showPlaceCategory = (categoryList) => {
-        var result = null;
-        // var listCatName = [];
-        const { listCatName } = this.state;
-        if (categoryList.length > 0) {
-            result = categoryList.map((data, index) => {
-                // const hi = this.getUsers(data);
-                // console.log(hi);
-                // console.log(res.data);
-                // callApi('city', 'GET', null)
-                // .then(res => {
-                //     return (
-                //         <p style={{ color: "red" }}>{data}</p>
-                //     )
-                // }).catch(function (error) {
-                //     if (error.response) {
-                //         console.log(error.response.data);
-                //     }
-                // });
-                let res = axios.get(`http://localhost:8090/category/${data}`);
-                return (
-                    <p style={{ color: "red" }}>a{res.data}</p>
-                )
-            });
-        }
-        return result;
-    }
-
 
     //Show items searched
     showSearchList = (searchList) => {
@@ -131,6 +93,7 @@ class ListPlaceSearched extends Component {
                             </div>
                         </div>
                     </Link>
+
                 );
             });
         }
@@ -150,13 +113,11 @@ class ListPlaceSearched extends Component {
         return result;
     }
 
+
+
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = (pageNumber) => {
         const { searchName, listCtiId, listCatId } = this.state;
-        // const { searchName, listCtiId, listCatId } = this.props;
-        // console.log(searchName);
-        // console.log(listCtiId);
-        // console.log(listCatId);;
         this.setState({
             activePage: pageNumber
         }
@@ -168,13 +129,15 @@ class ListPlaceSearched extends Component {
     }
 
     //Received data from API
-    receivedData(searchName, IDCityFilter, IDCategoryFilter,) {
+    receivedData = async (searchName, IDCityFilter, IDCategoryFilter,) => {
         const { activePage, value } = this.state;
+        const { showLoader, hideLoader } = this.props;
         console.log(searchName);
         console.log(IDCityFilter);
         console.log(IDCategoryFilter);
         console.log(value.max);
-        axios.get('http://localhost:8090/place/searchClient', {
+        showLoader();
+        await axios.get('http://localhost:8090/place/searchClient', {
             params: {
                 //park name
                 name: searchName ? searchName : "",
@@ -197,26 +160,33 @@ class ListPlaceSearched extends Component {
                 searchList: res.data.listResult,
                 totalItems: res.data.totalItems,
             })
+            hideLoader();
         }).catch(function (error) {
             console.log(error.response);
         });
 
     }
-    getAllCategories = () => {
+
+    getAllCategories = async () => {
         //get City list
-        callApi('categories', 'GET', null)
+        showLoader();
+        await callApi('categories', 'GET', null)
             .then(res => {
                 this.setState({
                     listCat: res.data
                 })
+                hideLoader();
             }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
                 }
             });
     }
-    componentWillMount = () => {
+
+    componentDidMount = () => {
         var { location } = this.props;
+        // console.log(location);
+        // if (location !== undefined) {
         console.log(location.search);
         const answer_array = location.search.split('?');
         var name = '';
@@ -253,6 +223,7 @@ class ListPlaceSearched extends Component {
         })
         this.getAllCategories();
     }
+    // }
     onChangeSlider = (value) => {
         this.setState({
             value
@@ -260,6 +231,7 @@ class ListPlaceSearched extends Component {
             this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
         })
     }
+
     onChangeCate = (res) => {
         let unique = [...new Set()];
         if (res !== null) {
@@ -285,20 +257,6 @@ class ListPlaceSearched extends Component {
         // debugger
         const { activePage, totalItems, searchList, listCatName,
             searchName, listId, listCat, listCategoryId } = this.state;
-        const { listCtiId, listCatId } = this.props;
-
-        // console.log(listCatName);
-        // console.log(listId);
-        // var listCategoryIdtemp = []
-
-        // for (let index = 0; index < listId.length; index++) {
-        //     const element = listId[index].value;
-        //     console.log(element);
-        //     listCategoryId.push(element);
-        // }
-
-        // console.log(listCategoryId);
-        // console.log(listCity);
         console.log(listCat)
         var options = []
         if (listCat.length > 0) {
@@ -308,87 +266,105 @@ class ListPlaceSearched extends Component {
             }
         }
         // console.log(options);
-
-        return (
-            <Container style={{ fontFamily: 'Inter' }} >
-                {/* <p>Search Name: {searchName} </p> */}
-                <div className="popular_places_area">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-4">
-                                <div className="filter_result_wrap">
-                                    <h3>Tất cả kết quả với : {searchName ? searchName : "Mọi địa điểm"}</h3>
-                                    <CategorySelection options={options}
-                                        onChangeCallback={response => this.onChangeCate(response)} />
-
-                                    {/* <div className="filter_bordered">
-                                        <div className="filter_inner">
-                                            <div className="row">
-                                            
-                                                <div className="col-lg-12">
-                                                    
-                                                    <div className="range_slider_wrap">
-                                                        <div id="slider-range"></div>
-                                                        <CategorySelection options={options}
-                                                            onChangeCallback={response => this.onChangeCate(response)} />
-                                                      
-                                                        <br></br>
-                                                        <br></br>
-                                                        <br></br>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div> */}
-
+        const { loader } = this.props;
+        if (loader.loading === true) {
+            return (
+                <div>
+                    <Container style={{ fontFamily: 'Inter' }} >
+                        {/* <p>Search Name: {searchName} </p> */}
+                        <div className="popular_places_area">
+                            <div className="container">
+                                <div style={{
+                                    width: "auto", height: "500px"
+                                }}>
                                 </div>
-                            </div>
-
-                            <div className="col-lg-8">
-                                <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
-                                <div className="row">
-                                    <div style={{marginBottom: "50px"}} className="col-4">
-                                        <InputRange
-                                            maxValue={500000}
-                                            minValue={0}
-                                            value={this.state.value}
-                                            onChange={value => this.onChangeSlider(value)
-                                                // this.setState({ value })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    {this.showSearchList(searchList)}
-                                </div>
-                                <Pagination
-                                    hideNavigation
-                                    hideFirstLastPages
-                                    //What number is selected
-                                    activePage={activePage}
-                                    //The number of items each page
-                                    itemsCountPerPage={this.state.limit}
-                                    //Total of items in list
-                                    totalItemsCount={totalItems}
-                                    //Set Css of boostrap 4
-                                    itemClass="page-item"
-                                    //Set Css of boostrap 4
-                                    linkClass="page-link"
-                                    //Trigger handle page change
-                                    onChange={this.handlePageChange.bind(this)}
-                                />
-                                {/* show List item seached & filter */}
-
                             </div>
                         </div>
-                    </div>
+                    </Container >
+                </div >
+          
+            );
+        } else
+            return (
+                <div>
+                    <Container style={{ fontFamily: 'Inter' }} >
+                        {/* <p>Search Name: {searchName} </p> */}
+                        <div className="popular_places_area">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className="filter_result_wrap">
+                                            <h3>Tất cả kết quả với : {searchName ? searchName : "Mọi địa điểm"}</h3>
+                                            <CategorySelection options={options}
+                                                onChangeCallback={response => this.onChangeCate(response)} />
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-8">
+                                        <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
+                                        <div className="row">
+                                            <div style={{ marginBottom: "50px" }} className="col-4">
+                                                <InputRange
+                                                    maxValue={500000}
+                                                    minValue={0}
+                                                    value={this.state.value}
+                                                    onChange={value => this.onChangeSlider(value)
+                                                        // this.setState({ value })
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            {searchList !== [] ? this.showSearchList(searchList) : ""}
+                                        </div>
+                                        <Pagination
+                                            hideNavigation
+                                            hideFirstLastPages
+                                            //What number is selected
+                                            activePage={activePage}
+                                            //The number of items each page
+                                            itemsCountPerPage={this.state.limit}
+                                            //Total of items in list
+                                            totalItemsCount={totalItems}
+                                            //Set Css of boostrap 4
+                                            itemClass="page-item"
+                                            //Set Css of boostrap 4
+                                            linkClass="page-link"
+                                            //Trigger handle page change
+                                            onChange={this.handlePageChange.bind(this)}
+                                        />
+                                        {/* show List item seached & filter */}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Container>
+
                 </div>
-            </Container>
-        );
+
+            );
     }
 
 }
 
-export default withRouter(ListPlaceSearched);
+// export default withRouter(ListPlaceSearched);
+const mapStateToProps = state => {
+    return {
+        loader: state.Loader
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
+    }
+}
+
+// export default MyCounter;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListPlaceSearched));

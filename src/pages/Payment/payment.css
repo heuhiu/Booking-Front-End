@@ -204,6 +204,9 @@
 }
 
 .purchaseLaterBtn{
-    padding: 10px;
+    margin-top: 50px;
     border: 1px solid green;
+    background: #FF7062;
+    border-radius: 10px;
+    padding: 10px;
 }

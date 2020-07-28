@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
 import VisitorTypeList from '../AddSub/VisitorTypeList';
-import { removeVisitorType, fetchVisitor2 } from '../../../actions/index';
+import { removeVisitorType, fetchVisitor2, showLoader, hideLoader } from '../../../actions/index';
 import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -54,12 +54,6 @@ class ReTicketType extends Component {
         const day = Date.getDay();
         var fullList = [0, 1, 2, 3, 4, 5, 6];
         fullList = fullList.filter(val => !activeDay.includes(val));
-        // console.log(fullList);
-        // for (let index = 0; index < fullList.length; index++) {
-        //     // const element = fullList[index];
-        //     return day !== fullList[index];
-        // }
-        
         return day !== fullList[0] && day !== fullList[1] && day !== fullList[2] && 
         day !== fullList[3] && day !== fullList[4] && day !== fullList[5] && day !== fullList[6] 
     }
@@ -344,6 +338,12 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         fetchVisitor2: (id, qty, price) => {
             dispatch(fetchVisitor2(id, qty, price))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

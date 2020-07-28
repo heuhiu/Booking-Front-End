@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import Menu from '../../../components/Menu/Menu';
 import Slider from 'react-slick';
 import SliderPic from '../../../img/Slider.png';
@@ -8,6 +8,8 @@ import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
 import Footer2 from '../../../components/Footer/Footer2/Footer2';
 import callApi from '../../../config/utils/apiCaller';
+import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+import { showLoader, hideLoader } from '../../../actions';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -50,14 +52,19 @@ class PlaceDetail extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         // debugger
+        const { showLoader, hideLoader } = this.props;
         const { match } = this.props;
         var id = match.params.id;
-        callApi(`placeClient/${id}`, 'GET', null).then(res => {
+        showLoader();
+        await callApi(`placeClient/${id}`, 'GET', null).then(res => {
             // console.log(res);
             this.setState({ place: res.data })
+            hideLoader();
         }).catch(error => {
+            hideLoader();
+            this.props.history.push("/404");
             console.log(error);
         });
     }
@@ -70,16 +77,6 @@ class PlaceDetail extends Component {
                     <div>
                         <div>
                             <img
-                                // style={{ borderRadius: "2px",
-                                // // maxWidth: "200%",
-                                // // maxHeight: "200%",
-                                // // margin: "auto",
-                                // // display: "block",
-                                // // width: "100%",
-                                // // objectFit: "contain"
-                                // width: "100%"
-
-                                // }}
                                 width="100%"
                                 height="600px"
                                 src={item}
@@ -122,7 +119,6 @@ class PlaceDetail extends Component {
         }
         if (place != null) {
             return (
-
                 <div >
                     <div
                         className="container"
@@ -130,44 +126,41 @@ class PlaceDetail extends Component {
                         <Menu />
                         <Slider {...settings}>
                             {this.renderSlider(place.placeImageLink)}
-                            {/* <div>
-                                <img
-                                    style={{ borderRadius: "2px" }}
-                                    width="100%"
-                                    height="100%"
-                                    src={SliderPic}
-                                    alt="Failt to load" />
-                            </div>
-                            <div>
-                                <img
-                                    style={{ borderRadius: "2px" }}
-                                    width="100%"
-                                    height="100%"
-                                    src={SliderPic}
-                                    alt="Failt to load" />
-                            </div>
-                            <div>
-                                <img
-                                    style={{ borderRadius: "2px" }}
-                                    width="100%"
-                                    height="100%"
-                                    src={SliderPic}
-                                    alt="Failt to load" />
-                            </div> */}
                         </Slider>
                         <Detail place={place} />
 
                     </div>
                     <div>
                         <Footer2 />
+                        <FullPageLoader />
                     </div>
                 </div>
             );
         } else {
-            return ""
+            return (
+                <div><Menu /><FullPageLoader /></div>
+            )
         }
     }
 
 }
 
-export default PlaceDetail;
+const mapStateToProps = state => {
+    return {
+        loader: state.Loader
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
+    }
+}
+
+// export default MyCounter;
+export default (connect(mapStateToProps, mapDispatchToProps)(PlaceDetail));

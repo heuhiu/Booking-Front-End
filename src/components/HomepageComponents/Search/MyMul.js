@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import './MyMul.scss';
+import { showLoader, hideLoader } from '../../../actions';
 
 class Checkbox extends React.Component {
     static defaultProps = {
@@ -40,9 +41,11 @@ class MyMul extends Component {
     }
 
     //Get all City and Category by API
-    getCitysAndCategories = () => {
+    getCitysAndCategories =  async () => {
+        const { showLoader, hideLoader } = this.props;
         //get City list
-        callApi('city', 'GET', null)
+        showLoader();
+         await callApi('city', 'GET', null)
             .then(res => {
                 this.setState({
                     listCity: res.data
@@ -53,11 +56,13 @@ class MyMul extends Component {
                 }
             });
         //get Categories list
-        callApi('categories', 'GET', null)
+         await callApi('categories', 'GET', null)
             .then(res => {
                 this.setState({
                     listCategory: res.data
                 })
+                console.log(res);
+                hideLoader();
             }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -77,7 +82,7 @@ class MyMul extends Component {
         if (e.target.checked === true) {
             this.setState({
                 ListIDFoSend: [...this.state.ListIDFoSend, id]
-            },()=>{
+            }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
 
             });
@@ -101,14 +106,14 @@ class MyMul extends Component {
         if (e.target.checked === true) {
             this.setState({
                 ListIDFoSendCat: [...this.state.ListIDFoSendCat, id]
-            }, ()=>{
+            }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
             });
-            
+
         } else {
             this.setState({
                 ListIDFoSendCat: this.state.ListIDFoSendCat.filter(temp => temp !== id)
-            },()=>{
+            }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
             })
         }
@@ -142,13 +147,13 @@ class MyMul extends Component {
                             <div
                                 // style={{ marginLeft: "10px" }}
                                 className="col-2"
-                                >
+                            >
                                 <Checkbox
                                     name={item.name}
                                     checked={this.state.checkedCity.get(item.name) || false}
                                     onChange={this.handleChange(item.id)}
                                     type="checkbox"
-                                />                               
+                                />
                             </div>
                             <div className="itemName col"  >
                                 {item.name}
@@ -171,7 +176,7 @@ class MyMul extends Component {
                         <div className="row no-gutters filterItem">
                             <div
                                 className="col-2"
-                                // style={{ marginLeft: "10px" }}
+                            // style={{ marginLeft: "10px" }}
                             >
                                 <Checkbox
                                     name={item.categoryName}
@@ -216,4 +221,23 @@ class MyMul extends Component {
 
 }
 
-export default MyMul;
+// export default MyMul;
+const mapStateToProps = state => {
+    return {
+        loader: state.Loader
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
+    }
+}
+
+// export default MyCounter;
+export default connect(mapStateToProps, mapDispatchToProps)(MyMul);

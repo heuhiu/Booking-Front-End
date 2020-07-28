@@ -9,6 +9,7 @@ import CardDemo from './cartDemo/CardDemo';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import callApi from '../../config/utils/apiCaller';
+import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -172,29 +173,29 @@ class Payment extends Component {
             }
             orderItems.push(item)
         }
-            console.log("khong ton tai status");
-            callApi('order', 'post', {
-                // them id order
-                ticketTypeId: location.state.ticketTypeID,
-                ticketTypeName: location.state.ticketName,
-                userId: loggedUser.id,
-                firstName: loggedUser.firstName,
-                lastName: loggedUser.lastName,
-                mail: loggedUser.mail,
-                phoneNumber: loggedUser.phoneNumber,
-                totalPayment: location.state.totalPayment,
-                purchaseDay: new Date(),
-                redemptionDate: location.state.redemptionDate,
-                orderItems: orderItems
-            })
-                .then(res => {
-                    console.log(res);
-                }).catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data);
-                    }
-                });
-        
+        console.log("khong ton tai status");
+        callApi('order', 'post', {
+            // them id order
+            ticketTypeId: location.state.ticketTypeID,
+            ticketTypeName: location.state.ticketName,
+            userId: loggedUser.id,
+            firstName: loggedUser.firstName,
+            lastName: loggedUser.lastName,
+            mail: loggedUser.mail,
+            phoneNumber: loggedUser.phoneNumber,
+            totalPayment: location.state.totalPayment,
+            purchaseDay: new Date(),
+            redemptionDate: location.state.redemptionDate,
+            orderItems: orderItems
+        })
+            .then(res => {
+                console.log(res);
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+
     }
     render() {
 
@@ -592,14 +593,23 @@ class Payment extends Component {
                                             </Accordion.Toggle>
                                                 <Accordion.Collapse eventKey="0">
                                                     <Card.Body>
-                                                        <span 
-                                                        style={{visibility: !location.state.orderStatus?"visible":"hidden"}}
+                                                        <div className="purchaseLaterBox">
+                                                            <h1>Vietcombank Hội sở chính</h1>
+                                                            <p>Chủ tài khoản: Phùng Trí Đức</p>
+                                                            <p>Số tài khoản: 000000000000000000</p>
+                                                            <h1>TPBank Hà Đông</h1>
+                                                            <p>Chủ tài khoản: Phùng Trí Đức</p>
+                                                            <p>Số tài khoản: 000000000000000000</p>
+                                                        </div>
+                                                        <br></br>
+
+                                                        <span
+                                                            style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
                                                             className="purchaseLaterBtn"
                                                             onClick={this.purchaseLater}
                                                         >
-                                                            Purchase
+                                                            Thanh toán sau
                                                         </span>
-                                                        <h1>Detail</h1>
                                                     </Card.Body>
                                                 </Accordion.Collapse>
                                             </Card>
@@ -847,6 +857,7 @@ class Payment extends Component {
                         </div>
                     </div>
                     <Footer2 />
+                    <FullPageLoader />
                 </div >
 
             );
