@@ -13,6 +13,7 @@ import CategorySelection from './reactSelect/CategorySelection';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { showLoader, hideLoader } from '../../../actions';
+import CurrencyInput from 'react-currency-input';
 
 
 class ListPlaceSearched extends Component {
@@ -32,11 +33,12 @@ class ListPlaceSearched extends Component {
             listId: [],
             listCat: [],
             listCategoryId: [],
-            value: { min: 5000000, max: 9999999 },
-            minValueForSlider: 5000000,//different usage
-            maxValueForSlider: 9999999,
+            value: { min: 0, max: 1000000 },
+            minValueForSlider: 0,//different usage
+            maxValueForSlider: 1000000,
             catName: [],
-            toggleDropdown: false
+            toggleDropdown: false,
+            amount: "0.00"
         }
     }
 
@@ -180,18 +182,35 @@ class ListPlaceSearched extends Component {
             toggleDropdown: !this.state.toggleDropdown
         })
     }
+    handleChange = (e, maskedvalue, floatvalue) => {
+        this.setState({
+            value: {
+                min: maskedvalue,
+                max: this.state.value.max
+            }
+        });
+    }
+    handleChange2 = (e, maskedvalue, floatvalue) => {
+        this.setState({
+            value: {
+                max: maskedvalue,
+                min: this.state.value.min
+            }
+        });
+    }
 
     onChangePriceMax = (e) => {
         var target = e.target;
         var name = target.name;
         var myValue = target.value;
         // if (value !== "") {
-        this.setState(prevState => ({
+        this.setState({
             value: {
                 [name]: myValue === "" ? 1 : myValue,
                 min: this.state.value.min
             }
-        }))
+        })
+        this.forceUpdate();
         // }
     }
 
@@ -200,12 +219,12 @@ class ListPlaceSearched extends Component {
         var name = target.name;
         var myValue = target.value;
         // if (value !== "") {
-        this.setState(prevState => ({
+        this.setState({
             value: {
                 [name]: myValue === "" ? 0 : myValue,
                 max: this.state.value.max
             }
-        }))
+        })
         // }
     }
 
@@ -216,7 +235,10 @@ class ListPlaceSearched extends Component {
         console.log(searchName);
         console.log(IDCityFilter);
         console.log(IDCategoryFilter);
-        console.log(value.max);
+        console.log(value.min);
+        console.log(String(value.min));
+        var min = Number(String(value.min).replace(/\./g, ""));
+        var max = Number(String(value.max).replace(/\./g, ""));
         showLoader();
         await axios.get('http://localhost:8090/place/searchClient', {
             params: {
@@ -230,8 +252,8 @@ class ListPlaceSearched extends Component {
                 cityId: isNaN(parseFloat(IDCityFilter)) === false ? IDCityFilter + '' : null,
                 //category List ID
                 categoryId: isNaN(parseFloat(IDCategoryFilter)) === false ? IDCategoryFilter + '' : null,
-                minValue: value.min,
-                maxValue: value.max
+                minValue: min,
+                maxValue: max
             }
         }).then(res => {
             //set state
@@ -417,18 +439,43 @@ class ListPlaceSearched extends Component {
                                                     step="10.01"
                                                     value={this.convertCurrecyToVnd(this.state.value.min)}
                                                     onChange={this.onChangePriceMin}
-                                                />
-                                                max
+                                                /> */}
+                                                {/* max
                                                 <input
                                                     className="input100"
                                                     type="number"
                                                     name="max"
                                                     min="0"
-                                                    value={this.convertCurrecyToVnd(this.state.value.max)}
                                                     onChange={this.onChangePriceMax}
                                                 /> */}
+                                                <div className="row no-gutters">
+                                                    <div className="col-5">
+                                                        <CurrencyInput
+                                                            className="maxminBtn"
+                                                            // style={{ border: "5px solid green" }}
+                                                            // suffix=" đ"
+                                                            precision="0"
+                                                            decimalSeparator=","
+                                                            thousandSeparator="."
+                                                            value={this.state.value.min}
+                                                            onChange={this.handleChange} />
+                                                    </div>
+                                                    <div className="col">
+                                                        <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
-                                                {/* <button onClick={this.onChangeSliderSet}>Xếp</button> */}
+                                                    </div>
+                                                    <div className="col-5">
+                                                        <CurrencyInput
+                                                            // suffix=" đ"
+                                                            className="maxminBtn"
+                                                            precision="0"
+                                                            decimalSeparator=","
+                                                            thousandSeparator="."
+                                                            value={this.state.value.max}
+                                                            onChange={this.handleChange2} />
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-danger" onClick={this.onChangeSliderSet}>Xếp</button>
                                                 <div>
                                                     <InputRange
                                                         maxValue={this.state.maxValueForSlider}

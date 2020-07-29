@@ -565,3 +565,20 @@
   z-index: 50;
   position: absolute;
 }
+
+.maxminBtn{
+  background: #FFFFFF;
+  border: 1px solid #E3E3E3;
+  box-sizing: border-box;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
+.maxminBtn:focus {
+  background: #FFFFFF;
+  border: 1px solid #E3E3E3;
+  box-sizing: border-box;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
