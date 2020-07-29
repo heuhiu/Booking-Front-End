@@ -111,7 +111,7 @@ class Search extends Component {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
         console.log(txtParkName);
-      
+
         return (
             <div>
                 <ToastContainer />
@@ -139,7 +139,11 @@ class Search extends Component {
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
                                 <div className="filterPanel">
-                                    Bộ lọc  <i className="fas fa-chevron-down"></i>
+                                    Bộ lọc &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
                                 </div>
 
                             </div>

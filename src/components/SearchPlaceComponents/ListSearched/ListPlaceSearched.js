@@ -32,7 +32,9 @@ class ListPlaceSearched extends Component {
             listId: [],
             listCat: [],
             listCategoryId: [],
-            value: { min: 0, max: 500000 },
+            value: { min: 5000000, max: 9999999 },
+            minValueForSlider: 5000000,//different usage
+            maxValueForSlider: 9999999,
             catName: [],
             toggleDropdown: false
         }
@@ -392,25 +394,28 @@ class ListPlaceSearched extends Component {
                                         <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
                                         <div className="row no-gutters">
                                             <div
-                                                
-                                                onClick={this.onTogglePriceRange} className="priceFilter col-4">
-                                                <label onClick={this.onTogglePriceRange}>
-                                                    {this.convertCurrecyToVnd(this.state.value.min)} -
+                                                style={{ padding: "20px" }}
+                                                onClick={this.onTogglePriceRange} className="priceFilter col-5">
+                                                <p onClick={this.onTogglePriceRange}>
+                                                    {this.convertCurrecyToVnd(this.state.value.min)} -&nbsp;
                                                     {this.convertCurrecyToVnd(this.state.value.max)}
-                                                </label>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                <svg style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </p>
                                             </div>
-
                                         </div>
-                                        <div style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible"}} className="row no-gutters">
-                                            <div className="dropBoxPriceRange col-4">
+                                        <div style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }} className="row no-gutters">
+                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-4">
                                                 <label>Khoảng giá</label>
-                                                min
+                                                {/* min
                                                 <input
                                                     className="input100"
                                                     type="number"
                                                     name="min"
                                                     step="10.01"
-                                                    // placeholder={this.convertCurrecyToVnd(this.state.value.min)}
+                                                    value={this.convertCurrecyToVnd(this.state.value.min)}
                                                     onChange={this.onChangePriceMin}
                                                 />
                                                 max
@@ -419,15 +424,15 @@ class ListPlaceSearched extends Component {
                                                     type="number"
                                                     name="max"
                                                     min="0"
-                                                    // placeholder={this.convertCurrecyToVnd(this.state.value.min)}
+                                                    value={this.convertCurrecyToVnd(this.state.value.max)}
                                                     onChange={this.onChangePriceMax}
-                                                />
+                                                /> */}
 
-                                                <button onClick={this.onChangeSliderSet}>Xếp</button>
+                                                {/* <button onClick={this.onChangeSliderSet}>Xếp</button> */}
                                                 <div>
                                                     <InputRange
-                                                        maxValue={500000}
-                                                        minValue={0}
+                                                        maxValue={this.state.maxValueForSlider}
+                                                        minValue={this.state.minValueForSlider}
                                                         step={10000}
                                                         value={this.state.value}
                                                         onChange={value => this.onChangeSlider(value)}
