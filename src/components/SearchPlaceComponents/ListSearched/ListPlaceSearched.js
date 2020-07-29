@@ -33,6 +33,8 @@ class ListPlaceSearched extends Component {
             listCat: [],
             listCategoryId: [],
             value: { min: 0, max: 500000 },
+            catName: [],
+            toggleDropdown: false
         }
     }
 
@@ -40,12 +42,54 @@ class ListPlaceSearched extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
+    convertIdToName = (id) => {
+        const { listCat } = this.state;
+        var options = []
+        if (listCat.length > 0) {
+            for (let i = 0; i < listCat.length; i++) {
+                var option = { value: listCat[i].id, label: listCat[i].categoryName }
+                options.push(option);
+            }
+        }
+        console.log(options);
+        for (let index = 0; index < options.length; index++) {
+            var element = options[index].value;
+            var convertedName = options[index].label;
+            if (id === element) {
+                return convertedName;
+            }
+        }
+    }
+
+    getListCategories = (list) => {
+        var result = null;
+        console.log(list);
+        if (list.length > 0) {
+            result = list.map((data, index) => {
+                console.log(data);
+                return (
+                    <button style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
+                )
+            });
+            return result;
+        }
+
+
+        // else if (list.length === 0 && this.props.loader.loading === false) {
+        //     return (
+        //         <div>not found</div>
+        //     );
+        // }
+
+        return result;
+    }
+
     //Show items searched
     showSearchList = (searchList) => {
         var result = null;
         if (searchList.length > 0) {
             result = searchList.map((data, index) => {
-                // console.log(data.categoryId);
+                console.log(data.categoryId);
                 return (
                     <Link
                         style={{ textDecoration: "none" }}
@@ -69,9 +113,11 @@ class ListPlaceSearched extends Component {
                                     <div className="col">
                                         <div className="place_info">
                                             <p>
-                                                <button>Điểm tham quan</button>
+                                                {/* <button>Điểm tham quan</button> */}
+                                                {this.getListCategories(data.categoryId)}
                                             </p>
-                                            {/* {this.showPlaceCategory(data.categoryId)} */}
+
+
                                             <h5>
                                                 {data.name}
                                             </h5>
@@ -116,7 +162,7 @@ class ListPlaceSearched extends Component {
 
 
     //Handle changing when user click in button paging "1 2 3 4 ..."
-    handlePageChange = (pageNumber) => {
+    handlePageChange = async (pageNumber) => {
         const { searchName, listCtiId, listCatId } = this.state;
         this.setState({
             activePage: pageNumber
@@ -126,6 +172,39 @@ class ListPlaceSearched extends Component {
             }
         )
         // this.forceUpdate();
+    }
+    onTogglePriceRange = () => {
+        this.setState({
+            toggleDropdown: !this.state.toggleDropdown
+        })
+    }
+
+    onChangePriceMax = (e) => {
+        var target = e.target;
+        var name = target.name;
+        var myValue = target.value;
+        // if (value !== "") {
+        this.setState(prevState => ({
+            value: {
+                [name]: myValue === "" ? 1 : myValue,
+                min: this.state.value.min
+            }
+        }))
+        // }
+    }
+
+    onChangePriceMin = (e) => {
+        var target = e.target;
+        var name = target.name;
+        var myValue = target.value;
+        // if (value !== "") {
+        this.setState(prevState => ({
+            value: {
+                [name]: myValue === "" ? 0 : myValue,
+                max: this.state.value.max
+            }
+        }))
+        // }
     }
 
     //Received data from API
@@ -169,6 +248,7 @@ class ListPlaceSearched extends Component {
 
     getAllCategories = async () => {
         //get City list
+        const { showLoader, hideLoader } = this.props;
         showLoader();
         await callApi('categories', 'GET', null)
             .then(res => {
@@ -178,6 +258,7 @@ class ListPlaceSearched extends Component {
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
+                    hideLoader();
                     console.log(error.response.data);
                 }
             });
@@ -219,17 +300,21 @@ class ListPlaceSearched extends Component {
             listCtiId: listCtiIdNumber,
             listCatId: listCatIdNumber
         }, () => {
+            this.getAllCategories();
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
-        this.getAllCategories();
+
     }
     // }
     onChangeSlider = (value) => {
         this.setState({
             value
-        }, () => {
-            this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
         })
+    }
+
+    onChangeSliderSet = () => {
+        this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+        this.onTogglePriceRange();
     }
 
     onChangeCate = (res) => {
@@ -241,10 +326,6 @@ class ListPlaceSearched extends Component {
                 unique.push(element);
 
             }
-            // console.log(res);
-            // let unique = [...new Set(this.state.listCategoryId)];
-            // console.log(unique);
-            // console.log(this.state.listCtiId);
             this.setState({
                 listCatId: unique
             }, () => {
@@ -259,7 +340,7 @@ class ListPlaceSearched extends Component {
         // debugger
         const { activePage, totalItems, searchList, listCatName,
             searchName, listId, listCat, listCategoryId } = this.state;
-        console.log(listCat)
+        // console.log(listCat)
         var options = []
         if (listCat.length > 0) {
             for (let i = 0; i < listCat.length; i++) {
@@ -309,15 +390,51 @@ class ListPlaceSearched extends Component {
 
                                     <div className="col-lg-8">
                                         <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
-                                        <div className="row">
-                                            <div style={{ marginBottom: "50px" }} className="col-4">
-                                                <InputRange
-                                                    maxValue={500000}
-                                                    minValue={0}
-                                                    value={this.state.value}
-                                                    onChange={value => this.onChangeSlider(value)
-                                                    }
+                                        <div className="row no-gutters">
+                                            <div
+                                                
+                                                onClick={this.onTogglePriceRange} className="priceFilter col-4">
+                                                <label onClick={this.onTogglePriceRange}>
+                                                    {this.convertCurrecyToVnd(this.state.value.min)} -
+                                                    {this.convertCurrecyToVnd(this.state.value.max)}
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible"}} className="row no-gutters">
+                                            <div className="dropBoxPriceRange col-4">
+                                                <label>Khoảng giá</label>
+                                                min
+                                                <input
+                                                    className="input100"
+                                                    type="number"
+                                                    name="min"
+                                                    step="10.01"
+                                                    // placeholder={this.convertCurrecyToVnd(this.state.value.min)}
+                                                    onChange={this.onChangePriceMin}
                                                 />
+                                                max
+                                                <input
+                                                    className="input100"
+                                                    type="number"
+                                                    name="max"
+                                                    min="0"
+                                                    // placeholder={this.convertCurrecyToVnd(this.state.value.min)}
+                                                    onChange={this.onChangePriceMax}
+                                                />
+
+                                                <button onClick={this.onChangeSliderSet}>Xếp</button>
+                                                <div>
+                                                    <InputRange
+                                                        maxValue={500000}
+                                                        minValue={0}
+                                                        step={10000}
+                                                        value={this.state.value}
+                                                        onChange={value => this.onChangeSlider(value)}
+                                                        onChangeComplete={value => this.onChangeSliderSet()}
+                                                    />
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div className="row">

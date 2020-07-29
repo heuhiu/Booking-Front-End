@@ -76,10 +76,11 @@ class CategorySelection extends Component {
         isMulti
         components={{ Option, MultiValue }}
         options={options}
-        hideSelectedOptions={false}
+        hideSelectedOptions={true}
         backspaceRemovesValue={false}
         onChange={e => onChangeCallback(e)}
         styles={customStyles}
+        closeMenuOnSelect={true}
       {...otherProps}
       theme={(theme) => ({
         ...theme,

@@ -36,7 +36,7 @@ class VisitorTypeItem extends Component {
                             <p className="myTitleType">
                                 {item.typeName}
                             &nbsp; &nbsp; &nbsp; &nbsp;
-                            Số lượng còn lại: {item.remaining - myQuan}
+                            Còn lại: {item.remaining - myQuan} vé
                             </p>
                         </div>
                         <div className="col-lg-5 col-md-4 col-sm-3 col-xs-3" style={{ display: "table" }} >
