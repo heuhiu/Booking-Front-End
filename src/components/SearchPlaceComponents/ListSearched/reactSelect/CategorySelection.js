@@ -25,15 +25,19 @@ const customStyles = {
   control: (base, state) => ({
     ...base,
     background: "#FFFFFF",
+    padding: "10px",
     // match with the menu
-    borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+    borderRadius: "8px" ,
     // Overwrittes the different states of border
-    borderColor: state.isFocused ? "black" : "none",
+    background: state.isFocused ? "#FFFFFF" : "#FFFFFF",
+    border: "2px solid #E3E3E3",
     // Removes weird border around container
     boxShadow: state.isFocused ? null : null,
     "&:hover": {
       // Overwrittes the different states of border
-      borderColor: state.isFocused ? "red" : "blue"
+      // borderColor: state.isFocused ? "red" : "blue"
+      // boxShadow: "2px 5px 5px rgba(0, 0, 0, 0.25)",
+      transition: ".5s"
     }
   }),
   menu: base => ({
@@ -80,7 +84,9 @@ class CategorySelection extends Component {
         backspaceRemovesValue={false}
         onChange={e => onChangeCallback(e)}
         styles={customStyles}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={false}
+        className="containerResek"
+        placeholder= "Loại hình vui chơi"
       {...otherProps}
       theme={(theme) => ({
         ...theme,

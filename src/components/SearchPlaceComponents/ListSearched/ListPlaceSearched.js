@@ -14,7 +14,8 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { showLoader, hideLoader } from '../../../actions';
 import CurrencyInput from 'react-currency-input';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ListPlaceSearched extends Component {
 
@@ -329,16 +330,43 @@ class ListPlaceSearched extends Component {
         })
 
     }
-    // }
+
+
     onChangeSlider = (value) => {
+
         this.setState({
             value
         })
+
     }
 
     onChangeSliderSet = () => {
+        if (this.state.value.min >= this.state.value.max) {
+            toast.error('Giá nhỏ nhất phải nhỏ hơn giá lớn nhất, vui lòng nhập lại!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+            this.onTogglePriceRange();
+        }
+    }
+
+    onSelectCat = () => {
         this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
-        this.onTogglePriceRange();
+    }
+    onResetSliderSet = () => {
+        this.setState({
+            value: {
+                min: this.state.minValueForSlider,
+                max: this.state.maxValueForSlider
+            }
+        });
     }
 
     onChangeCate = (res) => {
@@ -348,12 +376,11 @@ class ListPlaceSearched extends Component {
                 const element = res[index].value;
                 // console.log(element);
                 unique.push(element);
-
             }
             this.setState({
                 listCatId: unique
             }, () => {
-                this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+                // this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
             })
         }
     }
@@ -395,28 +422,27 @@ class ListPlaceSearched extends Component {
             return (
                 <div>
                     <Container style={{ fontFamily: 'Inter' }} >
-                        {/* <p>Search Name: {searchName} </p> */}
                         <div className="popular_places_area">
                             <div className="container">
-                                <div className="row">
+                                <span className="labelName">Tất cả kết quả với {searchName ? searchName : "mọi địa điểm"}</span>
+                                <div
+                                    style={{ marginTop: "26px" }}
+                                    className="row">
                                     <div className="col-lg-4">
                                         <div className="filter_result_wrap">
-                                            <h3>Tất cả kết quả với : {searchName ? searchName : "Mọi địa điểm"}</h3>
                                             <CategorySelection options={options}
                                                 onChangeCallback={response => this.onChangeCate(response)} />
+                                            <button
+                                                onClick={this.onSelectCat}
+                                                type="button"
+                                                class="btn btn-danger">
+                                                button
+                                            </button>
                                         </div>
-                                        {/* <button
-                                            onClick={this.urlChange}
-                                            className="btn btn-primary">
-                                            Search
-                                        </button> */}
                                     </div>
-
                                     <div className="col-lg-8">
-                                        <h3 style={{ visibility: "hidden" }}>Tất cả kết quả với :</h3>
                                         <div className="row no-gutters">
                                             <div
-                                                style={{ padding: "20px" }}
                                                 onClick={this.onTogglePriceRange} className="priceFilter col-5">
                                                 <p onClick={this.onTogglePriceRange}>
                                                     {this.convertCurrecyToVnd(this.state.value.min)} -&nbsp;
@@ -428,45 +454,30 @@ class ListPlaceSearched extends Component {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }} className="row no-gutters">
-                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-4">
-                                                <label>Khoảng giá</label>
-                                                {/* min
-                                                <input
-                                                    className="input100"
-                                                    type="number"
-                                                    name="min"
-                                                    step="10.01"
-                                                    value={this.convertCurrecyToVnd(this.state.value.min)}
-                                                    onChange={this.onChangePriceMin}
-                                                /> */}
-                                                {/* max
-                                                <input
-                                                    className="input100"
-                                                    type="number"
-                                                    name="max"
-                                                    min="0"
-                                                    onChange={this.onChangePriceMax}
-                                                /> */}
+                                        <div
+                                            style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }}
+                                            className="row no-gutters">
+                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-5">
+                                                <label className="priceRangeLabel">Khoảng giá</label>
+
                                                 <div className="row no-gutters">
                                                     <div className="col-5">
                                                         <CurrencyInput
                                                             className="maxminBtn"
                                                             // style={{ border: "5px solid green" }}
-                                                            // suffix=" đ"
+                                                            suffix=" đ"
                                                             precision="0"
                                                             decimalSeparator=","
                                                             thousandSeparator="."
                                                             value={this.state.value.min}
                                                             onChange={this.handleChange} />
                                                     </div>
-                                                    <div className="col">
+                                                    <div className="col-2">
                                                         <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
-
                                                     </div>
                                                     <div className="col-5">
                                                         <CurrencyInput
-                                                            // suffix=" đ"
+                                                            suffix=" đ"
                                                             className="maxminBtn"
                                                             precision="0"
                                                             decimalSeparator=","
@@ -475,8 +486,8 @@ class ListPlaceSearched extends Component {
                                                             onChange={this.handleChange2} />
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-danger" onClick={this.onChangeSliderSet}>Xếp</button>
-                                                <div>
+
+                                                <div className="mrtb-30">
                                                     <InputRange
                                                         maxValue={this.state.maxValueForSlider}
                                                         minValue={this.state.minValueForSlider}
@@ -486,9 +497,21 @@ class ListPlaceSearched extends Component {
                                                         onChangeComplete={value => this.onChangeSliderSet()}
                                                     />
                                                 </div>
+                                                <div className="row no-gutters">
+                                                    <div className="col">
+                                                    </div>
+                                                    <div className="col-5">
+                                                        <button class="resetFilterPricebtn" onClick={this.onResetSliderSet}>Đặt lại</button>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <button class="filterPricebtn" onClick={this.onChangeSliderSet}>Xếp giá</button>
+                                                    </div>
+                                                </div>
+
 
                                             </div>
                                         </div>
+
                                         <div className="row">
                                             {searchList !== [] ? this.showSearchList(searchList) : ""}
                                         </div>
@@ -514,6 +537,7 @@ class ListPlaceSearched extends Component {
                                 </div>
                             </div>
                         </div>
+                        <ToastContainer />
                     </Container>
 
                 </div>

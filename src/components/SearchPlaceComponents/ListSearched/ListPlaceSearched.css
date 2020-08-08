@@ -234,7 +234,6 @@
   font-size: 16px;
   font-weight: 500;
   color: #001D38;
-  margin-bottom: 26px;
 }
 
 /* line 103, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
@@ -374,7 +373,7 @@
     font-size: 16px;
     font-weight: 500;
     color: #001D38;
-    margin-bottom: 26px;
+    /* margin-bottom: 26px; */
   }
   
   /* line 103, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_popular_place.scss */
@@ -544,10 +543,23 @@
 
 
 .priceFilter{
+ 
   margin-bottom:10px;
   background: #FFFFFF;
   border: 2px solid #E3E3E3;
   border-radius: 10px;
+}
+
+.priceFilter p{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5B5B5B;
+  padding: 18px;
+  width: auto;
+  height: auto;
 }
 
 .input-range__label-container {
@@ -557,8 +569,8 @@
 }
 
 .dropBoxPriceRange{
-  width: 235px;
-  height: auto;
+  width: 40%;
+  /* height: auto; */
   background: #FFFFFF;
   box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -573,7 +585,17 @@
   border-radius: 10px;
   width: 100%;
   height: auto;
+  text-align: center;
+  padding: 7px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #5B5B5B;
 }
+
 .maxminBtn:focus {
   background: #FFFFFF;
   border: 1px solid #E3E3E3;
@@ -581,4 +603,64 @@
   border-radius: 10px;
   width: 100%;
   height: auto;
+}
+
+.filterPricebtn{
+  background: #FF7062;
+  border-radius: 10px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 10px 20px 10px 20px;
+  /* padding: 10px; */
+  width: 100%;
+}
+
+.resetFilterPricebtn{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #FF7062;
+  padding: 10px;
+  width: 100%;
+}
+
+.priceRangeLabel{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #5B5B5B;
+}
+
+.mrtb-30{
+  margin: 30px 0px 30px 0px;
+}
+
+/* .containerResek{
+  border: 5px solid greenyellow;
+} */
+
+.labelName{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 41px;
+  color: #5B5B5B;
+}
+
+.priceText{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5B5B5B;
 }
