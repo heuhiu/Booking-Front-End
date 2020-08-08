@@ -8,7 +8,7 @@ import './cat.css'
 const Option = props => (
   <div>
     <components.Option {...props}>
-      <label class="container1">
+      <label className="container1">
         <input type="checkbox" checked={props.isSelected} onChange={() => null} />{" "}
         <label>{props.label}</label>
       </label>
@@ -27,7 +27,7 @@ const customStyles = {
     background: "#FFFFFF",
     padding: "10px",
     // match with the menu
-    borderRadius: "8px" ,
+    borderRadius: "8px",
     // Overwrittes the different states of border
     background: state.isFocused ? "#FFFFFF" : "#FFFFFF",
     border: "2px solid #E3E3E3",
@@ -58,7 +58,7 @@ class CategorySelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: PropTypes.arrayOf(
+      soptions: PropTypes.arrayOf(
         PropTypes.shape({
           value: PropTypes.node,
           label: PropTypes.node
@@ -68,39 +68,46 @@ class CategorySelection extends Component {
     }
   }
   static defaultProps = {
-    options: []
+    soptions: []
   };
 
   render() {
     const { options, onChangeCallback, ...otherProps } = this.props;
-
-    return (
-      <Select
-        closeMenuOnSelect={false}
-        isMulti
-        components={{ Option, MultiValue }}
-        options={options}
-        hideSelectedOptions={true}
-        backspaceRemovesValue={false}
-        onChange={e => onChangeCallback(e)}
-        styles={customStyles}
-        closeMenuOnSelect={false}
-        className="containerResek"
-        placeholder= "Loại hình vui chơi"
-      {...otherProps}
-      theme={(theme) => ({
-        ...theme,
-        borderRadius: "10px",
-        colors: {
-        ...theme.colors,
-          text: 'orangered',
-          primary25: '#FF7062',
-          primary: '#FF7062',
-        },
-      })}
-      />
-
-    );
+    console.log(options);
+    if (options[0] != undefined) {
+      console.log(options[0].label);
+    }
+      return (
+        <Select
+          closeMenuOnSelect={false}
+          isMulti
+          components={{ Option, MultiValue }}
+          options={options}
+          hideSelectedOptions={true}
+          backspaceRemovesValue={false}
+          onChange={e => onChangeCallback(e)}
+          styles={customStyles}
+          closeMenuOnSelect={false}
+          defaultValue={[
+            options[0] != undefined ? options[0].label : "aaa",
+            // options[2], options[3], 
+            // options[4], options[5]
+          ]}
+          className="containerResek"
+          placeholder="Danh mục"
+          {...otherProps}
+          theme={(theme) => ({
+            ...theme,
+            borderRadius: "10px",
+            colors: {
+              ...theme.colors,
+              text: 'orangered',
+              primary25: '#FF7062',
+              primary: '#FF7062',
+            },
+          })}
+        />
+      );
   }
 
 }

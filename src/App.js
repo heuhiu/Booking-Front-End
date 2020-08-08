@@ -24,15 +24,15 @@ class App extends Component {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
-            console.log(decoded);
+            // console.log(decoded);
             const id = decoded.user.userId;
             // this.props.fetchUserDetail(decoded.user);
             callApi("login/checkToken", 'POST', null)
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
-                            console.log(res);
+                            // console.log(res);
                             this.props.fetchUserDetail(res.data);
                         }).catch(function (error) {
                             if (error.response) {

@@ -63,11 +63,9 @@ class Search extends Component {
         var target = e.target;
         var name = target.name;
         var value = target.value;
-        // if (value !== "") {
         this.setState({
             [name]: value,
         })
-        // }
     }
 
     //After click search set Name Seached to local storage
@@ -75,6 +73,7 @@ class Search extends Component {
         e.preventDefault();
         console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
+            console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
 
@@ -92,10 +91,6 @@ class Search extends Component {
         else {
             this.props.history.push(`${this.searchPathLink()}`);
         }
-
-
-
-
     }
 
     setmMul = (cityMul, catMul) => {
@@ -141,7 +136,7 @@ class Search extends Component {
                                 <div className="filterPanel">
                                     Bộ lọc &nbsp;&nbsp;&nbsp;&nbsp;
                                     <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
 
                                 </div>

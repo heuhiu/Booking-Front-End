@@ -70,6 +70,7 @@ class Slick2 extends Component {
       result = listTopcity.map((item, index) => {
         return (
           <Link 
+          key={index}
          className="decoNone"
           to={`/searchedPlace?listCityID=${item.id}`}>
             <div className="owlStyle">

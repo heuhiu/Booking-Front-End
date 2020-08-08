@@ -56,7 +56,7 @@ class ListPlaceSearched extends Component {
                 options.push(option);
             }
         }
-        console.log(options);
+        // console.log(options);
         for (let index = 0; index < options.length; index++) {
             var element = options[index].value;
             var convertedName = options[index].label;
@@ -68,12 +68,14 @@ class ListPlaceSearched extends Component {
 
     getListCategories = (list) => {
         var result = null;
-        console.log(list);
+        // console.log(list);
         if (list.length > 0) {
             result = list.map((data, index) => {
-                console.log(data);
+                // console.log(data);
                 return (
-                    <button style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
+                        <div className="col-2">
+                            <button className="overflowCate" key={index} style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
+                        </div>
                 )
             });
             return result;
@@ -94,7 +96,7 @@ class ListPlaceSearched extends Component {
         var result = null;
         if (searchList.length > 0) {
             result = searchList.map((data, index) => {
-                console.log(data.categoryId);
+                // console.log(data.categoryId);
                 return (
                     <Link
                         style={{ textDecoration: "none" }}
@@ -106,23 +108,22 @@ class ListPlaceSearched extends Component {
                             <div className="single_place">
                                 <div className="row">
                                     <div
-                                        // style={{backgroundImage: `url(${searchPic})`}} 
                                         className="col">
                                         <div className="thumb">
                                             <img src={data.placeImageLink[0]}
                                                 width="416px"
-                                                height="216px"
+                                                height="250px"
                                                 alt="FAIL TO LOAD" />
                                         </div>
                                     </div>
                                     <div className="col">
                                         <div className="place_info">
-                                            <p>
+                                            <div className="row no-gutters">
+                                            {/* <p> */}
                                                 {/* <button>Điểm tham quan</button> */}
                                                 {this.getListCategories(data.categoryId)}
-                                            </p>
-
-
+                                            {/* </p> */}
+                                            </div>
                                             <h5>
                                                 {data.name}
                                             </h5>
@@ -163,9 +164,6 @@ class ListPlaceSearched extends Component {
         }
         return result;
     }
-
-
-
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = async (pageNumber) => {
         const { searchName, listCtiId, listCatId } = this.state;
@@ -178,11 +176,13 @@ class ListPlaceSearched extends Component {
         )
         // this.forceUpdate();
     }
+
     onTogglePriceRange = () => {
         this.setState({
             toggleDropdown: !this.state.toggleDropdown
         })
     }
+
     handleChange = (e, maskedvalue, floatvalue) => {
         this.setState({
             value: {
@@ -191,6 +191,7 @@ class ListPlaceSearched extends Component {
             }
         });
     }
+
     handleChange2 = (e, maskedvalue, floatvalue) => {
         this.setState({
             value: {
@@ -236,8 +237,8 @@ class ListPlaceSearched extends Component {
         console.log(searchName);
         console.log(IDCityFilter);
         console.log(IDCategoryFilter);
-        console.log(value.min);
-        console.log(String(value.min));
+        // console.log(value.min);
+        // console.log(String(value.min));
         var min = Number(String(value.min).replace(/\./g, ""));
         var max = Number(String(value.max).replace(/\./g, ""));
         showLoader();
@@ -258,7 +259,7 @@ class ListPlaceSearched extends Component {
             }
         }).then(res => {
             //set state
-            console.log(res);
+            // console.log(res);
             this.setState({
                 totalPage: res.data.totalPage,
                 searchList: res.data.listResult,
@@ -278,7 +279,7 @@ class ListPlaceSearched extends Component {
         await callApi('categories', 'GET', null)
             .then(res => {
                 this.setState({
-                    listCat: res.data
+                    listCat: res.data,
                 })
                 hideLoader();
             }).catch(function (error) {
@@ -325,12 +326,12 @@ class ListPlaceSearched extends Component {
             listCtiId: listCtiIdNumber,
             listCatId: listCatIdNumber
         }, () => {
+            // console.log(listCatId);
             this.getAllCategories();
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
 
     }
-
 
     onChangeSlider = (value) => {
 
@@ -358,8 +359,19 @@ class ListPlaceSearched extends Component {
     }
 
     onSelectCat = () => {
-        this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+        // console.log(this.props.history.location.search);
+        // this.props.history.push(this.props.history.location.search);
+        const arr = this.props.history.location.search.split('listCatID=');
+        console.log(arr);
+        console.log(arr[0] + `listCatID=${this.state.listCatId}`);
+        this.props.history.push(arr[0] + `listCatID=${this.state.listCatId}`);
+        window.location.reload();
+        // this.props.history.push(this.props.history.location.search);
+        // console.log(window.location.pathname);
+
+        // this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
     }
+
     onResetSliderSet = () => {
         this.setState({
             value: {
@@ -377,16 +389,18 @@ class ListPlaceSearched extends Component {
                 // console.log(element);
                 unique.push(element);
             }
+            console.log(unique.join());
+            console.log(unique);
             this.setState({
                 listCatId: unique
             }, () => {
+
+                // this.props.history.push(`${this.searchPathLink()}`);
                 // this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
             })
         }
     }
-    // urlChange = () => {
-    //     this.props.history.push("/searchedPlace?name=vin");
-    // }
+
     render() {
         // debugger
         const { activePage, totalItems, searchList, listCatName,
@@ -435,8 +449,8 @@ class ListPlaceSearched extends Component {
                                             <button
                                                 onClick={this.onSelectCat}
                                                 type="button"
-                                                class="btn btn-danger">
-                                                button
+                                                className="btn btn-danger">
+                                                Filter by category
                                             </button>
                                         </div>
                                     </div>
@@ -449,7 +463,7 @@ class ListPlaceSearched extends Component {
                                                     {this.convertCurrecyToVnd(this.state.value.max)}
                                                     &nbsp;&nbsp;&nbsp;
                                                 <svg style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
                                                 </p>
                                             </div>
@@ -501,10 +515,10 @@ class ListPlaceSearched extends Component {
                                                     <div className="col">
                                                     </div>
                                                     <div className="col-5">
-                                                        <button class="resetFilterPricebtn" onClick={this.onResetSliderSet}>Đặt lại</button>
+                                                        <button className="resetFilterPricebtn" onClick={this.onResetSliderSet}>Đặt lại</button>
                                                     </div>
                                                     <div className="col-6">
-                                                        <button class="filterPricebtn" onClick={this.onChangeSliderSet}>Xếp giá</button>
+                                                        <button className="filterPricebtn" onClick={this.onChangeSliderSet}>Xếp giá</button>
                                                     </div>
                                                 </div>
 
@@ -513,7 +527,7 @@ class ListPlaceSearched extends Component {
                                         </div>
 
                                         <div className="row">
-                                            {searchList !== [] ? this.showSearchList(searchList) : ""}
+                                            {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
                                         <Pagination
                                             hideNavigation
