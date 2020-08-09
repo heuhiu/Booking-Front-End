@@ -114,7 +114,7 @@ class Detail extends Component {
                             <TabDetail place={place}/>
                         </div>
 
-                        <div
+                        {/* <div
                             style={{ paddingTop: "40px" }}
                             id="inline">
                             <div className="bulletListCustome"></div>
@@ -122,7 +122,7 @@ class Detail extends Component {
                         </div>
                         <div className="mapComp">
                             <MapComponent />
-                        </div>
+                        </div> */}
 
                     </div>
                     <div

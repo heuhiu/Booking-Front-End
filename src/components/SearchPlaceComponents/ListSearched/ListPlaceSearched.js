@@ -16,7 +16,6 @@ import { showLoader, hideLoader } from '../../../actions';
 import CurrencyInput from 'react-currency-input';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 class ListPlaceSearched extends Component {
 
     constructor(props) {
@@ -39,7 +38,9 @@ class ListPlaceSearched extends Component {
             maxValueForSlider: 1000000,
             catName: [],
             toggleDropdown: false,
-            amount: "0.00"
+            amount: "0.00",
+            checkApiListSearched: false,
+            checkApiCat: false
         }
     }
 
@@ -66,6 +67,7 @@ class ListPlaceSearched extends Component {
         }
     }
 
+
     getListCategories = (list) => {
         var result = null;
         // console.log(list);
@@ -73,9 +75,9 @@ class ListPlaceSearched extends Component {
             result = list.map((data, index) => {
                 // console.log(data);
                 return (
-                        <div className="col-2">
-                            <button className="overflowCate" key={index} style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
-                        </div>
+                    <div key={index} className="col-2">
+                        <button className="overflowCate" key={index} style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
+                    </div>
                 )
             });
             return result;
@@ -119,10 +121,10 @@ class ListPlaceSearched extends Component {
                                     <div className="col">
                                         <div className="place_info">
                                             <div className="row no-gutters">
-                                            {/* <p> */}
+                                                {/* <p> */}
                                                 {/* <button>Điểm tham quan</button> */}
                                                 {this.getListCategories(data.categoryId)}
-                                            {/* </p> */}
+                                                {/* </p> */}
                                             </div>
                                             <h5>
                                                 {data.name}
@@ -264,8 +266,12 @@ class ListPlaceSearched extends Component {
                 totalPage: res.data.totalPage,
                 searchList: res.data.listResult,
                 totalItems: res.data.totalItems,
+                checkApiListSearched: true
+            }, ()=> {
+                if(this.state.checkApiCat===true && this.state.checkApiListSearched===true)
+                hideLoader();
             })
-            hideLoader();
+            
         }).catch(function (error) {
             console.log(error.response);
         });
@@ -278,10 +284,14 @@ class ListPlaceSearched extends Component {
         showLoader();
         await callApi('categories', 'GET', null)
             .then(res => {
+                // debugger
                 this.setState({
                     listCat: res.data,
+                    checkApiCat: true
+                }, ()=> {
+                    if(this.state.checkApiCat===true && this.state.checkApiListSearched===true)
+                    hideLoader();
                 })
-                hideLoader();
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader();
@@ -291,6 +301,7 @@ class ListPlaceSearched extends Component {
     }
 
     componentDidMount = () => {
+        // debugger
         var { location } = this.props;
         // console.log(location);
         // if (location !== undefined) {
@@ -326,7 +337,7 @@ class ListPlaceSearched extends Component {
             listCtiId: listCtiIdNumber,
             listCatId: listCatIdNumber
         }, () => {
-            // console.log(listCatId);
+            console.log(listCatId);
             this.getAllCategories();
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
@@ -359,17 +370,9 @@ class ListPlaceSearched extends Component {
     }
 
     onSelectCat = () => {
-        // console.log(this.props.history.location.search);
-        // this.props.history.push(this.props.history.location.search);
-        const arr = this.props.history.location.search.split('listCatID=');
-        console.log(arr);
-        console.log(arr[0] + `listCatID=${this.state.listCatId}`);
-        this.props.history.push(arr[0] + `listCatID=${this.state.listCatId}`);
-        window.location.reload();
-        // this.props.history.push(this.props.history.location.search);
-        // console.log(window.location.pathname);
-
-        // this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+        const arr = this.props.history.location.search.split('?listCatID=');
+        this.props.history.push(arr[0] + `?listCatID=${this.state.listCatId}`);
+        this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId); 
     }
 
     onResetSliderSet = () => {
@@ -404,16 +407,17 @@ class ListPlaceSearched extends Component {
     render() {
         // debugger
         const { activePage, totalItems, searchList, listCatName,
-            searchName, listId, listCat, listCategoryId } = this.state;
-        // console.log(listCat)
-        var options = []
+            searchName, listId, listCat, listCatId, categoryId } = this.state;
+        // console.log(listCat);
+        // console.log(listCatId);
+        var options = [];
+        var options2 = [];
         if (listCat.length > 0) {
             for (let i = 0; i < listCat.length; i++) {
                 var option = { value: listCat[i].id, label: listCat[i].categoryName }
                 options.push(option);
             }
         }
-        // console.log(options);
         const { loader } = this.props;
         // if (loader.loading === true) {
         if (false) {
@@ -444,7 +448,9 @@ class ListPlaceSearched extends Component {
                                     className="row">
                                     <div className="col-lg-4">
                                         <div className="filter_result_wrap">
-                                            <CategorySelection options={options}
+                                            <CategorySelection
+                                                options={options}
+                                                catSelect={listCatId}
                                                 onChangeCallback={response => this.onChangeCate(response)} />
                                             <button
                                                 onClick={this.onSelectCat}
@@ -457,6 +463,7 @@ class ListPlaceSearched extends Component {
                                     <div className="col-lg-8">
                                         <div className="row no-gutters">
                                             <div
+                                                
                                                 onClick={this.onTogglePriceRange} className="priceFilter col-5">
                                                 <p onClick={this.onTogglePriceRange}>
                                                     {this.convertCurrecyToVnd(this.state.value.min)} -&nbsp;
@@ -529,6 +536,7 @@ class ListPlaceSearched extends Component {
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
+                                        <div style={{visibility: loader.loading === true ?"hidden":"visible"}}>
                                         <Pagination
                                             hideNavigation
                                             hideFirstLastPages
@@ -546,7 +554,7 @@ class ListPlaceSearched extends Component {
                                             onChange={this.handlePageChange.bind(this)}
                                         />
                                         {/* show List item seached & filter */}
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
