@@ -131,7 +131,7 @@ class Slick1 extends Component {
           <h2 className="headerOwl">Vòng quanh thủ đô</h2>
           <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
           <Slider {...settings}>
-            {/* {this.showPlaceOfTopCity(bla)} */}
+            {this.showPlaceOfTopCity(bla)}
             {/* {this.getPlacebyCityId()} */}
           </Slider>
         </div>

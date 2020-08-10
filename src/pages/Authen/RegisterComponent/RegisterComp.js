@@ -121,7 +121,8 @@ class RegisterComp extends Component {
                     };
                 }
             case "myfirstName":
-                regexp = /^[^\s].+[^\s]$/;
+                // regexp = /^[^\s].+[^\s]$/;
+                regexp = /^[^\s][a-zA-Z ][^\s]*$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -135,7 +136,7 @@ class RegisterComp extends Component {
                     };
                 }
             case "lastName":
-                regexp = /^^[^\s].+[^\s]$/;
+                regexp = /^[^\s][a-zA-Z ][^\s]*$/;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
