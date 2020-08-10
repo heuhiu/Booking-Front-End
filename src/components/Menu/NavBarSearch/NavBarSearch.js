@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './style.css';
+import './NavnarSearch.css';
 import { withRouter } from 'react-router-dom';
 import LogoSearch from '../../../img/LogoSearch.png';
 import search from '../../../img/search.png';
-// import { Form } from 'react-bootstrap';
-// import callApi from '../../../config/utils/apiCaller';
-import MyMul from './MyMul';
+// import MyMul from './MyMul';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //search
-class Search extends Component {
+class NavBarSearch extends Component {
 
     constructor(props) {
         super(props);
@@ -151,7 +148,7 @@ class Search extends Component {
                                 className="filterBox">
                                 <div className="row">
                                     <div className="col-12">
-                                        <MyMul setmMul={this.setmMul} />
+                                        {/* <MyMul setmMul={this.setmMul} /> */}
                                     </div>
                                 </div>
                             </div>
@@ -204,4 +201,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBarSearch));

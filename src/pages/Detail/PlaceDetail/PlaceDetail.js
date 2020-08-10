@@ -80,7 +80,7 @@ class PlaceDetail extends Component {
                                 width="100%"
                                 height="600px"
                                 src={item}
-                                alt="Failt to load" />
+                                alt="fail to load" />
                         </div>
                     </div>
                 );

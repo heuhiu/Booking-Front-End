@@ -42,6 +42,7 @@
         height: 70px !important;
         border: 1px solid transparent;
         padding: 10px 30px;
+        font-style: normal;
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
         -ms-border-radius: 0;
@@ -117,6 +118,7 @@
   color: #A5A5A5;
   text-align: left;
   padding: 15px;
+  cursor: pointer;
 }
 .searchbtn{
   font-style: normal;
@@ -211,3 +213,28 @@
     text-align: left;
     color: #FF7062;
    }
+
+   ::-webkit-input-placeholder { /* Edge */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+    color: #A5A5A5 !important;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+    color: #A5A5A5 !important;
+  }
+  
+  ::placeholder {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+    color: #A5A5A5 !important;
+
+  }

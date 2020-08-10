@@ -64,7 +64,7 @@ class CarouselCategories extends Component {
                                     <img
                                         className="coverImg"
                                         src={item.iconLink}
-                                        alt="FAILT TO LOAD" />
+                                        alt="FAIL TO LOAD" />
                                 </div>
                                 <div className="containerOwlChil">
                                     <div style={{height: "55px"}}>

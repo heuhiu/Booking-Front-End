@@ -70,3 +70,9 @@
   color: #A5A5A5;
   margin-left: 10px;
 }
+
+.overflowName{
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+  width: auto; 
+}

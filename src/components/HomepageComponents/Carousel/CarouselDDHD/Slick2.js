@@ -38,30 +38,13 @@ function SamplePrevArrow(props) {
   );
 }
 
-
-
 class Slick2 extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       selectedOption: null,
-      topCity: []
     }
-  }
-
-  componentDidMount = () => {
-    callApi("topCity", 'GET', null)
-      .then(res => {
-        console.log(res);
-        this.setState({
-          topCity: res.data
-        })
-      }).catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-        }
-      });
   }
 
   showTopcity = (listTopcity) => {
@@ -69,12 +52,12 @@ class Slick2 extends Component {
     if (listTopcity.length > 0) {
       result = listTopcity.map((item, index) => {
         return (
-          <Link 
-          key={index}
-         className="decoNone"
-          to={`/searchedPlace?listCityID=${item.id}`}>
+          <Link
+            key={index}
+            className="decoNone"
+            to={`/searchedPlace?listCityID=${item.id}`}>
             <div className="owlStyle">
-              <h3 style={{border: "none"}} className="owlStyleChil">
+              <h3 style={{ border: "none" }} className="owlStyleChil">
                 <div className="topPlace"
                   style={{
                     borderRadius: "10px",
@@ -89,13 +72,14 @@ class Slick2 extends Component {
       });
     } else {
       return (
-        <div>not found</div>
+        <div style={{width:"200px", visibility: "hidden" }}>
+        </div >
       )
     }
     return result;
   }
   render() {
-    const { topCity } = this.state;
+    const { topCity } = this.props;
     const settings = {
       dots: true,
       infinite: true,
@@ -103,7 +87,6 @@ class Slick2 extends Component {
       slidesToScroll: 3,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />
-
     };
 
     return (
@@ -112,32 +95,6 @@ class Slick2 extends Component {
           <h2 className="headerOwl">Điểm đến hàng đầu</h2>
           <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
           <Slider {...settings}>
-            {/* <div className="owlStyle">
-              <h3 className="owlStyleChil">
-
-                <div className="owlCom1">Hà Nội</div>
-
-              </h3>
-            </div >
-            <div className="owlStyle">
-              <h3 className="owlStyleChil">
-
-                <div className="owlCom2">Đà Nẵng</div>
-
-              </h3>
-            </div >
-
-            <div className="owlStyle">
-              <h3 className="owlStyleChil">
-                <div
-                  style={{
-                    backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
-                  ,url(${wtf})`
-                  }}
-                  className="owlCom3">TP HCM</div>
-              </h3>
-            </div >
-          */}
             {this.showTopcity(topCity)}
           </Slider>
         </div>

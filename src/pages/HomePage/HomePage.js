@@ -17,11 +17,11 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            topCity : []
         }
     }
 
-    componentWillMount = () => {
-
+    componentDidMount = () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
@@ -53,25 +53,6 @@ class HomePage extends Component {
     getCategories = async () => {
         const { showLoader, hideLoader } = this.props;
         showLoader();
-        // //get City list
-        // await callApi('city', 'GET', null)
-        //     .then(res => {
-        //         this.props.fetchAllCity(res.data);
-        //     }).catch(function (error) {
-        //         if (error.response) {
-        //             console.log(error.response.data);
-        //         }
-        //     });
-        // //get Categories list
-        // await callApi('categories', 'GET', null)
-        //     .then(res => {
-        //         this.props.fetchAllCategory(res.data);
-        //         hideLoader();
-        //     }).catch(function (error) {
-        //         if (error.response) {
-        //             console.log(error.response.data);
-        //         }
-        //     });
         Promise.all([
             await callApi('city', 'GET', null)
                 .then(res => {
@@ -89,21 +70,33 @@ class HomePage extends Component {
                     if (error.response) {
                         console.log(error.response.data);
                     }
+                }),
+            await callApi("topCity", 'GET', null)
+                .then(res => {
+                    console.log(res);
+                    this.setState({
+                        topCity: res.data
+                    })
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
                 })
         ]).then(
-            hideLoader()
-        );
+                    hideLoader()
+                );
     }
 
     render() {
+        const {topCity} = this.state;
+        console.log(topCity);
         return (
             <div>
                 <Menu />
                 <Banner />
-                <Slick2 />
-                <Slick1 />
-                <CarouselCategories
-                />
+                <Slick2 topCity={topCity} />
+                <Slick1 topCity={topCity}/>
+                <CarouselCategories/>
                 <Footer2 />
                 <FullPageLoader />
             </div>
