@@ -216,7 +216,6 @@ class UserUpdateInformation extends Component {
         console.log(dob.value);
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
-            // alert("Dien 1 cai gi do vao di thang lon")
             toast.error('Tên Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -227,7 +226,6 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (lastName.isInputValid === false) {
-            // alert("Dien lai Ho di con di~")
             toast.error('Họ có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -238,7 +236,6 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (myfirstName.isInputValid === false) {
-            // alert("Dien lai ten di con di~")
             toast.error('Tên có ít nhất 3 kí tự và khác số!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -249,7 +246,6 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (phoneNumber.isInputValid === false) {
-            // alert("Dien lai sdt di con di~")
             toast.error('Số điện thoại chứa 10-11 số!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -260,7 +256,6 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (dob.isInputValid === false) {
-            // alert("Dien lai dob di con di~")
             toast.error('Không đúng định dạng!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -303,12 +298,13 @@ class UserUpdateInformation extends Component {
     callAPIChangeUserInfor = async (id) => {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser, showLoader, hideLoader } = this.props;
+        console.log(dob.value);
         showLoader();
         await callApi(`userClient/${id}`, 'PUT',
             {
                 firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
                 lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
-                dob: dob.value ? dob.value !== '' : loggedUser.dob,
+                dob:  dob.value !== '' ? dob.value : loggedUser.dob,
                 phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
             })
             .then(res => {
@@ -331,6 +327,7 @@ class UserUpdateInformation extends Component {
                 }
             });
     }
+
     render() {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
@@ -344,8 +341,8 @@ class UserUpdateInformation extends Component {
                 className="col">
                 {/* <form
                 onSubmit={this.updateUserDetail}
-                > */}                <ToastContainer />
-
+                > */}                
+                <ToastContainer />
                 <div className="rightBoxUserDetail">
                     <div style={{ padding: "30px" }} >
                         <div className="row">

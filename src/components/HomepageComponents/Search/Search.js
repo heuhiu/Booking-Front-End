@@ -121,7 +121,7 @@ class Search extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Ex: food, service, hotel"
+                                placeholder="Tìm kiếm hoạt động hoặc điểm đến"
                                 name="txtParkName"
                                 // defaultValu={txtParkName}
                                 onChange={this.onChange}
@@ -134,7 +134,8 @@ class Search extends Component {
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
                                 <div className="filterPanel">
-                                    Bộ lọc &nbsp;&nbsp;&nbsp;&nbsp;
+                                    Bộ lọc 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>

@@ -48,8 +48,8 @@
 .owlCom3{
   height: 100%;
   min-height: 215px;  
-  background: linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
-  ,url("../../../../img/TPHCM.png");
+  /* background: linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
+  ,url("../../../../img/TPHCM.png"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -67,78 +67,14 @@
 
 .coverImg{
   width: 100%;
+  height: auto;
 }
 
-.owlStyleChil{
-  /* border: 10px solid #E3E3E3;
-  box-sizing: border-box;
-  border-radius: 10px; */
-  border: 2px solid #E3E3E3;
-  border-radius: 10px;
-}
-
-.owlStyleChil1{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #5B5B5B;
-}
-.owlStyleChil2{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 14px;
-  text-decoration-line: line-through;
-  color: #A5A5A5;
-}
-.owlStyleChil3{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #FF7062;
-}
-.owlStyleChil4{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 14px;
-  color: #FF7062;
-}
-
-.containerOwlChil{
-  margin: 1em;
-}
-
-.headerOwl{
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 28px;  
-  color: #5B5B5B;
-
-}
-
-.desHeaderOwl{
-  font-family: Inter;
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 16px;
-/* or 114% */
-
-
-/* A5A5A5 */
-
-color: #A5A5A5;
-}
 
 .decoNone:hover{
   text-decoration: none;
+}
+
+.topPlace{
+  border-radius: 10px;
 }

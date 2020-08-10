@@ -74,9 +74,10 @@ class Slick2 extends Component {
          className="decoNone"
           to={`/searchedPlace?listCityID=${item.id}`}>
             <div className="owlStyle">
-              <h3 className="owlStyleChil">
-                <div
+              <h3 style={{border: "none"}} className="owlStyleChil">
+                <div className="topPlace"
                   style={{
+                    borderRadius: "10px",
                     backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
                   ,url(${item.imageLink ? item.imageLink : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
                   }}

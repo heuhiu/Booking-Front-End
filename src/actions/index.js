@@ -99,3 +99,17 @@ export const hideLoader = () => {
       type: types.HIDE_LOADER,
   }
 }
+
+export const fetchAllCategory = (listCategory) => {
+  return {
+      type: types.GET_ALL_CATEGORY,
+      listCategory
+  }
+}
+
+export const fetchAllCity = (listCity) => {
+  return {
+      type: types.GET_ALL_CITY,
+      listCity
+  }
+}

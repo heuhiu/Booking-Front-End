@@ -1,8 +1,8 @@
 @import url('https://rsms.me/inter/inter.css');
 
 .masthead {
-    height: 100vh;
-    min-height: 664px;  
+    height: 90vh;
+    /* min-height: 100px;   */
     /* background-image: url('./img/headerbackground.png'); */
     /* background-image: url('../../../img/headerbackground.png'); */
     background:linear-gradient( rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5)100%),
@@ -22,7 +22,7 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 76.8px;
+  font-size: 65px;
   line-height: 64px;
   text-align: center;
   color: #FFFFFF;

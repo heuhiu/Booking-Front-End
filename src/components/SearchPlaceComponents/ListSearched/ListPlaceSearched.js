@@ -7,7 +7,6 @@ import Pagination from "react-js-pagination";
 import './ListPlaceSearched.css';
 import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
-import PlaceFilter from '../PlaceFilter/PlaceFilter';
 import MyMul from '../../HomepageComponents/Search/MyMul';
 import CategorySelection from './reactSelect/CategorySelection';
 import InputRange from 'react-input-range';
@@ -75,7 +74,7 @@ class ListPlaceSearched extends Component {
             result = list.map((data, index) => {
                 // console.log(data);
                 return (
-                    <div key={index} className="col-2">
+                    <div key={index} className="col-4">
                         <button className="overflowCate" key={index} style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
                     </div>
                 )

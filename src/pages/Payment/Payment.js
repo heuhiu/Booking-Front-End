@@ -151,7 +151,7 @@ class Payment extends Component {
                 // console.log(item.visitorTypeName);
                 // <p>{item.visitorTypeName}</p>
                 return (
-                    <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
+                    <p key={index} >{item.visitorTypeName}: {item.quantity} vé</p>
                 )
             });
         }
@@ -385,7 +385,7 @@ class Payment extends Component {
                                     </div>
                                     <div className="mrt-30 col-12">
                                         <div className="row">
-                                            <div className="col-3">
+                                            {/* <div className="col-3">
                                                 <label>Danh xưng</label>
                                                 <div className="dropdown">
                                                     <button type="button" className="myCall" data-toggle="dropdown">
@@ -404,7 +404,7 @@ class Payment extends Component {
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div> */}
                                             <div className="col">
                                                 <label>Họ</label>
                                                 <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
@@ -729,7 +729,7 @@ class Payment extends Component {
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
                                             {/* <p>Người lớn : 2</p> */}
-                                            {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"} vé
+                                            {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"} 
                                     </div>
                                     </div>
 

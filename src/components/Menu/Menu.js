@@ -148,7 +148,7 @@ class Menu extends Component {
                         className="nav-link">
                         <button
                             style={{ display: tokenLogin ? "" : "none" }} className="userNamebefore">
-                            Hello !
+                            Hello!
                         </button>
                     </div>
                     &nbsp;

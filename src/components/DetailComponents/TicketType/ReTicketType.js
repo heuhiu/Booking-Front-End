@@ -252,13 +252,10 @@ class ReTicketType extends Component {
 
                     </div>
                     <div className="row no-gutters"
-                        style={{ marginTop: "10px" }}
-                    >
+                        style={{ marginTop: "10px" }}>
                         <div className="col-4">
-                        
                         </div>
                         <div>
-                            
                             <Collapse in={this.state.open}>
                                 <div
                                     id="example-collapse-text">

@@ -72,7 +72,7 @@ class MyMul extends Component {
 
     //Call
     componentDidMount = () => {
-        this.getCitysAndCategories();
+        // this.getCitysAndCategories();
     }
 
     //Handle set check/checked & add to list of City ID
@@ -135,7 +135,9 @@ class MyMul extends Component {
 
 
     render() {
-        const checkboxesToRender = this.state.listCity.map(item => {
+        const {listCategory, listCity} = this.props;
+        // const checkboxesToRender = this.state.listCity.map(item => {
+            const checkboxesToRender = listCity.map(item => {
             return (
                 <div
                     style={{
@@ -164,7 +166,9 @@ class MyMul extends Component {
             );
         });
 
-        const checkboxesToRender2 = this.state.listCategory.map(item => {
+        // const checkboxesToRender2 = this.state.listCategory.map(item => {
+            const checkboxesToRender2 = listCategory.map(item => {
+
             return (
                 <div
                     style={{
@@ -224,7 +228,9 @@ class MyMul extends Component {
 // export default MyMul;
 const mapStateToProps = state => {
     return {
-        loader: state.Loader
+        loader: state.Loader,
+        listCategory: state.Categories,
+        listCity: state.City
     }
 }
 
