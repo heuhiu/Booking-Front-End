@@ -11,6 +11,8 @@ import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
 import axios from 'axios';
+// import API_URL from '../../constants/ConfigAPI';
+import * as Config from '../../constants/ConfigAPI';
 
 //Home page
 class HomePage extends Component {
@@ -99,7 +101,7 @@ class HomePage extends Component {
                         console.log(error.response.data);
                     }
                 }),
-            await axios.get('http://localhost:8090/topPlace', {
+            await axios.get(`${Config.API_URL}/topPlace`, {
                 params: {
                     cityId: this.state.id1
                 }
@@ -111,7 +113,7 @@ class HomePage extends Component {
                 }).catch(function (error) {
                     console.log(error);
                 }),
-            await axios.get('http://localhost:8090/topPlace', {
+            await axios.get(`${Config.API_URL}/topPlace`, {
                 params: {
                     cityId: this.state.id2
                 }
@@ -123,7 +125,7 @@ class HomePage extends Component {
                 }).catch(function (error) {
                     console.log(error);
                 }),
-            await axios.get('http://localhost:8090/topPlace', {
+            await axios.get(`${Config.API_URL}/topPlace`, {
                 params: {
                     cityId: this.state.id3
                 }
@@ -144,7 +146,7 @@ class HomePage extends Component {
         // console.log(id);
         const { listData1, listData2, listData3 } = this.state
         showLoader();
-        axios.get('http://localhost:8090/topPlace', {
+        axios.get(`${Config.API_URL}/topPlace`, {
             params: {
                 cityId: id
             }
@@ -163,7 +165,7 @@ class HomePage extends Component {
         // console.log(id);
         const { listData1, listData2, listData3 } = this.state
         showLoader();
-        axios.get('http://localhost:8090/topPlace', {
+        axios.get(`${Config.API_URL}/topPlace`, {
             params: {
                 cityId: id
             }
@@ -183,7 +185,7 @@ class HomePage extends Component {
         const { listData1, listData2, listData3 } = this.state
 
         showLoader();
-        axios.get('http://localhost:8090/topPlace', {
+        axios.get(`${Config.API_URL}/topPlace`, {
             params: {
                 cityId: id
             }

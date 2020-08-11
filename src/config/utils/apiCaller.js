@@ -1,5 +1,6 @@
 import axios from 'axios';
-import * as Config from '../ConfigAPI';
+// import * as Config from '../ConfigAPI';
+import * as Config from '../../constants/ConfigAPI';
 
 
 

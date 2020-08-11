@@ -67,11 +67,10 @@ class CarouselCategories extends Component {
                                         alt="FAIL TO LOAD" />
                                 </div>
                                 <div className="containerOwlChil">
-                                    <div style={{height: "55px"}}>
+                                    {/* <div style={{height: "5px"}}> */}
                                     <p className="catOwlStyleChil1">{item.categoryName}</p>
-                                    </div>
-                                    <p className="catOwlStyleChil2">[TEMP]Những hoạt động hấp dẫn
-                                    tạo nên khoảnh khắc khó quên
+                                    {/* </div> */}
+                                    <p className="catOwlStyleChil2">{item.description}
                                     </p>
                                 </div>
                             </h3>

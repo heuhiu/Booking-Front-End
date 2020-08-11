@@ -118,6 +118,7 @@ class PlaceDetail extends Component {
             }
         }
         if (place != null) {
+            console.log(place);
             return (
                 <div >
                     <div

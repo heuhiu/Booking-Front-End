@@ -15,6 +15,10 @@ import { showLoader, hideLoader } from '../../../actions';
 import CurrencyInput from 'react-currency-input';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ListFilter from '../ListFilter/ListFilter';
+// import API_URL from '../../../constants/ConfigAPI';
+import * as Config from '../../../constants/ConfigAPI';
+
 class ListPlaceSearched extends Component {
 
     constructor(props) {
@@ -39,7 +43,11 @@ class ListPlaceSearched extends Component {
             toggleDropdown: false,
             amount: "0.00",
             checkApiListSearched: false,
-            checkApiCat: false
+            checkApiCat: false,
+            cityMul: [],
+            catMul: [],
+            listCity: [],
+            listCategory: []
         }
     }
 
@@ -75,7 +83,7 @@ class ListPlaceSearched extends Component {
                 // console.log(data);
                 return (
                     <div key={index} className="col-4">
-                        <button className="overflowCate" key={index} style={{ marginRight: "10px" }}>{this.convertIdToName(data)}</button>
+                        <button className="overflowCate" key={index} style={{ margin: "5px 5px 0px 0px" }}>{this.convertIdToName(data)}</button>
                     </div>
                 )
             });
@@ -91,6 +99,38 @@ class ListPlaceSearched extends Component {
 
         return result;
     }
+
+    getCategoriesnCity = async () => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader();
+        Promise.all([
+            await callApi('city', 'GET', null)
+                .then(res => {
+                    this.setState({
+                        listCity: res.data
+                    })
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                }),
+            //get Categories list
+            await callApi('categories', 'GET', null)
+                .then(res => {
+                    this.setState({
+                        listCat: res.data,
+                        checkApiCat: true
+                    })
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                }),
+        ]).then(
+            hideLoader()
+        );
+    }
+
 
     //Show items searched
     showSearchList = (searchList) => {
@@ -235,15 +275,15 @@ class ListPlaceSearched extends Component {
     receivedData = async (searchName, IDCityFilter, IDCategoryFilter,) => {
         const { activePage, value } = this.state;
         const { showLoader, hideLoader } = this.props;
-        console.log(searchName);
-        console.log(IDCityFilter);
-        console.log(IDCategoryFilter);
+        // console.log(searchName);
+        // console.log(IDCityFilter);
+        // console.log(IDCategoryFilter);
         // console.log(value.min);
         // console.log(String(value.min));
         var min = Number(String(value.min).replace(/\./g, ""));
         var max = Number(String(value.max).replace(/\./g, ""));
         showLoader();
-        await axios.get('http://localhost:8090/place/searchClient', {
+        await axios.get(`${Config.API_URL}/place/searchClient`, {
             params: {
                 //park name
                 name: searchName ? searchName : "",
@@ -266,11 +306,11 @@ class ListPlaceSearched extends Component {
                 searchList: res.data.listResult,
                 totalItems: res.data.totalItems,
                 checkApiListSearched: true
-            }, ()=> {
-                if(this.state.checkApiCat===true && this.state.checkApiListSearched===true)
-                hideLoader();
+            }, () => {
+                if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
+                    hideLoader();
             })
-            
+
         }).catch(function (error) {
             console.log(error.response);
         });
@@ -287,9 +327,9 @@ class ListPlaceSearched extends Component {
                 this.setState({
                     listCat: res.data,
                     checkApiCat: true
-                }, ()=> {
-                    if(this.state.checkApiCat===true && this.state.checkApiListSearched===true)
-                    hideLoader();
+                }, () => {
+                    if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
+                        hideLoader();
                 })
             }).catch(function (error) {
                 if (error.response) {
@@ -297,6 +337,48 @@ class ListPlaceSearched extends Component {
                     console.log(error.response.data);
                 }
             });
+        //get City list
+    }
+
+    setmMul = (cityMul, catMul) => {
+        this.setState({
+            cityMul,
+            catMul
+        });
+    }
+
+    removeCityID = (id) => {
+        const { listCtiId } = this.state;
+        console.log(listCtiId);
+        const index = listCtiId.indexOf(id);
+        if (index > -1) {
+            listCtiId.splice(index, 1);
+        }
+        // array = [2, 9]
+        console.log(listCtiId);
+
+        this.setState({
+            listCtiId: listCtiId,
+        });
+    }
+
+    removeCategoryID = (id) => {
+        const { listCatId } = this.state;
+        console.log(listCatId);
+        const index = listCatId.indexOf(id);
+        if (index > -1) {
+            listCatId.splice(index, 1);
+        }
+        // array = [2, 9]
+        console.log(listCatId);
+
+        this.setState({
+            listCatId: listCatId,
+        });
+    }
+
+    removeNaN = (oldArray) => {
+        return oldArray.filter(value => !Number.isNaN(value));
     }
 
     componentDidMount = () => {
@@ -337,7 +419,8 @@ class ListPlaceSearched extends Component {
             listCatId: listCatIdNumber
         }, () => {
             console.log(listCatId);
-            this.getAllCategories();
+            // this.getAllCategories();
+            this.getCategoriesnCity();
             this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
         })
 
@@ -369,9 +452,46 @@ class ListPlaceSearched extends Component {
     }
 
     onSelectCat = () => {
-        const arr = this.props.history.location.search.split('?listCatID=');
-        this.props.history.push(arr[0] + `?listCatID=${this.state.listCatId}`);
-        this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId); 
+        const { catMul, cityMul, listCtiId, listCatId } = this.state
+        console.log(listCtiId);
+        console.log(listCatId);
+        console.log(cityMul);
+        console.log(catMul);
+        var jointCityID = cityMul.concat(listCtiId)
+        var jointCategoryID = catMul.concat(listCatId)
+        console.log(jointCityID)
+        console.log(jointCategoryID)
+        console.log(this.removeNaN(jointCityID))
+        console.log(this.removeNaN(jointCategoryID))
+        console.log(isNaN(jointCityID[0]))
+        console.log(isNaN(jointCategoryID[0]))
+        console.log(jointCityID.length)
+        console.log(jointCategoryID.length)
+        // var pathLink = this.props.history.location.search;
+        var pathLink = "";
+        // console.log(catMul)
+        // console.log(cityMul)
+        // console.log(this.props.history.location.search);
+        // console.log(this.props.history.location);
+        // const arr = this.props.history.location.search.split('?listCatID=');
+        // const arr2 = this.props.history.location.search.split('?listCityID=');
+        const pathListCity = `?listCityID=${this.removeNaN(jointCityID)}`
+        const pathListCat = `?listCatID=${this.removeNaN(jointCategoryID)}`
+        this.setState({
+            listCtiId: this.removeNaN(jointCityID),
+            listCatId: this.removeNaN(jointCategoryID)
+        })
+        console.log(pathListCity)
+        console.log(pathListCat)
+        if ((this.removeNaN(jointCityID)).length > 0) {
+            pathLink += pathListCity;
+        }
+        if ((this.removeNaN(jointCategoryID)).length > 0) {
+            pathLink += pathListCat;
+        }
+
+        this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
+        this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
     }
 
     onResetSliderSet = () => {
@@ -405,12 +525,13 @@ class ListPlaceSearched extends Component {
 
     render() {
         // debugger
-        const { activePage, totalItems, searchList, listCatName,
-            searchName, listId, listCat, listCatId, categoryId } = this.state;
-        // console.log(listCat);
-        // console.log(listCatId);
+        const { activePage, totalItems, searchList, cityMul, catMul,
+            searchName, listCat, listCategory, listCity, listCtiId, listCatId } = this.state;
+        // console.log(cityMul);
+        // console.log(catMul);
+        const listCtiSEND = listCtiId;
+        const listCateSEND = listCatId;
         var options = [];
-        var options2 = [];
         if (listCat.length > 0) {
             for (let i = 0; i < listCat.length; i++) {
                 var option = { value: listCat[i].id, label: listCat[i].categoryName }
@@ -447,10 +568,25 @@ class ListPlaceSearched extends Component {
                                     className="row">
                                     <div className="col-lg-4">
                                         <div className="filter_result_wrap">
-                                            <CategorySelection
+                                            {/* <CategorySelection
                                                 options={options}
                                                 catSelect={listCatId}
-                                                onChangeCallback={response => this.onChangeCate(response)} />
+                                                onChangeCallback={response => this.onChangeCate(response)} /> */}
+                                            {/* <ListFilter 
+                                            listCategory={listCat} 
+                                            listCity={listCity} 
+                                            setmMul={this.setmMul}/> 
+                                            */}
+                                            <ListFilter
+                                                listCategory={listCat}
+                                                listCity={listCity}
+                                                listCitySelected={listCtiSEND}
+                                                listCategorySelected={listCateSEND}
+                                                setmMul={this.setmMul}
+                                                removeCityID={this.removeCityID}
+                                                removeCategoryID={this.removeCategoryID}
+                                            />
+
                                             <button
                                                 onClick={this.onSelectCat}
                                                 type="button"
@@ -462,7 +598,7 @@ class ListPlaceSearched extends Component {
                                     <div className="col-lg-8">
                                         <div className="row no-gutters">
                                             <div
-                                                
+
                                                 onClick={this.onTogglePriceRange} className="priceFilter col-5">
                                                 <p onClick={this.onTogglePriceRange}>
                                                     {this.convertCurrecyToVnd(this.state.value.min)} -&nbsp;
@@ -535,24 +671,24 @@ class ListPlaceSearched extends Component {
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
-                                        <div style={{visibility: loader.loading === true ?"hidden":"visible"}}>
-                                        <Pagination
-                                            hideNavigation
-                                            hideFirstLastPages
-                                            //What number is selected
-                                            activePage={activePage}
-                                            //The number of items each page
-                                            itemsCountPerPage={this.state.limit}
-                                            //Total of items in list
-                                            totalItemsCount={totalItems}
-                                            //Set Css of boostrap 4
-                                            itemClass="page-item"
-                                            //Set Css of boostrap 4
-                                            linkClass="page-link"
-                                            //Trigger handle page change
-                                            onChange={this.handlePageChange.bind(this)}
-                                        />
-                                        {/* show List item seached & filter */}
+                                        <div style={{ visibility: loader.loading === true ? "hidden" : "visible" }}>
+                                            <Pagination
+                                                hideNavigation
+                                                hideFirstLastPages
+                                                //What number is selected
+                                                activePage={activePage}
+                                                //The number of items each page
+                                                itemsCountPerPage={this.state.limit}
+                                                //Total of items in list
+                                                totalItemsCount={totalItems}
+                                                //Set Css of boostrap 4
+                                                itemClass="page-item"
+                                                //Set Css of boostrap 4
+                                                linkClass="page-link"
+                                                //Trigger handle page change
+                                                onChange={this.handlePageChange.bind(this)}
+                                            />
+                                            {/* show List item seached & filter */}
                                         </div>
                                     </div>
                                 </div>
@@ -571,7 +707,9 @@ class ListPlaceSearched extends Component {
 // export default withRouter(ListPlaceSearched);
 const mapStateToProps = state => {
     return {
-        loader: state.Loader
+        loader: state.Loader,
+        listCategory: state.Categories,
+        listCity: state.City
     }
 }
 

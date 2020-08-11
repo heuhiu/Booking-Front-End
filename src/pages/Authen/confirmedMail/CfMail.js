@@ -5,6 +5,8 @@ import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import backG from '../../../img/LoginPaper.png';
 import { Link } from 'react-router-dom';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+// import API_URL from '../../../constants/ConfigAPI';
+import * as Config from '../../../constants/ConfigAPI';
 
 class CfMail extends Component {
 
@@ -21,7 +23,7 @@ class CfMail extends Component {
         // console.log(myParam);
         const{showLoader, hideLoader} = this.props;
         showLoader()
-        await axios.get('http://localhost:8090/user/active', {
+        await axios.get(`${Config.API_URL}/user/active`, {
             params: {
                 token: myParam
             }

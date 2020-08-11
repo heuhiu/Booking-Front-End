@@ -50,15 +50,20 @@ class Search extends Component {
                 pathLink += pathListCat;
             }
         }
-        else if (this.state.cityMul.length > 0) {
+        else 
+        if (this.state.cityMul.length > 0) {
             pathLink += pathListCity;
         }
-        else if (this.state.catMul.length > 0) {
+         if (this.state.catMul.length > 0) {
             pathLink += pathListCat;
         }
+        console.log(pathLink);
         return pathLink;
     }
+
     //Set value of seach name
+
+
     onChange = (e) => {
         var target = e.target;
         var name = target.name;
@@ -106,7 +111,7 @@ class Search extends Component {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
         // console.log(txtParkName);
-
+        this.searchPathLink();
         return (
             <div>
                 <ToastContainer />

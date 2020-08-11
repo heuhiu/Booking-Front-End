@@ -9,6 +9,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+// import API_URL from '../../../constants/ConfigAPI';
+import * as Config from '../../../constants/ConfigAPI';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -178,7 +180,7 @@ class CfNewPassword extends Component {
         console.log(myParam);
         // debugger
         showLoader()
-        await axios.get('http://localhost:8090/user/verifyChangePasswordToken', {
+        await axios.get(`${Config.API_URL}/user/verifyChangePasswordToken`, {
             params: {
                 token: myParam
             }
