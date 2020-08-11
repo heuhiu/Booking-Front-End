@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getUserLogin } from '../../../actions/index';
+import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import backG from '../../../img/LoginPaper.png';
 import { Link } from 'react-router-dom';
+import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 
 class CfMail extends Component {
 
@@ -14,12 +15,13 @@ class CfMail extends Component {
         }
     }
 
-    componentWillMount = () => {
+    componentDidMount = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
-        console.log(myParam);
-        
-        axios.get('http://localhost:8090/user/active', {
+        // console.log(myParam);
+        const{showLoader, hideLoader} = this.props;
+        showLoader()
+        await axios.get('http://localhost:8090/user/active', {
             params: {
                 token: myParam
             }
@@ -28,25 +30,27 @@ class CfMail extends Component {
             var jwtDecode = require('jwt-decode');
             //set state
             if (res.data) {
-                console.log(res.data.token);
+                // console.log(res.data.token);
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
                 // var decoded = jwtDecode(res.data.token);
                 // this.props.fetchUserDetail(decoded.user);
                 // console.log(decoded.user);
                 // alert("will push to home page if sucess");
+                hideLoader()
                 this.props.history.push("/");
             }
-        
-        }).catch(error =>  {
+
+        }).catch(error => {
             console.log(error.response);
             this.setState({
                 checkSuccess: false
             })
+            hideLoader()
         });
     }
 
     render() {
-        const {checkSuccess} = this.state;
+        const { checkSuccess } = this.state;
         return (
             <div className="limiter">
                 <div className="container-login100">
@@ -72,22 +76,23 @@ class CfMail extends Component {
                                 </svg>
                             </Link>
                             <div className="loginPanelEmail">
-                                Xác nhận Email {checkSuccess===false?"Thất bại":"Thành công"}
+                                Xác nhận Email {checkSuccess === false ? "Thất bại" : "Thành công"}
                             </div>
                             <div className="row det">
                                 <div className="col">
                                     <p className="det1">
-                                    {checkSuccess===false?"Vui Lòng kiểm tra lại email mới nhất":"Vui lòng chờ trong giây lát"}
+                                        {checkSuccess === false ? "Vui Lòng kiểm tra lại email mới nhất" : "Vui lòng chờ trong giây lát"}
                                          &emsp;
                                     </p>
                                 </div>
                             </div>
-                        
+
                         </form>
                     </div>
                 </div>
+                <FullPageLoader />
             </div>
-      
+
         );
     }
 
@@ -98,6 +103,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

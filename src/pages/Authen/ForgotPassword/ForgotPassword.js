@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ForgotPassword.css';
 import callApi from '../../../config/utils/apiCaller';
-import { getUserLogin } from '../../../actions/index';
+import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -60,20 +63,6 @@ class ForgotPassword extends Component {
                         errorMessage: 'Email có dạng abc@xyz.ghi(.xnh)'
                     };
                 }
-            case "password":
-                regexp = /./;
-                checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                } else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'Password not null'
-                    };
-                }
             default:
                 return null;
         }
@@ -88,64 +77,85 @@ class ForgotPassword extends Component {
         this.setState({ [name]: newState })
     }
 
+    apiForgotPass = async (data) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader()
+        await callApi('user/forgotPassword', 'POST', data)
+            .then(res => {
+                // console.log(res);
+                this.setState({
+                    checkResent: true
+                })
+                hideLoader()
+                toast.success('Vui lòng kiểm tra email, nếu chưa nhận được xin vui lòng Gửi email xác thực một lần nữa.!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+            }).catch(function (error) {
+                if (error.response) {
+                    // Request made and server responded
+                    console.log(error.response);
+                    hideLoader()
+                }
+            });
+    }
+
     onLogin = (e) => {
         e.preventDefault();
         const { email, password } = this.state;
-        console.log(email.value);
+        // console.log(email.value);
         const myMail = email.value;
+        // let data = new FormData();
+        // data.append('mail', myMail);
+        // callApi('user/forgotPassword', 'POST', data)
+        // .then(res => {
+        //     // console.log(res);
+        //     this.setState({
+        //         checkResent: true
+        //     })
+        // }).catch(function (error) {
+        //     if (error.response) {
+        //         // Request made and server responded
+        //         console.log(error.response);
+        //     }
+        // });
 
 
-        let data = new FormData();
-        data.append('mail', myMail);
-        callApi('user/forgotPassword', 'POST', data)
-        .then(res => {
-            console.log(res);
-            this.setState({
-                checkResent: true
-            })
-        }).catch(function (error) {
-            if (error.response) {
-                // Request made and server responded
-                console.log(error.response);
-            }
-        });
+        if (this.mailInput && email.isInputValid === false) {
+            setTimeout(() => {
+                this.mailInput.focus();
+            }, 1);
+        }
 
-        
-        // if (this.mailInput && email.isInputValid === false) {
-        //     setTimeout(() => {
-        //         this.mailInput.focus();
-        //     }, 1);
-        // } else if (this.pass && password.isInputValid === false) {
-        //     setTimeout(() => {
-        //         this.pass.focus();
-        //     }, 1);
-        // }
+        if (email.isInputValid === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else {
+            // console.log("GO to susscess")
 
-
-        // if (email.isInputValid === false ||
-        //     password.isInputValid === false) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        // }
-        // else {
-        //     console.log("GO to susscess")
-
-        //     let data = new FormData();
-        //     data.append('mail', myMail);
-
-        //     callApi('', 'POST', {
-        //         mail: email.value,
-        //         password: password.value
-        //     }).then(res => {
-        //         console.log(res);
-        //     }).catch(function (error) {
-        //         if (error.response) {
-        //             // Request made and server responded
-        //             console.log(error.response.data);
-        //             alert("Wrong User Name or Password");
-        //         }
-        //     });
-        // }
+            let data = new FormData();
+            data.append('mail', myMail);
+            this.apiForgotPass(data);
+            // callApi('', 'POST', {
+            //     mail: email.value,
+            //     password: password.value
+            // }).then(res => {
+            //     console.log(res);
+            // }).catch(function (error) {
+            //     if (error.response) {
+            //         // Request made and server responded
+            //         console.log(error.response.data);
+            //         alert("Wrong User Name or Password");
+            //     }
+            // });
+        }
     }
 
 
@@ -156,8 +166,8 @@ class ForgotPassword extends Component {
     }
 
     render() {
-        console.log(this.state.email.value);
-        const {checkResent} = this.state;
+        // console.log(this.state.email.value);
+        const { checkResent } = this.state;
         return (
             <div className="limiter">
                 <div className="container-login100">
@@ -211,12 +221,14 @@ class ForgotPassword extends Component {
                                     Gửi email xác thực
 						        </button>
                             </div>
-                            <label className="subHeader">
-                              {checkResent===true?"Vui lòng kiểm tra email, nếu chưa nhận được xin vui lòng |Gửi email xác thực| một lần nữa":""}  
-                            </label>
+                            {/* <label className="mrt-30 subHeader">
+                                {checkResent === false ? "Vui lòng kiểm tra email, nếu chưa nhận được xin vui lòng Gửi email xác thực một lần nữa." : ""}
+                            </label> */}
                         </form>
                     </div>
                 </div>
+                <ToastContainer />
+                <FullPageLoader />
             </div>
 
         );
@@ -228,6 +240,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

@@ -278,9 +278,9 @@ const CardForm = injectStripe(_CardForm);
 class CardDemo extends Component {
   render() {
     const { orderDetail, visitorType, loggedUser,showLoader, hideLoader } = this.props;
-    console.log(orderDetail);
-    console.log(visitorType);
-    console.log(loggedUser)
+    // console.log(orderDetail);
+    // console.log(visitorType);
+    // console.log(loggedUser)
     return (
 
       <StripeProvider apiKey='pk_test_51Gs1CYGtpdysubsWvXC2vynpAmqeGq1vGggeXCHQsepXXX5TOxNBKlLFHBsar57TIkYsMYWuTSFg5H40uHBL4TW200nIV10yG5'>

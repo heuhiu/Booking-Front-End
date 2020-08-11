@@ -201,7 +201,6 @@ class HomePage extends Component {
 
     render() {
         const { topCity, id1, id2, id3, listData1, listData2, listData3 } = this.state;
-
         return (
             <div>
                 <Menu />

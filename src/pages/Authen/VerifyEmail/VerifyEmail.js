@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 // import './login2.css'
 import './verify.css';
 // import callApi from '../../../config/utils/apiCaller';
-import { getUserLogin } from '../../../actions/index';
+import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { Link, Redirect } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
 import callApi from '../../../config/utils/apiCaller';
+import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class VerifyEmail extends Component {
 
@@ -17,15 +20,27 @@ class VerifyEmail extends Component {
         }
     }
     onLogin = (e) => {
+        const{showLoader, hideLoader} = this.props;
         e.preventDefault();
         const { myMail } = this.state;
-        console.log(myMail);
+        // console.log(myMail);
         
         let data = new FormData();
         data.append('mail', myMail);
+        showLoader();
         callApi("user/resent-email", 'POST', data)
             .then(res => {
-                console.log(res);
+                // console.log(res);
+                hideLoader()
+                toast.success('Gửi lại mail xác nhận thành công!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -35,9 +50,9 @@ class VerifyEmail extends Component {
 
     componentDidMount = () => {
         const { location } = this.props;
-        console.log(location);
+        // console.log(location);
         if (location.state !== undefined) {
-            console.log(location.state.mailRegis);
+            // console.log(location.state.mailRegis);
             this.setState({
                 myMail: location.state.mailRegis
             })
@@ -47,14 +62,17 @@ class VerifyEmail extends Component {
     render() {
         const { location } = this.props;
         const { myMail } = this.state;
-        console.log(location.state);
+        // console.log(location.state);
         if (location.state === undefined) {
             return (
                 <Redirect to="/" />
             )
         } else
             return (
+                <div>
+                
                 <div className="limiter">
+                    <ToastContainer />
                     <div className="container-login100">
                         <div className="wrap-login100">
                             <div
@@ -96,14 +114,16 @@ class VerifyEmail extends Component {
                                         <Link to="/" type="button" className="toMain"> Trang Chủ </Link>
                                     </div>
                                     <div className="col-6">
-                                        <button type="submit" className="toMain"> Gửi lại </button>
+                                        <button type="submit" className="toMain2"> Gửi lại </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <FullPageLoader />
                 </div>
-
+               
+                </div>
             );
     }
 
@@ -112,6 +132,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }
