@@ -5,7 +5,11 @@ import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
 import axios from 'axios';
+import { showLoader, hideLoader } from '../../../../actions/index';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { id } from 'date-fns/locale';
+
 function SampleNextArrow(props) {
   const { className, onClick } = props;
   return (
@@ -49,96 +53,220 @@ class Slick1 extends Component {
     super(props);
     this.state = {
       selectedOption: null,
-      bla: []
+      listPlace: [],
+      compareId: null,
     }
   }
 
-  componentDidMount = () => {
-    this.getPlacebyCityId();
-  }
+  // componentDidUpdate = () => {
+  //   const { topCity } = this.props;
+  //   const { id1, id2, id3 } = this.state;
+  //   // console.log(topCity)
+  //   for (let index = 0; index < topCity.length; index++) {
+  //     const element = topCity[index].id;
+  //     // console.log(element)
+  //     // this.getPlacebyCityId(element);
 
-  getPlacebyCityId = () => {
-    axios.get('http://localhost:8090/topPlace', {
-      params: {
-        cityId: 1
-      }
-    }).then(res => {
-      console.log(res.data);
-      this.setState({
-        bla: res.data
-      })
-    }).catch(function (error) {
-      console.log(error.response.data);
-    });
+  //     // if (id1 === -1) {
+  //     //   this.setState({
+  //     //     id1: element
+  //     //   })
+  //     // } else if(id1 !== -1 && id2 === -1) {
+  //     //   this.setState({
+  //     //     id2: element
+  //     //   })
+  //     // } else if(id1 !== -1 && id2 !== -1 && id3 === -1) {
+  //     //   this.setState({
+  //     //     id2: element
+  //     //   })
+  //     // }
+  //   }
+  // }
+
+  componentDidUpdate = () => {
+    const { topCity, listCityId, listData1, listData2, listData3 } = this.props;
+    console.log(listCityId);
+    console.log(topCity);
+    console.log(listData1);
+    console.log(listData2);
+    console.log(listData3);
   }
+  convertCurrecyToVnd = (currency) => {
+    return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+}
+
 
   showPlaceOfTopCity = (topCity) => {
     var result = null;
-    if (topCity.length > 0) {
-      result = topCity.map((item, index) => {
-        return (
-          <Link
-            key={index}
-            className="decoNone"
-            to={`/placeDetail/${item.id}`}>
-            <div className="owlStyle">
-              <h3 className="owlStyleChil">
-                <div
-                  style={{
-                    borderRadius: "10px",
-                    backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
-                ,url(${item.placeImageLink ? item.placeImageLink : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
-                  }}
-                  className="overflowName owlCom3">{item.name}
-                </div>
+    if (topCity !== undefined)
+      if (topCity.length > 0) {
+        result = topCity.map((item, index) => {
+          // console.log(item)
+          return (
+            <Link
+              key={index}
+              className="decoNone"
+              to={`/placeDetail/${item.id}`}>
+              <div className="owlStyle">
+                <h3 className="owlStyleChil">
+                  <div
+                    className="owlCom3"
+                    style={{
+                      borderRadius: "10px 10px 0px 0px",
+                      backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                    }}
+                   >
+                  </div>
                 <div className="containerOwlChil">
-                  <p className="owlStyleChil1">somnething</p>
-                  <p className="owlStyleChil2">đ 100.000</p>
-                  <p className="owlStyleChil3">đ 86.000</p>
-                  <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                  <div style={{height: "45px"}}>
+                  <p className="owlStyleChil1">{item.name}</p>
+                  </div>
+                  <div>
+                    {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
+                    <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
+                    <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                  </div>
+                  
                 </div>
-              </h3>
-            </div >
-          </Link>
-        );
+                </h3>
+              </div >
+            </Link >
+          );
       });
-    } else {
-      return (
-        <div style={{ width: "200px", visibility: "hidden" }}>
-        </div >
-      )
-    }
-    return result;
+  } else {
+  return (
+    <div style={{ width: "200px", visibility: "hidden" }}>
+    </div >
+  )
+}
+return result;
   }
 
-  render() {
-    const settings = {
-      // dots: true,
-      infinite: true,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
+forByCityId = (topCity, listData1, listData2, listData3) => {
+  const settings = {
+    // dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
+  };
+  var result = null;
+  if (topCity.length > 0) {
+    result = topCity.map((item, index) => {
+      // this.getPlacebyCityId(item.id)
+      // console.log(index)
+      if (index === 0) {
+        return (
+          <section className="py-5">
+            <div className="container">
+              <div key={index}>
+                <h2 className="headerOwl">{item.shortDescription}</h2>
+                <h2 className="desHeaderOwl">{item.name}</h2>
+                <Slider {...settings}>
+                  {/* {this.getPlacebyCityId(item.id)} */}
+                  {this.showPlaceOfTopCity(listData1)}
+                </Slider>
+              </div>
+            </div>
+          </section>
+        );
+      }
+      if (index === 1) {
+        return (
+          <section className="py-5">
+            <div className="container">
+              <div key={index}>
+                <h2 className="headerOwl">{item.shortDescription}</h2>
+                <h2 className="desHeaderOwl">{item.name}</h2>
+                <Slider {...settings}>
+                  {/* {this.getPlacebyCityId(item.id)} */}
+                  {this.showPlaceOfTopCity(listData2)}
+                </Slider>
+              </div>
+            </div>
+          </section>
+        );
+      }
+      if (index === 2) {
+        return (
+          <section className="py-5">
+            <div className="container">
+              <div key={index}>
+                <h2 className="headerOwl">{item.shortDescription}</h2>
+                <h2 className="desHeaderOwl">{item.name}</h2>
+                <Slider {...settings}>
+                  {/* {this.getPlacebyCityId(item.id)} */}
+                  {this.showPlaceOfTopCity(listData3)}
+                </Slider>
+              </div>
+            </div>
+          </section>
+        );
+      }
+    });
 
-    };
-    const { topCity } = this.props;
-    const { bla } = this.state;
-    console.log(bla)
-    console.log(topCity)
+  } else {
     return (
-      <section className="py-5">
-        <div className="container">
-          <h2 className="headerOwl">Vòng quanh thủ đô</h2>
-          <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
-          <Slider {...settings}>
-            {this.showPlaceOfTopCity(bla)}
-            {/* {this.getPlacebyCityId()} */}
-          </Slider>
-        </div>
-      </section>
-    );
+      <div style={{ width: "200px", visibility: "hidden" }}>
+      </div >
+    )
+  }
+  return result;
+}
 
+render() {
+
+  const settings = {
+    // dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
+  };
+  const { listPlace, id1, id2, id3 } = this.state;
+  console.log(id1 + " " + id2 + " " + id3)
+  const { topCity, listData1, listData2, listData3 } = this.props;
+  // for (let index = 0; index < topCity.length; index++) {
+  //   const element = topCity[index].id;
+  //   // console.log(element)
+  //   this.getPlacebyCityId(element);
+  // }
+  return (
+    this.forByCityId(topCity, listData1, listData2, listData3)
+    // <section className="py-5">
+    //   <div className="container">
+
+    //     {/* <h2 className="headerOwl">Vòng quanh thủ đô</h2>
+    //     <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
+    //     <Slider {...settings}>
+    //       {this.showPlaceOfTopCity(listPlace)}
+    //     </Slider> */}
+    //   </div>
+    // </section>
+  );
+
+}
+}
+
+// export default Slick1;
+
+const mapStateToProps = state => {
+  return {
+    // visitorType: state.Ticket
   }
 }
 
-export default Slick1;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    showLoader: () => {
+      dispatch(showLoader())
+    },
+    hideLoader: () => {
+      dispatch(hideLoader())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Slick1);

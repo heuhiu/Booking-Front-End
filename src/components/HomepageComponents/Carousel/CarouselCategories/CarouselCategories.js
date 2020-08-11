@@ -89,7 +89,7 @@ class CarouselCategories extends Component {
 
     render() {
         const { listCategory } = this.props;
-        console.log(listCategory);
+        // console.log(listCategory);
         const settings = {
             dots: false,
             infinite: true,

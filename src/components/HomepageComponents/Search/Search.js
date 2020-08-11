@@ -105,7 +105,7 @@ class Search extends Component {
     render() {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
-        console.log(txtParkName);
+        // console.log(txtParkName);
 
         return (
             <div>

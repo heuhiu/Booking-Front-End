@@ -10,6 +10,7 @@ import { getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } 
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
+import axios from 'axios';
 
 //Home page
 class HomePage extends Component {
@@ -17,7 +18,14 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            topCity : []
+            topCity: [],
+            listCityId: [],
+            id1: -1,
+            id2: -1,
+            id3: -1,
+            listData1: [],
+            listData2: [],
+            listData3: [],
         }
     }
 
@@ -46,11 +54,11 @@ class HomePage extends Component {
                         window.location.reload();
                     }
                 });
-            this.getCategories();
         }
+        this.getCategoriesnCity();
     }
 
-    getCategories = async () => {
+    getCategoriesnCity = async () => {
         const { showLoader, hideLoader } = this.props;
         showLoader();
         Promise.all([
@@ -73,30 +81,143 @@ class HomePage extends Component {
                 }),
             await callApi("topCity", 'GET', null)
                 .then(res => {
-                    console.log(res);
+                    var listCityId = [];
+                    for (let index = 0; index < res.data.length; index++) {
+                        const element = res.data[index].id;
+                        listCityId.push(element);
+                    }
+                    // console.log(listCityId)
                     this.setState({
-                        topCity: res.data
+                        topCity: res.data,
+                        listCityId: listCityId,
+                        id1: listCityId[0],
+                        id2: listCityId[1],
+                        id3: listCityId[2],
+                    }, () => {
+
                     })
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);
                     }
-                })
+                }),
+            await axios.get('http://localhost:8090/topPlace', {
+                params: {
+                    cityId: this.state.id1
+                }
+                }).then(res => {
+                    console.log(res.data);
+                    this.setState({
+                        listData1: res.data
+                    })
+                }).catch(function (error) {
+                    console.log(error);
+                }),
+            await axios.get('http://localhost:8090/topPlace', {
+                params: {
+                    cityId: this.state.id2
+                }
+                }).then(res => {
+                    console.log(res.data);
+                    this.setState({
+                        listData2: res.data
+                    })
+                }).catch(function (error) {
+                    console.log(error);
+                }),
+            await axios.get('http://localhost:8090/topPlace', {
+                params: {
+                    cityId: this.state.id3
+                }
+                }).then(res => {
+                    console.log(res.data);
+                    this.setState({
+                        listData3: res.data
+                    })
+                }).catch(function (error) {
+                    console.log(error);
+                }),
         ]).then(
-                    hideLoader()
-                );
+            hideLoader()
+        );
+    }
+
+    getPlacebyCityId1 = (id) => {
+        // console.log(id);
+        const { listData1, listData2, listData3 } = this.state
+        showLoader();
+        axios.get('http://localhost:8090/topPlace', {
+            params: {
+                cityId: id
+            }
+        }).then(res => {
+            console.log(res.data);
+            this.setState({
+                listData1: res.data
+            })
+            // this.state.listData.push(res.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+        // return counter;
+    }
+    getPlacebyCityId2 = (id) => {
+        // console.log(id);
+        const { listData1, listData2, listData3 } = this.state
+        showLoader();
+        axios.get('http://localhost:8090/topPlace', {
+            params: {
+                cityId: id
+            }
+        }).then(res => {
+            console.log(res.data);
+            this.setState({
+                listData2: res.data
+            })
+            // this.state.listData.push(res.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+        // return counter;
+    }
+    getPlacebyCityId3 = (id) => {
+        // console.log(id);
+        const { listData1, listData2, listData3 } = this.state
+
+        showLoader();
+        axios.get('http://localhost:8090/topPlace', {
+            params: {
+                cityId: id
+            }
+        }).then(res => {
+            console.log(res.data);
+            this.setState({
+                listData3: res.data
+            })
+            // this.state.listData.push(res.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+        // return counter;
     }
 
     render() {
-        const {topCity} = this.state;
-        console.log(topCity);
+        const { topCity, id1, id2, id3, listData1, listData2, listData3 } = this.state;
+
         return (
             <div>
                 <Menu />
                 <Banner />
-                <Slick2 topCity={topCity} />
-                <Slick1 topCity={topCity}/>
-                <CarouselCategories/>
+                <div style={{ display: this.props.loader.loading === true ? "none" : "" }}>
+                    <Slick2 topCity={topCity} />
+                    <Slick1
+                        listData1={listData1}
+                        listData2={listData2}
+                        listData3={listData3}
+                        topCity={topCity} />
+
+                    <CarouselCategories />
+                </div>
                 <Footer2 />
                 <FullPageLoader />
             </div>
@@ -109,7 +230,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        // visitorType: state.Ticket
+        loader: state.Loader
     }
 }
 
