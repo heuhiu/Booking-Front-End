@@ -19,7 +19,6 @@ class HomePage extends Component {
         super(props);
         this.state = {
             topCity: [],
-            listCityId: [],
             id1: -1,
             id2: -1,
             id3: -1,
@@ -89,7 +88,6 @@ class HomePage extends Component {
                     // console.log(listCityId)
                     this.setState({
                         topCity: res.data,
-                        listCityId: listCityId,
                         id1: listCityId[0],
                         id2: listCityId[1],
                         id3: listCityId[2],
@@ -106,7 +104,7 @@ class HomePage extends Component {
                     cityId: this.state.id1
                 }
                 }).then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         listData1: res.data
                     })
@@ -118,7 +116,7 @@ class HomePage extends Component {
                     cityId: this.state.id2
                 }
                 }).then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         listData2: res.data
                     })
@@ -130,7 +128,7 @@ class HomePage extends Component {
                     cityId: this.state.id3
                 }
                 }).then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         listData3: res.data
                     })

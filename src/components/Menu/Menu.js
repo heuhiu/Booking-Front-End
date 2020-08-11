@@ -49,7 +49,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
                     return (
                         <li className={active}>
                             <Link to={to}>
-                                
+
                                 <button className={style}>
                                     {label}
                                 </button>
@@ -122,8 +122,8 @@ class Menu extends Component {
                 {/* <NavBarSearch /> */}
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
-                    <Link 
-                    style={{ textDecoration: "none" }} to="/">
+                    <Link
+                        style={{ textDecoration: "none" }} to="/">
                         <button style={{ display: tokenLogin ? "" : "none" }} className="none1 nav-link">
                             {/* <svg style={{marginBottom: "8px"}}width="18.2" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 10.625L12.625 1.58337L24.25 10.625V24.8334C24.25 25.5185 23.9778 26.1756 23.4934 26.6601C23.0089 27.1445 22.3518 27.4167 21.6667 27.4167H3.58333C2.89819 27.4167 2.24111 27.1445 1.75664 26.6601C1.27217 26.1756 1 25.5185 1 24.8334V10.625Z" stroke="#5B5B5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -162,29 +162,28 @@ class Menu extends Component {
                             <Dropdown.Toggle id="userName">
                                 {this.props.UserDetail.firstName} {this.props.UserDetail.lastName}
                             </Dropdown.Toggle>
-                            <Dropdown.Menu
-                            // id="dropdown-menu"
-                            >
-                                <Dropdown.Item id="dropdown-item">
-                                    <Link to="/userProfile/myProfile">
-                                        <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M19 21V18.7778C19 17.599 18.5259 16.4686 17.682 15.6351C16.8381 14.8016 15.6935 14.3333 14.5 14.3333H5.5C4.30653 14.3333 3.16193 14.8016 2.31802 15.6351C1.47411 16.4686 1 17.599 1 18.7778V21" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M10 9.88889C12.4853 9.88889 14.5 7.89904 14.5 5.44444C14.5 2.98985 12.4853 1 10 1C7.51472 1 5.5 2.98985 5.5 5.44444C5.5 7.89904 7.51472 9.88889 10 9.88889Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg> &nbsp;
+                            <Dropdown.Menu>
+                                {/* <Dropdown.Item href="/userProfile/myProfile" id="dropdown-item"> */}
+                                <Link className="itemDrop" to="/userProfile/myProfile">
+                                    <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 21V18.7778C19 17.599 18.5259 16.4686 17.682 15.6351C16.8381 14.8016 15.6935 14.3333 14.5 14.3333H5.5C4.30653 14.3333 3.16193 14.8016 2.31802 15.6351C1.47411 16.4686 1 17.599 1 18.7778V21" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M10 9.88889C12.4853 9.88889 14.5 7.89904 14.5 5.44444C14.5 2.98985 12.4853 1 10 1C7.51472 1 5.5 2.98985 5.5 5.44444C5.5 7.89904 7.51472 9.88889 10 9.88889Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg> &nbsp;
                                     Hồ sơ của tôi
                                     </Link>
-                                </Dropdown.Item>
+                                {/* </Dropdown.Item> */}
 
-                                <Dropdown.Item
+                                {/* <Dropdown.Item
                                     onClick={this.logOut}
-                                // id="dropdown-item"
-                                >
+                                > */}
+                                <button className="itemDrop" onClick={this.logOut}>
                                     <svg width="14.4" height="16" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M16.365 5.64001C17.6234 6.8988 18.4803 8.50246 18.8273 10.2482C19.1743 11.994 18.9959 13.8034 18.3146 15.4478C17.6334 17.0921 16.4798 18.4976 14.9998 19.4864C13.5199 20.4752 11.7799 21.0029 10 21.0029C8.2201 21.0029 6.48016 20.4752 5.00018 19.4864C3.5202 18.4976 2.36664 17.0921 1.68537 15.4478C1.00409 13.8034 0.825693 11.994 1.17272 10.2482C1.51975 8.50246 2.37663 6.8988 3.635 5.64001" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M10.005 1V11" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg> &nbsp;
                                     Đăng xuất
-                                    </Dropdown.Item>
+                                    </button>
+                                {/* </Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
