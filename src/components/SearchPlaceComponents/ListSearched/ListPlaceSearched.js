@@ -19,6 +19,7 @@ import ListFilter from '../ListFilter/ListFilter';
 // import API_URL from '../../../constants/ConfigAPI';
 import * as Config from '../../../constants/ConfigAPI';
 
+
 class ListPlaceSearched extends Component {
 
     constructor(props) {
@@ -276,45 +277,57 @@ class ListPlaceSearched extends Component {
         const { activePage, value } = this.state;
         const { showLoader, hideLoader } = this.props;
         // console.log(searchName);
-        // console.log(IDCityFilter);
-        // console.log(IDCategoryFilter);
+        console.log(isNaN(IDCityFilter[0]));
+        console.log(isNaN(IDCityFilter[0]));
         // console.log(value.min);
         // console.log(String(value.min));
-        var min = Number(String(value.min).replace(/\./g, ""));
-        var max = Number(String(value.max).replace(/\./g, ""));
-        showLoader();
-        await axios.get(`${Config.API_URL}/place/searchClient`, {
-            params: {
-                //park name
-                name: searchName ? searchName : "",
-                //limit of page
-                limit: this.state.limit,
-                //page Number  
-                page: activePage,
-                //city list ID
-                cityId: isNaN(parseFloat(IDCityFilter)) === false ? IDCityFilter + '' : null,
-                //category List ID
-                categoryId: isNaN(parseFloat(IDCategoryFilter)) === false ? IDCategoryFilter + '' : null,
-                minValue: min,
-                maxValue: max
-            }
-        }).then(res => {
-            //set state
-            // console.log(res);
-            this.setState({
-                totalPage: res.data.totalPage,
-                searchList: res.data.listResult,
-                totalItems: res.data.totalItems,
-                checkApiListSearched: true
-            }, () => {
-                if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
-                    hideLoader();
-            })
+        if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCityFilter[0]) === true) {
+            toast.error('Cần chọn ít nhất 1 Thành phố hoặc mục!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            var min = Number(String(value.min).replace(/\./g, ""));
+            var max = Number(String(value.max).replace(/\./g, ""));
+            showLoader();
+            await axios.get(`${Config.API_URL}/place/searchClient`, {
+                params: {
+                    //park name
+                    name: searchName ? searchName : "",
+                    //limit of page
+                    limit: this.state.limit,
+                    //page Number  
+                    page: activePage,
+                    //city list ID
+                    cityId: isNaN(parseFloat(IDCityFilter)) === false ? IDCityFilter + '' : null,
+                    //category List ID
+                    categoryId: isNaN(parseFloat(IDCategoryFilter)) === false ? IDCategoryFilter + '' : null,
+                    minValue: min,
+                    maxValue: max
+                }
+            }).then(res => {
+                //set state
+                // console.log(res);
+                this.setState({
+                    totalPage: res.data.totalPage,
+                    searchList: res.data.listResult,
+                    totalItems: res.data.totalItems,
+                    checkApiListSearched: true
+                }, () => {
+                    if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
+                        hideLoader();
+                })
 
-        }).catch(function (error) {
-            console.log(error.response);
-        });
-
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        }
     }
 
     getAllCategories = async () => {
@@ -453,20 +466,20 @@ class ListPlaceSearched extends Component {
 
     onSelectCat = () => {
         const { catMul, cityMul, listCtiId, listCatId } = this.state
-        console.log(listCtiId);
-        console.log(listCatId);
-        console.log(cityMul);
-        console.log(catMul);
+        // console.log(listCtiId);
+        // console.log(listCatId);
+        // console.log(cityMul);
+        // console.log(catMul);
         var jointCityID = cityMul.concat(listCtiId)
         var jointCategoryID = catMul.concat(listCatId)
-        console.log(jointCityID)
-        console.log(jointCategoryID)
-        console.log(this.removeNaN(jointCityID))
-        console.log(this.removeNaN(jointCategoryID))
-        console.log(isNaN(jointCityID[0]))
-        console.log(isNaN(jointCategoryID[0]))
-        console.log(jointCityID.length)
-        console.log(jointCategoryID.length)
+        // console.log(jointCityID)
+        // console.log(jointCategoryID)
+        // console.log(this.removeNaN(jointCityID))
+        // console.log(this.removeNaN(jointCategoryID))
+        // console.log(isNaN(jointCityID[0]))
+        // console.log(isNaN(jointCategoryID[0]))
+        // console.log(jointCityID.length)
+        // console.log(jointCategoryID.length)
         // var pathLink = this.props.history.location.search;
         var pathLink = "";
         // console.log(catMul)
@@ -481,8 +494,8 @@ class ListPlaceSearched extends Component {
             listCtiId: this.removeNaN(jointCityID),
             listCatId: this.removeNaN(jointCategoryID)
         })
-        console.log(pathListCity)
-        console.log(pathListCat)
+        // console.log(pathListCity)
+        // console.log(pathListCat)
         if ((this.removeNaN(jointCityID)).length > 0) {
             pathLink += pathListCity;
         }
