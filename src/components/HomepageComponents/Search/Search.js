@@ -50,12 +50,13 @@ class Search extends Component {
                 pathLink += pathListCat;
             }
         }
-        else 
-        if (this.state.cityMul.length > 0) {
-            pathLink += pathListCity;
-        }
-         if (this.state.catMul.length > 0) {
-            pathLink += pathListCat;
+        else if (this.state.txtParkName === "") {
+            if (this.state.cityMul.length > 0) {
+                pathLink += pathListCity;
+            }
+            if (this.state.catMul.length > 0) {
+                pathLink += pathListCat;
+            }
         }
         console.log(pathLink);
         return pathLink;
@@ -73,6 +74,11 @@ class Search extends Component {
         })
     }
 
+    isValid = (str) => {
+        return /^[a-zA-Z0-9 ]{0,225}$/g.test(str);
+        // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
+    }
+    
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
         e.preventDefault();
@@ -93,6 +99,17 @@ class Search extends Component {
                 progress: undefined,
             });
         }
+        // if (this.isValid(this.state.txtParkName) === false) {
+        //     toast.error('Vui lòng không điền kí tự đặc biệt!', {
+        //         position: "bottom-right",
+        //         autoClose: 5000,
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //     });
+        // }
         else {
             this.props.history.push(`${this.searchPathLink()}`);
         }
@@ -125,6 +142,7 @@ class Search extends Component {
                         <div className="textfield-search one-third">
                             <input
                                 type="text"
+                                maxlength="225"
                                 className="form-control"
                                 placeholder="Tìm kiếm hoạt động hoặc điểm đến"
                                 name="txtParkName"
@@ -142,7 +160,7 @@ class Search extends Component {
                                     <span>
                                         Bộ lọc
                                     </span>
-                                    <span style={{marginLeft: "10px"}}>
+                                    <span style={{ marginLeft: "10px" }}>
                                         <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1.34546 1L7.34546 7L13.3455 1" stroke="#A5A5A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>

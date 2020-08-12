@@ -49,7 +49,7 @@ class ListPlaceSearched extends Component {
             catMul: [],
             listCity: [],
             listCategory: [],
-            // notFoundPage: false,
+            notFoundPage: false,
             checkSearch: false
         }
     }
@@ -278,13 +278,29 @@ class ListPlaceSearched extends Component {
     receivedData = async (searchName, IDCityFilter, IDCategoryFilter,) => {
         const { activePage, value } = this.state;
         const { showLoader, hideLoader } = this.props;
-        console.log(searchName);
-        console.log(isNaN(IDCityFilter[0]));
-        console.log(isNaN(IDCategoryFilter[0]));
+        // console.log(searchName);
+        // console.log(isNaN(IDCityFilter[0]));
+        // console.log(isNaN(IDCategoryFilter[0]));
         // console.log(value.min);
         // console.log(String(value.min));
+        if(searchName === "!"){
+            this.setState({
+                searchList: [],
+                checkSearch: true
+            }, () => {
+                toast.error('URL không hợp lệ!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
+        }
         if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCategoryFilter[0]) === true) {
-        // if (false) {
+            // if (false) {
             this.setState({
                 searchList: [],
                 checkSearch: true
@@ -299,7 +315,7 @@ class ListPlaceSearched extends Component {
                     progress: undefined,
                 });
             })
-            
+
         }
         else {
             var min = Number(String(value.min).replace(/\./g, ""));
@@ -403,12 +419,18 @@ class ListPlaceSearched extends Component {
         return oldArray.filter(value => !Number.isNaN(value));
     }
 
+    isValid = (str) => {
+        return /^[a-zA-Z0-9]{0,225}$/g.test(str);
+        // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
+    }
+
     componentDidMount = () => {
         // debugger
         var { location } = this.props;
         console.log(location);
         // if (location !== undefined) {
         console.log(location.search);
+
         if (location.search !== "") {
             const answer_array = location.search.split('?');
             var name = '';
@@ -432,9 +454,19 @@ class ListPlaceSearched extends Component {
             var listCatIdNumber = listCatId.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
+            console.log(this.isValid(name))
             var newDecode = decodeURIComponent(name);
+            // var newDecode = decodeURIComponent(this.isValid(name)===false?"!":name);
+            // if(this.isValid(name)===false) {
+            //     this.setState({
+            //         notFoundPage: true
+            //     })
+            // }
             console.log(newDecode);
+            console.log(listCtiId);
+            console.log(listCatId);
             this.setState({
+                // searchName: String(": "+this.isValid(name)),
                 searchName: newDecode,
                 listCtiId: listCtiIdNumber,
                 listCatId: listCatIdNumber
@@ -447,7 +479,7 @@ class ListPlaceSearched extends Component {
         } else {
             this.setState({
                 searchList: [],
-            },()=>{
+            }, () => {
                 this.getCategoriesnCity();
                 toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục!', {
                     position: "bottom-right",
@@ -517,7 +549,7 @@ class ListPlaceSearched extends Component {
         // console.log(jointCityID.length)
         // console.log(jointCategoryID.length)
         // var pathLink = this.props.history.location.search;
-        var pathLink = `/searchedPlace${searchName?`?name=${searchName}`:""}`;
+        var pathLink = `/searchedPlace${searchName ? `?name=${searchName}` : ""}`;
         // console.log(catMul)
         // console.log(cityMul)
         // console.log(this.props.history.location.search);
@@ -543,7 +575,7 @@ class ListPlaceSearched extends Component {
         }
         // this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
         // this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
-        this.receivedData(this.state.searchName, cityRemoveDub,cateRemoveDub);
+        this.receivedData(this.state.searchName, cityRemoveDub, cateRemoveDub);
     }
 
     onResetSliderSet = () => {
@@ -592,7 +624,7 @@ class ListPlaceSearched extends Component {
         }
         const { loader } = this.props;
         // if (loader.loading === true) {
-        if (false) {
+        if (this.state.notFoundPage===true) {
             return (
                 <div>
                     <Container style={{ fontFamily: 'Inter' }} >
@@ -602,6 +634,7 @@ class ListPlaceSearched extends Component {
                                 <div style={{
                                     width: "auto", height: "500px"
                                 }}>
+                                     WRONG URL
                                 </div>
                             </div>
                         </div>

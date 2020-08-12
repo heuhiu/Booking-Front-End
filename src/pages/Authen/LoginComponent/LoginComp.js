@@ -142,7 +142,7 @@ class LoginComp extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
-                    debugger
+                    
                     console.log(error.response.data);
                     if (error.response.data === "ACCOUNT_NOT_ACTIVATED") {
                         // alert("ACCOUNT_NOT_ACTIVATED");
