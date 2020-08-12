@@ -67,12 +67,16 @@ class UserMenu extends Component {
     }
 
     changeAvarHandle = (event) => {
+        console.log("yes")
+        const { loggedUser } = this.props;
+        console.log(loggedUser.avatarLink);
         this.setState({
             // file: URL.createObjectURL(event.target.files[0])
             file: event.target.files[0]
         }, () => {
             const { loggedUser } = this.props;
             const { file } = this.state;
+            console.log(file)
             const id = loggedUser.id;
 
             let data = new FormData();
@@ -82,7 +86,7 @@ class UserMenu extends Component {
             callApi(`user/avatar/${id}`, 'POST', data)
                 .then(res => {
                     console.log(res);
-                    window.location.reload();
+                    // window.location.reload();
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response);
@@ -96,6 +100,7 @@ class UserMenu extends Component {
     render() {
         const { loggedUser } = this.props;
         console.log(loggedUser.avatarLink);
+        console.log(this.state.file?this.state.file:"");
         console.log(this.state.file);
         const { file } = this.state;
         // if (file) {

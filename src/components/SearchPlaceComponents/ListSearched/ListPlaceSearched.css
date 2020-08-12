@@ -672,3 +672,8 @@
   text-overflow: ellipsis; 
   width: 100px; 
 }
+
+.react-datepicker__day--disabled, .react-datepicker__month-text--disabled, .react-datepicker__quarter-text--disabled {
+  cursor: default;
+  color: #ccc !important;
+}
