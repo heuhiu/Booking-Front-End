@@ -276,12 +276,13 @@ class ListPlaceSearched extends Component {
     receivedData = async (searchName, IDCityFilter, IDCategoryFilter,) => {
         const { activePage, value } = this.state;
         const { showLoader, hideLoader } = this.props;
-        // console.log(searchName);
+        console.log(searchName);
         console.log(isNaN(IDCityFilter[0]));
         console.log(isNaN(IDCityFilter[0]));
         // console.log(value.min);
         // console.log(String(value.min));
-        if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCityFilter[0]) === true) {
+        // if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCityFilter[0]) === true) {
+        if (false) {
             toast.error('Cần chọn ít nhất 1 Thành phố hoặc mục!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -464,6 +465,11 @@ class ListPlaceSearched extends Component {
         }
     }
 
+    removeDublicate = (list) => {
+        return  [...new Set(list)];
+        // console.log(unique)
+        // return unique
+    }
     onSelectCat = () => {
         const { catMul, cityMul, listCtiId, listCatId } = this.state
         // console.log(listCtiId);
@@ -474,8 +480,16 @@ class ListPlaceSearched extends Component {
         var jointCategoryID = catMul.concat(listCatId)
         // console.log(jointCityID)
         // console.log(jointCategoryID)
-        // console.log(this.removeNaN(jointCityID))
-        // console.log(this.removeNaN(jointCategoryID))
+        // this.removeDublicate(jointCityID)
+        console.log(this.removeNaN(jointCityID))
+        console.log(this.removeNaN(jointCategoryID))
+        const cityRemoveNaN = this.removeNaN(jointCityID)
+        const cateRemoveNaN = this.removeNaN(jointCategoryID)
+        const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
+        const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
+        console.log(cityRemoveDub)
+        console.log(cateRemoveDub)
+
         // console.log(isNaN(jointCityID[0]))
         // console.log(isNaN(jointCategoryID[0]))
         // console.log(jointCityID.length)
@@ -488,22 +502,22 @@ class ListPlaceSearched extends Component {
         // console.log(this.props.history.location);
         // const arr = this.props.history.location.search.split('?listCatID=');
         // const arr2 = this.props.history.location.search.split('?listCityID=');
-        const pathListCity = `?listCityID=${this.removeNaN(jointCityID)}`
-        const pathListCat = `?listCatID=${this.removeNaN(jointCategoryID)}`
+        const pathListCity = `?listCityID=${cityRemoveDub}`
+        const pathListCat = `?listCatID=${cateRemoveDub}`
         this.setState({
-            listCtiId: this.removeNaN(jointCityID),
-            listCatId: this.removeNaN(jointCategoryID)
+            listCtiId: cityRemoveDub,
+            listCatId: cateRemoveDub
         })
         // console.log(pathListCity)
         // console.log(pathListCat)
-        if ((this.removeNaN(jointCityID)).length > 0) {
+        if (cityRemoveDub.length > 0) {
             pathLink += pathListCity;
         }
-        if ((this.removeNaN(jointCategoryID)).length > 0) {
+        if (cateRemoveDub.length > 0) {
             pathLink += pathListCat;
         }
-
-        this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
+        this.props.history.push(pathLink);
+        // this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
         this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
     }
 
