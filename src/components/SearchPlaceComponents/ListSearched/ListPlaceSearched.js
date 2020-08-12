@@ -31,8 +31,8 @@ class ListPlaceSearched extends Component {
             limit: 2,          //Number of items appear
             searchList: [],     //ListSeached temporary
             searchName: "",
-            listCtiId: "",
-            listCatId: "",
+            listCtiId: [],
+            listCatId: [],
             listCatName: [],
             listId: [],
             listCat: [],
@@ -48,7 +48,9 @@ class ListPlaceSearched extends Component {
             cityMul: [],
             catMul: [],
             listCity: [],
-            listCategory: []
+            listCategory: [],
+            // notFoundPage: false,
+            checkSearch: false
         }
     }
 
@@ -278,20 +280,26 @@ class ListPlaceSearched extends Component {
         const { showLoader, hideLoader } = this.props;
         console.log(searchName);
         console.log(isNaN(IDCityFilter[0]));
-        console.log(isNaN(IDCityFilter[0]));
+        console.log(isNaN(IDCategoryFilter[0]));
         // console.log(value.min);
         // console.log(String(value.min));
-        // if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCityFilter[0]) === true) {
-        if (false) {
-            toast.error('Cần chọn ít nhất 1 Thành phố hoặc mục!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+        if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCategoryFilter[0]) === true) {
+        // if (false) {
+            this.setState({
+                searchList: [],
+                checkSearch: true
+            }, () => {
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
+            
         }
         else {
             var min = Number(String(value.min).replace(/\./g, ""));
@@ -398,46 +406,60 @@ class ListPlaceSearched extends Component {
     componentDidMount = () => {
         // debugger
         var { location } = this.props;
-        // console.log(location);
+        console.log(location);
         // if (location !== undefined) {
         console.log(location.search);
-        const answer_array = location.search.split('?');
-        var name = '';
-        var listCtiId = '';
-        var listCatId = '';
-        for (let index = 0; index < answer_array.length; index++) {
-            const element = answer_array[index];
-            if (element.split("=")[0] === "name") {
-                name = element.split("=")[1]
+        if (location.search !== "") {
+            const answer_array = location.search.split('?');
+            var name = '';
+            var listCtiId = '';
+            var listCatId = '';
+            for (let index = 0; index < answer_array.length; index++) {
+                const element = answer_array[index];
+                if (element.split("=")[0] === "name") {
+                    name = element.split("=")[1]
+                }
+                if (element.split("=")[0] === "listCityID") {
+                    listCtiId = element.split("=")[1]
+                }
+                if (element.split("=")[0] === "listCatID") {
+                    listCatId = element.split("=")[1]
+                }
             }
-            if (element.split("=")[0] === "listCityID") {
-                listCtiId = element.split("=")[1]
-            }
-            if (element.split("=")[0] === "listCatID") {
-                listCatId = element.split("=")[1]
-            }
+            var listCtiIdNumber = listCtiId.split(',').map(function (item) {
+                return parseInt(item, 10);
+            });
+            var listCatIdNumber = listCatId.split(',').map(function (item) {
+                return parseInt(item, 10);
+            });
+            var newDecode = decodeURIComponent(name);
+            console.log(newDecode);
+            this.setState({
+                searchName: newDecode,
+                listCtiId: listCtiIdNumber,
+                listCatId: listCatIdNumber
+            }, () => {
+                console.log(listCatId);
+                // this.getAllCategories();
+                this.getCategoriesnCity();
+                this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
+            })
+        } else {
+            this.setState({
+                searchList: [],
+            },()=>{
+                this.getCategoriesnCity();
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục!', {
+                    position: "bottom-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
         }
-        var listCtiIdNumber = listCtiId.split(',').map(function (item) {
-            return parseInt(item, 10);
-        });
-        var listCatIdNumber = listCatId.split(',').map(function (item) {
-            return parseInt(item, 10);
-        });
-        // console.log(name.replace(/%20/g, ' '));
-        var newDecode = decodeURIComponent(name);
-        console.log(newDecode);
-        this.setState({
-            // searchedName: name.replace(/%20/g, ' '),
-            searchName: newDecode,
-            listCtiId: listCtiIdNumber,
-            listCatId: listCatIdNumber
-        }, () => {
-            console.log(listCatId);
-            // this.getAllCategories();
-            this.getCategoriesnCity();
-            this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
-        })
-
     }
 
     onChangeSlider = (value) => {
@@ -466,12 +488,12 @@ class ListPlaceSearched extends Component {
     }
 
     removeDublicate = (list) => {
-        return  [...new Set(list)];
+        return [...new Set(list)];
         // console.log(unique)
         // return unique
     }
     onSelectCat = () => {
-        const { catMul, cityMul, listCtiId, listCatId } = this.state
+        const { catMul, cityMul, listCtiId, listCatId, searchName } = this.state
         // console.log(listCtiId);
         // console.log(listCatId);
         // console.log(cityMul);
@@ -481,21 +503,21 @@ class ListPlaceSearched extends Component {
         // console.log(jointCityID)
         // console.log(jointCategoryID)
         // this.removeDublicate(jointCityID)
-        console.log(this.removeNaN(jointCityID))
-        console.log(this.removeNaN(jointCategoryID))
+        // console.log(this.removeNaN(jointCityID))
+        // console.log(this.removeNaN(jointCategoryID))
         const cityRemoveNaN = this.removeNaN(jointCityID)
         const cateRemoveNaN = this.removeNaN(jointCategoryID)
         const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
         const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
-        console.log(cityRemoveDub)
-        console.log(cateRemoveDub)
+        // console.log(cityRemoveDub)
+        // console.log(cateRemoveDub)
 
         // console.log(isNaN(jointCityID[0]))
         // console.log(isNaN(jointCategoryID[0]))
         // console.log(jointCityID.length)
         // console.log(jointCategoryID.length)
         // var pathLink = this.props.history.location.search;
-        var pathLink = "";
+        var pathLink = `/searchedPlace${searchName?`?name=${searchName}`:""}`;
         // console.log(catMul)
         // console.log(cityMul)
         // console.log(this.props.history.location.search);
@@ -516,9 +538,12 @@ class ListPlaceSearched extends Component {
         if (cateRemoveDub.length > 0) {
             pathLink += pathListCat;
         }
-        this.props.history.push(pathLink);
+        if (pathLink !== "") {
+            this.props.history.push(pathLink);
+        }
         // this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
-        this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
+        // this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
+        this.receivedData(this.state.searchName, cityRemoveDub,cateRemoveDub);
     }
 
     onResetSliderSet = () => {
@@ -698,7 +723,7 @@ class ListPlaceSearched extends Component {
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
-                                        <div style={{ visibility: loader.loading === true ? "hidden" : "visible" }}>
+                                        <div style={{ visibility: loader.loading === true || this.state.checkSearch === true ? "hidden" : "visible" }}>
                                             <Pagination
                                                 hideNavigation
                                                 hideFirstLastPages

@@ -74,7 +74,7 @@ class PlaceDetail extends Component {
         if (array.length > 0) {
             result = array.map((item, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <div>
                             <img
                                 width="100%"
