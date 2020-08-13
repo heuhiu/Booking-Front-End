@@ -48,8 +48,9 @@ class App extends Component {
         const { showLoader, hideLoader } = this.props;
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-        showLoader();
+       
         if (tokenLogin) {
+            showLoader();
             var decoded = jwtDecode(tokenLogin);
             // console.log(decoded);
             const id = decoded.user.userId;
