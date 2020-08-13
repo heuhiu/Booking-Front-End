@@ -10,6 +10,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { showLoader, hideLoader } from '../../actions/index';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -160,52 +163,102 @@ class Payment extends Component {
 
     purchaseLater = () => {
         const { location, visitorType, loggedUser } = this.props;
-        var orderItems = [];
-        var item = {
-            visitorTypeId: null,
-            visitorTypeName: null,
-            quantity: null
-        }
-        for (let index = 0; index < visitorType.length; index++) {
-            item = {
-                visitorTypeId: visitorType[index].visitorTypeId,
-                quantity: visitorType[index].quantity
+        if (this.state.myPercen === 0) {
+            toast.error('Bạn cần xác thực thông tin liên lạc!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' })
+        } else {
+            var orderItems = [];
+            var item = {
+                visitorTypeId: null,
+                visitorTypeName: null,
+                quantity: null
             }
-            orderItems.push(item)
+            for (let index = 0; index < visitorType.length; index++) {
+                item = {
+                    visitorTypeId: visitorType[index].visitorTypeId,
+                    quantity: visitorType[index].quantity
+                }
+                orderItems.push(item)
+            }
+            console.log("khong ton tai status");
+            this.callApiPurchaseLater(location.state.ticketTypeID, location.state.ticketName, loggedUser.id, loggedUser.firstName, loggedUser.lastName, loggedUser.mail, loggedUser.phoneNumber, location.state.totalPayment, location.state.redemptionDate, orderItems)
+            // callApi('order', 'post', {
+            //     // them id order
+            //     ticketTypeId: location.state.ticketTypeID,
+            //     ticketTypeName: location.state.ticketName,
+            //     userId: loggedUser.id,
+            //     firstName: loggedUser.firstName,
+            //     lastName: loggedUser.lastName,
+            //     mail: loggedUser.mail,
+            //     phoneNumber: loggedUser.phoneNumber,
+            //     totalPayment: location.state.totalPayment,
+            //     purchaseDay: new Date(),
+            //     redemptionDate: location.state.redemptionDate,
+            //     orderItems: orderItems
+            // })
+            //     .then(res => {
+            //         console.log(res);
+            //     }).catch(function (error) {
+            //         if (error.response) {
+            //             console.log(error.response.data);
+            //         }
+            //     });
         }
-        console.log("khong ton tai status");
-        callApi('order', 'post', {
+    }
+
+    callApiPurchaseLater = async (ticketTypeId, ticketTypeName, userId, firstName, lastName, mail, phoneNumber, totalPayment, redemptionDate, orderItems) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi('order', 'post', {
             // them id order
-            ticketTypeId: location.state.ticketTypeID,
-            ticketTypeName: location.state.ticketName,
-            userId: loggedUser.id,
-            firstName: loggedUser.firstName,
-            lastName: loggedUser.lastName,
-            mail: loggedUser.mail,
-            phoneNumber: loggedUser.phoneNumber,
-            totalPayment: location.state.totalPayment,
+            ticketTypeId: ticketTypeId,
+            ticketTypeName: ticketTypeName,
+            userId: userId,
+            firstName: firstName,
+            lastName: lastName,
+            mail: mail,
+            phoneNumber: phoneNumber,
+            totalPayment: totalPayment,
             purchaseDay: new Date(),
-            redemptionDate: location.state.redemptionDate,
+            redemptionDate: redemptionDate,
             orderItems: orderItems
         })
             .then(res => {
                 console.log(res);
+                hideLoader();
+                toast.success('Đặt vé trả sau thành công!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch(function (error) {
                 if (error.response) {
+                    hideLoader();
                     console.log(error.response.data);
                 }
             });
-
     }
     render() {
 
         const { location, visitorType } = this.props;
         console.log(visitorType);
-        if (location.state.orderStatus) {
-            console.log(location.state.orderStatus);
-        } else {
-            console.log("khong ton tai status");
-        }
+        // if (location.state.orderStatus) {
+        //     console.log(location.state.orderStatus);
+        // } else {
+        //     console.log("khong ton tai status");
+        // }
 
         if (location.state === undefined) {
             return (
@@ -242,6 +295,7 @@ class Payment extends Component {
                 >
                     {/* {this.scrollToStep1()} */}
                     <Menu />
+                    <ToastContainer />
                     <br></br>
                     <br></br>
                     <br></br>
@@ -597,6 +651,7 @@ class Payment extends Component {
                                                             <h1>Vietcombank Hội sở chính</h1>
                                                             <p>Chủ tài khoản: Phùng Trí Đức</p>
                                                             <p>Số tài khoản: 000000000000000000</p>
+                                                            <br></br>
                                                             <h1>TPBank Hà Đông</h1>
                                                             <p>Chủ tài khoản: Phùng Trí Đức</p>
                                                             <p>Số tài khoản: 000000000000000000</p>
@@ -729,8 +784,8 @@ class Payment extends Component {
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
                                             {/* <p>Người lớn : 2</p> */}
-                                            {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"} 
-                                    </div>
+                                            {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"}
+                                        </div>
                                     </div>
 
                                     <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
@@ -876,7 +931,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
     }
 }
 

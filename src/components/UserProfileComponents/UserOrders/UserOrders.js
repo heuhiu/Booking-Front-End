@@ -105,7 +105,7 @@ class UserOrders extends Component {
                             <div className={`detailTicketChild${item.status} col-12`}>
                                 <div className="row">
                                     <div className="col-4">
-                                        <p>Đặt chỗ số: {item.status} </p>
+                                        <p>Đặt chỗ số: {item.orderCode} </p>
                                     </div>
                                     <div className="col-4">
                                         <p>Thời gian: (thanh toán?) :

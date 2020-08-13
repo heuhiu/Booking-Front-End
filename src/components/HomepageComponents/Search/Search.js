@@ -37,7 +37,9 @@ class Search extends Component {
     searchPathLink = () => {
         const { cityMul, catMul } = this.state;
         var pathLink = '/searchedPlace';
-        const pathName = `?name=${this.state.txtParkName}`
+        // console.log(this.removeSpace(this.state.txtParkName));
+        // const pathName = `?name=${this.state.txtParkName}`
+        const pathName = `?name=${this.removeSpace(this.state.txtParkName)}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
         const pathListCat = `?listCatID=${this.state.catMul.join()}`
 
@@ -78,18 +80,38 @@ class Search extends Component {
         return /^[a-zA-Z0-9 ]{0,225}$/g.test(str);
         // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
     }
-    
+
+    removeSpace = (str) => {
+        return str.replace(/\s+/gi, " ");
+    }
+
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
+
         e.preventDefault();
         console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
             console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
-
-        if (this.state.txtParkName === "") {
-            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+        const n = this.state.txtParkName.localeCompare(" ");
+        console.log(n);
+        if (n == 0) {
+            console.log("aa")
+        }
+            if (this.state.txtParkName === "") {
+                toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        if (this.isValid(this.state.txtParkName) === false) {
+            toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -99,17 +121,6 @@ class Search extends Component {
                 progress: undefined,
             });
         }
-        // if (this.isValid(this.state.txtParkName) === false) {
-        //     toast.error('Vui lòng không điền kí tự đặc biệt!', {
-        //         position: "bottom-right",
-        //         autoClose: 5000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //     });
-        // }
         else {
             this.props.history.push(`${this.searchPathLink()}`);
         }
@@ -142,7 +153,7 @@ class Search extends Component {
                         <div className="textfield-search one-third">
                             <input
                                 type="text"
-                                maxlength="225"
+                                maxLength="225"
                                 className="form-control"
                                 placeholder="Tìm kiếm hoạt động hoặc điểm đến"
                                 name="txtParkName"

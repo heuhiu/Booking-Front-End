@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { connect } from 'react-redux';
-import { getUserLogin } from './actions/index';
+import { getUserLogin, showLoader, hideLoader } from './actions/index';
 import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -19,21 +19,24 @@ class App extends Component {
         this.state = {
         }
     }
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        const {showLoader, hideLoader} = this.props;
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+        showLoader();
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
             // console.log(decoded);
             const id = decoded.user.userId;
             // this.props.fetchUserDetail(decoded.user);
-            callApi("login/checkToken", 'POST', null)
+            await callApi("login/checkToken", 'POST', null)
                 .then(res => {
                     // console.log(res);
                     callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
-                            // console.log(res);
+                            console.log(res);
                             this.props.fetchUserDetail(res.data);
+                            hideLoader();
                         }).catch(function (error) {
                             if (error.response) {
                                 console.log(error.response.data);
@@ -47,7 +50,7 @@ class App extends Component {
                 });
         }
     }
-    
+
     render() {
         return (
             <Router>
@@ -84,6 +87,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchUserDetail: (user) => {
             dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

@@ -205,10 +205,21 @@
 
 .purchaseLaterBtn{
     margin-top: 50px;
-    border: 1px solid green;
     background: #FF7062;
     border-radius: 10px;
     padding: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    flex: none;
+    order: 0;
+    align-self: center;
+    margin: 10px 0px;
+    padding: 20px;
+    cursor: pointer;
 }
 
 .purchaseLaterBox{
@@ -225,5 +236,13 @@
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
+    color: #5B5B5B;
+}
+.purchaseLaterBox p{
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
     color: #5B5B5B;
 }

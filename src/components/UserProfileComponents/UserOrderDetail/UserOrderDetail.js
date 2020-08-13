@@ -100,7 +100,7 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.status} </div>
+                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
                         <div className="content2"><p>Số tiền thanh toán:
                             <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
@@ -191,7 +191,7 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.status} </div>
+                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
                         <div className="content2"><p>Số tiền thanh toán:
                             <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
@@ -202,11 +202,17 @@ class UserOrderDetail extends Component {
 
                         </div>
                         <div className="col-4" >
-                            <svg className="svgLG" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            {/* <svg className="svgLG" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="55" cy="55" r="55" fill="#FF7062" />
                                 <path d="M36 68C53.6731 68 68 53.6731 68 36C68 18.3269 53.6731 4 36 4C18.3269 4 4 18.3269 4 36C4 53.6731 18.3269 68 36 68Z" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M36 17V35.75L49 42" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg> */}
+                            <svg className="svgLG" width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="55" cy="55" r="55" fill="#FF7062" />
+                                <path d="M55 87C72.6731 87 87 72.6731 87 55C87 37.3269 72.6731 23 55 23C37.3269 23 23 37.3269 23 55C23 72.6731 37.3269 87 55 87Z" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M55 36V54.75L68 61" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
+
                         </div>
                         <div className="col-4" >
 
@@ -217,6 +223,7 @@ class UserOrderDetail extends Component {
                             <p className="mp3"> Chờ thanh toán</p>
                             <p className="mp1">Bạn cần thanh toán trong vòng 2 giờ kể từ khi hoàn thành thông tin đơn hàng</p>
                             {/* <p className="mp2">{orderDetail.mail}</p> */}
+                            <br></br>
                             <Link
                                 onClick={this.fetchOrders}
                                 className="btnRequestPayment"
@@ -296,7 +303,7 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.status} </div>
+                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
                         <div className="content2"><p>Số tiền thanh toán:
                             <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
@@ -385,7 +392,7 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.status} </div>
+                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
                         <div className="content2"><p>Số tiền thanh toán:
                             <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>

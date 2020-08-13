@@ -209,11 +209,11 @@ class UserUpdateInformation extends Component {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
         const id = loggedUser.id;
-        console.log(id);
-        console.log(myfirstName.value);
-        console.log(lastName.value);
-        console.log(phoneNumber.value);
-        console.log(dob.value);
+        // console.log(id);
+        // console.log(myfirstName.value);
+        // console.log(lastName.value);
+        // console.log(phoneNumber.value);
+        // console.log(dob.value);
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
             toast.error('Tên Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {

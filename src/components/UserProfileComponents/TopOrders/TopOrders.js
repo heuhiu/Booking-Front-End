@@ -86,6 +86,7 @@ class TopOrders extends Component {
             var result = null;
             if (topOrders.length > 0) {
                 result = topOrders.map((item, index) => {
+                    console.log(item)
                     return (
                         <div key={index}
                             className="detailTicketBoxDetail row no-gutters">
@@ -94,7 +95,7 @@ class TopOrders extends Component {
                                 <div className={`detailTicketChild${item.status} col-12`}>
                                     <div className="row">
                                         <div className="col-4">
-                                            <p>Đặt chỗ số: {item.status} </p>
+                                            <p>Đặt chỗ số: {item.orderCode} </p>
                                         </div>
                                         <div className="col-4">
                                             <p>Thời gian: (thanh toán?) :

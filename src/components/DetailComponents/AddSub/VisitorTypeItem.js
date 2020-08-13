@@ -5,6 +5,9 @@ import './AddSub.css';
 import axios from 'axios';
 import { isFirstDayOfMonth } from 'date-fns';
 // const radioToolbar = "radio-toolbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 var quantity = 0;
 
 class VisitorTypeItem extends Component {
@@ -33,12 +36,14 @@ class VisitorTypeItem extends Component {
                         borderRadius: '10px',
                     }}>
                         <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5" style={{ display: "table" }} >
-                            <p className="myTitleType">
+                            <p style={{width: "300px"}} className="myTitleType">
                                 {item.typeName}
-                            &nbsp; &nbsp; &nbsp; &nbsp;
-                            Còn lại: {item.remaining - myQuan} vé
                             </p>
+                            <span className="myTitleType">Còn lại: {item.remaining - myQuan} vé</span>
                         </div>
+                        {/* <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1" style={{ display: "table" }} >
+                            <span style={{textAlign: "left"}} className="myTitleType">Còn lại: {item.remaining - myQuan} vé</span>
+                        </div> */}
                         <div className="col-lg-5 col-md-4 col-sm-3 col-xs-3" style={{ display: "table" }} >
                             <p className="myTitlePrice"> {item.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                         </div>
@@ -66,10 +71,22 @@ class VisitorTypeItem extends Component {
 
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, visitorType } = this.props;
+        console.log(item)
+        console.log(quantity)
+        if (item.remaining - quantity == -1 ) {
+            toast.error(`Loại vé dành cho ${item.typeName} đã hết`, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
         if (quantity >= 0 && (item.remaining - quantity) >=0 ) {
             fetchVisitor2(item.id, quantity, item.price, item.typeName);
             this.forceUpdate()
-
         }
     }
 

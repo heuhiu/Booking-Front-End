@@ -193,6 +193,7 @@ class ReTicketType extends Component {
                     className="ticketBox"
                     style={{ fontFamily: 'Inter' }}
                 >
+                   
                     <div className="row no-gutters">
                         <div className="col-5">
                             <div

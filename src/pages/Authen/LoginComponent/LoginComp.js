@@ -142,10 +142,10 @@ class LoginComp extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
-                    
                     console.log(error.response.data);
                     if (error.response.data === "ACCOUNT_NOT_ACTIVATED") {
                         // alert("ACCOUNT_NOT_ACTIVATED");
+                        hideLoader();
                         toast.error('Tài khoản chưa được kích hoạt, vui lòng kiểm tra mail!', {
                             position: "bottom-right",
                             autoClose: 5000,
@@ -155,9 +155,11 @@ class LoginComp extends Component {
                             draggable: true,
                             progress: undefined,
                         });
+                        
                     } else {
                         // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
                         // alert("Wrong User Name or Password");
+                        hideLoader();
                         toast.error('Sai mật khẩu hoặc tài khoản!', {
                             position: "bottom-right",
                             autoClose: 5000,
@@ -168,6 +170,7 @@ class LoginComp extends Component {
                             progress: undefined,
                         });
                     }
+                    hideLoader();
                     // }
                     // history.push("/login");
                 }

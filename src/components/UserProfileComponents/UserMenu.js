@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import testImg from '../../img/Detailpic.png'
 import callApi from '../../config/utils/apiCaller';
+import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 
 const menus = [
     {
@@ -66,12 +67,44 @@ class UserMenu extends Component {
         }
     }
 
+    // fetchUserDetailAgain = async () => {
+    //     const {showLoader, hideLoader} = this.props;
+    //     var jwtDecode = require('jwt-decode');
+    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+    //     showLoader();
+    //     if (tokenLogin) {
+    //         var decoded = jwtDecode(tokenLogin);
+    //         // console.log(decoded);
+    //         const id = decoded.user.userId;
+    //         // this.props.fetchUserDetail(decoded.user);
+    //         await callApi("login/checkToken", 'POST', null)
+    //             .then(res => {
+    //                 // console.log(res);
+    //                 callApi(`userClient/${id}`, 'GET', null)
+    //                     .then(res => {
+    //                         console.log(res.data);
+    //                         this.props.fetchUserDetail(res.data);
+    //                         hideLoader();
+    //                     }).catch(function (error) {
+    //                         if (error.response) {
+    //                             console.log(error.response.data);
+    //                         }
+    //                     });
+    //             }).catch(function (error) {
+    //                 if (error.response) {
+    //                     localStorage.removeItem('tokenLogin');
+    //                     window.location.reload();
+    //                 }
+    //             });
+    //     }
+    // }
+
     changeAvarHandle = (event) => {
         console.log("yes")
         const { loggedUser } = this.props;
         console.log(loggedUser.avatarLink);
         this.setState({
-            // file: URL.createObjectURL(event.target.files[0])
+            file2: URL.createObjectURL(event.target.files[0]),
             file: event.target.files[0]
         }, () => {
             const { loggedUser } = this.props;
@@ -82,27 +115,51 @@ class UserMenu extends Component {
             let data = new FormData();
             data.append('file', file);
             console.log(file);
-
-            callApi(`user/avatar/${id}`, 'POST', data)
-                .then(res => {
-                    console.log(res);
-                    // window.location.reload();
-                }).catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response);
-                    }
-                });
+            this.callApiChangeAvar(id, data);
+            // callApi(`user/avatar/${id}`, 'POST', data)
+            //     .then(res => {
+            //         console.log(res);
+            //         // window.location.reload();
+            //         this.fetchUserDetailAgain()
+            //     }).catch(function (error) {
+            //         if (error.response) {
+            //             console.log(error.response);
+            //         }
+            //     });
         })
-        
+
 
     }
-
+    callApiChangeAvar = async (id, data) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi(`user/avatar/${id}`, 'POST', data)
+            .then(res => {
+                console.log(res.data);
+                // window.location.reload();
+                this.props.fetchUserDetail(res.data);
+                hideLoader();
+                // this.fetchUserDetailAgain();
+                // this.forceUpdate();
+                console.log("wtf");
+                // hideLoader();
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response);
+                    hideLoader();
+                }
+            });
+    }
     render() {
         const { loggedUser } = this.props;
-        console.log(loggedUser.avatarLink);
-        console.log(this.state.file?this.state.file:"");
-        console.log(this.state.file);
-        const { file } = this.state;
+        // console.log(loggedUser.avatarLink);
+        // console.log(this.state.file?this.state.file:"");
+        // console.log(this.state.file);
+        const { file, file2 } = this.state;
+        console.log(file2);
+        console.log(file2 !== undefined);
+        var checkUpdatAva= file2 !== undefined;
+
         // if (file) {
         //     const myCut = file.split("b:");
         //     console.log(myCut[1]);
@@ -119,16 +176,18 @@ class UserMenu extends Component {
                         </div> */}
                         <div>
                             {/* <form enctype="multipart/form-data"> */}
-                                <label
-                                    style={{ backgroundImage: "url(" + loggedUser.avatarLink + ")" }}
-                                    className="logoAvar">
-                                    <svg style={{ visibility: loggedUser.avatarLink ? "hidden" : "visible" }} 
+                            <label
+                                // style={{ backgroundImage: "url(" + checkUpdatAva ? file2 : loggedUser.avatarLink + ")" }}
+                                style={{ backgroundImage: "url(" + loggedUser.avatarLink + ")" }}
+
+                                className="logoAvar">
+                                <svg style={{ visibility: loggedUser.avatarLink ? "hidden" : "visible" }}
                                     className="camreraLG" width="62" height="53" viewBox="0 0 62 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M59.4173 44.875C59.4173 46.2674 58.873 47.6027 57.904 48.5873C56.9351 49.5719 55.6209 50.125 54.2506 50.125H7.75065C6.38037 50.125 5.0662 49.5719 4.09727 48.5873C3.12833 47.6027 2.58398 46.2674 2.58398 44.875V16C2.58398 14.6076 3.12833 13.2723 4.09727 12.2877C5.0662 11.3031 6.38037 10.75 7.75065 10.75H18.084L23.2507 2.875H38.7506L43.9173 10.75H54.2506C55.6209 10.75 56.9351 11.3031 57.904 12.2877C58.873 13.2723 59.4173 14.6076 59.4173 16V44.875Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M30.9993 39.625C36.7063 39.625 41.3327 34.924 41.3327 29.125C41.3327 23.326 36.7063 18.625 30.9993 18.625C25.2924 18.625 20.666 23.326 20.666 29.125C20.666 34.924 25.2924 39.625 30.9993 39.625Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <input className="inputAvar" type="file" onChange={this.changeAvarHandle} />
-                                    {/* <img
+                                    <path d="M59.4173 44.875C59.4173 46.2674 58.873 47.6027 57.904 48.5873C56.9351 49.5719 55.6209 50.125 54.2506 50.125H7.75065C6.38037 50.125 5.0662 49.5719 4.09727 48.5873C3.12833 47.6027 2.58398 46.2674 2.58398 44.875V16C2.58398 14.6076 3.12833 13.2723 4.09727 12.2877C5.0662 11.3031 6.38037 10.75 7.75065 10.75H18.084L23.2507 2.875H38.7506L43.9173 10.75H54.2506C55.6209 10.75 56.9351 11.3031 57.904 12.2877C58.873 13.2723 59.4173 14.6076 59.4173 16V44.875Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M30.9993 39.625C36.7063 39.625 41.3327 34.924 41.3327 29.125C41.3327 23.326 36.7063 18.625 30.9993 18.625C25.2924 18.625 20.666 23.326 20.666 29.125C20.666 34.924 25.2924 39.625 30.9993 39.625Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <input className="inputAvar" type="file" onChange={this.changeAvarHandle} />
+                                {/* <img
                                     style={{
                                         visibility: this.state.file ? "visible" : "hidden",
                                         borderRadius: "50%",
@@ -138,7 +197,7 @@ class UserMenu extends Component {
                                     width="130px"
                                     height="130px"
                                     alt="Fail to load" /> */}
-                                </label>
+                            </label>
                             {/* </form> */}
                         </div>
                     </div>
@@ -216,7 +275,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        fetchUserDetail: (user) => {
+            dispatch(getUserLogin(user))
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
+        }
     }
 }
 
