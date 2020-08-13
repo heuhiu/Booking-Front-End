@@ -101,6 +101,15 @@ class ForgotPassword extends Component {
                 if (error.response) {
                     // Request made and server responded
                     console.log(error.response);
+                    toast.success('Something Wrong!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                     hideLoader()
                 }
             });

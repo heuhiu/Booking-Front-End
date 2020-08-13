@@ -14,6 +14,7 @@ import TotalPayment from '../components/DetailComponents/TotalPayment/TotalPayme
 import UserProfile from '../pages/UserProfile/UserProfile';
 import ForgotPassword from '../pages/Authen/ForgotPassword/ForgotPassword';
 import CfNewPassword from '../pages/Authen/cfNewPassword/CfNewPassword';
+import AboutUs from '../pages/AboutUs/AboutUs';
 
 
 const routers = [
@@ -87,6 +88,11 @@ const routers = [
         path: '/userProfile',
         exact: false,
         main: ({ history, match, location }) => <UserProfile location={location} history={history} match={match} />
+    },
+    {
+        path: '/aboutUs',
+        exact: false,
+        main: ({ history, match, location }) => <AboutUs location={location} history={history} match={match} />
     },
     {
         path: '/',
