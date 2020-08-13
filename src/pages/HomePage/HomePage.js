@@ -142,67 +142,8 @@ class HomePage extends Component {
         );
     }
 
-    getPlacebyCityId1 = (id) => {
-        // console.log(id);
-        const { listData1, listData2, listData3 } = this.state
-        showLoader();
-        axios.get(`${Config.API_URL}/topPlace`, {
-            params: {
-                cityId: id
-            }
-        }).then(res => {
-            console.log(res.data);
-            this.setState({
-                listData1: res.data
-            })
-            // this.state.listData.push(res.data);
-        }).catch(function (error) {
-            console.log(error);
-        });
-        // return counter;
-    }
-    getPlacebyCityId2 = (id) => {
-        // console.log(id);
-        const { listData1, listData2, listData3 } = this.state
-        showLoader();
-        axios.get(`${Config.API_URL}/topPlace`, {
-            params: {
-                cityId: id
-            }
-        }).then(res => {
-            console.log(res.data);
-            this.setState({
-                listData2: res.data
-            })
-            // this.state.listData.push(res.data);
-        }).catch(function (error) {
-            console.log(error);
-        });
-        // return counter;
-    }
-    getPlacebyCityId3 = (id) => {
-        // console.log(id);
-        const { listData1, listData2, listData3 } = this.state
-
-        showLoader();
-        axios.get(`${Config.API_URL}/topPlace`, {
-            params: {
-                cityId: id
-            }
-        }).then(res => {
-            console.log(res.data);
-            this.setState({
-                listData3: res.data
-            })
-            // this.state.listData.push(res.data);
-        }).catch(function (error) {
-            console.log(error);
-        });
-        // return counter;
-    }
-
     render() {
-        const { topCity, id1, id2, id3, listData1, listData2, listData3 } = this.state;
+        const { topCity, listData1, listData2, listData3 } = this.state;
         return (
             <div>
                 <Menu />

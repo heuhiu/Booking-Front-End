@@ -13,6 +13,7 @@ import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showLoader, hideLoader } from '../../actions/index';
+import * as regex from '../../constants/Regex';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -78,7 +79,8 @@ class Payment extends Component {
         var checkingResult = '';
         switch (type) {
             case "firstName":
-                regexp = /^^[^\s].+[^\s]$/;
+                // regexp = /^^[^\s].+[^\s]$/;
+                regexp = regex.FIRST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -92,7 +94,8 @@ class Payment extends Component {
                     };
                 }
             case "lastName":
-                regexp = /^^[^\s].+[^\s]$/;
+                // regexp = /^^[^\s].+[^\s]$/;
+                regexp = regex.LAST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -106,7 +109,8 @@ class Payment extends Component {
                     };
                 }
             case "phoneNumb":
-                regexp = /^\d{10,11}$/;
+                // regexp = /^\d{10,11}$/;
+                regexp = regex.PHONE_NUMBER;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -120,7 +124,8 @@ class Payment extends Component {
                     };
                 }
             case "email":
-                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                // regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                regexp = regex.EMAIL;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -188,7 +193,7 @@ class Payment extends Component {
                 }
                 orderItems.push(item)
             }
-            console.log("khong ton tai status");
+            // console.log("khong ton tai status");
             this.callApiPurchaseLater(location.state.ticketTypeID, location.state.ticketName, loggedUser.id, loggedUser.firstName, loggedUser.lastName, loggedUser.mail, loggedUser.phoneNumber, location.state.totalPayment, location.state.redemptionDate, orderItems)
             // callApi('order', 'post', {
             //     // them id order
@@ -233,7 +238,7 @@ class Payment extends Component {
             placeId: location.state.place.id
         })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 hideLoader();
                 toast.success('Đặt vé trả sau thành công!', {
                     position: "bottom-right",
@@ -254,7 +259,7 @@ class Payment extends Component {
     render() {
 
         const { location, visitorType } = this.props;
-        console.log(visitorType);
+        // console.log(visitorType);
         // if (location.state.orderStatus) {
         //     console.log(location.state.orderStatus);
         // } else {
@@ -272,24 +277,24 @@ class Payment extends Component {
 
             var prnDt = location.state.redemptionDate.toLocaleDateString('vi', dateType);
 
-            console.log(location.state);
-            console.log(location.state.ticketTypeID);
-            console.log(location.state.ticketName);
-            console.log(location.state.totalPayment);
-            console.log(location.state.redemptionDate);
-            console.log(location.state.place);
+            // console.log(location.state);
+            // console.log(location.state.ticketTypeID);
+            // console.log(location.state.ticketName);
+            // console.log(location.state.totalPayment);
+            // console.log(location.state.redemptionDate);
+            // console.log(location.state.place);
             // console.log(this.state.email.value);
             // var x = 1000;
             // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
 
             const myLocation = location;
-            console.log(myLocation);
-            console.log(myLocation.state);
+            // console.log(myLocation);
+            // console.log(myLocation.state);
             const ticketName = myLocation.state.ticketName;
             const { accomplished } = this.state;
             const { loggedUser } = this.props;
-            console.log(loggedUser);
+            // console.log(loggedUser);
             return (
 
                 <div

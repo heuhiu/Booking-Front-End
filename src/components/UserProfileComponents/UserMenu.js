@@ -146,21 +146,21 @@ class UserMenu extends Component {
     // }
 
     changeAvarHandle = (event) => {
-        console.log("yes")
+        // console.log("yes")
         const { loggedUser } = this.props;
-        console.log(loggedUser.avatarLink);
+        // console.log(loggedUser.avatarLink);
         this.setState({
             file2: URL.createObjectURL(event.target.files[0]),
             file: event.target.files[0]
         }, () => {
             const { loggedUser } = this.props;
             const { file } = this.state;
-            console.log(file)
+            // console.log(file)
             const id = loggedUser.id;
 
             let data = new FormData();
             data.append('file', file);
-            console.log(file);
+            // console.log(file);
             this.callApiChangeAvar(id, data);
             // callApi(`user/avatar/${id}`, 'POST', data)
             //     .then(res => {
@@ -181,13 +181,13 @@ class UserMenu extends Component {
         showLoader();
         await callApi(`user/avatar/${id}`, 'POST', data)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 // window.location.reload();
                 this.props.fetchUserDetail(res.data);
                 hideLoader();
                 // this.fetchUserDetailAgain();
                 // this.forceUpdate();
-                console.log("wtf");
+                // console.log("wtf");
                 // hideLoader();
             }).catch(function (error) {
                 if (error.response) {
@@ -202,8 +202,8 @@ class UserMenu extends Component {
         // console.log(this.state.file?this.state.file:"");
         // console.log(this.state.file);
         const { file, file2 } = this.state;
-        console.log(file2);
-        console.log(file2 !== undefined);
+        // console.log(file2);
+        // console.log(file2 !== undefined);
         var checkUpdatAva = file2 !== undefined;
 
         // if (file) {

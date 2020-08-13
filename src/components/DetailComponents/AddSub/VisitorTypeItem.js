@@ -71,8 +71,8 @@ class VisitorTypeItem extends Component {
 
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, visitorType } = this.props;
-        console.log(item)
-        console.log(quantity)
+        // console.log(item)
+        // console.log(quantity)
         if (item.remaining - quantity == -1 ) {
             toast.error(`Loại vé dành cho ${item.typeName} đã hết`, {
                 position: "bottom-right",

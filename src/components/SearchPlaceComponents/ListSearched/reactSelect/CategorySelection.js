@@ -80,8 +80,8 @@ class CategorySelection extends Component {
     };
 
     defaultValue = (catSelect, options) => {
-        console.log(options);
-        console.log(catSelect);
+        // console.log(options);
+        // console.log(catSelect);
         var wtf = [];
         for (let index = 0; index < options.length; index++) {
             const element = options[index].value;
@@ -100,7 +100,7 @@ class CategorySelection extends Component {
         if (options[0] !== undefined) {
             // console.log(options);
             // console.log(options[0].value);
-            console.log(catSelect[0]);
+            // console.log(catSelect[0]);
             this.defaultValue(catSelect, options);
             return (
                 <Select

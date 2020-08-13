@@ -60,7 +60,7 @@ class Search extends Component {
                 pathLink += pathListCat;
             }
         }
-        console.log(pathLink);
+        // console.log(pathLink);
         return pathLink;
     }
 
@@ -89,29 +89,15 @@ class Search extends Component {
     onSubmitSearch = (e) => {
 
         e.preventDefault();
-        console.log(this.state.cityMul.length);
+        // console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
-            console.log(this.searchPathLink());
+            // console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
-        const n = this.state.txtParkName.localeCompare(" ");
-        console.log(n);
-        if (n == 0) {
-            console.log("aa")
-        }
-            if (this.state.txtParkName === "") {
-                toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
-        if (this.isValid(this.state.txtParkName) === false) {
-            toast.error('Vui lòng không điền kí tự đặc biệt!', {
+        var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
+        console.log(str);
+        if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
+            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -121,7 +107,17 @@ class Search extends Component {
                 progress: undefined,
             });
         }
-        else {
+        else if (this.isValid(this.state.txtParkName) === false) {
+            toast.error('Vui lòng không điền kí tự đặc biệt!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
             this.props.history.push(`${this.searchPathLink()}`);
         }
     }

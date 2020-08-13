@@ -8,6 +8,7 @@ import backG from '../../../img/LoginPaper.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+import * as regex from '../../../constants/Regex';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -50,7 +51,8 @@ class ForgotPassword extends Component {
         var checkingResult = '';
         switch (type) {
             case "email":
-                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                // regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                regexp = regex.EMAIL;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {

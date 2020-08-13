@@ -93,7 +93,7 @@ class Menu extends Component {
         // this.props.history.push("/");
         callApi("login/logout", 'POST', null)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 localStorage.removeItem('tokenLogin');
                 localStorage.removeItem('USER');
                 // window.location.reload();

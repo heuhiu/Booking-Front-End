@@ -4,6 +4,7 @@ import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as regex from '../../../constants/Regex';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -72,7 +73,8 @@ class UserUpdateInformation extends Component {
         var checkingResult = '';
         switch (type) {
             case "email":
-                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                // regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                regexp = regex.EMAIL;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -86,7 +88,8 @@ class UserUpdateInformation extends Component {
                     };
                 }
             case "password":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                regexp = regex.PASSWORD;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -120,7 +123,7 @@ class UserUpdateInformation extends Component {
                     };
                 }
             case "myfirstName":
-                regexp = /^[^\s].+[^\s]$/;
+                regexp = regex.FIRST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null || this.state.myfirstName.value === '') {
                     return {
@@ -130,11 +133,12 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
+                        errorMessage: 'Có ísst nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
                     };
                 }
             case "lastName":
-                regexp = /^[^\s].+[^\s]$/;
+                // regexp = /^[^\s].+[^\s]$/;
+                regexp = regex.LAST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null || this.state.lastName.value === '') {
                     return {
@@ -148,7 +152,7 @@ class UserUpdateInformation extends Component {
                     };
                 }
             case "dob":
-                regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
+                regexp = regex.DATE_OF_BIRTH;
                 checkingResult = regexp.exec(checkingText.toString());
                 if (checkingResult !== null || this.state.dob.value === '') {
                     // if (true) {
@@ -163,7 +167,8 @@ class UserUpdateInformation extends Component {
                     };
                 }
             case "phoneNumber":
-                regexp = /^\d{10,11}$/;
+                // regexp = /^\d{10,11}$/;
+                regexp = regex.PHONE_NUMBER;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null || this.state.phoneNumber.value === '') {
                     return {
@@ -188,12 +193,12 @@ class UserUpdateInformation extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        console.log(check);
+        // console.log(check);
         if (name === "dob" && check === false) {
             this.setState({
                 check: true
             })
-            console.log(check);
+            // console.log(check);
         } else if (name === "dob" && check === true) {
             this.setState({
                 check: false
@@ -202,7 +207,7 @@ class UserUpdateInformation extends Component {
         this.setState({
             [name]: newState,
         })
-        console.log(check);
+        // console.log(check);
     }
 
     updateUserDetail = () => {
@@ -298,7 +303,7 @@ class UserUpdateInformation extends Component {
     callAPIChangeUserInfor = async (id) => {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser, showLoader, hideLoader } = this.props;
-        console.log(dob.value);
+        // console.log(dob.value);
         showLoader();
         await callApi(`userClient/${id}`, 'PUT',
             {
@@ -308,7 +313,7 @@ class UserUpdateInformation extends Component {
                 phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
             })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.props.fetchUserDetail(res.data);
                 hideLoader();
                 toast.success('Thay đổi thông tin thành công!', {
@@ -331,11 +336,11 @@ class UserUpdateInformation extends Component {
     render() {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
-        console.log(myfirstName.value);
-        console.log(lastName.value);
-        console.log(phoneNumber.value);
-        console.log(dob.value);
-        console.log(lastName.isInputValid);
+        // console.log(myfirstName.value);
+        // console.log(lastName.value);
+        // console.log(phoneNumber.value);
+        // console.log(dob.value);
+        // console.log(lastName.isInputValid);
         return (
             <div
                 className="col">

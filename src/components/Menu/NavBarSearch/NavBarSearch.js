@@ -68,9 +68,9 @@ class NavBarSearch extends Component {
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
         e.preventDefault();
-        console.log(this.state.cityMul.length);
+        // console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
-            console.log(this.searchPathLink());
+            // console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
 
@@ -102,7 +102,7 @@ class NavBarSearch extends Component {
     render() {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
-        console.log(txtParkName);
+        // console.log(txtParkName);
 
         return (
             <div>

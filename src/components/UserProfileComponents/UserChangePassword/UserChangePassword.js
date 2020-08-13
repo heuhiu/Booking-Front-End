@@ -4,6 +4,7 @@ import testImg from '../../../img/Detailpic.png';
 import callApi from '../../../config/utils/apiCaller';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as regex from '../../../constants/Regex';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -49,7 +50,9 @@ class UserChangePassword extends Component {
         var checkingResult = '';
         switch (type) {
             case "password":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                regexp = regex.PASSWORD;
+
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -63,7 +66,8 @@ class UserChangePassword extends Component {
                     };
                 }
             case "newPassword":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                regexp = regex.PASSWORD;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -115,12 +119,12 @@ class UserChangePassword extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        console.log(check);
+        // console.log(check);
         if (name === "dob" && check === false) {
             this.setState({
                 check: true
             })
-            console.log(check);
+            // console.log(check);
         } else if (name === "dob" && check === true) {
             this.setState({
                 check: false
@@ -129,14 +133,14 @@ class UserChangePassword extends Component {
         this.setState({
             [name]: newState,
         })
-        console.log(check);
+        // console.log(check);
     }
 
     changePassword = (e) => {
         const { password, RePassword, newPassword } = this.state;
-        console.log(password.value);
-        console.log(RePassword.value);
-        console.log(newPassword.value);
+        // console.log(password.value);
+        // console.log(RePassword.value);
+        // console.log(newPassword.value);
 
         e.preventDefault();
         if (true) {
@@ -180,9 +184,9 @@ class UserChangePassword extends Component {
             e.stopPropagation();
         } else {
             const { loggedUser } = this.props;
-            console.log(loggedUser.id);
-            console.log(password.value);
-            console.log(newPassword.value);
+            // console.log(loggedUser.id);
+            // console.log(password.value);
+            // console.log(newPassword.value);
             const oldPass = password.value;
             const newPass = newPassword.value
             let data = new FormData();
@@ -205,7 +209,7 @@ class UserChangePassword extends Component {
                     }
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data = "WRONG_OLD_PASSWORD");
+                        // console.log(error.response.data = "WRONG_OLD_PASSWORD");
                         toast.error('Mật khẩu cũ không chính xác!', {
                             position: "bottom-right",
                             autoClose: 5000,

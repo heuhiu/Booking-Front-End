@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Detail.css';
 import '../RightPartDetail/RightPartDetail.css';
-import TicketType from '../TicketType/TicketType';
-// import RightPartDetail from '../RightPartDetail/RightPartDetail';
 import DetailPic from '../../../img/Detailpic.png';
-// import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import TabDetail from '../TabDetail/TabDetai';
-import MapComponent from '../MapComponent/MapComponent';
-// import callApi from '../../../config/utils/apiCaller';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import ReTicketType from '../TicketType/ReTicketType';
-import { pl } from 'date-fns/locale';
 import { showLoader, hideLoader } from '../../../actions/index';
 
 class Detail extends Component {
@@ -31,7 +24,6 @@ class Detail extends Component {
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
 
     showShortDescrip = (shortDesCrip) => {
-        const {showLoader, hideLoader} = this.props;
         const splitArray = shortDesCrip.split('<br><br>');
         var result = null;
         if (splitArray.length > 0) {
@@ -54,8 +46,8 @@ class Detail extends Component {
 
     render() {
         var {place} = this.props
-        console.log(place);
-        console.log(place.weekDays);
+        // console.log(place);
+        // console.log(place.weekDays);
         if (place !== undefined) {
             return (
                 <div

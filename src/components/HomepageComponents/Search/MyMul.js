@@ -61,7 +61,7 @@ class MyMul extends Component {
                 this.setState({
                     listCategory: res.data
                 })
-                console.log(res);
+                // console.log(res);
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {

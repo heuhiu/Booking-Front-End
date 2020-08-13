@@ -8,6 +8,8 @@ import axios from 'axios';
 import backG from '../../../img/LoginPaper.png';
 import Menu from '../../../components/Menu/Menu';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
+import * as regex from '../../../constants/Regex';
+
 function FormError(props) {
     if (props.isHidden) { return null; }
     return (
@@ -75,7 +77,8 @@ class RegisterComp extends Component {
         var checkingResult = '';
         switch (type) {
             case "email":
-                regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                // regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+                regexp = regex.EMAIL;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -89,7 +92,8 @@ class RegisterComp extends Component {
                     };
                 }
             case "password":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                regexp = regex.PASSWORD;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -124,7 +128,8 @@ class RegisterComp extends Component {
                 }
             case "myfirstName":
                 // regexp = /^[^\s].+[^\s]$/;
-                regexp = /^[^\s][a-zA-Z ][^\s]*$/;
+                // regexp = /^[^\s][a-zA-Z ][^\s]*$/;
+                regexp = regex.FIRST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -138,7 +143,8 @@ class RegisterComp extends Component {
                     };
                 }
             case "lastName":
-                regexp = /^[^\s][a-zA-Z ][^\s]*$/;
+                // regexp = /^[^\s][a-zA-Z ][^\s]*$/;
+                regexp = regex.LAST_NAME;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -152,7 +158,8 @@ class RegisterComp extends Component {
                     };
                 }
             case "dob":
-                regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
+                // regexp = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:[2468][048]|[13579][26])00))(\/|-|\.)(?:0?2\1(?:29)))|(?:(?:[1-9]\d{3})(\/|-|\.)(?:(?:(?:0?[13578]|1[02])\2(?:31))|(?:(?:0?[13-9]|1[0-2])\2(?:29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\2(?:0?[1-9]|1\d|2[0-8])))))$/;
+                regexp = regex.DATE_OF_BIRTH;
                 checkingResult = regexp.exec(checkingText.toString());
                 if (checkingResult !== null) {
                     // if (true) {
@@ -167,7 +174,8 @@ class RegisterComp extends Component {
                     };
                 }
             case "phoneNumber":
-                regexp = /^\d{10,11}$/;
+                // regexp = /^\d{10,11}$/;
+                regexp = regex.PHONE_NUMBER;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -203,7 +211,7 @@ class RegisterComp extends Component {
             this.setState({
                 check: true
             })
-            console.log(check);
+            // console.log(check);
         } else if (name === "dob" && check === true) {
             this.setState({
                 check: false
@@ -342,7 +350,7 @@ class RegisterComp extends Component {
             e.preventDefault();
             e.stopPropagation();
         } else {
-            console.log("GO to susscess");
+            // console.log("GO to susscess");
             const mailRegis = email.value;
             // this.props.history.push({
             //     pathname: '/verify',

@@ -10,9 +10,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import vi from "date-fns/locale/vi";
 import TotalPayment from '../TotalPayment/TotalPayment';
 // import format from 'react';
-import MyCounter from '../AddSub/MyCounter';
-import axios from 'axios';
-import { el } from 'date-fns/locale';
 registerLocale("vi", vi);
 const radioToolbar = "radio-toolbar";
 
@@ -60,7 +57,7 @@ class ReTicketType extends Component {
 
     componentWillMount = () => {
         var { ticketType, weekDays } = this.props;
-        console.log(ticketType);
+        // console.log(ticketType);
         this.setState({
             ticketTypeState: ticketType,
             activeDay: weekDays
@@ -90,12 +87,12 @@ class ReTicketType extends Component {
     }
 
     setDefaultTicketType = (ticketTypes) => {
-        var result = null;
+        // var result = null;
         if (ticketTypes.length > 0) {
-            result = ticketTypes.map((ticketType, index) => {
+            var result = ticketTypes.map((ticketType, index) => {
                 if (index == 0) {
-                    console.log(ticketType.id);
-                    console.log(ticketType.typeName);
+                    // console.log(ticketType.id);
+                    // console.log(ticketType.typeName);
                     this.setState({
                         ticketTypeId: ticketType.id,
                         ticketName: ticketType.typeName
@@ -177,14 +174,14 @@ class ReTicketType extends Component {
         if (this.state.startDate !== null)
             var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
 
-        console.log(prnDt);
+        // console.log(prnDt);
         const { ticketTypeId, ticketName, startDate } = this.state;
-        console.log(ticketTypeId);
-        console.log(ticketName);
+        // console.log(ticketTypeId);
+        // console.log(ticketName);
         const { ticketType, weekDays, place } = this.props;
-        console.log(weekDays);
+        // console.log(weekDays);
         // var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-        console.log(place);
+        // console.log(place);
         var total = this.getTotalMoney();;
 
         return (

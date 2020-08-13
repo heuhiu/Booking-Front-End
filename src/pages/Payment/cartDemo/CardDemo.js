@@ -7,9 +7,7 @@ import {
 } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
-import { Link, Redirect } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
-import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
@@ -49,10 +47,10 @@ class _CardForm extends Component {
     const { orderDetail, visitorType, loggedUser } = this.props;
 
     if (orderDetail.state.orderStatus) {
-      console.log(orderDetail.state.orderStatus);
+      // console.log(orderDetail.state.orderStatus);
 
     } else {
-      console.log("khong ton tai status");
+      // console.log("khong ton tai status");
     }
 
     var orderItems = [];
@@ -134,7 +132,7 @@ class _CardForm extends Component {
     showLoader();
     await callApi('payment', 'POST', data)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         hideLoader();
         if (res) {
           this.props.history.push({
@@ -153,8 +151,8 @@ class _CardForm extends Component {
   }
 
   render() {
-    const { orderDetail, showLoader, hideLoader } = this.props;
-    console.log(this.props.loggedUser);
+    const { orderDetail } = this.props;
+    // console.log(this.props.loggedUser);
     var dateType = {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     };
@@ -279,7 +277,7 @@ const CardForm = injectStripe(_CardForm);
 class CardDemo extends Component {
   render() {
     const { orderDetail, visitorType, loggedUser,showLoader, hideLoader } = this.props;
-    console.log(orderDetail.state.place.id);
+    // console.log(orderDetail.state.place.id);
     // console.log(visitorType);
     // console.log(loggedUser)
     return (

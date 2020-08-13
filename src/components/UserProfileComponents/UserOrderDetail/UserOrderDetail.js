@@ -19,10 +19,10 @@ class UserOrderDetail extends Component {
     componentDidMount = () => {
         const { match } = this.props;
         var id = match.params.id;
-        console.log(id);
+        // console.log(id);
         callApi(`order/${id}`, 'GET', null)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     orderDetail: res.data
                 })
@@ -68,13 +68,13 @@ class UserOrderDetail extends Component {
     fetchOrders = () => {
         const { orderDetail } = this.state;
         const { fetchVisitor } = this.props;
-        console.log(orderDetail.orderItems);
+        // console.log(orderDetail.orderItems);
         fetchVisitor(orderDetail.orderItems);
     }
 
     showOrderByStatus = (orderDetail) => {
         const orderStatus = orderDetail.status;
-        console.log(orderStatus);
+        // console.log(orderStatus);
         var date = new Date(orderDetail.redemptionDate);
 
         /* PAID, UNPAID, SENT, EXPIRED */
@@ -482,8 +482,8 @@ class UserOrderDetail extends Component {
 
     render() {
         const { orderDetail } = this.state;
-        console.log(orderDetail);
-        console.log(orderDetail.redemptionDate);
+        // console.log(orderDetail);
+        // console.log(orderDetail.redemptionDate);
         return (
             <div
                 className="borderBox2 col-12">

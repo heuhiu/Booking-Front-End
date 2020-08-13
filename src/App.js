@@ -10,17 +10,42 @@ import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import FullPageLoader from './components/FullPageLoader/FullPageLoader';
-
+import {
+    BrowserView,
+} from "react-device-detect";
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            checkFetchUser: false,
+            checkToken: false
         }
     }
+
+    callApifechUser = async (id, data) => {
+        const { showLoader, hideLoader } = this.props;
+        showLoader()
+        await callApi(`userClient/${id}`, 'GET', null)
+            .then(res => {
+                // console.log(res);
+                this.props.fetchUserDetail(data);
+                this.setState({
+                    checkFetchUser: true
+                }, () => {
+                    if (this.state.checkFetchUser === true && this.state.checkToken === true) {
+                        hideLoader();
+                    }
+                })
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+    }
+
     componentDidMount = async () => {
-        const {showLoader, hideLoader} = this.props;
+        const { showLoader, hideLoader } = this.props;
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         showLoader();
@@ -31,10 +56,11 @@ class App extends Component {
             // this.props.fetchUserDetail(decoded.user);
             await callApi("login/checkToken", 'POST', null)
                 .then(res => {
-                    // console.log(res);
-                    callApi(`userClient/${id}`, 'GET', null)
+                    this.setState({ checkToken: true })
+                    console.log(res);
+                     callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
-                            console.log(res);
+                            // console.log(res);
                             this.props.fetchUserDetail(res.data);
                             hideLoader();
                         }).catch(function (error) {
@@ -42,8 +68,10 @@ class App extends Component {
                                 console.log(error.response.data);
                             }
                         });
+                    // this.callApifechUser(id, res.data)
                 }).catch(function (error) {
                     if (error.response) {
+                        hideLoader();
                         localStorage.removeItem('tokenLogin');
                         window.location.reload();
                     }
@@ -53,13 +81,15 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
-                <Container style={{ padding: "0px" }} fluid={true}>
-                    <Row noGutters={true}>
-                        <Col md={12}>{this.showContentMenus(routers)}</Col>
-                    </Row>
-                </Container>
-            </Router >
+            <BrowserView>
+                <Router>
+                    <Container style={{ padding: "0px" }} fluid={true}>
+                        <Row noGutters={true}>
+                            <Col md={12}>{this.showContentMenus(routers)}</Col>
+                        </Row>
+                    </Container>
+                </Router >
+            </BrowserView>
         );
     }
 

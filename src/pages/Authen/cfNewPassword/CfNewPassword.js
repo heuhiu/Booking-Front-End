@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 // import API_URL from '../../../constants/ConfigAPI';
 import * as Config from '../../../constants/ConfigAPI';
+import * as regex from '../../../constants/Regex';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -77,7 +78,8 @@ class CfNewPassword extends Component {
                     };
                 }
             case "password":
-                regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
+                regexp = regex.PASSWORD;
                 checkingResult = regexp.exec(checkingText);
                 if (checkingResult !== null) {
                     return {
@@ -177,7 +179,7 @@ class CfNewPassword extends Component {
 
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
-        console.log(myParam);
+        // console.log(myParam);
         // debugger
         showLoader()
         await axios.get(`${Config.API_URL}/user/verifyChangePasswordToken`, {

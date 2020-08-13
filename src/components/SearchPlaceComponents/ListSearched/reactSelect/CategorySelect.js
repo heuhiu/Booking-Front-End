@@ -40,7 +40,7 @@ class CategorySelect extends Component {
   
 
     render() {
-        console.log(this.state.values);
+        // console.log(this.state.values);
         return (
             <div className="App">
         <Select

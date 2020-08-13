@@ -176,7 +176,7 @@ class UserInformation extends Component {
 
     render() {
         const {loggedUser} = this.props;
-        console.log(this.state.topOrders);
+        // console.log(this.state.topOrders);
         return (
             <div
                 className="col">

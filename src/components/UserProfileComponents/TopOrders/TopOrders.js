@@ -31,7 +31,7 @@ class TopOrders extends Component {
         showLoader();
         await callApi(`order/top3/${id}`, 'GET', null)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     topOrders: res.data
                 })
@@ -49,11 +49,11 @@ class TopOrders extends Component {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
-            console.log(decoded);
+            // console.log(decoded);
             const id = decoded.user.userId;
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
-                    console.log(res.data.id);
+                    // console.log(res.data.id);
                     this.getTop3Order(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
@@ -86,7 +86,7 @@ class TopOrders extends Component {
             var result = null;
             if (topOrders.length > 0) {
                 result = topOrders.map((item, index) => {
-                    console.log(item)
+                    // console.log(item)
                     return (
                         <div key={index}
                             className="detailTicketBoxDetail row no-gutters">

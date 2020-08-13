@@ -32,7 +32,7 @@ class UserOrders extends Component {
         showLoader();
         await callApi(`order/user/${id}`, 'GET', null)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     UserOrders: res.data
                 })
@@ -50,11 +50,11 @@ class UserOrders extends Component {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
-            console.log(decoded);
+            // console.log(decoded);
             const id = decoded.user.userId;
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
-                    console.log(res.data.id);
+                    // console.log(res.data.id);
                     this.getAllOrder(res.data.id);
                     // callApi(`order/user/${res.data.id}`, 'GET', null)
                     //     .then(res => {

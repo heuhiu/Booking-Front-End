@@ -53,7 +53,7 @@ class SearchedPlace extends Component {
     render() {
         // debugger
         const { searchedName, listCtiId, listCatId } = this.state;
-        console.log(searchedName);
+        // console.log(searchedName);
         return (
             <div
             style={{background: "#F2F2F2"}}

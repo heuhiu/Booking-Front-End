@@ -387,13 +387,13 @@ class ListPlaceSearched extends Component {
 
     removeCityID = (id) => {
         const { listCtiId } = this.state;
-        console.log(listCtiId);
+        // console.log(listCtiId);
         const index = listCtiId.indexOf(id);
         if (index > -1) {
             listCtiId.splice(index, 1);
         }
         // array = [2, 9]
-        console.log(listCtiId);
+        // console.log(listCtiId);
 
         this.setState({
             listCtiId: listCtiId,
@@ -402,13 +402,13 @@ class ListPlaceSearched extends Component {
 
     removeCategoryID = (id) => {
         const { listCatId } = this.state;
-        console.log(listCatId);
+        // console.log(listCatId);
         const index = listCatId.indexOf(id);
         if (index > -1) {
             listCatId.splice(index, 1);
         }
         // array = [2, 9]
-        console.log(listCatId);
+        // console.log(listCatId);
 
         this.setState({
             listCatId: listCatId,
@@ -427,9 +427,9 @@ class ListPlaceSearched extends Component {
     componentDidMount = () => {
         // debugger
         var { location } = this.props;
-        console.log(location);
+        // console.log(location);
         // if (location !== undefined) {
-        console.log(location.search);
+        // console.log(location.search);
 
         if (location.search !== "") {
             const answer_array = location.search.split('?');
@@ -454,7 +454,7 @@ class ListPlaceSearched extends Component {
             var listCatIdNumber = listCatId.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
-            console.log(this.isValid(name))
+            // console.log(this.isValid(name))
             var newDecode = decodeURIComponent(name);
             // var newDecode = decodeURIComponent(this.isValid(name)===false?"!":name);
             // if(this.isValid(name)===false) {
@@ -462,16 +462,16 @@ class ListPlaceSearched extends Component {
             //         notFoundPage: true
             //     })
             // }
-            console.log(newDecode);
-            console.log(listCtiId);
-            console.log(listCatId);
+            // console.log(newDecode);
+            // console.log(listCtiId);
+            // console.log(listCatId);
             this.setState({
                 // searchName: String(": "+this.isValid(name)),
                 searchName: newDecode,
                 listCtiId: listCtiIdNumber,
                 listCatId: listCatIdNumber
             }, () => {
-                console.log(listCatId);
+                // console.log(listCatId);
                 // this.getAllCategories();
                 this.getCategoriesnCity();
                 this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
@@ -595,8 +595,8 @@ class ListPlaceSearched extends Component {
                 // console.log(element);
                 unique.push(element);
             }
-            console.log(unique.join());
-            console.log(unique);
+            // console.log(unique.join());
+            // console.log(unique);
             this.setState({
                 listCatId: unique
             }, () => {

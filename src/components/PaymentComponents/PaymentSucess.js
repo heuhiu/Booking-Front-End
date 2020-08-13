@@ -46,7 +46,7 @@ class PaymentSucess extends Component {
     render() {
         const { visitorType, location, loggedUser } = this.props;
         // console.log(this.props.location);
-        console.log(location);
+        // console.log(location);
 
         // console.log(location.state.orderDetail.state.ticketName);
         // console.log(location.state.orderDetail.state.totalPayment);
@@ -58,7 +58,7 @@ class PaymentSucess extends Component {
                 <Redirect to="/" />
             )
         } else {
-            console.log(location.state.orderDetail.state.redemptionDate);
+            // console.log(location.state.orderDetail.state.redemptionDate);
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             };

@@ -46,7 +46,7 @@ class TotalPayment extends Component {
         e.preventDefault();
         const { history } = this.props;
         const { totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
-        console.log(place)
+        // console.log(place)
         if (false) {
             alert("fillt di dkm");
         } else {
@@ -108,7 +108,7 @@ class TotalPayment extends Component {
         // console.log(ticketName);
         // console.log(redemptionDate);
         // console.log(totalPayment);
-        console.log(place)
+        // console.log(place)
         return (
             <div>
                 {/* <div>
