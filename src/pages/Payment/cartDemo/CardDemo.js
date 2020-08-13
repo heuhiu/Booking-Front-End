@@ -81,7 +81,8 @@ class _CardForm extends Component {
       purchaseDay: new Date(),
       redemptionDate: orderDetail.state.redemptionDate,
       orderItems: orderItems,
-      id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null
+      id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null,
+      placeId: orderDetail.state.place.id
     }
 
 
@@ -278,7 +279,7 @@ const CardForm = injectStripe(_CardForm);
 class CardDemo extends Component {
   render() {
     const { orderDetail, visitorType, loggedUser,showLoader, hideLoader } = this.props;
-    // console.log(orderDetail);
+    console.log(orderDetail.state.place.id);
     // console.log(visitorType);
     // console.log(loggedUser)
     return (

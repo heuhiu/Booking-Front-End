@@ -45,7 +45,8 @@ class TotalPayment extends Component {
     checkLogin = (e) => {
         e.preventDefault();
         const { history } = this.props;
-        const { totalPayment, ticketTypeID, ticketName, redemptionDate } = this.props;
+        const { totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
+        console.log(place)
         if (false) {
             alert("fillt di dkm");
         } else {
@@ -74,7 +75,7 @@ class TotalPayment extends Component {
                     } else {
                         this.props.history.push({
                             pathname: '/payment',
-                            state: { ticketTypeID, ticketName, totalPayment, redemptionDate }
+                            state: { ticketTypeID, ticketName, totalPayment, redemptionDate, place }
                         })
                     }
                     
@@ -102,11 +103,12 @@ class TotalPayment extends Component {
     //     })
     // }
     render() {
-        const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate } = this.props;
-        console.log(ticketTypeID);
-        console.log(ticketName);
-        console.log(redemptionDate);
-        console.log(totalPayment);
+        const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
+        // console.log(ticketTypeID);
+        // console.log(ticketName);
+        // console.log(redemptionDate);
+        // console.log(totalPayment);
+        console.log(place)
         return (
             <div>
                 {/* <div>

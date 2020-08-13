@@ -215,7 +215,7 @@ class Payment extends Component {
     }
 
     callApiPurchaseLater = async (ticketTypeId, ticketTypeName, userId, firstName, lastName, mail, phoneNumber, totalPayment, redemptionDate, orderItems) => {
-        const { showLoader, hideLoader } = this.props;
+        const { showLoader, hideLoader, location } = this.props;
         showLoader();
         await callApi('order', 'post', {
             // them id order
@@ -229,7 +229,8 @@ class Payment extends Component {
             totalPayment: totalPayment,
             purchaseDay: new Date(),
             redemptionDate: redemptionDate,
-            orderItems: orderItems
+            orderItems: orderItems,
+            placeId: location.state.place.id
         })
             .then(res => {
                 console.log(res);
@@ -276,6 +277,7 @@ class Payment extends Component {
             console.log(location.state.ticketName);
             console.log(location.state.totalPayment);
             console.log(location.state.redemptionDate);
+            console.log(location.state.place);
             // console.log(this.state.email.value);
             // var x = 1000;
             // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});

@@ -25,7 +25,7 @@ class ReTicketType extends Component {
             startDate: null,
             open: false,
             apple: "aa",
-            activeDay: [0,1],
+            activeDay: [0, 1],
             ticketTypeId: 0,
             ticketName: 'default',
 
@@ -54,8 +54,8 @@ class ReTicketType extends Component {
         const day = Date.getDay();
         var fullList = [0, 1, 2, 3, 4, 5, 6];
         fullList = fullList.filter(val => !activeDay.includes(val));
-        return day !== fullList[0] && day !== fullList[1] && day !== fullList[2] && 
-        day !== fullList[3] && day !== fullList[4] && day !== fullList[5] && day !== fullList[6] 
+        return day !== fullList[0] && day !== fullList[1] && day !== fullList[2] &&
+            day !== fullList[3] && day !== fullList[4] && day !== fullList[5] && day !== fullList[6]
     }
 
     componentWillMount = () => {
@@ -100,11 +100,11 @@ class ReTicketType extends Component {
                         ticketTypeId: ticketType.id,
                         ticketName: ticketType.typeName
                     })
-                } 
+                }
             });
         }
     }
-    
+
     showTicketTypeName = (ticketTypes) => {
         var result = null;
         if (ticketTypes.length > 0) {
@@ -113,8 +113,8 @@ class ReTicketType extends Component {
                     return (
                         <li key={index} className="nav-item"
                             onClick={this.resetOrder}>
-                            <a className="nav-link active" 
-                            href={`#${ticketType.id}`} role="tab" data-toggle="tab">
+                            <a className="nav-link active"
+                                href={`#${ticketType.id}`} role="tab" data-toggle="tab">
                                 {ticketType.typeName}
                             </a>
                         </li>
@@ -174,17 +174,17 @@ class ReTicketType extends Component {
         var dateType = {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
-        if(this.state.startDate!==null)
-        var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
-        
+        if (this.state.startDate !== null)
+            var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
+
         console.log(prnDt);
         const { ticketTypeId, ticketName, startDate } = this.state;
         console.log(ticketTypeId);
         console.log(ticketName);
-        const { ticketType, weekDays } = this.props;
+        const { ticketType, weekDays, place } = this.props;
         console.log(weekDays);
         // var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-        
+        console.log(place);
         var total = this.getTotalMoney();;
 
         return (
@@ -193,7 +193,7 @@ class ReTicketType extends Component {
                     className="ticketBox"
                     style={{ fontFamily: 'Inter' }}
                 >
-                   
+
                     <div className="row no-gutters">
                         <div className="col-5">
                             <div
@@ -235,9 +235,9 @@ class ReTicketType extends Component {
                                     <div className="col myTitle">
                                         <h6
                                             className="myTitle"
-                                            style={{ marginBottom: "0px", color: "#FF7062", textAlign:"center" }}
+                                            style={{ marginBottom: "0px", color: "#FF7062", textAlign: "center" }}
                                         >
-                                            {prnDt===undefined?"Bấm để chọn":prnDt}
+                                            {prnDt === undefined ? "Bấm để chọn" : prnDt}
                                         </h6>
                                     </div>
                                     <div className="col-1">
@@ -308,6 +308,7 @@ class ReTicketType extends Component {
                         <div className="col-7">
                             {/* {total} */}
                             <TotalPayment
+                                place={place}
                                 ticketTypeID={ticketTypeId}
                                 ticketName={ticketName}
                                 totalPayment={total}
