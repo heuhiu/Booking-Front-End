@@ -25,7 +25,7 @@ const menus = [
 
 const menus2 = [
     {
-        name: 'Chính sách & quyền riêng từ',
+        name: 'Chính sách & quyền riêng tư',
         to: '/aboutUs/policy',
         exact: true,
     },
@@ -48,7 +48,7 @@ const menus2 = [
 
 
 
-const MenuLink = ({ label, to, activeOnlyWhenExact, mark }) => {
+const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     return (
         <Route
             path={to}
@@ -56,15 +56,16 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, mark }) => {
             children={({ match }) => {
                 var myActive = match ? 'myActive' : 'labelPointer';
                 return (
-                    <Link className={`${myActive}`} to={to}>
-                        <div className="mr-20 col-12">
-                            <li >
-                                <Link className={`${myActive}`} to={to}>
-                                    {label}
-                                </Link>
-                            </li>
-                        </div>
-                    </Link>
+                    <div className="mr-20 col-12">
+                        <Link className={`${myActive}`}
+                            to={{
+                                pathname: to
+                            }}
+                        >
+                            <li >{label}</li>
+                        </Link>
+                    </div>
+
                 );
             }}
         />
@@ -75,7 +76,6 @@ class AboutUsMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: null
         }
     }
 
@@ -106,8 +106,8 @@ class AboutUsMenu extends Component {
                     {this.showMenus(menus)}
                 </div>
                 <div className="row">
-                    <div style={{padding: "0px 60px 0px 60px"}} className="col-12">
-                    <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                    <div style={{ padding: "0px 60px 0px 60px" }} className="col-12">
+                        <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                     </div>
                 </div>
                 <div className="row">

@@ -20,9 +20,34 @@ class FAQ extends Component {
 
 
     render() {
+        // const data = this.props.location.state.data[0];
+        // const label = this.props.location.state.label
         return (
-            <div>
-                <div>FAQ</div>
+            <div className="FAQbox">
+                <div id="inline">
+                    <div className="bulletListCustome"></div>
+                    <div className="content">F.A.Q</div>
+                </div>
+                <div>
+                    <p>Tôi có thể mua vé online được không? Những hình thức thanh toán nào được chấp nhận khi mua vé online?
+                        <h1>Bạn hoàn toàn có thể mua vé online trên website của Goboki. Khi mua vé online, bạn có thể thanh toán bằng các loại thẻ tín dụng/ghi nợ, VISA.
+                    </h1>
+                    </p>
+                    <p>Tôi có thể mua vé online được không? Những hình thức thanh toán nào được chấp nhận khi mua vé online?
+                        <h1>Bạn hoàn toàn có thể mua vé online trên website của Goboki. Khi mua vé online, bạn có thể thanh toán bằng các loại thẻ tín dụng/ghi nợ, VISA.
+                    </h1>
+                    </p>
+                    <p>Tôi có thể mua vé online được không? Những hình thức thanh toán nào được chấp nhận khi mua vé online?
+                        <h1>Bạn hoàn toàn có thể mua vé online trên website của Goboki. Khi mua vé online, bạn có thể thanh toán bằng các loại thẻ tín dụng/ghi nợ, VISA.
+                    </h1>
+                    </p><p>Tôi có thể mua vé online được không? Những hình thức thanh toán nào được chấp nhận khi mua vé online?
+                        <h1>Bạn hoàn toàn có thể mua vé online trên website của Goboki. Khi mua vé online, bạn có thể thanh toán bằng các loại thẻ tín dụng/ghi nợ, VISA.
+                    </h1>
+                    </p><p>Tôi có thể mua vé online được không? Những hình thức thanh toán nào được chấp nhận khi mua vé online?
+                        <h1>Bạn hoàn toàn có thể mua vé online trên website của Goboki. Khi mua vé online, bạn có thể thanh toán bằng các loại thẻ tín dụng/ghi nợ, VISA.
+                    </h1>
+                    </p>
+                </div>
                 <FullPageLoader />
             </div>
         );

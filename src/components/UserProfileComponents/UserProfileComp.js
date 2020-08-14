@@ -26,7 +26,7 @@ class UserProfileComp extends Component {
 
     render() {   
         return (
-          <div>IDK WHY THIS EXIST</div>
+          <div>IDK WHY THIS EXIST, BUT IF NOT IT WOULD'T WORKS</div>
       );
     }
 

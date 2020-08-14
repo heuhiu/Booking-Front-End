@@ -47,6 +47,14 @@ footer div {
   text-align: left;
 }
 
+.fp1:hover{
+  text-decoration: none;
+  font-weight: 900;
+  /* font-size: 17px; */
+  transition: .35s;
+}
+
+
 .headerFooter{
   font-style: normal;
   font-weight: 600;

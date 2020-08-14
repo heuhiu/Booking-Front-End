@@ -20,9 +20,44 @@ class Contact extends Component {
 
 
     render() {
+        // const data = this.props.location.state.data[0];
+        // const label = this.props.location.state.label
         return (
-            <div>
-                <div>Contact</div>
+            <div className="contactBox">
+                <div id="inline">
+                    <div className="bulletListCustome"></div>
+                    <div className="content">Liên Hệ</div>
+                </div>
+                <div>
+                    <h1>Going Booking - GOBOKI</h1>
+                    <br></br>
+                    <div className="row">
+                        <div className="col-2">
+                            <span>Email:</span>
+                        </div>
+                        <div className="col">
+                            <p>goboki.cs@gmail.com. </p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-2">
+                            <span>Hotline:</span>
+                        </div>
+                        <div className="col">
+                            <p>0888 662 369 - 0983 450 322. </p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-2">
+                            <span>Address:</span>
+                        </div>
+                        <div className="col">
+                            <p>Trường Đại học FPT, Km29 Thạch Hòa, Thạch Thất, Hà Nội. </p>
+                        </div>
+                    </div>
+
+
+                </div>
                 <FullPageLoader />
             </div>
         );
