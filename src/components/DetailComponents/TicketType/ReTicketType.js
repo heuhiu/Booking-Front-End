@@ -30,6 +30,7 @@ class ReTicketType extends Component {
             typeChoosing: 1,
             orderDetail: [],
             total: 0,
+            
         }
     }
 
@@ -64,6 +65,7 @@ class ReTicketType extends Component {
         })
         this.props.removeVisitorType();
         this.setDefaultTicketType(ticketType);
+       
     }
 
     resetOrder = (e) => {
@@ -109,8 +111,9 @@ class ReTicketType extends Component {
                 if (index == 0) {
                     return (
                         <li key={index} className="nav-item"
-                            onClick={this.resetOrder}>
+                            >
                             <a className="nav-link active"
+                            onClick={this.resetOrder}
                                 href={`#${ticketType.id}`} role="tab" data-toggle="tab">
                                 {ticketType.typeName}
                             </a>
@@ -118,8 +121,8 @@ class ReTicketType extends Component {
                     );
                 } else {
                     return (
-                        <li key={index} className="nav-item" onClick={this.resetOrder}>
-                            <a className="nav-link" href={`#${ticketType.id}`} role="tab" data-toggle="tab" >
+                        <li key={index} className="nav-item" >
+                            <a onClick={this.resetOrder} className="nav-link" href={`#${ticketType.id}`} role="tab" data-toggle="tab" >
                                 {ticketType.typeName}
                             </a>
                         </li>
@@ -160,6 +163,8 @@ class ReTicketType extends Component {
         }
         return result;
     }
+
+
 
     render() {
         const ExampleCustomInput = ({ value, onClick }) => (

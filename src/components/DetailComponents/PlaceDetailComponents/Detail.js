@@ -46,7 +46,7 @@ class Detail extends Component {
 
     render() {
         var {place} = this.props
-        // console.log(place);
+        console.log(place);
         // console.log(place.weekDays);
         if (place !== undefined) {
             return (
@@ -93,7 +93,7 @@ class Detail extends Component {
                                 backgroundPosition: "center"
                             }}
                         >
-                            <img src={DetailPic} alt="FAIL TO LOAD" width="auto" height="auto" />
+                            <img src={place.placeImageLink?place.placeImageLink[0]:DetailPic} alt="FAIL TO LOAD" width="100%" height="auto" />
                         </div>
 
                         <div

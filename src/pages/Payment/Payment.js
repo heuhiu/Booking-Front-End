@@ -33,27 +33,9 @@ class Payment extends Component {
         this.myRef2 = React.createRef()
         this.state = {
             myPercen: 0,
-            nameToCall: "Anh",
-            // firstName: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // lastName: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // phoneNumb: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // },
-            // email: {
-            //     value: '',
-            //     isInputValid: false,
-            //     errorMessage: ''
-            // }
+            activeRadius1: false,
+            activeRadius2: true,
+            checkLogin: false
         }
     }
     scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
@@ -73,6 +55,7 @@ class Payment extends Component {
     }
     componentDidMount = () => {
         window.scrollTo(0, 0)
+        this.checkLogin();
     }
     validateInput = (type, checkingText) => {
         var regexp = '';
@@ -256,6 +239,34 @@ class Payment extends Component {
                 }
             });
     }
+
+    onActiveRadio1 = () => {
+        // alert("lmao1")
+        this.setState({
+            activeRadius1: !this.state.activeRadius1,
+            activeRadius2: !this.state.activeRadius2
+        })
+
+    }
+
+    onActiveRadio2 = () => {
+        this.setState({
+            activeRadius2: !this.state.activeRadius2,
+            activeRadius1: !this.state.activeRadius1
+        })
+    }
+
+    checkLogin = () => {
+        callApi('login/checkToken', 'post', null)
+            .then(res => {
+                this.setState({
+                    checkLogin: true
+                })
+            }).catch(function (error) {
+               
+            });
+    }
+
     render() {
 
         const { location, visitorType } = this.props;
@@ -287,14 +298,10 @@ class Payment extends Component {
             // var x = 1000;
             // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
-
             const myLocation = location;
-            // console.log(myLocation);
-            // console.log(myLocation.state);
             const ticketName = myLocation.state.ticketName;
             const { accomplished } = this.state;
             const { loggedUser } = this.props;
-            // console.log(loggedUser);
             return (
 
                 <div
@@ -322,9 +329,8 @@ class Payment extends Component {
                                 }}
                                 className="col-8 no-gutters">
                                 {/* process bar */}
-                                <div>
+                                <div className="row no-gutter">
                                     <div
-
                                         style={{
                                             padding: "0rem 7rem 0rem 7rem"
                                         }}
@@ -335,9 +341,11 @@ class Payment extends Component {
                                         >
                                             <Step transition="scale">
                                                 {({ accomplished }) => (
-                                                    <div onClick={this.scrollToStep1}>
+                                                    <div 
+                                                    // onClick={this.scrollToStep1}
+                                                    >
                                                         <div
-                                                            onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
+                                                            // onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
                                                             style={{
                                                                 filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                                 border: "1px solid",
@@ -350,11 +358,13 @@ class Payment extends Component {
                                                                 display: "table"
                                                             }}
                                                         >
-                                                            <p style={{
-                                                                textAlign: "center",
-                                                                verticalAlign: "middle",
-                                                                display: "table-cell"
-                                                            }}>1</p>
+                                                            <p
+
+                                                                style={{
+                                                                    textAlign: "center",
+                                                                    verticalAlign: "middle",
+                                                                    display: "table-cell"
+                                                                }}>1</p>
                                                         </div>
                                                     </div>
                                                 )}
@@ -366,9 +376,11 @@ class Payment extends Component {
                                                     //     width="30"
                                                     //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
                                                     // />
-                                                    <div onClick={this.scrollToStep2}>
+                                                    <div 
+                                                    // onClick={this.scrollToStep2}
+                                                    >
                                                         <div
-                                                            onClick={() => { this.setState({ myPercen: 50 }) }}
+                                                            // onClick={() => { this.setState({ myPercen: 50 }) }}
                                                             style={{
                                                                 filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                                 border: "1px solid",
@@ -419,6 +431,19 @@ class Payment extends Component {
                                             </Step>
                                         </ProgressBar>
                                     </div>
+                                    <br></br>
+                                    <div className="textProgressbar col"
+                                        style={{ color: this.state.myPercen === 0 ? "#FF7062" : "#FF7062", paddingLeft: "5rem", textAlign: "left" }} >
+                                        <span>Đặt chỗ</span>
+                                    </div>
+                                    <div className="textProgressbar col"
+                                        style={{color: this.state.myPercen === 50 ? "#FF7062" : "#A5A5A5", textAlign: "center" }} >
+                                        <span>Thanh toán</span>
+                                    </div>
+                                    <div className="textProgressbar col"
+                                        style={{ paddingRight: "4.5rem", textAlign: "right" }}>
+                                        <span>Đang xử lý</span>
+                                    </div>
                                 </div>
 
                                 {/* Step 1 */}
@@ -446,53 +471,15 @@ class Payment extends Component {
                                     </div>
                                     <div className="mrt-30 col-12">
                                         <div className="row">
-                                            {/* <div className="col-3">
-                                                <label>Danh xưng</label>
-                                                <div className="dropdown">
-                                                    <button type="button" className="myCall" data-toggle="dropdown">
-                                                        {this.state.nameToCall} &nbsp;
-                                                    <svg style={{ textAlign: "left" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
 
-                                                    </button>
-                                                    <div className="dropdown-menu">
-                                                        <a className="dropdown-item" onClick={() => { this.setState({ nameToCall: "Anh" }) }}>Anh</a>
-                                                        <a className="dropdown-item" onClick={() => { this.setState({ nameToCall: "Chị" }) }}>Chị</a>
-                                                        <a className="dropdown-item" onClick={() => { this.setState({ nameToCall: "Em" }) }}>Em</a>
-                                                        <a className="dropdown-item" onClick={() => { this.setState({ nameToCall: "Cô" }) }}>Cô</a>
-                                                        <a className="dropdown-item" onClick={() => { this.setState({ nameToCall: "Dì" }) }}>Dì</a>
-                                                    </div>
-                                                </div>
-
-                                            </div> */}
                                             <div className="col">
                                                 <label>Họ</label>
                                                 <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
                                                     placeholder="Họ" />
 
                                             </div>
-                                            {/* <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    // ref={(input) => { this.mailInput = input; }}
-                                                    type="text"
-                                                    name="lastName"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                    disabled
-                                                    value={loggedUser.lastName ? loggedUser.lastName : ""}
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Họ</span>
-                                            </div>
-                                            <FormError
-                                                type="lastName"
-                                                isHidden={this.state.lastName.isInputValid}
-                                                errorMessage={this.state.lastName.errorMessage} />
-                                        </div> */}
+
+
 
 
                                             <div className="col">
@@ -502,39 +489,9 @@ class Payment extends Component {
                                                     value={loggedUser.firstName ? loggedUser.firstName : ""}
                                                     className="inputPayment form-control" placeholder="Tên" />
                                             </div>
-                                            {/* <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    ref={(input) => { this.mailInput = input; }}
-                                                    type="text"
-                                                    name="firstName"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                    disabled
-                                                    value={loggedUser.firstName ? loggedUser.firstName : ""}
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Tên</span>
-                                            </div>
-                                            <FormError
-                                                type="firstName"
-                                                isHidden={this.state.firstName.isInputValid}
-                                                errorMessage={this.state.firstName.errorMessage} />
-                                        </div> */}
-                                        </div>
-                                        {/* <div className="row">
-                                        <div className="col">
 
                                         </div>
-                                        <div className="col">
-                                            <label className="cmt">Như trên CMND (không dấu)</label>
-                                        </div>
-                                        <div className="col">
-                                            <label className="cmt">Như trên CMND (không dấu)</label>
-                                        </div>
-                                    </div> */}
+
                                     </div>
 
                                     <div className="mrt-30 col-12">
@@ -546,27 +503,7 @@ class Payment extends Component {
                                                     value={loggedUser.phoneNumber}
                                                     className="inputPayment form-control" />
                                             </div>
-                                            {/* <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    ref={(input) => { this.mailInput = input; }}
-                                                    type="text"
-                                                    name="phoneNumb"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                    disabled
-                                                    value={loggedUser.phoneNumber}
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Số điện thoại xác thực</span>
-                                            </div>
-                                            <FormError
-                                                type="phoneNumb"
-                                                isHidden={this.state.phoneNumb.isInputValid}
-                                                errorMessage={this.state.phoneNumb.errorMessage} />
-                                        </div> */}
+
                                             <div className="col">
                                                 <label>Địa chỉ Email</label>
                                                 <input type="text"
@@ -574,28 +511,7 @@ class Payment extends Component {
                                                     value={loggedUser.mail}
                                                     className="inputPayment form-control" placeholder="Email" />
                                             </div>
-                                            {/* <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    ref={(input) => { this.mailInput = input; }}
-                                                    type="text"
-                                                    name="email"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                    disabled
-                                                    value={loggedUser.mail}
 
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">{loggedUser.mail}</span>
-                                            </div>
-                                            <FormError
-                                                type="email"
-                                                isHidden={this.state.email.isInputValid}
-                                                errorMessage={this.state.email.errorMessage} />
-                                        </div> */}
                                         </div>
                                         <div className="mrt-30 row">
                                             <div className="col">
@@ -641,17 +557,25 @@ class Payment extends Component {
                                                     <path d="M17 10H3C1.89543 10 1 10.8954 1 12V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V12C19 10.8954 18.1046 10 17 10Z" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                                     <path d="M5 10V6C5 4.67392 5.52678 3.40215 6.46447 2.46447C7.40215 1.52678 8.67392 1 10 1C11.3261 1 12.5979 1.52678 13.5355 2.46447C14.4732 3.40215 15 4.67392 15 6V10" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg> &nbsp;
-
                                         Tất cả thông tin của thẻ sẽ được mã hoá, bảo mật và bảo vệ
 
                                     </p>
                                         </div>
 
-                                        <Accordion className="pdt-30 pdb-30" defaultActiveKey="0">
+                                        <Accordion className="pdt-30 pdb-30" defaultActiveKey="1">
                                             <Card id="cardHeade">
-                                                <Accordion.Toggle id="cardHeade2" as={Card.Header} eventKey="0">
-                                                    Chuyển khoản qua ngân hàng
-                                            </Accordion.Toggle>
+                                                {/* <button className="circleBtn"></button>
+                                                <button className="circleBtn2"></button> */}
+                                                <Accordion.Toggle onClick={this.onActiveRadio1} id="cardHeade2" as={Card.Header} eventKey="0">
+                                                    <div className="row">
+                                                        <div className="col-1">
+                                                            <p className={this.state.activeRadius1 === false ? "circleBtn2" : "circle"}></p>
+                                                        </div>
+                                                        <div className="col">
+                                                            <span>Chuyển khoản qua ngân hàng</span>
+                                                        </div>
+                                                    </div>
+                                                </Accordion.Toggle>
                                                 <Accordion.Collapse eventKey="0">
                                                     <Card.Body>
                                                         <div className="purchaseLaterBox">
@@ -676,95 +600,32 @@ class Payment extends Component {
                                                 </Accordion.Collapse>
                                             </Card>
                                             <Card id="cardHeade">
-                                                <Accordion.Toggle id="cardHeade2" as={Card.Header} eventKey="1">
-                                                    Thẻ Credit/Debit
-                                            </Accordion.Toggle>
+                                                <Accordion.Toggle onClick={this.onActiveRadio2} id="cardHeade2" as={Card.Header} eventKey="1">
+                                                    <div className="row">
+                                                        <div className="col-1">
+                                                            <p className={this.state.activeRadius2 === false ? "circleBtn2" : "circle"}></p>
+                                                        </div>
+                                                        <div className="col">
+                                                            <span> Thẻ Credit/Debit</span>
+                                                        </div>
+                                                    </div>
+                                                </Accordion.Toggle>
                                                 <Accordion.Collapse eventKey="1">
                                                     <Card.Body>
                                                         <div
                                                             className="paymentMethodBox row">
-                                                            <div> <CardDemo
-                                                                history={this.props.history}
-                                                                orderDetail={myLocation} /></div>
-                                                        </div>
-                                                        {/* <div
-                                                        className="paymentMethodBox row">
-                                                        <div className="row">
-                                                            <div className="col">
-                                                                <label>Số thẻ</label>
+                                                            <div>
+                                                                <CardDemo
+                                                                    history={this.props.history}
+                                                                    orderDetail={myLocation} />
                                                             </div>
                                                         </div>
-                                                        <div className="row">
 
-                                                            <div className="col">
-                                                                <input type="number" className="inputPayment form-control" placeholder="Số thẻ" />
-                                                            </div>
-                                                            <div
-                                                                className="lockLogoPayment col-1">
-                                                                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M17 10H3C1.89543 10 1 10.8954 1 12V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V12C19 10.8954 18.1046 10 17 10Z" stroke="#A5A5A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                                    <path d="M5 10V6C5 4.67392 5.52678 3.40215 6.46447 2.46447C7.40215 1.52678 8.67392 1 10 1C11.3261 1 12.5979 1.52678 13.5355 2.46447C14.4732 3.40215 15 4.67392 15 6V10" stroke="#A5A5A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                                </svg>
-                                                            </div>
-                                                            <div className="moreInfor col">
-                                                                <p>
-                                                                    Thông tin giao dịch của bạn được mã hóa an toàn bởi các hệ thống thanh toán uy tín.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="pdt-30 row">
-                                                            <div className="col-12">
-                                                                <div className="row">
-                                                                    <div className="col-3">
-                                                                        <label>Ngày hết hạn</label>
-                                                                        <div className="dropup">
-                                                                            <button type="button" className="myCall" data-toggle="dropdown">
-                                                                                Ngày &nbsp;
-                                                                                <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                                                </svg>
-
-                                                                            </button>
-                                                                            <div className="dropdown-menu">
-                                                                                <a className="dropdown-item" href="/#">Link 1</a>
-                                                                                <a className="dropdown-item" href="/#">Link 2</a>
-                                                                                <a className="dropdown-item" href="/#">Link 3</a>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div className="col-3">
-                                                                        <label>&nbsp;</label>
-                                                                        <div className="dropdown">
-                                                                            <button type="button" aria-haspopup="true" className="myCall" data-toggle="dropdown">
-                                                                                Tháng &nbsp;
-                                                                                <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                                                </svg>
-
-                                                                            </button>
-                                                                            <div className="dropdown-menu">
-                                                                                <a className="dropdown-item" href="/#">Link 1</a>
-                                                                                <a className="dropdown-item" href="/#">Link 2</a>
-                                                                                <a className="dropdown-item" href="/#">Link 3</a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="col">
-                                                                        <label>Mã bảo mật</label>
-                                                                        <input type="number" className="inputPayment form-control" placeholder="Mã bảo mật" />
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                */}
                                                     </Card.Body>
                                                 </Accordion.Collapse>
                                             </Card>
                                         </Accordion>
+
                                     </div>
                                 </form>
 
@@ -819,100 +680,6 @@ class Payment extends Component {
                                         <div style={{ textAlign: "right" }} className="col">
                                             <span className="totalPaymentRightPart">{totalPayment}</span>
                                         </div>
-                                    </div>
-
-                                    <div
-                                        style={{ marginTop: "20px" }}
-                                        className="progressbar col-12">
-                                        <ProgressBar
-                                            percent={this.state.myPercen}
-                                            filledBackground="linear-gradient(to right, #fefb72, #FF7062)"
-                                        >
-                                            <Step transition="scale">
-                                                {({ accomplished }) => (
-                                                    <div onClick={this.scrollToStep1}>
-                                                        <div
-                                                            onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
-                                                            style={{
-                                                                filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                                border: "1px solid",
-                                                                borderRadius: "50%",
-                                                                width: "30px",
-                                                                height: "30px",
-                                                                background: "#FF7062",
-                                                                textAlign: "center",
-                                                                color: "white",
-                                                                display: "table"
-                                                            }}
-                                                        >
-                                                            <p style={{
-                                                                textAlign: "center",
-                                                                verticalAlign: "middle",
-                                                                display: "table-cell"
-                                                            }}>1</p>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Step>
-                                            <Step transition="scale">
-                                                {({ accomplished }) => (
-                                                    // <img
-                                                    //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-                                                    //     width="30"
-                                                    //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
-                                                    // />
-                                                    <div onClick={this.scrollToStep2}>
-                                                        <div
-                                                            onClick={() => { this.setState({ myPercen: 50 }) }}
-                                                            style={{
-                                                                filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                                border: "1px solid",
-                                                                borderRadius: "50%",
-                                                                width: "30px",
-                                                                height: "30px",
-                                                                background: "#FF7062",
-                                                                textAlign: "center",
-                                                                color: "white",
-                                                                display: "table"
-                                                            }}
-                                                        >
-                                                            <p style={{
-                                                                textAlign: "center",
-                                                                verticalAlign: "middle",
-                                                                display: "table-cell"
-                                                            }}>2</p>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Step>
-                                            <Step transition="scale">
-                                                {({ accomplished }) => (
-                                                    <div>
-                                                        <div
-
-                                                            style={{
-                                                                filter: `grayscale(${accomplished ? 0 : 80}%)`,
-                                                                border: "1px solid",
-                                                                borderRadius: "50%",
-                                                                width: "30px",
-                                                                height: "30px",
-                                                                background: "#FF7062",
-                                                                textAlign: "center",
-                                                                color: "white",
-                                                                display: "table"
-                                                            }}
-                                                        >
-                                                            <p style={{
-                                                                textAlign: "center",
-                                                                verticalAlign: "middle",
-                                                                display: "table-cell"
-                                                            }}>3</p>
-                                                        </div>
-
-                                                    </div>
-                                                )}
-                                            </Step>
-                                        </ProgressBar>
                                     </div>
                                 </div>
                             </div>

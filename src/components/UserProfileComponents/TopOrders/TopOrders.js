@@ -98,7 +98,7 @@ class TopOrders extends Component {
                                             <p>Đặt chỗ số: {item.orderCode} </p>
                                         </div>
                                         <div className="col-4">
-                                            <p>Thời gian: (thanh toán?) :
+                                            <p>Thời gian: &nbsp;
                                             {/* {item.purchaseDay} */}
                                                 {this.formatter.format(Date.parse(item.purchaseDay))}
                                             </p>

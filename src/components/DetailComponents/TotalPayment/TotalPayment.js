@@ -46,10 +46,6 @@ class TotalPayment extends Component {
         e.preventDefault();
         const { history } = this.props;
         const { totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
-        // console.log(place)
-        if (false) {
-            alert("fillt di dkm");
-        } else {
             callApi('login/checkToken', 'post', null)
                 .then(res => {
                     if(totalPayment === 0) {
@@ -95,7 +91,7 @@ class TotalPayment extends Component {
                         progress: undefined,
                     });
                 });
-        }
+        
     }
     // test=()=>{
     //     this.setState({

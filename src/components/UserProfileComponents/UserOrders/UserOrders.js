@@ -108,7 +108,7 @@ class UserOrders extends Component {
                                         <p>Đặt chỗ số: {item.orderCode} </p>
                                     </div>
                                     <div className="col-4">
-                                        <p>Thời gian: (thanh toán?) :
+                                        <p>Thời gian: &nbsp;
                                     {this.formatter.format(Date.parse(item.purchaseDay))}
                                         </p>
                                     </div>

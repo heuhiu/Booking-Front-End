@@ -5,6 +5,12 @@ import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as regex from '../../../constants/Regex';
+import './UserUpdateInformation.css'
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import vi from "date-fns/locale/vi";
+import { format } from 'date-fns';
+registerLocale("vi", vi);
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -19,6 +25,7 @@ class UserUpdateInformation extends Component {
 
     constructor(props) {
         super(props);
+        const { loggedUser } = this.props;
         this.state = {
             email: {
                 value: '',
@@ -54,7 +61,9 @@ class UserUpdateInformation extends Component {
                 value: '',
                 isInputValid: true,
                 errorMessage: ''
-            }
+            },
+            // startDate: this.convertDateToLocalVN(loggedUser.dob),
+            // startDate: new Date("2014/02/08"),
         }
     }
     handleInput = event => {
@@ -87,41 +96,6 @@ class UserUpdateInformation extends Component {
                         errorMessage: 'Email có dạng abc@xyz.ghi(.xnh)'
                     };
                 }
-            case "password":
-                // regexp = /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,20}$/;
-                regexp = regex.PASSWORD;
-                checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                } else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
-                    };
-                }
-            case "RePassword":
-                const { password } = this.state;
-                if (checkingText === password.value && checkingText !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                }
-                if (checkingText !== password.value) {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'Mật khẩu không khớp'
-                    };
-                }
-                else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'Mật khẩu không khớp'
-                    };
-                }
             case "myfirstName":
                 regexp = regex.FIRST_NAME;
                 checkingResult = regexp.exec(checkingText);
@@ -133,7 +107,7 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Có ísst nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
+                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
                     };
                 }
             case "lastName":
@@ -214,14 +188,9 @@ class UserUpdateInformation extends Component {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser } = this.props;
         const id = loggedUser.id;
-        // console.log(id);
-        // console.log(myfirstName.value);
-        // console.log(lastName.value);
-        // console.log(phoneNumber.value);
-        // console.log(dob.value);
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
-            toast.error('Tên Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
+            toast.error('Vui lòng điền thông tin bạn muốn thay đổi', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -231,7 +200,7 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (lastName.isInputValid === false) {
-            toast.error('Họ có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối', {
+            toast.error('Họ có ít nhất 3 kí tự và khác số!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -300,6 +269,7 @@ class UserUpdateInformation extends Component {
             //     });
         }
     }
+
     callAPIChangeUserInfor = async (id) => {
         const { dob, myfirstName, lastName, phoneNumber } = this.state;
         const { loggedUser, showLoader, hideLoader } = this.props;
@@ -309,7 +279,7 @@ class UserUpdateInformation extends Component {
             {
                 firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
                 lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
-                dob:  dob.value !== '' ? dob.value : loggedUser.dob,
+                dob: dob.value !== '' ? dob.value : loggedUser.dob,
                 phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
             })
             .then(res => {
@@ -332,10 +302,33 @@ class UserUpdateInformation extends Component {
                 }
             });
     }
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
+    }
+
+    convertDateToLocalVN = (date) => {
+        if (date !== undefined) {
+            return this.formatter.format(Date.parse(date));
+        }
+    }
+    
+    formatter = new Intl.DateTimeFormat("vi-VN", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+    });
 
     render() {
-        const { dob, myfirstName, lastName, phoneNumber } = this.state;
+        const { dob, myfirstName, lastName, phoneNumber, startDate } = this.state;
         const { loggedUser } = this.props;
+        // console.log(loggedUser.dob);
+        // console.log(this.convertDateToLocalVN(loggedUser.dob));
+        // console.log(new Date())
+        // console.log(format(new Date(), 'yyyy/MM/dd'))
+
+
         // console.log(myfirstName.value);
         // console.log(lastName.value);
         // console.log(phoneNumber.value);
@@ -346,9 +339,9 @@ class UserUpdateInformation extends Component {
                 className="col">
                 {/* <form
                 onSubmit={this.updateUserDetail}
-                > */}                
+                > */}
                 <ToastContainer />
-                <div className="rightBoxUserDetail">
+                {/* <div className="rightBoxUserDetail">
                     <div style={{ padding: "30px" }} >
                         <div className="row">
                             <div className="col-12">
@@ -361,22 +354,16 @@ class UserUpdateInformation extends Component {
                                 </div>
                                 <div className="mrt-30 col-12">
                                     <div className="row">
-                                        {/* <div className="col">
-                                                                <label>Họ</label>
-                                                                <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
-                                                                    placeholder="Họ" />
-
-                                                            </div> */}
+    
                                         <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
-                                                    // ref={(input) => { this.mailInput = input; }}
                                                     type="text"
                                                     name="lastName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                // required
+                                                    placeholder={loggedUser.lastName}
 
                                                 />
                                                 <span className="focus-input100"></span>
@@ -387,28 +374,17 @@ class UserUpdateInformation extends Component {
                                                 isHidden={this.state.lastName.isInputValid}
                                                 errorMessage={this.state.lastName.errorMessage} />
                                         </div>
-
-
-                                        {/* <div className="col">
-                                                                <label>Tên</label>
-                                                                <input type="text"
-                                                                    disabled
-                                                                    value={loggedUser.firstName ? loggedUser.firstName : ""}
-                                                                    className="inputPayment form-control" placeholder="Tên" />
-                                                            </div> */}
                                         <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
-                                                    // type="text"
-                                                    // name="email"
-                                                    // required
+
                                                     ref={(input) => { this.myfirstName = input; }}
                                                     type="text"
                                                     name="myfirstName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                // required
+                                                    placeholder={loggedUser.firstName}
                                                 />
 
                                                 <span className="focus-input100"></span>
@@ -435,26 +411,18 @@ class UserUpdateInformation extends Component {
 
                                 <div className="mrt-30 col-12">
                                     <div className="row">
-                                        {/* <div className="col">
-                                                                <label>Số điện thoại</label>
-                                                                <input type="number"
-                                                                    disabled
-                                                                    value={loggedUser.phoneNumber}
-                                                                    className="inputPayment form-control" />
-                                                            </div> */}
+
                                         <div className="col">
                                             <div className="wrap-input100">
                                                 <input
                                                     className="input100"
-                                                    // type="text"
-                                                    // name="email"
-                                                    // required
+d
                                                     ref={(input) => { this.phoneNumber = input; }}
                                                     type="text"
                                                     name="phoneNumber"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                // required
+                                                    placeholder={loggedUser.phoneNumber}
                                                 />
                                                 <span className="focus-input100"></span>
                                                 <span className="label-input100">Số Điện thoại</span>
@@ -465,44 +433,17 @@ class UserUpdateInformation extends Component {
                                                 isHidden={this.state.phoneNumber.isInputValid}
                                                 errorMessage={this.state.phoneNumber.errorMessage} />
                                         </div>
-                                        {/* <div className="col">
-                                                                <label>Địa chỉ Email</label>
-                                                                <input type="text"
-                                                                    disabled
-                                                                    value={loggedUser.mail}
-                                                                    className="inputPayment form-control" placeholder="Email" />
-                                                            </div> */}
-                                        {/* <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    ref={(input) => { this.mailInput = input; }}
-                                                    type="text"
-                                                    name="email"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    required
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Email</span>
-                                            </div>
-                                            <FormError
-                                                type="email"
-                                                isHidden={this.state.email.isInputValid}
-                                                errorMessage={this.state.email.errorMessage} />
-                                        </div> */}
+                                      
                                         <div className="col">
                                             <div onClick={this.showDate} className="wrap-input100">
                                                 <input
-                                                    // style={{visibility: this.state.check ? "hidden" : "visible"}}
                                                     className="input100"
                                                     ref={(input) => { this.dob = input; }}
-                                                    // type={this.state.check ? "date" : "text"}
                                                     type="date"
                                                     name="dob"
-
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
+                                                    placeholder={loggedUser.dob}
                                                 // required
                                                 />
                                                 <span className="focus-input100"></span>
@@ -527,6 +468,110 @@ class UserUpdateInformation extends Component {
                                     </div>
                                 </div>
 
+                                <div className="pdt-30 col-12">
+                                    <div className="row">
+                                        <div className="col">
+                                        </div>
+                                        <div className="col">
+                                            <button type="submit"
+                                                onClick={this.updateUserDetail}
+                                                className="proceedPaymentBtn">Lưu thông tin</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+                <div className="rightBoxUserDetail">
+                    <div style={{ padding: "30px" }} >
+                        <div className="row">
+                            <div className="col-12">
+                                <div id="inline">
+                                    <div className="bulletListCustome"></div>
+                                    <div className="content">Chỉnh sửa tài khoản</div>
+                                </div>
+                                <div className="col-12">
+                                    <p className="attention">Thông tin này sẽ được tự động nhập vào đơn hàng của bạn. Thông tin của bạn sẽ được mã hoá và không chia sẻ với bên thứ 3</p>
+                                </div>
+                                <div className="mrt-30 col-12">
+                                    <div className="row">
+                                        <div className="col">
+                                            <span className="labelHolder"> Tên </span><span className="turnRed">*</span>
+                                            <div className="customWrap-input100">
+                                                <input
+                                                    className="input100"
+                                                    type="text"
+                                                    name="myfirstName"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    placeholder={loggedUser.firstName}
+                                                />
+                                            </div>
+                                            <label className="cmt">Như trên CMND (không dấu)</label>
+                                        </div>
+                                        <div className="col">
+                                            <span className="labelHolder"> Họ </span><span className="turnRed">*</span>
+                                            <div className="customWrap-input100">
+                                                <input
+                                                    className="input100"
+                                                    type="text"
+                                                    name="lastName"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    placeholder={loggedUser.lastName}
+                                                />
+                                            </div>
+                                            <label className="cmt">Như trên CMND (không dấu)</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mrt-30 col-12">
+                                    <div className="row">
+
+                                        <div className="col">
+                                            <span className="labelHolder"> Số điện thoại </span><span className="turnRed">*</span>
+                                            <div className="customWrap-input100">
+                                                <input
+                                                    className="input100"
+                                                    type="text"
+                                                    name="phoneNumber"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    placeholder={loggedUser.phoneNumber}
+                                                />
+                                            </div>
+                                            <label className="cmt">Số điện thoại sử dụng để xác thực giao dịch</label>
+                                        </div>
+
+                                        <div className="col">
+                                            <span className="labelHolder"> Ngày sinh </span><span className="turnRed">*</span>
+                                            <div onClick={this.showDate} className="customWrap-input100">
+                                                <input
+                                                    className="input100"
+                                                    // ref={(input) => { this.dob = input; }}
+                                                    type="date"
+                                                    name="dob"
+                                                    onChange={this.handleInput}
+                                                    onBlur={this.handleInputValidation}
+                                                    placeholder={loggedUser.dob}
+                                                />
+                                                {/* <DatePicker
+                                                    className="input100"
+                                                    dateFormat="dd/MM/yyyy"
+                                                    selected={this.state.startDate}
+                                                    onChange={this.handleChange}
+                                                    open={false}
+                                                /> */}
+                                            </div>
+                                            <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
+                                            xin vui lòng kiểm tra kỹ thông tin.)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="pdt-30 col-12">
                                     <div className="row">
                                         <div className="col">

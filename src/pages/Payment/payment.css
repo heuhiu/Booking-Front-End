@@ -14,7 +14,7 @@
     padding: 10px;
 }
 
-.alertStep2{
+.alertStep2 p{
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
@@ -25,6 +25,16 @@
     border-radius: 10px;
     padding: 10px;
     text-align: center;
+    
+}
+
+.textProgressbar span{
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    /* color: #A5A5A5; */
 }
 
 .attention{
@@ -246,3 +256,79 @@
     line-height: 20px;
     color: #5B5B5B;
 }
+
+.circleBtn{
+    width: 2rem;
+    height: 2rem;
+    background-color: #FF7062;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.circleBtn2{
+    width: 1.5rem;
+    height: 1.5rem;
+    left: 10px;
+    background-color: none;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #E3E3E3;
+}
+/* btn clicked */
+
+.circle {
+    height:1.5rem;
+    width:1.5rem;
+    border-radius:50%;
+    background-color:#FF7062;
+    
+    position:relative;
+    top: 10px;
+    left: 11px;
+    /* top:100px; */
+    /* left:300px; */
+    
+    -webkit-transition:height .25s ease, width .25s ease;
+    transition:height .25s ease, width .25s ease;
+    
+    -webkit-transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%);
+  }
+  
+  
+  .circle:before,
+  .circle:after {
+    content:'';
+    /* display:block; */
+    position:absolute;
+    top:0; right:0; bottom:0; left:0;
+    border-radius:50%;
+    border: .5px solid #FF7062;
+  }
+  
+  .circle:before {
+    -webkit-animation: ripple 1s linear infinite;
+    animation: ripple 1s linear infinite;
+  }
+  .circle:after {
+    -webkit-animation: ripple 1s linear infinite;
+    animation: ripple 1s linear infinite;
+  }
+  
+  /* .circle:hover:before,
+  .circle:hover:after {
+    -webkit-animation: none;
+    animation: none;
+  } */
+  
+  @-webkit-keyframes ripple{
+    0% {-webkit-transform:scale(1); }
+    75% {-webkit-transform:scale(1.75); opacity:0;}
+    100% {-webkit-transform:scale(2); opacity:0;}
+  }
+  
+  @keyframes ripple{
+    0% {transform:scale(1); }
+    75% {transform:scale(1.75); opacity:0;}
+    100% {transform:scale(2); opacity:0;}
+  }

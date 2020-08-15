@@ -37,9 +37,7 @@ class UserOrderDetail extends Component {
         year: "numeric",
         month: "long",
         day: "2-digit",
-        // hour: 'numeric',
-        // minute: 'numeric',
-        // second: 'numeric'
+
     });
 
     convertCurrecyToVnd = (currency) => {
@@ -50,7 +48,6 @@ class UserOrderDetail extends Component {
     convertDateToLocalVN = (date) => {
         if (date !== undefined)
             return this.formatter.format(Date.parse(date));
-
     }
 
     showQtyxType = (VisitorTypeArr) => {

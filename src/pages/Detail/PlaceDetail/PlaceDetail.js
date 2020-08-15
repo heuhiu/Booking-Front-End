@@ -110,11 +110,8 @@ class PlaceDetail extends Component {
         };
         const { place } = this.state;
         if (place !== null) {
-            // console.log(place.placeImageLink);
-            // {this.renderSlider2}
             for (let index = 0; index < place.placeImageLink.length; index++) {
                 const element = place.placeImageLink[index];
-                // console.log(element);
             }
         }
         if (place != null) {

@@ -42,6 +42,7 @@ ul.a{
 }
 
 .placeDetail{
+    border-radius: 10px;
     width: auto;
     height: auto;
     background: #FFFFFF;

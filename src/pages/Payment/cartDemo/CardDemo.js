@@ -205,62 +205,7 @@ class _CardForm extends Component {
               </p>
             </div>
           </div>
-
-          {/* <div className="pdt-30 row">
-            <div className="col-12">
-              <div className="row">
-                <div className="col">
-                  <label>Ngày hết hạn</label>
-                  <div>{prnDt}</div> */}
-          {/* <div className="dropup">
-                    <button type="button" className="myCall" data-toggle="dropdown">
-                      Ngày &nbsp;
-                        <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-
-                    </button>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/#">Link 1</a>
-                      <a className="dropdown-item" href="/#">Link 2</a>
-                      <a className="dropdown-item" href="/#">Link 3</a>
-                    </div>
-                  </div> */}
-
         </div>
-        {/* <div className="col-3">
-                  <label>&nbsp;</label>
-                  <div className="dropdown">
-                    <button type="button" aria-haspopup="true" className="myCall" data-toggle="dropdown">
-                      Tháng &nbsp;
-                                                                                <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-
-                    </button>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="/#">Link 1</a>
-                      <a className="dropdown-item" href="/#">Link 2</a>
-                      <a className="dropdown-item" href="/#">Link 3</a>
-                    </div>
-                  </div>
-                </div>
-               */}
-        {/* <div className="col">
-                  <label>Mã bảo mật</label>
-                  <input type="number" className="inputPayment form-control" placeholder="Mã bảo mật" />
-                </div> */}
-
-        {/* </div>
-            </div> */}
-
-        {/* </div>
-        </div> */}
-        {/* <Link 
-          to={{
-            pathname: '/paymentSucess',
-            state: orderDetail
-          }}> */}
         <button className="proceedPaymentBtn"
           onClick={this.handleSubmit.bind(this)}>
           Pay

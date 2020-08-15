@@ -89,7 +89,7 @@ class ForgotPassword extends Component {
                     checkResent: true
                 })
                 hideLoader()
-                toast.success('Vui lòng kiểm tra email, nếu chưa nhận được xin vui lòng Gửi email xác thực một lần nữa.!', {
+                toast.success('Vui lòng kiểm tra email!', {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
