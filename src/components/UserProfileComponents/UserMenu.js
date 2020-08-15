@@ -164,10 +164,10 @@ class UserMenu extends Component {
             let data = new FormData();
             data.append('file', file);
             // console.log(file);
-            if(file.size<400000) {
+            if(file.size<300000) {
             this.callApiChangeAvar(id, data);
             } else {
-                toast.error('Dung lượng ảnh quá lớn!', {
+                toast.error('Dung lượng ảnh quá lớn (<300KB)!', {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -189,6 +189,7 @@ class UserMenu extends Component {
                 // console.log(res.data);
                 // window.location.reload();
                 this.props.fetchUserDetail(res.data);
+                // setTimeout(() => {  console.log("World!"); }, 2000);
                 hideLoader();
                 toast.success('Cập nhật ảnh đại diện thành công!', {
                     position: "bottom-right",
