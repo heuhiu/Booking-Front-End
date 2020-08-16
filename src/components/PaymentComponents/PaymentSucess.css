@@ -11,7 +11,7 @@
 .coffeLogo{
     padding: 50px 40px 50px 55px;
     border-radius: 50%;
-    background: #FF7062;
+    background: #197ACF;
 }
 
 
@@ -85,6 +85,68 @@
 }
 .leftPartUserDetail{
   background: #FFFFFF;
-box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: sticky;
+    top: 90px;
+}
+.noDecoration:hover{
+  text-decoration: none;
+}
+.boxSusscess{
+  border: 1px solid #FF7062;
+  /* box-sizing: border-box; */
+  border-radius: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FF7062;
+  /* padding: 10px 20px 10px 20px; */
+  padding: 20px;
+  margin-right: 20px;
+  margin-left: 40px;
+}
+
+.boxSusscessBackHome{
+  background: #FF7062;
+  border-radius: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+  /* padding: 10px 20px 10px 20px; */
+  padding: 20px;
+}
+
+.toMyOrder{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FF7062;
+}
+.toMyOrder:hover{
+  text-decoration: none;
+  color: #FF7062;
+}
+.toHome{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.toHome:hover{
+  text-decoration: none;
+  color: #FFFFFF;
 }

@@ -574,12 +574,10 @@ d
                                 </div>
                                 <div className="pdt-30 col-12">
                                     <div className="row">
-                                        <div className="col">
-                                        </div>
-                                        <div className="col">
+                                        <div className="col-3">
                                             <button type="submit"
                                                 onClick={this.updateUserDetail}
-                                                className="proceedPaymentBtn">Lưu thông tin</button>
+                                                className="proceedPaymentBtn">Lưu</button>
                                         </div>
                                     </div>
                                 </div>

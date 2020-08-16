@@ -4,6 +4,7 @@ import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
+import { Collapse } from 'react-bootstrap';
 
 class TopOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -18,7 +19,8 @@ class TopOrders extends Component {
         super(props);
         this.state = {
             UserOrders: [],
-            topOrders: []
+            topOrders: [],
+            open: true,
         }
     }
 

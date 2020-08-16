@@ -56,3 +56,49 @@
     text-align: right;
     color: #5B5B5B;
 }
+/* arr */
+
+
+.circle1{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border: 2px solid #fff;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.circle1 .fas{
+  color: #fff;
+  animation: bounce 1.5s linear infinite;
+}
+@keyframes bounce {
+  0%{
+    transform: translateY(-25px);
+    text-shadow: 0 0 20px #fff;
+  }
+  20%{
+    transform: translateY(0px);
+  }
+  40%{
+    transform: translateY(20px);
+  }
+  60%{
+    transform: translateY(0px);
+  }
+  80%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(100px);
+  }
+}
+
+
+

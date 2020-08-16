@@ -6,6 +6,7 @@ import callApi from '../../../config/utils/apiCaller';
 import TopOrders from '../TopOrders/TopOrders';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
+import { Collapse } from 'react-bootstrap';
 
 class UserOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -20,6 +21,9 @@ class UserOrders extends Component {
         super(props);
         this.state = {
             UserOrders: [],
+            open: true,
+            open2: true,
+            arrowAnimation: false
         }
     }
 
@@ -91,7 +95,11 @@ class UserOrders extends Component {
         }
         return myStatus;
     }
-
+    toggleArrow = () => {
+        this.setState({
+            arrowAnimation: true
+        })
+    }
     showOrders = (topOrders) => {
         const topOrd = topOrders.orderItems
         var result = null;
@@ -171,7 +179,7 @@ class UserOrders extends Component {
 
         else if (topOrders.length === 0) {
             return (
-                <p style={{visibility: this.props.loader===false?"visible":"hidden"}}>Not Found</p>
+                <p style={{ visibility: this.props.loader === false ? "visible" : "hidden" }}>Not Found</p>
             );
         }
         return result;
@@ -180,22 +188,37 @@ class UserOrders extends Component {
     render() {
         const { UserOrders } = this.state;
         return (
-            <div>
+            <div className="col">
                 <div style={{ paddingTop: "0px" }} className="rightBoxUserDetail2">
-                    <div style={{ padding: "30px" }} >
-                        <div className="row">
+                    <div
+                        onClick={() => this.setState({ open: !this.state.open })}
+                        aria-controls="example-collapse-text"
+                        aria-expanded={this.state.open}
+                        style={{ padding: "30px" }} >
+                        <div className="row no-gutters">
                             <div className="col-6">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
-                                    <div className="content">Đặt chỗ gần đây</div>
+                                    <div className="content">Đặt chỗ gần đây </div>
                                 </div>
                             </div>
+                            <div className="col">
+                                
+                            </div>
                         </div>
-                        <TopOrders UserOrders={UserOrders} />
+                        <Collapse in={this.state.open}>
+                            <div id="example-collapse-text">
+                                <TopOrders UserOrders={UserOrders} />
+                            </div>
+                        </Collapse>
                     </div>
                 </div>
-                <div className="rightBoxUserDetail2">
-                    <div style={{ padding: "30px" }} >
+                <div style={{ marginTop: "30px" }} className="rightBoxUserDetail2">
+                    <div
+                        onClick={() => this.setState({ open2: !this.state.open2 })}
+                        aria-controls="example-collapse-text2"
+                        aria-expanded={this.state.open2}
+                        style={{ padding: "30px" }} >
                         <div className="row">
                             <div className="col-6">
                                 <div id="inline">
@@ -204,12 +227,18 @@ class UserOrders extends Component {
                                 </div>
                             </div>
                         </div>
-                        {this.showOrders(UserOrders)}
+                        {/* {this.showOrders(UserOrders)} */}
+                        <Collapse in={this.state.open2}>
+                            <div id="example-collapse-text2">
+                                {this.showOrders(UserOrders)}
+                            </div>
+                        </Collapse>
                     </div>
                 </div>
             </div>
 
         );
+
     }
 
 }
@@ -226,10 +255,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         showLoader: () => {
             dispatch(showLoader())
-          },
-          hideLoader: () => {
+        },
+        hideLoader: () => {
             dispatch(hideLoader())
-          }
+        }
     }
 }
 

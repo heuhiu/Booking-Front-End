@@ -434,7 +434,7 @@ class RegisterComp extends Component {
                                             required
                                         />
                                         <span className="focus-input100"></span>
-                                        <span className="label-input100">Email</span>
+                                        <span className="label-input100">Email<span className="turnRed"> *</span></span>
                                     </div>
                                     <FormError
                                         type="email"
@@ -459,7 +459,7 @@ class RegisterComp extends Component {
                                             required
                                         />
                                         <span className="focus-input100"></span>
-                                        <span className="label-input100">Mật khẩu</span>
+                                        <span className="label-input100">Mật khẩu<span className="turnRed"> *</span></span>
                                         <span
                                             onClick={this.toggleShow}
                                             style={{ marginLeft: "87%", paddingRight: "0px", cursor: "pointer" }}
@@ -504,7 +504,7 @@ class RegisterComp extends Component {
                                             required
                                         />
                                         <span className="focus-input100"></span>
-                                        <span className="label-input100">Nhập lại mật khẩu</span>
+                                        <span className="label-input100">Nhập lại mật khẩu<span className="turnRed"> *</span></span>
                                         <span
                                             onClick={this.toggleShow}
                                             style={{ marginLeft: "87%", paddingRight: "0px", cursor: "pointer" }}
@@ -550,7 +550,7 @@ class RegisterComp extends Component {
                                             />
 
                                             <span className="focus-input100"></span>
-                                            <span className="label-input100">Tên</span>
+                                            <span className="label-input100">Tên<span className="turnRed"> *</span></span>
 
                                         </div>
                                         <FormError
@@ -578,7 +578,7 @@ class RegisterComp extends Component {
                                                 required
                                             />
                                             <span className="focus-input100"></span>
-                                            <span className="label-input100">Họ</span>
+                                            <span className="label-input100">Họ<span className="turnRed"> *</span></span>
 
                                         </div>
                                         <FormError
@@ -609,7 +609,7 @@ class RegisterComp extends Component {
                                                 required
                                             />
                                             <span className="focus-input100"></span>
-                                            <span className="label-input98">Ngày sinh</span>
+                                            <span className="label-input98">Ngày sinh<span className="turnRed"> *</span></span>
                                         </div>
                                         <FormError
                                             type="dob"
@@ -635,7 +635,7 @@ class RegisterComp extends Component {
                                                 required
                                             />
                                             <span className="focus-input100"></span>
-                                            <span className="label-input100">Số Điện thoại</span>
+                                            <span className="label-input100">Số Điện thoại<span className="turnRed"> *</span></span>
 
                                         </div>
                                         <FormError

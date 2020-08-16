@@ -85,8 +85,6 @@ class AboutUsMenu extends Component {
             <div className="leftPartUserDetail">
                 <div className="outer row no-gutters">
                     <div className="inner circleCamera">
-
-
                     </div>
                 </div>
                 <div style={{ paddingTop: "0px" }} className="outer row no-gutters">

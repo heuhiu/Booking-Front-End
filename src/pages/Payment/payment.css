@@ -170,8 +170,8 @@
 }
 
 .progressbar{
-    position: sticky;
-    top: 90px;
+    /* position: sticky;
+    top: 90px; */
 }
 
 .rightPartPayment h1 {

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showLoader, hideLoader } from '../../actions/index';
 import * as regex from '../../constants/Regex';
+import { Collapse } from 'react-bootstrap';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -35,14 +36,17 @@ class Payment extends Component {
             myPercen: 0,
             activeRadius1: false,
             activeRadius2: true,
-            checkLogin: false
+            checkLoginPar: false,
+            open: true
         }
     }
     scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
     // scrollToStep2 = () => window.scrollTo({ top: this.myRef2.current.offsetTop, behavior: 'smooth' });
     scrollToStep2 = () => {
         this.setState({
-            myPercen: 50
+            myPercen: 50,
+            open: false,
+            open2: true
         }, () => {
             window.scrollTo({ top: this.myRef2.current.offsetTop, behavior: 'smooth' })
         })
@@ -56,6 +60,7 @@ class Payment extends Component {
     componentDidMount = () => {
         window.scrollTo(0, 0)
         this.checkLogin();
+        console.log("before")
     }
     validateInput = (type, checkingText) => {
         var regexp = '';
@@ -161,7 +166,12 @@ class Payment extends Component {
                 draggable: true,
                 progress: undefined,
             });
+            this.setState({
+                open: true,
+                open2: false
+            })
             window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' })
+
         } else {
             var orderItems = [];
             var item = {
@@ -176,68 +186,58 @@ class Payment extends Component {
                 }
                 orderItems.push(item)
             }
-            // console.log("khong ton tai status");
             this.callApiPurchaseLater(location.state.ticketTypeID, location.state.ticketName, loggedUser.id, loggedUser.firstName, loggedUser.lastName, loggedUser.mail, loggedUser.phoneNumber, location.state.totalPayment, location.state.redemptionDate, orderItems)
-            // callApi('order', 'post', {
-            //     // them id order
-            //     ticketTypeId: location.state.ticketTypeID,
-            //     ticketTypeName: location.state.ticketName,
-            //     userId: loggedUser.id,
-            //     firstName: loggedUser.firstName,
-            //     lastName: loggedUser.lastName,
-            //     mail: loggedUser.mail,
-            //     phoneNumber: loggedUser.phoneNumber,
-            //     totalPayment: location.state.totalPayment,
-            //     purchaseDay: new Date(),
-            //     redemptionDate: location.state.redemptionDate,
-            //     orderItems: orderItems
-            // })
-            //     .then(res => {
-            //         console.log(res);
-            //     }).catch(function (error) {
-            //         if (error.response) {
-            //             console.log(error.response.data);
-            //         }
-            //     });
         }
     }
 
     callApiPurchaseLater = async (ticketTypeId, ticketTypeName, userId, firstName, lastName, mail, phoneNumber, totalPayment, redemptionDate, orderItems) => {
         const { showLoader, hideLoader, location } = this.props;
-        showLoader();
-        await callApi('order', 'post', {
-            // them id order
-            ticketTypeId: ticketTypeId,
-            ticketTypeName: ticketTypeName,
-            userId: userId,
-            firstName: firstName,
-            lastName: lastName,
-            mail: mail,
-            phoneNumber: phoneNumber,
-            totalPayment: totalPayment,
-            purchaseDay: new Date(),
-            redemptionDate: redemptionDate,
-            orderItems: orderItems,
-            placeId: location.state.place.id
-        })
-            .then(res => {
-                // console.log(res);
-                hideLoader();
-                toast.success('Đặt vé trả sau thành công!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }).catch(function (error) {
-                if (error.response) {
-                    hideLoader();
-                    console.log(error.response.data);
-                }
+        if (this.state.checkLoginPar === false) {
+            toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
             });
+        } else {
+            showLoader();
+            await callApi('order', 'post', {
+                // them id order
+                ticketTypeId: ticketTypeId,
+                ticketTypeName: ticketTypeName,
+                userId: userId,
+                firstName: firstName,
+                lastName: lastName,
+                mail: mail,
+                phoneNumber: phoneNumber,
+                totalPayment: totalPayment,
+                purchaseDay: new Date(),
+                redemptionDate: redemptionDate,
+                orderItems: orderItems,
+                placeId: location.state.place.id
+            })
+                .then(res => {
+                    // console.log(res);
+                    hideLoader();
+                    toast.success('Đặt vé trả sau thành công!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }).catch(function (error) {
+                    if (error.response) {
+                        hideLoader();
+                        console.log(error.response.data);
+                    }
+                });
+        }
     }
 
     onActiveRadio1 = () => {
@@ -256,27 +256,20 @@ class Payment extends Component {
         })
     }
 
-    checkLogin = () => {
-        callApi('login/checkToken', 'post', null)
+    checkLogin = async () => {
+        await callApi('login/checkToken', 'post', null)
             .then(res => {
+                console.log(res);
                 this.setState({
-                    checkLogin: true
+                    checkLoginPar: true
                 })
             }).catch(function (error) {
-               
             });
     }
 
     render() {
 
         const { location, visitorType } = this.props;
-        // console.log(visitorType);
-        // if (location.state.orderStatus) {
-        //     console.log(location.state.orderStatus);
-        // } else {
-        //     console.log("khong ton tai status");
-        // }
-
         if (location.state === undefined) {
             return (
                 <Redirect to="/" />
@@ -285,17 +278,7 @@ class Payment extends Component {
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             };
-
             var prnDt = location.state.redemptionDate.toLocaleDateString('vi', dateType);
-
-            // console.log(location.state);
-            // console.log(location.state.ticketTypeID);
-            // console.log(location.state.ticketName);
-            // console.log(location.state.totalPayment);
-            // console.log(location.state.redemptionDate);
-            // console.log(location.state.place);
-            // console.log(this.state.email.value);
-            // var x = 1000;
             // x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
             const myLocation = location;
@@ -303,7 +286,6 @@ class Payment extends Component {
             const { accomplished } = this.state;
             const { loggedUser } = this.props;
             return (
-
                 <div
                     style={{ backgroundColor: "#F2F2F2" }}
                 >
@@ -341,7 +323,7 @@ class Payment extends Component {
                                         >
                                             <Step transition="scale">
                                                 {({ accomplished }) => (
-                                                    <div 
+                                                    <div
                                                     // onClick={this.scrollToStep1}
                                                     >
                                                         <div
@@ -376,7 +358,7 @@ class Payment extends Component {
                                                     //     width="30"
                                                     //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
                                                     // />
-                                                    <div 
+                                                    <div
                                                     // onClick={this.scrollToStep2}
                                                     >
                                                         <div
@@ -437,11 +419,11 @@ class Payment extends Component {
                                         <span>Đặt chỗ</span>
                                     </div>
                                     <div className="textProgressbar col"
-                                        style={{color: this.state.myPercen === 50 ? "#FF7062" : "#A5A5A5", textAlign: "center" }} >
+                                        style={{ color: this.state.myPercen === 50 ? "#FF7062" : "#A5A5A5", textAlign: "center" }} >
                                         <span>Thanh toán</span>
                                     </div>
                                     <div className="textProgressbar col"
-                                        style={{ paddingRight: "4.5rem", textAlign: "right" }}>
+                                        style={{ color: this.state.myPercen === 100 ? "#FF7062" : "#A5A5A5", paddingRight: "4.5rem", textAlign: "right" }}>
                                         <span>Đang xử lý</span>
                                     </div>
                                 </div>
@@ -450,90 +432,95 @@ class Payment extends Component {
                                 {/* <form> */}
                                 <div
                                     className="borderBox col-12">
-                                    <div id="tries" className="col-12">
-                                        <h1 className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
+                                    <div
+                                        onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
+                                        aria-controls="example-collapse-text"
+                                        aria-expanded={this.state.open}
+                                        id="tries" className="col-12">
+                                        <h1 style={{ color: this.state.open === true ? "#FF7062" : "#A5A5A5" }} className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
                                     </div>
                                     <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
-                                    <div ref={this.myRef1} className="col-12 alertStep1">
-                                        <p>
-                                            Xin đảm bảo thông tin điền vào là chính xác.
-                                            Bạn sẽ không thể thay đổi thông tin sau khi thanh toán
+                                    <Collapse in={this.state.open}>
+                                        <div id="example-collapse-text">
+                                            <div ref={this.myRef1} className="col-12 alertStep1">
+                                                <p>
+                                                    Xin đảm bảo thông tin điền vào là chính xác.
+                                                    Bạn sẽ không thể thay đổi thông tin sau khi thanh toán
                                         </p>
-                                    </div>
-                                    <div className="col-12">
-                                        <div id="inline">
-                                            <div className="bulletListCustome"></div>
-                                            <div className="content">Thông tin liên lạc</div>
-                                        </div>
-                                    </div>
-                                    <div className="col-12">
-                                        <p className="attention">Chúng tôi sẽ thông báo mọi thay đổi về đơn hàng cho bạn</p>
-                                    </div>
-                                    <div className="mrt-30 col-12">
-                                        <div className="row">
+                                            </div>
+                                            <div className="col-12">
+                                                <div id="inline">
+                                                    <div className="bulletListCustome"></div>
+                                                    <div className="content">Thông tin liên lạc</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-12">
+                                                <p className="attention">Chúng tôi sẽ thông báo mọi thay đổi về đơn hàng cho bạn</p>
+                                            </div>
+                                            <div className="mrt-30 col-12">
+                                                <div className="row">
 
-                                            <div className="col">
-                                                <label>Họ</label>
-                                                <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
-                                                    placeholder="Họ" />
+                                                    <div className="col">
+                                                        <label>Họ</label>
+                                                        <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
+                                                            placeholder="Họ" />
+
+                                                    </div>
+                                                    <div className="col">
+                                                        <label>Tên</label>
+                                                        <input type="text"
+                                                            disabled
+                                                            value={loggedUser.firstName ? loggedUser.firstName : ""}
+                                                            className="inputPayment form-control" placeholder="Tên" />
+                                                    </div>
+
+                                                </div>
 
                                             </div>
 
+                                            <div className="mrt-30 col-12">
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <label>Số điện thoại</label>
+                                                        <input type="number"
+                                                            disabled
+                                                            value={loggedUser.phoneNumber}
+                                                            className="inputPayment form-control" />
+                                                    </div>
 
+                                                    <div className="col">
+                                                        <label>Địa chỉ Email</label>
+                                                        <input type="text"
+                                                            disabled
+                                                            value={loggedUser.mail}
+                                                            className="inputPayment form-control" placeholder="Email" />
+                                                    </div>
 
-
-                                            <div className="col">
-                                                <label>Tên</label>
-                                                <input type="text"
-                                                    disabled
-                                                    value={loggedUser.firstName ? loggedUser.firstName : ""}
-                                                    className="inputPayment form-control" placeholder="Tên" />
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div className="mrt-30 col-12">
-                                        <div className="row">
-                                            <div className="col">
-                                                <label>Số điện thoại</label>
-                                                <input type="number"
-                                                    disabled
-                                                    value={loggedUser.phoneNumber}
-                                                    className="inputPayment form-control" />
-                                            </div>
-
-                                            <div className="col">
-                                                <label>Địa chỉ Email</label>
-                                                <input type="text"
-                                                    disabled
-                                                    value={loggedUser.mail}
-                                                    className="inputPayment form-control" placeholder="Email" />
-                                            </div>
-
-                                        </div>
-                                        <div className="mrt-30 row">
-                                            <div className="col">
-                                                <label className="cmt">Số điện thoại xác thực</label>
-                                            </div>
-                                            <div className="col">
-                                                <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
-                                                xin vui lòng kiểm tra kỹ thông tin.)
+                                                </div>
+                                                <div className="mrt-30 row">
+                                                    <div className="col">
+                                                        <label className="cmt">Số điện thoại xác thực</label>
+                                                    </div>
+                                                    <div className="col">
+                                                        <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
+                                                        xin vui lòng kiểm tra kỹ thông tin.)
                                                 </label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <div className="pdt-30 col-12">
-                                        <div className="row">
-                                            <div className="col">
+                                            <div className="pdt-30 col-12">
+                                                <div className="row">
+                                                    <div className="col">
+                                                    </div>
+                                                    <div className="col">
+                                                        <button onClick={this.scrollToStep2} className="proceedPaymentBtn">Tiến hành thanh toán</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="col">
-                                                <button onClick={this.scrollToStep2} className="proceedPaymentBtn">Tiến hành thanh toán</button>
-                                            </div>
+
                                         </div>
-                                    </div>
+                                    </Collapse>
 
                                 </div>
                                 {/* </form> */}
@@ -541,90 +528,98 @@ class Payment extends Component {
 
                                 {/* Step 2 */}
                                 <form>
-                                    <div ref={this.myRef2}
+                                    <div
                                         style={{
-
                                             marginTop: "50px"
                                         }}
                                         className="borderBox col-12">
-                                        <div className="col-12">
-                                            <h1 className="step2h">Bước 2: Xác nhận để thanh toán</h1>
+                                        <div
+                                            onClick={() => this.setState({ open2: !this.state.open2, open: !this.state.open })}
+                                            aria-controls="example-collapse-text2"
+                                            aria-expanded={this.state.open2}
+                                            className="col-12">
+                                            <h1 style={{ color: this.state.open2 === true ? "#FF7062" : "#A5A5A5" }} className="step2h">Bước 2: Xác nhận để thanh toán</h1>
                                         </div>
-                                        <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
-                                        <div className="col-12 alertStep2">
-                                            <p>
-                                                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M17 10H3C1.89543 10 1 10.8954 1 12V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V12C19 10.8954 18.1046 10 17 10Z" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                    <path d="M5 10V6C5 4.67392 5.52678 3.40215 6.46447 2.46447C7.40215 1.52678 8.67392 1 10 1C11.3261 1 12.5979 1.52678 13.5355 2.46447C14.4732 3.40215 15 4.67392 15 6V10" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg> &nbsp;
+                                        <hr ref={this.myRef2} style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
+                                        <Collapse in={this.state.open2}>
+                                            <div id="example-collapse-text2">
+                                                <div className="col-12 alertStep2">
+                                                    <p>
+                                                        <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M17 10H3C1.89543 10 1 10.8954 1 12V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V12C19 10.8954 18.1046 10 17 10Z" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M5 10V6C5 4.67392 5.52678 3.40215 6.46447 2.46447C7.40215 1.52678 8.67392 1 10 1C11.3261 1 12.5979 1.52678 13.5355 2.46447C14.4732 3.40215 15 4.67392 15 6V10" stroke="#197ACF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                        </svg> &nbsp;
                                         Tất cả thông tin của thẻ sẽ được mã hoá, bảo mật và bảo vệ
+                                            </p>
+                                                </div>
 
-                                    </p>
-                                        </div>
-
-                                        <Accordion className="pdt-30 pdb-30" defaultActiveKey="1">
-                                            <Card id="cardHeade">
-                                                {/* <button className="circleBtn"></button>
+                                                <Accordion className="pdt-30 pdb-30" defaultActiveKey="1">
+                                                    <Card id="cardHeade">
+                                                        {/* <button className="circleBtn"></button>
                                                 <button className="circleBtn2"></button> */}
-                                                <Accordion.Toggle onClick={this.onActiveRadio1} id="cardHeade2" as={Card.Header} eventKey="0">
-                                                    <div className="row">
-                                                        <div className="col-1">
-                                                            <p className={this.state.activeRadius1 === false ? "circleBtn2" : "circle"}></p>
-                                                        </div>
-                                                        <div className="col">
-                                                            <span>Chuyển khoản qua ngân hàng</span>
-                                                        </div>
-                                                    </div>
-                                                </Accordion.Toggle>
-                                                <Accordion.Collapse eventKey="0">
-                                                    <Card.Body>
-                                                        <div className="purchaseLaterBox">
-                                                            <h1>Vietcombank Hội sở chính</h1>
-                                                            <p>Chủ tài khoản: Phùng Trí Đức</p>
-                                                            <p>Số tài khoản: 000000000000000000</p>
-                                                            <br></br>
-                                                            <h1>TPBank Hà Đông</h1>
-                                                            <p>Chủ tài khoản: Phùng Trí Đức</p>
-                                                            <p>Số tài khoản: 000000000000000000</p>
-                                                        </div>
-                                                        <br></br>
-
-                                                        <span
-                                                            style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
-                                                            className="purchaseLaterBtn"
-                                                            onClick={this.purchaseLater}
-                                                        >
-                                                            Thanh toán sau
-                                                        </span>
-                                                    </Card.Body>
-                                                </Accordion.Collapse>
-                                            </Card>
-                                            <Card id="cardHeade">
-                                                <Accordion.Toggle onClick={this.onActiveRadio2} id="cardHeade2" as={Card.Header} eventKey="1">
-                                                    <div className="row">
-                                                        <div className="col-1">
-                                                            <p className={this.state.activeRadius2 === false ? "circleBtn2" : "circle"}></p>
-                                                        </div>
-                                                        <div className="col">
-                                                            <span> Thẻ Credit/Debit</span>
-                                                        </div>
-                                                    </div>
-                                                </Accordion.Toggle>
-                                                <Accordion.Collapse eventKey="1">
-                                                    <Card.Body>
-                                                        <div
-                                                            className="paymentMethodBox row">
-                                                            <div>
-                                                                <CardDemo
-                                                                    history={this.props.history}
-                                                                    orderDetail={myLocation} />
+                                                        <Accordion.Toggle onClick={this.onActiveRadio1} id="cardHeade2" as={Card.Header} eventKey="0">
+                                                            <div className="row">
+                                                                <div className="col-1">
+                                                                    <p className={this.state.activeRadius1 === false ? "circleBtn2" : "circle"}></p>
+                                                                </div>
+                                                                <div className="col">
+                                                                    <span>Chuyển khoản qua ngân hàng</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </Accordion.Toggle>
+                                                        <Accordion.Collapse eventKey="0">
+                                                            <Card.Body>
+                                                                <div className="purchaseLaterBox">
+                                                                    <h1>Vietcombank Hội sở chính</h1>
+                                                                    <p>Chủ tài khoản: Phùng Trí Đức</p>
+                                                                    <p>Số tài khoản: 000000000000000000</p>
+                                                                    <br></br>
+                                                                    <h1>TPBank Hà Đông</h1>
+                                                                    <p>Chủ tài khoản: Phùng Trí Đức</p>
+                                                                    <p>Số tài khoản: 000000000000000000</p>
+                                                                </div>
+                                                                <br></br>
 
-                                                    </Card.Body>
-                                                </Accordion.Collapse>
-                                            </Card>
-                                        </Accordion>
+                                                                <span
+                                                                    style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
+                                                                    className="purchaseLaterBtn"
+                                                                    onClick={this.purchaseLater}
+                                                                >
+                                                                    Thanh toán sau
+                                                        </span>
+                                                            </Card.Body>
+                                                        </Accordion.Collapse>
+                                                    </Card>
+                                                    <Card id="cardHeade">
+                                                        <Accordion.Toggle onClick={this.onActiveRadio2} id="cardHeade2" as={Card.Header} eventKey="1">
+                                                            <div className="row">
+                                                                <div className="col-1">
+                                                                    <p className={this.state.activeRadius2 === false ? "circleBtn2" : "circle"}></p>
+                                                                </div>
+                                                                <div className="col">
+                                                                    <span> Thẻ Credit/Debit</span>
+                                                                </div>
+                                                            </div>
+                                                        </Accordion.Toggle>
+                                                        <Accordion.Collapse eventKey="1">
+                                                            <Card.Body>
+                                                                <div
+                                                                    className="paymentMethodBox row">
+                                                                    <div>
+                                                                        <CardDemo
+                                                                            checkStep1={this.state.myPercen}
+                                                                            checkLogin={this.state.checkLoginPar}
+                                                                            history={this.props.history}
+                                                                            orderDetail={myLocation} />
+                                                                    </div>
+                                                                </div>
+
+                                                            </Card.Body>
+                                                        </Accordion.Collapse>
+                                                    </Card>
+                                                </Accordion>
+                                            </div>
+                                        </Collapse>
 
                                     </div>
                                 </form>

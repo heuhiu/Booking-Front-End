@@ -8,7 +8,8 @@ import {
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import { showLoader, hideLoader } from '../../../actions/index';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
   return {
@@ -32,11 +33,21 @@ const createOptions = () => {
 class _CardForm extends Component {
   state = {
     errorMessage: '',
+    checkWrong: true
   };
 
   handleChange = ({ error }) => {
     if (error) {
-      this.setState({ errorMessage: error.message });
+      this.setState({ 
+        errorMessage: error.message,
+        checkWrong: false
+      }, ()=>{
+        console.log(this.state.errorMessage);
+      });
+    } else {
+      this.setState({
+        checkWrong: null
+      })
     }
   };
 
@@ -44,87 +55,129 @@ class _CardForm extends Component {
     // debugger
     evt.preventDefault();
 
-    const { orderDetail, visitorType, loggedUser } = this.props;
-
-    if (orderDetail.state.orderStatus) {
-      // console.log(orderDetail.state.orderStatus);
-
-    } else {
-      // console.log("khong ton tai status");
+    const { orderDetail, visitorType, loggedUser, checkLogin, checkStep1 } = this.props;
+    console.log(this.state.errorMessage);
+    console.log(this.state.checkWrong);
+    if (checkLogin === false) {
+      toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if(checkStep1 !== 50) {
+      toast.error('Bạn cần xác thực thông tin liên lạc!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (this.state.checkWrong === false){
+      toast.error(`Vui lòng điền lại số thẻ`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
+      else if (this.state.checkWrong === true){
+        toast.error(`Vui lòng điền số thẻ`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    } else  {
+      if (orderDetail.state.orderStatus) {
+        // console.log(orderDetail.state.orderStatus);
 
-    var orderItems = [];
-    var item = {
-      visitorTypeId: null,
-      visitorTypeName: null,
-      quantity: null
-    }
-    for (let index = 0; index < visitorType.length; index++) {
-      item = {
-        visitorTypeId: visitorType[index].visitorTypeId,
-        quantity: visitorType[index].quantity
+      } else {
+        // console.log("khong ton tai status");
       }
-      orderItems.push(item)
+
+      var orderItems = [];
+      var item = {
+        visitorTypeId: null,
+        visitorTypeName: null,
+        quantity: null
+      }
+      for (let index = 0; index < visitorType.length; index++) {
+        item = {
+          visitorTypeId: visitorType[index].visitorTypeId,
+          quantity: visitorType[index].quantity
+        }
+        orderItems.push(item)
+      }
+
+      var order = {
+        ticketTypeId: orderDetail.state.ticketTypeID,
+        ticketTypeName: orderDetail.state.ticketName,
+        userId: loggedUser.id,
+        firstName: loggedUser.firstName,
+        lastName: loggedUser.lastName,
+        mail: loggedUser.mail,
+        phoneNumber: loggedUser.phoneNumber,
+        totalPayment: orderDetail.state.totalPayment,
+        purchaseDay: new Date(),
+        redemptionDate: orderDetail.state.redemptionDate,
+        orderItems: orderItems,
+        id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null,
+        placeId: orderDetail.state.place.id
+      }
+
+
+
+      if (this.props.stripe) {
+        this.props.stripe.createToken()
+          .then(res => {
+            console.log(res.token.id);
+            // const paymentToken = res.token.id;
+            const paymentToken = res.token.id;
+            let data = new FormData();
+            const myStatus = "existed";
+            const myNewStatus = "new";
+            // if(orderDetail.state.orderStatus) {
+            //   data.append('action', myStatus);
+            //   } else {
+            //   data.append('action', "new");
+            //   }
+            data.append('order', JSON.stringify(order));
+            data.append('token', paymentToken);
+            data.append('action', orderDetail.state.orderStatus ? myStatus : myNewStatus);
+
+            //  callApi('payment', 'POST', data) 
+            //   .then (res => {
+            //     console.log(res);
+            //     if (res) {
+            //       this.props.history.push({
+            //         pathname: '/paymentSucess',
+            //         state: { orderDetail: orderDetail }
+            //       })
+            //     }
+            //   })
+            //   .catch(function (error) {
+            //     if (error.response) {
+            //       console.log(error.response);
+            //     }
+            //   });
+            this.callPayment(data, orderDetail);
+          })
+      } else {
+        console.log("Stripe.js hasn't loaded yet.");
+      }
     }
-
-    var order = {
-      ticketTypeId: orderDetail.state.ticketTypeID,
-      ticketTypeName: orderDetail.state.ticketName,
-      userId: loggedUser.id,
-      firstName: loggedUser.firstName,
-      lastName: loggedUser.lastName,
-      mail: loggedUser.mail,
-      phoneNumber: loggedUser.phoneNumber,
-      totalPayment: orderDetail.state.totalPayment,
-      purchaseDay: new Date(),
-      redemptionDate: orderDetail.state.redemptionDate,
-      orderItems: orderItems,
-      id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null,
-      placeId: orderDetail.state.place.id
-    }
-
-
-
-    if (this.props.stripe) {
-      this.props.stripe.createToken()
-        .then(res => {
-          console.log(res.token.id);
-          // const paymentToken = res.token.id;
-          const paymentToken = res.token.id;
-          let data = new FormData();
-          const myStatus = "existed";
-          const myNewStatus = "new";
-          // if(orderDetail.state.orderStatus) {
-          //   data.append('action', myStatus);
-          //   } else {
-          //   data.append('action', "new");
-          //   }
-          data.append('order', JSON.stringify(order));
-          data.append('token', paymentToken);
-          data.append('action', orderDetail.state.orderStatus ? myStatus : myNewStatus);
-
-          //  callApi('payment', 'POST', data) 
-          //   .then (res => {
-          //     console.log(res);
-          //     if (res) {
-          //       this.props.history.push({
-          //         pathname: '/paymentSucess',
-          //         state: { orderDetail: orderDetail }
-          //       })
-          //     }
-          //   })
-          //   .catch(function (error) {
-          //     if (error.response) {
-          //       console.log(error.response);
-          //     }
-          //   });
-          this.callPayment(data, orderDetail);
-
-        })
-    } else {
-      console.log("Stripe.js hasn't loaded yet.");
-    }
-
   };
 
   callPayment = async (data, orderDetail) => {
@@ -144,7 +197,7 @@ class _CardForm extends Component {
       .catch(function (error) {
         if (error.response) {
           hideLoader();
-          alert("error")
+          // alert("error")
           console.log(error.response);
         }
       });
@@ -164,6 +217,7 @@ class _CardForm extends Component {
       <div className="CardDemo">
         {/* <FullPageLoader /> */}
         {/* <form onSubmit={this.handleSubmit.bind(this)}> */}
+        <ToastContainer />
 
         {/* <CardElement
           onChange={this.handleChange}
@@ -189,6 +243,7 @@ class _CardForm extends Component {
                 onChange={this.handleChange}
                 {...createOptions()}
               />
+              {/* <span style={{color: "red"}}>{this.state.errorMessage}</span> */}
             </div>
             <br></br>
             <br></br>
@@ -221,7 +276,7 @@ const CardForm = injectStripe(_CardForm);
 
 class CardDemo extends Component {
   render() {
-    const { orderDetail, visitorType, loggedUser,showLoader, hideLoader } = this.props;
+    const { orderDetail, visitorType, loggedUser, showLoader, hideLoader, checkLogin, checkStep1 } = this.props;
     // console.log(orderDetail.state.place.id);
     // console.log(visitorType);
     // console.log(loggedUser)
@@ -236,6 +291,8 @@ class CardDemo extends Component {
             visitorType={visitorType}
             showLoader={showLoader}
             hideLoader={hideLoader}
+            checkLogin={checkLogin}
+            checkStep1={checkStep1}
           />
         </Elements>
       </StripeProvider>
