@@ -171,7 +171,6 @@ class Payment extends Component {
                 open2: false
             })
             window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' })
-
         } else {
             var orderItems = [];
             var item = {
@@ -220,17 +219,21 @@ class Payment extends Component {
                 placeId: location.state.place.id
             })
                 .then(res => {
-                    // console.log(res);
+                    console.log(res.data);
                     hideLoader();
-                    toast.success('Đặt vé trả sau thành công!', {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    this.props.history.push({
+                        pathname: '/paymentSucess',
+                        state: { orderDetail: res.data }
+                      })
+                    // toast.success('Đặt vé trả sau thành công!', {
+                    //     position: "bottom-right",
+                    //     autoClose: 5000,
+                    //     hideProgressBar: false,
+                    //     closeOnClick: true,
+                    //     pauseOnHover: true,
+                    //     draggable: true,
+                    //     progress: undefined,
+                    // });
                 }).catch(function (error) {
                     if (error.response) {
                         hideLoader();
@@ -244,7 +247,8 @@ class Payment extends Component {
         // alert("lmao1")
         this.setState({
             activeRadius1: !this.state.activeRadius1,
-            activeRadius2: !this.state.activeRadius2
+            activeRadius2: false,
+            // open: true
         })
 
     }
@@ -252,7 +256,8 @@ class Payment extends Component {
     onActiveRadio2 = () => {
         this.setState({
             activeRadius2: !this.state.activeRadius2,
-            activeRadius1: !this.state.activeRadius1
+            activeRadius1: false,
+            // open2: true
         })
     }
 
@@ -269,8 +274,8 @@ class Payment extends Component {
 
     render() {
 
-        const { location, visitorType } = this.props;
-        if (location.state === undefined) {
+        const { location, visitorType, loggedUser } = this.props;
+        if (location.state === undefined || loggedUser.id === undefined) {
             return (
                 <Redirect to="/" />
             )
@@ -433,7 +438,7 @@ class Payment extends Component {
                                 <div
                                     className="borderBox col-12">
                                     <div
-                                        onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
+                                        onClick={() => this.setState({open: !this.state.open, open2: !this.state.open2 })}
                                         aria-controls="example-collapse-text"
                                         aria-expanded={this.state.open}
                                         id="tries" className="col-12">
@@ -534,7 +539,7 @@ class Payment extends Component {
                                         }}
                                         className="borderBox col-12">
                                         <div
-                                            onClick={() => this.setState({ open2: !this.state.open2, open: !this.state.open })}
+                                            onClick={() => this.setState({ open: !this.state.open ,open2: !this.state.open2 })}
                                             aria-controls="example-collapse-text2"
                                             aria-expanded={this.state.open2}
                                             className="col-12">
@@ -555,8 +560,6 @@ class Payment extends Component {
 
                                                 <Accordion className="pdt-30 pdb-30" defaultActiveKey="1">
                                                     <Card id="cardHeade">
-                                                        {/* <button className="circleBtn"></button>
-                                                <button className="circleBtn2"></button> */}
                                                         <Accordion.Toggle onClick={this.onActiveRadio1} id="cardHeade2" as={Card.Header} eventKey="0">
                                                             <div className="row">
                                                                 <div className="col-1">
@@ -631,7 +634,6 @@ class Payment extends Component {
                                 <div
                                     className="rightPartPayment">
                                     <h1>{ticketName}</h1>
-                                    <p>Tour mở dành cho tối đa 12 khách</p>
                                     <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                                     <div className="row no-gutters">
                                         <div style={{ marginRight: "-15px" }} className="col">
@@ -660,14 +662,14 @@ class Payment extends Component {
                                             <p> {totalPayment}</p>
                                         </div>
                                     </div>
-                                    <div className="row no-gutters">
+                                    {/* <div className="row no-gutters">
                                         <div className="col-5">
                                             <p>Giảm giá: </p>
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
                                             <p>đ 0</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row no-gutters">
                                         <div className="col">
                                             <p>Số tiền thanh toán: </p>

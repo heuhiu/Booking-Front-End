@@ -52,7 +52,7 @@ class UserInformation extends Component {
     //                     <div className="detailTicketChild col-12">
     //                         <div className="row">
     //                             <div className="col-4">
-    //                                 <p>Đặt chỗ số: 3485970104 </p>
+    //                                 <p>Mã đơn hàng: : 3485970104 </p>
     //                             </div>
     //                             <div className="col-4">
     //                                 <p>Thời gian: (thanh toán?) : 
@@ -200,11 +200,12 @@ class UserInformation extends Component {
                 className="col">
                 <div className="rightBoxUserDetail">
                     <div
-                        onClick={() => this.setState({ open: !this.state.open })}
-                        aria-controls="example-collapse-text"
-                        aria-expanded={this.state.open}
                         style={{ padding: "30px" }} >
-                        <div className="row">
+                        <div
+                         onClick={() => this.setState({ open: !this.state.open })}
+                         aria-controls="example-collapse-text"
+                         aria-expanded={this.state.open}
+                        className="labelPointer row">
                             <div
                                 className="col-6">
                                 <div id="inline">
@@ -273,11 +274,12 @@ class UserInformation extends Component {
 
                 <div style={{ marginTop: "30px" }} className="rightBoxUserDetail2">
                     <div
+                        style={{ padding: "30px" }} >
+                        <div 
                         onClick={() => this.setState({ open2: !this.state.open2 })}
                         aria-controls="example-collapse-text2"
                         aria-expanded={this.state.open2}
-                        style={{ padding: "30px" }} >
-                        <div className="row">
+                        className="labelPointer row">
                             <div className="col-6">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>

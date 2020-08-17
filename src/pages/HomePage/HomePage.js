@@ -6,7 +6,7 @@ import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Sl
 import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import { checkTokenLogin, getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../actions/index';
+import {  getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../actions/index';
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
@@ -30,17 +30,17 @@ class HomePage extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
             // console.log(decoded);
             const id = decoded.user.userId;
-            callApi("login/checkToken", 'POST', null)
-                .then(res => {
+            await callApi("login/checkToken", 'POST', null)
+                .then(async res => {
                     // console.log(res);
-                    callApi(`userClient/${id}`, 'GET', null)
+                    await callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
                             // console.log(res);
                             this.props.fetchUserDetail(res.data);
@@ -194,9 +194,6 @@ const mapDispatchToProps = (dispatch, props) => {
         hideLoader: () => {
             dispatch(hideLoader())
         },
-        checkTokenLogin: ()=>{
-            dispatch(checkTokenLogin())
-        }
     }
 }
 

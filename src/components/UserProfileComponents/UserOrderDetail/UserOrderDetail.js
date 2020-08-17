@@ -5,6 +5,7 @@ import testImg from '../../../img/Detailpic.png';
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
 import { fetchVisitor2, fetchVisitor } from '../../../actions/index';
+import { showLoader, hideLoader } from '../../../actions/index';
 
 class UserOrderDetail extends Component {
 
@@ -16,11 +17,14 @@ class UserOrderDetail extends Component {
     }
 
 
-    componentDidMount = () => {
-        const { match } = this.props;
+    componentDidMount = async () => {
+        const { match, loggedUser } = this.props;
         var id = match.params.id;
         // console.log(id);
-        callApi(`order/${id}`, 'GET', null)
+        const userId = loggedUser.id;
+        let data = new FormData();
+        data.append('uid', userId);
+        await callApi(`order/${id}`, 'GET', data)
             .then(res => {
                 // console.log(res);
                 this.setState({
@@ -73,7 +77,7 @@ class UserOrderDetail extends Component {
         const orderStatus = orderDetail.status;
         // console.log(orderStatus);
         var date = new Date(orderDetail.redemptionDate);
-
+        console.log(orderDetail);
         /* PAID, UNPAID, SENT, EXPIRED */
         // firstName: "Quang"
         // id: 53
@@ -97,12 +101,12 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
-                        <div className="content2"><p>Số tiền thanh toán:
-                            <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
+                        <div className="content">Mã đơn hàng: #{orderDetail.orderCode} </div>
+                        <div className="content2"><p>Số tiền thanh toán:<i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
-                    <p className="orderTime">Thời gian: {this.convertDateToLocalVN(orderDetail.redemptionDate)}</p>
-
+                    <p className="orderTime">Thanh toán: {this.convertDateToLocalVN(orderDetail.purchaseDay)}</p>
+                    <br></br>
+                    <br></br>
                     <div className="row">
                         <div className="col-4" >
 
@@ -141,9 +145,11 @@ class UserOrderDetail extends Component {
                                 <div
                                     style={{ textAlign: "right" }}
                                     className="rightHeader col-4">
-                                    <span><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg> &nbsp;Hỗ trợ</span>
+                                    <Link to="/aboutUs/FAQ">
+                                        <span className="noDecoration" style={{ color: "#FF7062" }}><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg> &nbsp;Hỗ trợ</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div
@@ -162,7 +168,7 @@ class UserOrderDetail extends Component {
 
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Loại vé: </span></div>
-                                                <div className="col"><span className="typeDetail2">[Vé cứng] vé tiêu chuẩn</span></div>
+                                                <div className="col"><span className="typeDetail2">{orderDetail.ticketTypeName}</span></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Thời gian: </span></div>
@@ -188,22 +194,17 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
-                        <div className="content2"><p>Số tiền thanh toán:
-                            <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
+                        <div className="content">Mã đơn hàng: #{orderDetail.orderCode} </div>
+                        <div className="content2"><p>Số tiền thanh toán:<i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
-                    <p className="orderTime">Thời gian: {this.convertDateToLocalVN(orderDetail.redemptionDate)}</p>
-
+                    <p className="orderTime">Thanh toán: {this.convertDateToLocalVN(orderDetail.purchaseDay)}</p>
+                    <br></br>
+                    <br></br>
                     <div className="row">
                         <div className="col-4" >
 
                         </div>
                         <div className="col-4" >
-                            {/* <svg className="svgLG" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="55" cy="55" r="55" fill="#FF7062" />
-                                <path d="M36 68C53.6731 68 68 53.6731 68 36C68 18.3269 53.6731 4 36 4C18.3269 4 4 18.3269 4 36C4 53.6731 18.3269 68 36 68Z" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M36 17V35.75L49 42" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg> */}
                             <svg className="svgLG" width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="55" cy="55" r="55" fill="#FF7062" />
                                 <path d="M55 87C72.6731 87 87 72.6731 87 55C87 37.3269 72.6731 23 55 23C37.3269 23 23 37.3269 23 55C23 72.6731 37.3269 87 55 87Z" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
@@ -232,7 +233,8 @@ class UserOrderDetail extends Component {
                                         totalPayment: orderDetail.totalPayment,
                                         redemptionDate: date,
                                         orderStatus: orderDetail.status,
-                                        orderId: orderDetail.id
+                                        orderId: orderDetail.id,
+                                        placeId: orderDetail.placeId
                                     }
                                 }} >
                                 Thanh toán ngay
@@ -252,9 +254,11 @@ class UserOrderDetail extends Component {
                                 <div
                                     style={{ textAlign: "right" }}
                                     className="rightHeader col-4">
-                                    <span><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg> &nbsp;Hỗ trợ</span>
+                                    <Link to="/aboutUs/FAQ">
+                                        <span className="noDecoration" style={{ color: "#FF7062" }}><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg> &nbsp;Hỗ trợ</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div
@@ -271,9 +275,9 @@ class UserOrderDetail extends Component {
                                             style={{ marginLeft: "20px" }}
                                             className="col-7">
 
-                                            <div className="row">
+                                            <div className="row ">
                                                 <div className="col-4"><span className="typeDetail">Loại vé: </span></div>
-                                                <div className="col"><span className="typeDetail2">[Vé cứng] vé tiêu chuẩn</span></div>
+                                                <div className="col"><span className="typeDetail2">{orderDetail.ticketTypeName}</span></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Thời gian: </span></div>
@@ -300,12 +304,12 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
-                        <div className="content2"><p>Số tiền thanh toán:
-                            <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
+                        <div className="content">Mã đơn hàng: #{orderDetail.orderCode} </div>
+                        <div className="content2"><p>Số tiền thanh toán:<i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
-                    <p className="orderTime">Thời gian: {this.convertDateToLocalVN(orderDetail.redemptionDate)}</p>
-
+                    <p className="orderTime">Thanh toán: {this.convertDateToLocalVN(orderDetail.purchaseDay)}</p>
+                    <br></br>
+                    <br></br>
                     <div className="row">
                         <div className="col-4" >
 
@@ -340,9 +344,11 @@ class UserOrderDetail extends Component {
                                 <div
                                     style={{ textAlign: "right" }}
                                     className="rightHeader col-4">
-                                    <span><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg> &nbsp;Hỗ trợ</span>
+                                    <Link to="/aboutUs/FAQ">
+                                        <span className="noDecoration" style={{ color: "#FF7062" }}><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg> &nbsp;Hỗ trợ</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div
@@ -361,7 +367,7 @@ class UserOrderDetail extends Component {
 
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Loại vé: </span></div>
-                                                <div className="col"><span className="typeDetail2">[Vé cứng] vé tiêu chuẩn</span></div>
+                                                <div className="col"><span className="typeDetail2">{orderDetail.ticketTypeName}</span></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Thời gian: </span></div>
@@ -389,12 +395,12 @@ class UserOrderDetail extends Component {
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
                         <div className="bulletListCustome"></div>
-                        <div className="content">Đặt chỗ số: {orderDetail.orderCode} </div>
-                        <div className="content2"><p>Số tiền thanh toán:
-                            <i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
+                        <div className="content">Mã đơn hàng: #{orderDetail.orderCode} </div>
+                        <div className="content2"><p>Số tiền thanh toán:<i>{this.convertCurrecyToVnd(orderDetail.totalPayment)}</i></p></div>
                     </div>
-                    <p className="orderTime">Thời gian: {this.convertDateToLocalVN(orderDetail.redemptionDate)}</p>
-
+                    <p className="orderTime">Thanh toán: {this.convertDateToLocalVN(orderDetail.purchaseDay)}</p>
+                    <br></br>
+                    <br></br>
                     <div className="row">
                         <div className="col-4" >
 
@@ -433,9 +439,11 @@ class UserOrderDetail extends Component {
                                 <div
                                     style={{ textAlign: "right" }}
                                     className="rightHeader col-4">
-                                    <span><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg> &nbsp;Hỗ trợ</span>
+                                    <Link to="/aboutUs/FAQ">
+                                        <span className="noDecoration" style={{ color: "#FF7062" }}><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.9381 5C14.9149 5.19057 15.8125 5.66826 16.5162 6.37194C17.2199 7.07561 17.6976 7.97326 17.8881 8.95L13.9381 5ZM13.9381 1C15.9674 1.22544 17.8597 2.13417 19.3044 3.57701C20.749 5.01984 21.6601 6.91101 21.8881 8.94L13.9381 1ZM20.8881 16.92V19.92C20.8892 20.1985 20.8322 20.4742 20.7206 20.7293C20.6091 20.9845 20.4454 21.2136 20.2402 21.4019C20.035 21.5901 19.7927 21.7335 19.5289 21.8227C19.265 21.9119 18.9855 21.9451 18.7081 21.92C15.631 21.5856 12.6751 20.5341 10.0781 18.85C7.66194 17.3147 5.61345 15.2662 4.07812 12.85C2.38809 10.2412 1.33636 7.27099 1.00812 4.18C0.983127 3.90347 1.01599 3.62476 1.10462 3.36162C1.19324 3.09849 1.33569 2.85669 1.52288 2.65162C1.71008 2.44655 1.93792 2.28271 2.19191 2.17052C2.44589 2.05833 2.72046 2.00026 2.99812 2H5.99812C6.48342 1.99522 6.95391 2.16708 7.32188 2.48353C7.68985 2.79999 7.93019 3.23945 7.99812 3.72C8.12474 4.68007 8.35957 5.62273 8.69812 6.53C8.83266 6.88792 8.86178 7.27691 8.78202 7.65088C8.70227 8.02485 8.51698 8.36811 8.24812 8.64L6.97812 9.91C8.40167 12.4135 10.4746 14.4864 12.9781 15.91L14.2481 14.64C14.52 14.3711 14.8633 14.1858 15.2372 14.1061C15.6112 14.0263 16.0002 14.0555 16.3581 14.19C17.2654 14.5286 18.2081 14.7634 19.1681 14.89C19.6539 14.9585 20.0975 15.2032 20.4146 15.5775C20.7318 15.9518 20.9003 16.4296 20.8881 16.92Z" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg> &nbsp;Hỗ trợ</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div
@@ -454,7 +462,7 @@ class UserOrderDetail extends Component {
 
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Loại vé: </span></div>
-                                                <div className="col"><span className="typeDetail2">[Vé cứng] vé tiêu chuẩn</span></div>
+                                                <div className="col"><span className="typeDetail2">{orderDetail.ticketTypeName}</span></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-4"><span className="typeDetail">Thời gian: </span></div>
@@ -479,7 +487,7 @@ class UserOrderDetail extends Component {
 
     render() {
         const { orderDetail } = this.state;
-        // console.log(orderDetail);
+        console.log(orderDetail);
         // console.log(orderDetail.redemptionDate);
         return (
             <div
@@ -495,17 +503,19 @@ class UserOrderDetail extends Component {
 // export default UserOrderDetail;
 const mapStateToProps = state => {
     return {
-        visitorType: state.Ticket
+        visitorType: state.Ticket,
+        loggedUser: state.User,
+
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchVisitor2: (id, qty, price, name) => {
-            dispatch(fetchVisitor2(id, qty, price, name))
+        showLoader: () => {
+            dispatch(showLoader())
         },
-        fetchVisitor: (item) => {
-            dispatch(fetchVisitor(item))
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

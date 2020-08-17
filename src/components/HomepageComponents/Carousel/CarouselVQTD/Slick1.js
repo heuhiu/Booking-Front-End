@@ -90,7 +90,7 @@ class Slick1 extends Component {
                                         <div>
                                             {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
                                             <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
-                                            <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                                            {/* <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p> */}
                                         </div>
 
                                     </div>

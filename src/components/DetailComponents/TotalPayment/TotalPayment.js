@@ -46,6 +46,7 @@ class TotalPayment extends Component {
         e.preventDefault();
         const { history } = this.props;
         const { totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
+        // console.log(place);
             callApi('login/checkToken', 'post', null)
                 .then(res => {
                     if(totalPayment === 0) {
@@ -71,7 +72,12 @@ class TotalPayment extends Component {
                     } else {
                         this.props.history.push({
                             pathname: '/payment',
-                            state: { ticketTypeID, ticketName, totalPayment, redemptionDate, place }
+                            state: { 
+                                ticketTypeID, 
+                                ticketName, 
+                                totalPayment, 
+                                redemptionDate, 
+                                place }
                         })
                     }
                     
@@ -122,7 +128,7 @@ class TotalPayment extends Component {
                             > {this.convertCurrecyToVnd(totalPayment)}</p>
                         </div>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col">
                             <p className="titlePayment">Giảm giá</p>
                         </div>
@@ -131,7 +137,7 @@ class TotalPayment extends Component {
                                 className="pPayment"
                             > 0 đ</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="row ">
                         <div className="col">
                             <p className="titlePayment">Số tiền thanh toán</p>

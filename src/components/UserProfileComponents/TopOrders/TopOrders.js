@@ -28,10 +28,13 @@ class TopOrders extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
-    getTop3Order = async (id) => {
-        const { showLoader, hideLoader } = this.props;
+    getTopThreeOrders = async (id) => {
+        const { showLoader, hideLoader, loggedUser } = this.props;
         showLoader();
-        await callApi(`order/top3/${id}`, 'GET', null)
+        const userId = loggedUser.id;
+        let data = new FormData();
+        data.append('uid', userId);
+        await callApi(`order/top3/${id}`, 'GET', data)
             .then(res => {
                 // console.log(res);
                 this.setState({
@@ -56,7 +59,7 @@ class TopOrders extends Component {
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
                     // console.log(res.data.id);
-                    this.getTop3Order(res.data.id);
+                    this.getTopThreeOrders(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);
@@ -95,14 +98,14 @@ class TopOrders extends Component {
                             <div
                                 className="detailTicketBox2Detail col-12">
                                 <div className={`detailTicketChild${item.status} col-12`}>
-                                    <div className="row">
+                                    <div className="row no-gutters">
                                         <div className="col-4">
-                                            <p>Đặt chỗ số: {item.orderCode} </p>
+                                            <p style={{ fontSize: "12px" }}>Mã đơn hàng: #{item.orderCode} </p>
                                         </div>
                                         <div className="col-4">
-                                            <p>Thời gian: &nbsp;
+                                            <p style={{ visibility: item.status === "UNPAID" ? "hidden" : "visible", fontSize: "12px" }}>Thanh toán: &nbsp;
                                             {/* {item.purchaseDay} */}
-                                                {this.formatter.format(Date.parse(item.purchaseDay))}
+                                                {this.formatter.format(Date.parse(item.purchaseDay))}   
                                             </p>
                                         </div>
                                         <div className="col-4">
@@ -125,20 +128,23 @@ class TopOrders extends Component {
                                     </div>
                                 </div>
 
-                                <div style={{ margin: "30px" }} className="row no-gutters">
+                                <div style={{ margin: "20px 30px 20px 30px" }} className="row no-gutters">
                                     <div
                                         className="col-3">
-                                        <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                        <img className="detailImg"
+                                            height="15px"
+                                            src={item.place.imageLink}
+                                            alt="FAIL TO LOAD" />
                                     </div>
                                     <div
                                         style={{ marginLeft: "20px" }}
                                         className="col">
                                         <div className="row">
-                                            <div className="col"><h1 className="nameDetail">{item.ticketTypeName}</h1></div>
+                                            <div className="col"><h1 className="nameDetail">Vé {item.place.name}</h1></div>
                                         </div>
                                         <div className="row">
                                             <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
-                                            <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
+                                            <div className="col"><span className="ticketTypeDetail">{item.ticketTypeName}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col-3">
@@ -164,7 +170,7 @@ class TopOrders extends Component {
 
             else if (topOrders.length === 0) {
                 return (
-                    <p style={{visibility: this.props.loader===false?"visible":"hidden"}}>Not Found</p>
+                    <p style={{ visibility: this.props.loader === false ? "visible" : "hidden" }}>Not Found</p>
                 );
             }
 
@@ -197,10 +203,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         showLoader: () => {
             dispatch(showLoader())
-          },
-          hideLoader: () => {
+        },
+        hideLoader: () => {
             dispatch(hideLoader())
-          }
+        }
     }
 }
 

@@ -203,7 +203,7 @@ class Detail extends Component {
                                 </div>
                             </div>
 
-                            <div
+                            {/* <div
                                 style={{ marginBottom: "10px" }}
                                 className="row no-gutters">
                                 <div className="col-1">
@@ -216,7 +216,7 @@ class Detail extends Component {
                                         Đón tại điểm hẹn
                         </p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 

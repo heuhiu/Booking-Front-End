@@ -7,6 +7,7 @@ import Menu from '../Menu/Menu';
 import { ProgressBar, Step } from "react-step-progress-bar";
 import testImg from '../../img/Detailpic.png'
 import { Redirect, Link } from 'react-router-dom';
+import UserOrderDetail from '../UserProfileComponents/UserOrderDetail/UserOrderDetail';
 //Home page
 class PaymentSucess extends Component {
 
@@ -41,7 +42,15 @@ class PaymentSucess extends Component {
         }
         return result;
     }
+    formatter = new Intl.DateTimeFormat("vi-VN", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
 
+    });
+    convertDateToLocalVN = (date) => {
+            return this.formatter.format(Date.parse(date));
+    }
 
     render() {
         const { visitorType, location, loggedUser } = this.props;
@@ -53,7 +62,7 @@ class PaymentSucess extends Component {
 
 
 
-        if (location.state === undefined) {
+        if (location.state === undefined || loggedUser.id === undefined) {
             return (
                 <Redirect to="/" />
             )
@@ -62,11 +71,24 @@ class PaymentSucess extends Component {
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             };
-            const prnDt = location.state.orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
-            const ticketName = location.state.orderDetail.state.ticketName;
-            const totalPayment = location.state.orderDetail.state.totalPayment;
+            var prnDt = '';
+            var ticketName = '';
+            var totalPayment = '';
             const userEmail = loggedUser.mail;
-
+            const status = location.state.orderDetail.status;
+            console.log(status);
+            if (status === "UNPAID") {
+                // console.log( location.state.orderDetail);
+                // console.log(this.convertDateToLocalVN(location.state.orderDetail.redemptionDate))
+                prnDt = this.convertDateToLocalVN(location.state.orderDetail.redemptionDate);
+                ticketName = location.state.orderDetail.ticketTypeName;
+                totalPayment = location.state.orderDetail.totalPayment;
+            } else {
+                console.log( location.state.orderDetail);
+                ticketName = location.state.orderDetail.state.ticketName;
+                totalPayment = location.state.orderDetail.state.totalPayment;
+                prnDt = location.state.orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
+            }
             return (
                 <div
                     style={{ backgroundColor: "#F2F2F2", fontFamily: "Inter" }}
@@ -213,26 +235,51 @@ class PaymentSucess extends Component {
                                     </div>
                                     <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
                                     <div className="row">
+                                        <div className="col-12 labelPaymentSucess">
+                                            <span>{status === "UNPAID" ? "Chờ thanh toán" : "Đang xử lý đặt chỗ"}</span>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+
                                         <div className="col-4" >
                                             <div className="circleCoffee">
 
                                             </div>
                                         </div>
                                         <div className="col-4" >
-                                            <div className="circleCoffee">
-                                                <div className="coffeLogo">
-                                                    <svg
-                                                        // style={{padding: "20px"}}
-                                                        // viewBox="70 160 800 190" preserveAspectRatio="xMaxYMax meet"
+
+                                            {/* <div className="circleCoffee"> */}
+                                            {/* <div className="coffeLogo"> */}
+                                            {/* <svg
                                                         width="112" height="106" viewBox="0 0 112 106" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M82.667 38.3003H87.5837C92.7996 38.3003 97.8019 40.3653 101.49 44.041C105.178 47.7167 107.25 52.702 107.25 57.9002C107.25 63.0985 105.178 68.0838 101.49 71.7595C97.8019 75.4352 92.7996 77.5002 87.5837 77.5002H82.667" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M4 38.3003H82.6667V82.4001C82.6667 87.5984 80.5946 92.5837 76.9064 96.2594C73.2182 99.9351 68.2159 102 63 102H23.6667C18.4507 102 13.4484 99.9351 9.76023 96.2594C6.07202 92.5837 4 87.5984 4 82.4001V38.3003Z" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M23.667 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M43.334 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M63 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                    </svg>
-                                                </div>
-                                            </div>
+                                                    </svg> */}
+                                            {status === "UNPAID"
+                                                ?
+                                                <svg className="svgLG" width="150" height="150" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="55" cy="55" r="55" fill="#FF7062" />
+                                                    <path d="M55 87C72.6731 87 87 72.6731 87 55C87 37.3269 72.6731 23 55 23C37.3269 23 23 37.3269 23 55C23 72.6731 37.3269 87 55 87Z" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M55 36V54.75L68 61" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                :
+                                                <svg className="svgLG" width="150" height="150" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="55" cy="55" r="55" fill="#197ACF" />
+                                                    <path d="M75.9336 45.4092H78.9919C82.2364 45.4092 85.348 46.6981 87.6423 48.9923C89.9365 51.2865 91.2253 54.3981 91.2253 57.6426C91.2253 60.8871 89.9365 63.9987 87.6423 66.2929C85.348 68.5871 82.2364 69.876 78.9919 69.876H75.9336" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M27 45.4092H75.9336V72.9343C75.9336 76.1788 74.6447 79.2904 72.3505 81.5846C70.0563 83.8788 66.9447 85.1677 63.7002 85.1677H39.2334C35.9889 85.1677 32.8773 83.8788 30.5831 81.5846C28.2889 79.2904 27 76.1788 27 72.9343V45.4092Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M39.2344 24V33.175" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M51.4668 24V33.175" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M63.6992 24V33.175" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            }
+
+
+
+                                            {/* </div> */}
+                                            {/* </div> */}
                                         </div>
                                         <div className="col-4" >
                                             <div className="circleCoffee">
@@ -242,8 +289,13 @@ class PaymentSucess extends Component {
                                         <div
                                             style={{ textAlign: "center" }}
                                             className="col-12">
-                                            <p className="mrt-30 mp1">Vé của bạn sẽ được gửi về địa chỉ email dưới đây trong vòng ít giờ tới</p>
-                                            <p className="mp2">{userEmail}</p>
+
+                                            <p className="mrt-30 mp1">
+                                                {status === "UNPAID"
+                                                    ? "Bạn cần thanh toán trong vòng 2 giờ kể từ khi hoàn thành thông tin đơn hàng"
+                                                    : "Vé của bạn sẽ được gửi về địa chỉ email dưới đây trong vòng ít giờ tới"}
+                                            </p>
+                                            <p className="mp2">{status === "UNPAID" ? "" : userEmail}</p>
                                         </div>
 
                                         <div className="col-12"
@@ -307,7 +359,7 @@ class PaymentSucess extends Component {
                                             <Link to="/userProfile/myOrders" type="button" className="toMyOrder"> Đặt chỗ của tôi </Link>
                                         </div>
                                         <div className="boxSusscessBackHome col-5">
-                                        <Link to="/" type="button" className="toHome"> Trang Chủ </Link>
+                                            <Link to="/" type="button" className="toHome"> Trang Chủ </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +372,6 @@ class PaymentSucess extends Component {
                                 <div
                                     className="rightPartPayment">
                                     <h1>{ticketName}</h1>
-                                    <p>Tour mở dành cho tối đa 12 khách</p>
                                     <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                                     <div className="row no-gutters">
                                         <div style={{ marginRight: "-15px" }} className="col">
@@ -348,14 +399,14 @@ class PaymentSucess extends Component {
                                             <p> {this.convertCurrecyToVnd(totalPayment)}</p>
                                         </div>
                                     </div>
-                                    <div className="row no-gutters">
+                                    {/* <div className="row no-gutters">
                                         <div className="col-5">
                                             <p>Giảm giá: </p>
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
                                             <p>0 đ</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row no-gutters">
                                         <div className="col">
                                             <p>Số tiền thanh toán: </p>

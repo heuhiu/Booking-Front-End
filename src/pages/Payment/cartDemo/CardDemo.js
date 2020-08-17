@@ -38,10 +38,10 @@ class _CardForm extends Component {
 
   handleChange = ({ error }) => {
     if (error) {
-      this.setState({ 
+      this.setState({
         errorMessage: error.message,
         checkWrong: false
-      }, ()=>{
+      }, () => {
         console.log(this.state.errorMessage);
       });
     } else {
@@ -68,7 +68,7 @@ class _CardForm extends Component {
         draggable: true,
         progress: undefined,
       });
-    } else if(checkStep1 !== 50) {
+    } else if (checkStep1 !== 50) {
       toast.error('Bạn cần xác thực thông tin liên lạc!', {
         position: "bottom-right",
         autoClose: 5000,
@@ -78,7 +78,7 @@ class _CardForm extends Component {
         draggable: true,
         progress: undefined,
       });
-    } else if (this.state.checkWrong === false){
+    } else if (this.state.checkWrong === false) {
       toast.error(`Vui lòng điền lại số thẻ`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -89,17 +89,17 @@ class _CardForm extends Component {
         progress: undefined,
       });
     }
-      else if (this.state.checkWrong === true){
-        toast.error(`Vui lòng điền số thẻ`, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-    } else  {
+    else if (this.state.checkWrong === true) {
+      toast.error(`Vui lòng điền số thẻ`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
       if (orderDetail.state.orderStatus) {
         // console.log(orderDetail.state.orderStatus);
 
@@ -134,7 +134,7 @@ class _CardForm extends Component {
         redemptionDate: orderDetail.state.redemptionDate,
         orderItems: orderItems,
         id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null,
-        placeId: orderDetail.state.place.id
+        placeId: orderDetail.state.place !== undefined ? orderDetail.state.place.id : orderDetail.state.placeId
       }
 
 
@@ -173,6 +173,7 @@ class _CardForm extends Component {
             //     }
             //   });
             this.callPayment(data, orderDetail);
+            // console.log(orderDetail);
           })
       } else {
         console.log("Stripe.js hasn't loaded yet.");

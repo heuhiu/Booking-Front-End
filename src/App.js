@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { connect } from 'react-redux';
-import { getUserLogin, showLoader, hideLoader } from './actions/index';
+import { getUserLogin, showLoader, hideLoader, checkTokenLogin } from './actions/index';
 import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -33,9 +33,9 @@ class App extends Component {
     //             this.setState({
     //                 checkFetchUser: true
     //             }, () => {
-    //                 if (this.state.checkFetchUser === true && this.state.checkToken === true) {
-    //                     hideLoader();
-    //                 }
+    //                 // if (this.state.checkFetchUser === true && this.state.checkToken === true) {
+    //                 hideLoader();
+    //                 // }
     //             })
     //         }).catch(function (error) {
     //             if (error.response) {
@@ -55,19 +55,21 @@ class App extends Component {
             const id = decoded.user.userId;
             // this.props.fetchUserDetail(decoded.user);
             await callApi("login/checkToken", 'POST', null)
-                .then(res => {
+                .then(async res =>  {
                     this.setState({ checkToken: true })
-                    console.log(res);
-                    callApi(`userClient/${id}`, 'GET', null)
+                    console.log(1);
+                    await callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
                             // console.log(res);
                             this.props.fetchUserDetail(res.data);
+                            console.log(2);
                             hideLoader();
                         }).catch(function (error) {
                             if (error.response) {
                                 console.log(error.response.data);
                             }
                         });
+                        console.log(3);
                     // this.callApifechUser(id, res.data)
                 }).catch(function (error) {
                     if (error.response) {
@@ -76,6 +78,7 @@ class App extends Component {
                         window.location.reload();
                     }
                 });
+
         }
     }
     // checkLogin = async () => {
@@ -157,7 +160,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         hideLoader: () => {
             dispatch(hideLoader())
-        }
+        },
     }
 }
 

@@ -95,7 +95,7 @@ class RightPartDetail extends Component {
                     </div>
                 </div>
 
-                <div 
+                {/* <div 
                 style={{marginBottom: "10px"}}
                 className="row no-gutters">
                     <div className="col-1">
@@ -108,7 +108,7 @@ class RightPartDetail extends Component {
                             Đón tại điểm hẹn
                         </p>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }
