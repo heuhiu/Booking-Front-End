@@ -253,7 +253,7 @@ class CfNewPassword extends Component {
                                         <div style={{ marginTop: "100px" }}>
                                             <svg className="svgLG" width="131" height="131" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="65.5" cy="65.5" r="65.5" fill="#FF7062" />
-                                                <path d="M99.9737 41.3684L52.5724 88.9421L31.0264 67.3177" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M99.9737 41.3684L52.5724 88.9421L31.0264 67.3177" stroke="white" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
                                         </div>
                                     </div>

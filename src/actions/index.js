@@ -113,3 +113,15 @@ export const fetchAllCity = (listCity) => {
       listCity
   }
 }
+
+export const removeUserLogin = () => {
+  return {
+      type: types.REMOVE_USER_LOGIN,
+  }
+}
+
+export const checkTokenLogin = () => {
+  return {
+      type: types.CHECK_TOKEN_LOGIN,
+  }
+}

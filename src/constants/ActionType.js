@@ -7,3 +7,7 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const GET_ALL_CATEGORY = 'GET_ALL_CATEGORY';
 export const GET_ALL_CITY = 'GET_ALL_CITY';
+export const REMOVE_USER_LOGIN = 'REMOVE_USER_LOGIN';
+export const CHECK_TOKEN_LOGIN = 'CHECK_TOKEN_LOGIN';
+
+

@@ -7,7 +7,7 @@ import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 import callApi from '../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
-import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
+import { showLoader, hideLoader, getUserLogin, removeUserLogin } from '../../actions/index';
 import Search from '../HomepageComponents/Search/Search';
 import NavBarSearch from './NavBarSearch/NavBarSearch';
 
@@ -96,6 +96,7 @@ class Menu extends Component {
                 // console.log(res);
                 localStorage.removeItem('tokenLogin');
                 localStorage.removeItem('USER');
+                this.props.removeUserLogin();
                 // window.location.reload();
                 this.props.history.push("/login");
             }).catch(function (error) {
@@ -106,6 +107,7 @@ class Menu extends Component {
     }
 
     render() {
+        // console.log(this.props.location.pathname === "/")
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         return (
             <nav
@@ -119,15 +121,17 @@ class Menu extends Component {
                         height="38.704"
                     />
                 </Link>
-                {/* <NavBarSearch /> */}
+                <div style={{display: this.props.location.pathname === "/"?"none":""}} >
+                <NavBarSearch />
+                </div>
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
                     <Link
                         style={{ textDecoration: "none" }} to="/">
                         <button style={{ display: tokenLogin ? "" : "" }} className="none1 nav-link">
                             <svg className="svgNav" width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 10.625L12.625 1.58337L24.25 10.625V24.8334C24.25 25.5185 23.9778 26.1756 23.4934 26.6601C23.0089 27.1445 22.3518 27.4167 21.6667 27.4167H3.58333C2.89819 27.4167 2.24111 27.1445 1.75664 26.6601C1.27217 26.1756 1 25.5185 1 24.8334V10.625Z" stroke="#5B5B5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M8.75 27.4167V14.5H16.5V27.4167" stroke="#5B5B5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 10.625L12.625 1.58337L24.25 10.625V24.8334C24.25 25.5185 23.9778 26.1756 23.4934 26.6601C23.0089 27.1445 22.3518 27.4167 21.6667 27.4167H3.58333C2.89819 27.4167 2.24111 27.1445 1.75664 26.6601C1.27217 26.1756 1 25.5185 1 24.8334V10.625Z" stroke="#5B5B5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M8.75 27.4167V14.5H16.5V27.4167" stroke="#5B5B5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             Trang chủ
                         </button>
@@ -135,11 +139,11 @@ class Menu extends Component {
                     <Link style={{ textDecoration: "none" }} to="/userProfile/myOrders">
                         <button style={{ display: tokenLogin ? "" : "none" }} className="none1 nav-link">
                             <svg className="svgNav" width="24" height="30" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.75 1H3.75C3.02065 1 2.32118 1.28973 1.80546 1.80546C1.28973 2.32118 1 3.02065 1 3.75V25.75C1 26.4793 1.28973 27.1788 1.80546 27.6945C2.32118 28.2103 3.02065 28.5 3.75 28.5H20.25C20.9793 28.5 21.6788 28.2103 22.1945 27.6945C22.7103 27.1788 23 26.4793 23 25.75V9.25L14.75 1Z" stroke="#5B5B5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M14.75 1V9.25H23" stroke="#5B5B5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M17.5 16.125H6.5" stroke="#5B5B5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M17.5 21.625H6.5" stroke="#5B5B5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M9.25 10.625H7.875H6.5" stroke="#5B5B5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M14.75 1H3.75C3.02065 1 2.32118 1.28973 1.80546 1.80546C1.28973 2.32118 1 3.02065 1 3.75V25.75C1 26.4793 1.28973 27.1788 1.80546 27.6945C2.32118 28.2103 3.02065 28.5 3.75 28.5H20.25C20.9793 28.5 21.6788 28.2103 22.1945 27.6945C22.7103 27.1788 23 26.4793 23 25.75V9.25L14.75 1Z" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M14.75 1V9.25H23" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M17.5 16.125H6.5" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M17.5 21.625H6.5" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M9.25 10.625H7.875H6.5" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             {' '}Đặt chỗ của tôi
                         </button>
@@ -249,6 +253,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         hideLoader: () => {
             dispatch(hideLoader())
+        },
+        removeUserLogin:()=>{
+            dispatch(removeUserLogin())
         }
     }
 }

@@ -64,17 +64,33 @@ class NavBarSearch extends Component {
             [name]: value,
         })
     }
+    isValid = (str) => {
+        return /^[a-zA-Z0-9 ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]{0,225}$/g.test(str);
+        // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
+    }
 
+    removeSpace = (str) => {
+        return str.replace(/\s+/gi, " ");
+    }
+    // if (this.props.location.pathname === "/searchedPlace") {
+    //     console.log("lmao");
+    //     this.props.history.push(`${this.searchPathLink()}`);
+    //     window.location.reload();
+    // } else {
+    //     this.props.history.push(`${this.searchPathLink()}`);
+    // }
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
+
         e.preventDefault();
         // console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
             // console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
-
-        if (this.state.txtParkName === "") {
+        var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
+        console.log(str);
+        if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -85,8 +101,25 @@ class NavBarSearch extends Component {
                 progress: undefined,
             });
         }
-        else {
-            this.props.history.push(`${this.searchPathLink()}`);
+        else if (this.isValid(this.state.txtParkName) === false) {
+            toast.error('Vui lòng không điền kí tự đặc biệt!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            // this.props.history.push(`${this.searchPathLink()}`);              
+            if (this.props.location.pathname === "/searchedPlace") {
+                console.log("lmao");
+                this.props.history.push(`${this.searchPathLink()}`);
+                window.location.reload();
+            } else {
+                this.props.history.push(`${this.searchPathLink()}`);
+            }
         }
     }
 
@@ -102,83 +135,55 @@ class NavBarSearch extends Component {
     render() {
         const { toggleFilter, txtParkName } = this.state;
         const { cityMul, catMul } = this.state;
-        // console.log(txtParkName);
-
+        // var name = '';
+        // const answer_array = this.props.location.search.split('?');
+        // for (let index = 0; index < answer_array.length; index++) {
+        //     const element = answer_array[index];
+        //     if (element.split("=")[0] === "name") {
+        //         name = element.split("=")[1]
+        //     }
+        // }
+        // const searchName = this.props.location.search.split("=");
+        // var searchNameAfterSpilit = null;
+        // if (searchName[0] === "?name") {
+        //     console.log(searchName[1])
+        //     searchNameAfterSpilit = searchName[1]
+        // }
         return (
             <div>
                 <ToastContainer />
                 <form
                     onSubmit={this.onSubmitSearch}
-                    className="d-block d-flex">
-                    <div className="fields d-block d-flex">
-                        <div className="textfield-search two-third">
-                            <img src={LogoSearch} alt="?" width="54.467" height="43.84" />
-                        </div>
-                        <div className="textfield-search one-third">
+                    className="d-flex">
+                    <div className="">
+                        <div className="">
                             <input
                                 type="text"
-                                className="form-control"
-                                placeholder="Tìm kiếm hoạt động hoặc điểm đến"
+                                maxLength="225"
+                                className="searchSubNavBar"
+                                placeholder="Tìm hoạt động hoặc điểm đến"
                                 name="txtParkName"
                                 // defaultValu={txtParkName}
                                 onChange={this.onChange}
                             />
                         </div>
-                        <div
-                            className="select-wrap one-third">
-                            <div
-                                onClick={this.toggleFilter}
-                                style={{ paddingLeft: "0px" }}
-                                className="form-control">
-                                <div className="filterPanel">
-                                    <span>
-                                        Bộ lọc
-                                    </span>
-                                    <span style={{marginLeft: "10px"}}>
-                                        <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1.34546 1L7.34546 7L13.3455 1" stroke="#A5A5A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    </span>
-
-                                </div>
-
-                            </div>
-                            <div
-                                style={{ visibility: toggleFilter ? "hidden" : "visible" }}
-                                className="filterBox">
-                                <div className="row">
-                                    <div className="col-12">
-                                        {/* <MyMul setmMul={this.setmMul} /> */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                    {/* <Link
-                        // onClick={this.onSubmitSearch}
-                        className="search-submit"
-                        // to="/searchedPlace"
-                        // to={`/searchedPlace?name=${txtParkName}?name=${txtParkName}?name=${txtParkName}`}
-                        // to={{
-                        //     pathname: '/searchedPlace',
-                        //     query: queryParameters
-                        //   }}
-                        // to={this.state.pathLink === "" ? "/searchedPlace" : this.state.pathLink}
-                        to={this.searchPathLink}
-                    > */}
                     <button
                         type="submit"
                         // onClick={this.onSubmitSearch}
-                        className="searchbtn"
-                        className="search-submit"
+                        className="subNabSearchBtn"
                     >
-                        <img src={search}
+                        {/* <img src={search}
                             alt="Fail !"
-                            width="17.76"
-                            height="17.76"
-                        /> &nbsp; Tìm Kiếm
-                        </button>
+                            width="14"
+                            height="14"
+                        /> */}
+                        <svg width="21" height="22" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.1111 23.4839C18.2476 23.4839 23.2222 18.6199 23.2222 12.6197C23.2222 6.61961 18.2476 1.75555 12.1111 1.75555C5.97461 1.75555 1 6.61961 1 12.6197C1 18.6199 5.97461 23.4839 12.1111 23.4839Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M26 26.2003L19.9583 20.2929" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+
+                    </button>
                     {/* </Link> */}
                 </form>
 

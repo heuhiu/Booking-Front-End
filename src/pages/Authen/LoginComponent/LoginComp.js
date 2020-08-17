@@ -190,6 +190,7 @@ class LoginComp extends Component {
     }
 
     render() {
+        console.log('hi')
         return (
             <div>
                 <Menu />
@@ -219,6 +220,7 @@ class LoginComp extends Component {
                                         ref={(input) => { this.mailInput = input; }}
                                         type="text"
                                         name="email"
+                                        maxLength="320"
                                         onChange={this.handleInput}
                                         onBlur={this.handleInputValidation}
                                         required

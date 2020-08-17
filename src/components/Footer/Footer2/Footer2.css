@@ -73,7 +73,7 @@ footer div {
   fill: var(--col-deepblue);
   animation: drop 3.2s linear infinite normal;
   stroke: var(--col-deepblue);
-  stroke-width:0.5;
+  strokeWidth:0.5;
   transform: translateY(25px) ;
   transform-box: fill-box;
   transform-origin: 50% 100%;

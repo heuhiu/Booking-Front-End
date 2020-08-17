@@ -5,3 +5,4 @@ export const DATE_OF_BIRTH = /^(?:(?:(?:(?:(?:[1-9]\d)(?:0[48]|[2468][048]|[1357
 export const EMAIL = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)((\.([a-zA-Z]{2,5})){1,2})$/;
 export const PHONE_NUMBER = /^\d{10,11}$/;
 // export const EMAIL = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
+// export const EMAIL = /^([a-zA-Z0-9_\-\.]{6,64}+)@(?=.{6,255}$)(([a-zA-Z0-9]{2,251})((\.([a-zA-Z]{2,251})){1,2}))$/;

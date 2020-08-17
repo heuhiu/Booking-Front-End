@@ -23,32 +23,31 @@ class App extends Component {
         }
     }
 
-    callApifechUser = async (id, data) => {
-        const { showLoader, hideLoader } = this.props;
-        showLoader()
-        await callApi(`userClient/${id}`, 'GET', null)
-            .then(res => {
-                // console.log(res);
-                this.props.fetchUserDetail(data);
-                this.setState({
-                    checkFetchUser: true
-                }, () => {
-                    if (this.state.checkFetchUser === true && this.state.checkToken === true) {
-                        hideLoader();
-                    }
-                })
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-    }
+    // callApifechUser = async (id, data) => {
+    //     const { showLoader, hideLoader } = this.props;
+    //     showLoader()
+    //     await callApi(`userClient/${id}`, 'GET', null)
+    //         .then(res => {
+    //             // console.log(res);
+    //             this.props.fetchUserDetail(data);
+    //             this.setState({
+    //                 checkFetchUser: true
+    //             }, () => {
+    //                 if (this.state.checkFetchUser === true && this.state.checkToken === true) {
+    //                     hideLoader();
+    //                 }
+    //             })
+    //         }).catch(function (error) {
+    //             if (error.response) {
+    //                 console.log(error.response.data);
+    //             }
+    //         });
+    // }
 
     componentDidMount = async () => {
         const { showLoader, hideLoader } = this.props;
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-       
         if (tokenLogin) {
             showLoader();
             var decoded = jwtDecode(tokenLogin);
@@ -59,7 +58,7 @@ class App extends Component {
                 .then(res => {
                     this.setState({ checkToken: true })
                     console.log(res);
-                     callApi(`userClient/${id}`, 'GET', null)
+                    callApi(`userClient/${id}`, 'GET', null)
                         .then(res => {
                             // console.log(res);
                             this.props.fetchUserDetail(res.data);
@@ -79,8 +78,42 @@ class App extends Component {
                 });
         }
     }
-
+    // checkLogin = async () => {
+    //     const { showLoader, hideLoader } = this.props;
+    //     var jwtDecode = require('jwt-decode');
+    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
+    //     if (tokenLogin) {
+    //         showLoader();
+    //         var decoded = jwtDecode(tokenLogin);
+    //         // console.log(decoded);
+    //         const id = decoded.user.userId;
+    //         // this.props.fetchUserDetail(decoded.user);
+    //         await callApi("login/checkToken", 'POST', null)
+    //             .then(res => {
+    //                 this.setState({ checkToken: true })
+    //                 console.log(res);
+    //                 callApi(`userClient/${id}`, 'GET', null)
+    //                     .then(res => {
+    //                         // console.log(res);
+    //                         this.props.fetchUserDetail(res.data);
+    //                         hideLoader();
+    //                     }).catch(function (error) {
+    //                         if (error.response) {
+    //                             console.log(error.response.data);
+    //                         }
+    //                     });
+    //                 // this.callApifechUser(id, res.data)
+    //             }).catch(function (error) {
+    //                 if (error.response) {
+    //                     hideLoader();
+    //                     localStorage.removeItem('tokenLogin');
+    //                     window.location.reload();
+    //                 }
+    //             });
+    //     }
+    // }
     render() {
+        // this.checkLogin();
         return (
             <BrowserView>
                 <Router>

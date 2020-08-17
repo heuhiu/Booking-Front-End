@@ -6,7 +6,7 @@ import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Sl
 import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import { getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../actions/index';
+import { checkTokenLogin, getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../actions/index';
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
@@ -56,6 +56,7 @@ class HomePage extends Component {
                     }
                 });
         }
+        // this.props.checkTokenLogin();
         this.getCategoriesnCity();
     }
 
@@ -143,6 +144,7 @@ class HomePage extends Component {
     }
 
     render() {
+        // console.log(this.props.UserDetail)
         const { topCity, listData1, listData2, listData3 } = this.state;
         return (
             <div>
@@ -170,7 +172,8 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        loader: state.Loader
+        loader: state.Loader,
+        UserDetail: state.User,
     }
 }
 
@@ -190,6 +193,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         hideLoader: () => {
             dispatch(hideLoader())
+        },
+        checkTokenLogin: ()=>{
+            dispatch(checkTokenLogin())
         }
     }
 }

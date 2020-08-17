@@ -206,8 +206,8 @@ class UserOrderDetail extends Component {
                             </svg> */}
                             <svg className="svgLG" width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="55" cy="55" r="55" fill="#FF7062" />
-                                <path d="M55 87C72.6731 87 87 72.6731 87 55C87 37.3269 72.6731 23 55 23C37.3269 23 23 37.3269 23 55C23 72.6731 37.3269 87 55 87Z" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M55 36V54.75L68 61" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M55 87C72.6731 87 87 72.6731 87 55C87 37.3269 72.6731 23 55 23C37.3269 23 23 37.3269 23 55C23 72.6731 37.3269 87 55 87Z" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M55 36V54.75L68 61" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
 
                         </div>

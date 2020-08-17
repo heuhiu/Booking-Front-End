@@ -283,29 +283,29 @@ class ListPlaceSearched extends Component {
         // console.log(isNaN(IDCategoryFilter[0]));
         // console.log(value.min);
         // console.log(String(value.min));
-        if(searchName === "!"){
-            this.setState({
-                searchList: [],
-                checkSearch: true
-            }, () => {
-                toast.error('URL không hợp lệ!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            })
-        }
+        // if(searchName === "!"){
+        //     this.setState({
+        //         searchList: [],
+        //         checkSearch: false
+        //     }, () => {
+        //         toast.error('URL không hợp lệ!', {
+        //             position: "bottom-right",
+        //             autoClose: 5000,
+        //             hideProgressBar: false,
+        //             closeOnClick: true,
+        //             pauseOnHover: true,
+        //             draggable: true,
+        //             progress: undefined,
+        //         });
+        //     })
+        // }
         if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCategoryFilter[0]) === true) {
             // if (false) {
             this.setState({
                 searchList: [],
-                checkSearch: true
+                checkSearch: false
             }, () => {
-                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục!', {
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục 22!', {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -343,7 +343,8 @@ class ListPlaceSearched extends Component {
                     totalPage: res.data.totalPage,
                     searchList: res.data.listResult,
                     totalItems: res.data.totalItems,
-                    checkApiListSearched: true
+                    checkApiListSearched: true,
+                    checkSearch: true
                 }, () => {
                     if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
                         hideLoader();
@@ -479,9 +480,10 @@ class ListPlaceSearched extends Component {
         } else {
             this.setState({
                 searchList: [],
+                checkSearch: false
             }, () => {
                 this.getCategoriesnCity();
-                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục!', {
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục 1111!', {
                     position: "bottom-right",
                     autoClose: 4000,
                     hideProgressBar: false,
@@ -756,7 +758,7 @@ class ListPlaceSearched extends Component {
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
-                                        <div style={{ visibility: loader.loading === true || this.state.checkSearch === true ? "hidden" : "visible" }}>
+                                        <div style={{ visibility: loader.loading === false && this.state.checkSearch === true ? "visible" : "hidden" }}>
                                             <Pagination
                                                 hideNavigation
                                                 hideFirstLastPages
