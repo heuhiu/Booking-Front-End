@@ -10,6 +10,7 @@ import UserMenu from '../../components/UserProfileComponents/UserMenu';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import callApi from '../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../actions/index';
+import NotLogin from '../NotLogin/NotLogin';
 
 class UserProfile extends Component {
 
@@ -19,46 +20,7 @@ class UserProfile extends Component {
             UserDetail: []
         }
     }
-    // componentWillMount = async () => {
-    //     const { showLoader, hideLoader } = this.props;
-    //     var jwtDecode = require('jwt-decode');
-    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-    //     if (tokenLogin) {
-    //         showLoader();
-    //         var decoded = jwtDecode(tokenLogin);
-    //         // console.log(decoded);
-    //         const id = decoded.user.userId;
-    //         // this.props.fetchUserDetail(decoded.user);
-    //         await callApi("login/checkToken", 'POST', null)
-    //             .then(async res =>  {
-    //                 this.setState({ checkToken: true })
-    //                 console.log(1);
-    //                 await callApi(`userClient/${id}`, 'GET', null)
-    //                     .then(res => {
-    //                         // console.log(res);
-    //                         // this.props.fetchUserDetail(res.data);
-    //                         this.setState({
-    //                             UserDetail: res.data
-    //                         })
-    //                         console.log(2);
-    //                         hideLoader();
-    //                     }).catch(function (error) {
-    //                         if (error.response) {
-    //                             console.log(error.response.data);
-    //                         }
-    //                     });
-    //                     console.log(3);
-    //                 // this.callApifechUser(id, res.data)
-    //             }).catch(function (error) {
-    //                 if (error.response) {
-    //                     hideLoader();
-    //                     localStorage.removeItem('tokenLogin');
-    //                     window.location.reload();
-    //                 }
-    //             });
 
-    //     }
-    // }
     render() {
         // console.log(this.props.UserDetail.id)
         // console.log(this.props.history.action);
@@ -66,25 +28,7 @@ class UserProfile extends Component {
             // console.log(this.props.history.action);
             if (this.props.UserDetail.id === undefined) {
                 return (
-                    <div style={{ background: "#F2F2F2" }}>
-                        <Menu />
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        {/* <UserProfileComp /> */}
-                        <div className="container"
-                            style={{ fontFamily: 'Inter' }}>
-                            <div className='row '>
-                                <div className="col-12">
-                                    <h1>Bạn cần đăng nhập để thực hiện chức năng này</h1>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Footer2 />
-                        <FullPageLoader />
-                    </div>
+                    <NotLogin />
                 );
 
             } else {
@@ -118,7 +62,7 @@ class UserProfile extends Component {
             }
         } else
             return (
-                
+
                 <div style={{ background: "#F2F2F2" }}>
                     <Menu />
                     <br></br>

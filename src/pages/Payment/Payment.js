@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { showLoader, hideLoader } from '../../actions/index';
 import * as regex from '../../constants/Regex';
 import { Collapse } from 'react-bootstrap';
+import NotLogin from '../NotLogin/NotLogin';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -60,7 +61,8 @@ class Payment extends Component {
     componentDidMount = () => {
         window.scrollTo(0, 0)
         this.checkLogin();
-        console.log("before")
+        // const paymentToken = this.storeTokenPaymentInLocal(5);
+        // localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
     }
     validateInput = (type, checkingText) => {
         var regexp = '';
@@ -154,6 +156,17 @@ class Payment extends Component {
         return result;
     }
 
+    storeTokenPaymentInLocal = (length) => {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
+
     purchaseLater = () => {
         const { location, visitorType, loggedUser } = this.props;
         if (this.state.myPercen === 0) {
@@ -185,6 +198,8 @@ class Payment extends Component {
                 }
                 orderItems.push(item)
             }
+            // const paymentToken = this.storeTokenPaymentInLocal(5);
+            // console.log(paymentToken);
             this.callApiPurchaseLater(location.state.ticketTypeID, location.state.ticketName, loggedUser.id, loggedUser.firstName, loggedUser.lastName, loggedUser.mail, loggedUser.phoneNumber, location.state.totalPayment, location.state.redemptionDate, orderItems)
         }
     }
@@ -220,11 +235,14 @@ class Payment extends Component {
             })
                 .then(res => {
                     console.log(res.data);
+                    const paymentToken = this.storeTokenPaymentInLocal(5);
+                    localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
+                    // var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
                     hideLoader();
                     this.props.history.push({
                         pathname: '/paymentSucess',
                         state: { orderDetail: res.data }
-                      })
+                    })
                     // toast.success('Đặt vé trả sau thành công!', {
                     //     position: "bottom-right",
                     //     autoClose: 5000,
@@ -273,11 +291,25 @@ class Payment extends Component {
     }
 
     render() {
-
+        var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
         const { location, visitorType, loggedUser } = this.props;
+        console.log(tokenLogin)
+        // if(tokenLogin === null){
+        //     console.log(tokenLogin)
+        //     return (
+        //         <div>a</div>
+        //     )
+        // } else
+
+        // if (this.props.history.action === "POP") {
+        //     // custom back button implementation
+        //     return(
+        //         <Redirect to="/"/>
+        //     )
+        // }
         if (location.state === undefined || loggedUser.id === undefined) {
             return (
-                <Redirect to="/" />
+                <NotLogin />
             )
         } else {
             var dateType = {
@@ -438,7 +470,7 @@ class Payment extends Component {
                                 <div
                                     className="borderBox col-12">
                                     <div
-                                        onClick={() => this.setState({open: !this.state.open, open2: !this.state.open2 })}
+                                        onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
                                         aria-controls="example-collapse-text"
                                         aria-expanded={this.state.open}
                                         id="tries" className="col-12">
@@ -539,7 +571,7 @@ class Payment extends Component {
                                         }}
                                         className="borderBox col-12">
                                         <div
-                                            onClick={() => this.setState({ open: !this.state.open ,open2: !this.state.open2 })}
+                                            onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
                                             aria-controls="example-collapse-text2"
                                             aria-expanded={this.state.open2}
                                             className="col-12">
@@ -582,14 +614,23 @@ class Payment extends Component {
                                                                     <p>Số tài khoản: 000000000000000000</p>
                                                                 </div>
                                                                 <br></br>
+                                                                <div className="row">
+                                                                    {/* <div className="col-4">
+                                                                        <p>Khi nhấp vào "Thanh toán", bạn đã đọc và đồng ý với Điều khoản sử dụng và Chính sách huỷ trả</p>
+                                                                    </div> */}
+                                                                    <div className="col-4">
+                                                                    </div>
+                                                                    <div className="col-4">
+                                                                        <span
+                                                                            style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
+                                                                            className="purchaseLaterBtn"
+                                                                            onClick={this.purchaseLater}
+                                                                        >
+                                                                            Thanh toán sau
+                                                                </span>
+                                                                    </div>
+                                                                </div>
 
-                                                                <span
-                                                                    style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
-                                                                    className="purchaseLaterBtn"
-                                                                    onClick={this.purchaseLater}
-                                                                >
-                                                                    Thanh toán sau
-                                                        </span>
                                                             </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>

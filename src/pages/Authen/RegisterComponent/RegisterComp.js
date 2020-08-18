@@ -139,7 +139,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Không chứa số hoặc kí tự đặc biệt'
                     };
                 }
             case "lastName":
@@ -154,7 +154,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không có kí tự trắng ở đầu và cuối'
+                        errorMessage: 'Không chứa số hoặc kí tự đặc biệt'
                     };
                 }
             case "dob":
@@ -223,8 +223,7 @@ class RegisterComp extends Component {
         // console.log(check);
     }
 
-    apiRegister =
-        async (email, password, myfirstName, lastName, dob, phoneNumber, mailRegis) => {
+    apiRegister = async (email, password, myfirstName, lastName, dob, phoneNumber, mailRegis) => {
             const { showLoader, hideLoader } = this.props;
             showLoader()
             await callApi('user/register', 'POST', {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import './ListFilter.scss';
 import { showLoader, hideLoader } from '../../../actions';
+import { Collapse } from 'react-bootstrap';
 
 class Checkbox extends React.Component {
     static defaultProps = {
@@ -11,8 +12,8 @@ class Checkbox extends React.Component {
     render() {
         return (
             <div
-                style={{ paddingRight: "10px" }}
-                className="box1">
+                style={{ paddingRight: "00px" }}
+                className="box2">
                 <input
                     // id="one"
                     type={this.props.type}
@@ -37,6 +38,8 @@ class ListFilter extends Component {
             checkedCate: new Map(),     //Create Map state item for Category Group Checkbox
             ListIDFoSend: [],           //List city ID for send to seached page
             ListIDFoSendCat: [],        //List Cat ID for send to seached page
+            open: true,
+            open2: true
         };
     }
 
@@ -85,7 +88,7 @@ class ListFilter extends Component {
                 ListIDFoSend: [...this.state.ListIDFoSend, id]
             }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
-                
+
             });
         } else {
             this.setState({
@@ -143,84 +146,97 @@ class ListFilter extends Component {
         // const checkboxesToRender = this.state.listCity.map(item => {
         const checkboxesToRender = listCity.map(item => {
             const checkSelected = listCitySelected.some(temp => temp === item.id)
-
             return (
-                <div
+                <label
+                    key={item.id}
                     style={{
                         textAlign: "left",
+                        padding: "10px 10px 10px 0px"
                     }}
-                    key={item.id} className="col-lg-4 col-md-6 col-sm-6 col-sx-12">
-                    <label key={item.id}>
-                        <div className="row no-gutters filterItem">
-                            <div
-                                // style={{ marginLeft: "10px" }}
-                                className="col-2"
-                            >
-                                <Checkbox
-                                    name={item.name}
-                                    checked={this.state.checkedCity.get(item.name) || checkSelected || false}
-                                    onChange={this.handleChange(item.id)}
-                                    type="checkbox"
-                                />
-                            </div>
-                            <div className="itemName col"  >
-                                {item.name}
-                            </div>
+                    key={item.id} className="col-lg-12 col-md-12 col-sm-12 col-sx-12">
+
+                    <div className="row no-gutters filterItem">
+                        <div
+                            className="col-2"
+                        >
+                            <Checkbox
+                                name={item.name}
+                                checked={this.state.checkedCity.get(item.name) || checkSelected || false}
+                                onChange={this.handleChange(item.id)}
+                                type="checkbox"
+                            />
                         </div>
-                    </label>
-                </div>
+                        <div className="itemName col"  >
+                            {item.name}
+                        </div>
+                    </div>
+                </label>
             );
         });
 
         // const checkboxesToRender2 = this.state.listCategory.map(item => {
         const checkboxesToRender2 = listCategory.map(item => {
             const checkSelected2 = listCategorySelected.some(temp => temp === item.id)
-
             return (
-                <div
+                <label
+                key={item.id}
                     style={{
                         textAlign: "left",
-                        // border: "1px solid red" 
+                        padding: "10px 10px 10px 0px"
                     }}
-                    key={item.id} className="col-lg-4 col-md-6 col-sm-6 col-sx-12">
-                    <label key={item.id}>
+                    key={item.id} className="col-lg-12 col-md-12 col-sm-12 col-sx-12">
                         <div className="row no-gutters filterItem">
                             <div
                                 className="col-2"
-                            // style={{ marginLeft: "10px" }}
                             >
                                 <Checkbox
                                     name={item.categoryName}
-                                    checked={this.state.checkedCate.get(item.categoryName)||checkSelected2 || false}
+                                    checked={this.state.checkedCate.get(item.categoryName) || checkSelected2 || false}
                                     onChange={this.handleChange2(item.id)}
                                     type="checkbox"
                                 />
-
                             </div>
                             <div className="itemName col"
                             >
                                 {item.categoryName}
                             </div>
                         </div>
-                    </label>
-                </div>
+                </label>
             );
         });
 
         return (
             <div>
-                <h6 className="typeFilter"
-                >Thành phố</h6>
-                <div className="row no-gutters">
-                    {checkboxesToRender}
-                    {/* {this.showList(this.state.listCity)} */}
+                <div 
+                onClick={() => this.setState({ open: !this.state.open })}
+                aria-controls="example-collapse-text"
+                aria-expanded={this.state.open}
+                className="filterByCityBox">
+                    <h6 className="typeFilterCity">Thành phố</h6>
+                    <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                    <Collapse in={this.state.open}>
+                    <div  id="example-collapse-text" className="row no-gutters">
+                        {checkboxesToRender}
+                    </div>
+                    </Collapse>
                 </div>
-                <h6 className="typeFilter"
-                >Danh mục</h6>
-                <div className="row no-gutters">
-                    {checkboxesToRender2}
-                    {/* {this.showList(this.state.listCategory)} */}
+                
+                <br></br>
+                <div 
+                 onClick={() => this.setState({ open2: !this.state.open2 })}
+                 aria-controls="example-collapse-text2"
+                 aria-expanded={this.state.open2}
+                className="filterByCityBox">
+                <h6 className="typeFilterCity">Danh mục</h6>
+                    <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                    <Collapse in={this.state.open2}>
+                    <div  id="example-collapse-text2" className="row no-gutters">
+                        {checkboxesToRender2}
+                        {/* {this.showList(this.state.listCity)} */}
+                    </div>
+                    </Collapse>
                 </div>
+
                 {/* <span
                     style={{ color: "#FF7062", fontWeight: "600" }}
                     type="button"

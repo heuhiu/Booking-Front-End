@@ -8,6 +8,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import testImg from '../../img/Detailpic.png'
 import { Redirect, Link } from 'react-router-dom';
 import UserOrderDetail from '../UserProfileComponents/UserOrderDetail/UserOrderDetail';
+import NotLogin from '../../pages/NotLogin/NotLogin';
 //Home page
 class PaymentSucess extends Component {
 
@@ -21,7 +22,9 @@ class PaymentSucess extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
-
+    componentDidMount = () => {
+        localStorage.removeItem('tokenPayment');
+    }
 
     showVisitorTypeNameChoosed = (VisitorTypeArr, type) => {
         var result = null;
@@ -49,7 +52,7 @@ class PaymentSucess extends Component {
 
     });
     convertDateToLocalVN = (date) => {
-            return this.formatter.format(Date.parse(date));
+        return this.formatter.format(Date.parse(date));
     }
 
     render() {
@@ -60,11 +63,9 @@ class PaymentSucess extends Component {
         // console.log(location.state.orderDetail.state.ticketName);
         // console.log(location.state.orderDetail.state.totalPayment);
 
-
-
         if (location.state === undefined || loggedUser.id === undefined) {
             return (
-                <Redirect to="/" />
+                <NotLogin to="/" />
             )
         } else {
             // console.log(location.state.orderDetail.state.redemptionDate);
@@ -84,7 +85,7 @@ class PaymentSucess extends Component {
                 ticketName = location.state.orderDetail.ticketTypeName;
                 totalPayment = location.state.orderDetail.totalPayment;
             } else {
-                console.log( location.state.orderDetail);
+                console.log(location.state.orderDetail);
                 ticketName = location.state.orderDetail.state.ticketName;
                 totalPayment = location.state.orderDetail.state.totalPayment;
                 prnDt = location.state.orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);

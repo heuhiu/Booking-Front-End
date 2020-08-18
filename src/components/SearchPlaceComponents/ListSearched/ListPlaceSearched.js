@@ -305,7 +305,7 @@ class ListPlaceSearched extends Component {
                 searchList: [],
                 checkSearch: false
             }, () => {
-                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục 22!', {
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục !', {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -483,7 +483,7 @@ class ListPlaceSearched extends Component {
                 checkSearch: false
             }, () => {
                 this.getCategoriesnCity();
-                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục 1111!', {
+                toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục !', {
                     position: "bottom-right",
                     autoClose: 4000,
                     hideProgressBar: false,
@@ -626,7 +626,7 @@ class ListPlaceSearched extends Component {
         }
         const { loader } = this.props;
         // if (loader.loading === true) {
-        if (this.state.notFoundPage===true) {
+        if (this.state.notFoundPage === true) {
             return (
                 <div>
                     <Container style={{ fontFamily: 'Inter' }} >
@@ -636,7 +636,7 @@ class ListPlaceSearched extends Component {
                                 <div style={{
                                     width: "auto", height: "500px"
                                 }}>
-                                     WRONG URL
+                                    WRONG URL
                                 </div>
                             </div>
                         </div>
@@ -649,7 +649,15 @@ class ListPlaceSearched extends Component {
                     <Container style={{ fontFamily: 'Inter' }} >
                         <div className="popular_places_area">
                             <div className="container">
-                                <span className="labelName">Tất cả kết quả với {searchName ? searchName : "mọi địa điểm"}</span>
+                                <div className="row">
+                                    <div className="col-3">
+                                        <span className="labelName">Tất cả kết quả với: </span>
+                                    </div>
+                                    <div className="labelName2 col">
+                                        <span className="labelName2"> {searchName ? searchName : "mọi địa điểm"}</span>
+                                    </div>
+                                </div>
+
                                 <div
                                     style={{ marginTop: "26px" }}
                                     className="row">
