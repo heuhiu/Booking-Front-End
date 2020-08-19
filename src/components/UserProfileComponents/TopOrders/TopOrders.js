@@ -32,9 +32,10 @@ class TopOrders extends Component {
         const { showLoader, hideLoader, loggedUser } = this.props;
         showLoader();
         const userId = loggedUser.id;
+        console.log(userId)
         let data = new FormData();
         data.append('uid', userId);
-        await callApi(`order/top3/${id}`, 'GET', data)
+        await callApi(`order/top3/${id}`, 'POST', data)
             .then(res => {
                 // console.log(res);
                 this.setState({

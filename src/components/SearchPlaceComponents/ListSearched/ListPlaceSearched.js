@@ -140,7 +140,7 @@ class ListPlaceSearched extends Component {
         var result = null;
         if (searchList.length > 0) {
             result = searchList.map((data, index) => {
-                // console.log(data.categoryId);
+                // console.log(data);
                 return (
                     <Link
                         style={{ textDecoration: "none" }}

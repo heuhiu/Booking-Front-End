@@ -67,7 +67,7 @@ class Slick1 extends Component {
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    // console.log(item)
+                    console.log(item)
                     return (
                         <Link
                             key={index}
@@ -90,7 +90,7 @@ class Slick1 extends Component {
                                         <div>
                                             {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
                                             <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
-                                            {/* <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p> */}
+                                            <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
                                         </div>
 
                                     </div>

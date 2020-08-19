@@ -45,9 +45,27 @@ class Detail extends Component {
 
 
     render() {
-        var {place} = this.props
+        var { place } = this.props
         console.log(place);
-        // console.log(place.weekDays);
+        console.log(place.weekDays);
+        console.log(place.weekDays.sort())
+        console.log(place.weekDays.sort().indexOf(1, 1));
+
+        const availableDay = place.weekDays.sort()
+        var textAvailableDay = "";
+        for (let index = 0; index < availableDay.length; index++) {
+            const element = availableDay[index] + 1;
+            textAvailableDay += "T" + element + ", "
+        }
+        const textAvailableDayVN = textAvailableDay.replace('T1,', 'Chủ Nhật')
+        var textAvailableDayCNlast = "";
+        // console.log(textAvailableDayVN);
+        // console.log(textAvailableDayVN.split("CN, "));
+        // if (textAvailableDayVN.split("CN, ")[1] !== undefined) {
+        // console.log((textAvailableDayVN.split("CN, ")[1]) + "CN.")
+        //  textAvailableDayCNlast = (textAvailableDayVN.split("CN, ")[1]) + "CN.";
+        // }
+        // console.log(textAvailableDay)
         if (place !== undefined) {
             return (
                 <div
@@ -74,8 +92,8 @@ class Detail extends Component {
                             <div className="content">Các lựa chọn vé</div>
                         </div>
                         <div >
-                            <ReTicketType 
-                            place={place} weekDays={place.weekDays} ticketType={place.ticketTypes}/>
+                            <ReTicketType
+                                place={place} weekDays={place.weekDays} ticketType={place.ticketTypes} />
                         </div>
 
                         <div id="inline">
@@ -83,8 +101,8 @@ class Detail extends Component {
                             <div className="content">Bạn được trải nghiệm những gì?</div>
                         </div>
                         <span className="longDescription">
-                        {place.detailDescription}
-                    </span>
+                            {place.detailDescription}
+                        </span>
                         <div
                             style={{
                                 marginTop: "40px",
@@ -93,7 +111,7 @@ class Detail extends Component {
                                 backgroundPosition: "center"
                             }}
                         >
-                            <img src={place.placeImageLink?place.placeImageLink[0]:DetailPic} alt="FAIL TO LOAD" width="100%" height="auto" />
+                            <img src={place.placeImageLink ? place.placeImageLink[0] : DetailPic} alt="FAIL TO LOAD" width="100%" height="auto" />
                         </div>
 
                         <div
@@ -103,7 +121,7 @@ class Detail extends Component {
                             <div className="content">Chi tiết</div>
                         </div>
                         <div className="placeDetail">
-                            <TabDetail place={place}/>
+                            <TabDetail place={place} />
                         </div>
 
                         {/* <div
@@ -145,7 +163,7 @@ class Detail extends Component {
                                 </div>
                                 <div className="col">
                                     <p className="p3">
-                                        Vé theo ngày cố định
+                                        Thời gian mở cửa: {textAvailableDayVN}
                                     </p>
                                 </div>
                             </div>
@@ -161,8 +179,8 @@ class Detail extends Component {
                                 </div>
                                 <div className="col">
                                     <p className="p4">
-                                       {place.openingHours}
-                        </p>
+                                        {place.openingHours}
+                                    </p>
                                 </div>
                             </div>
 

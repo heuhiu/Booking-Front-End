@@ -24,7 +24,7 @@ class UserOrderDetail extends Component {
         const userId = loggedUser.id;
         let data = new FormData();
         data.append('uid', userId);
-        await callApi(`order/${id}`, 'GET', data)
+        await callApi(`order/${id}`, 'POST', data)
             .then(res => {
                 // console.log(res);
                 this.setState({
