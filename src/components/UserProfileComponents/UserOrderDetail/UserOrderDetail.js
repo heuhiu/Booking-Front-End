@@ -223,7 +223,7 @@ class UserOrderDetail extends Component {
                             {/* <p className="mp2">{orderDetail.mail}</p> */}
                             <br></br>
                             <Link
-                                onClick={this.fetchOrders}
+                                // onClick={this.fetchOrders}
                                 className="btnRequestPayment"
                                 to={{
                                     pathname: "/payment",

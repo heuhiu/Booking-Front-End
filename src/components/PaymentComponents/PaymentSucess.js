@@ -320,7 +320,7 @@ class PaymentSucess extends Component {
                                                 </div>
                                             </div>
                                             <div
-                                                className="detailTicketBox row">
+                                                className="detailTicketBox3 row">
                                                 <div
                                                     className="detailTicketBox2 col-12">
                                                     <h3>{ticketName}</h3>

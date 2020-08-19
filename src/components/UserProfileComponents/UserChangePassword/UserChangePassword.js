@@ -62,7 +62,7 @@ class UserChangePassword extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
+                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa và kí tự đặc biệt'
                     };
                 }
             case "newPassword":
@@ -77,7 +77,7 @@ class UserChangePassword extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
+                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa và kí tự đặc biệt'
                     };
                 }
             case "RePassword":
@@ -282,10 +282,15 @@ class UserChangePassword extends Component {
                                             </span>
 
                                         </div>
-                                        <FormError
-                                            type="password"
-                                            isHidden={this.state.password.isInputValid}
-                                            errorMessage={this.state.password.errorMessage} />
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <FormError
+                                                    type="password"
+                                                    isHidden={this.state.password.isInputValid}
+                                                    errorMessage={this.state.password.errorMessage} />
+                                            </div>
+                                        </div>
+
                                         <br></br>
                                     </div>
 
@@ -330,10 +335,14 @@ class UserChangePassword extends Component {
                                             </span>
 
                                         </div>
-                                        <FormError
+                                        <div className="row">
+                                            <div className="col-12">
+                                            <FormError
                                             type="newPassword"
                                             isHidden={this.state.newPassword.isInputValid}
                                             errorMessage={this.state.newPassword.errorMessage} />
+                                            </div>
+                                        </div>
                                         <br></br>
                                     </div>
                                     {/* Re Newpass */}

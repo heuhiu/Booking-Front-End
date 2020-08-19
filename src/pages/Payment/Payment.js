@@ -16,6 +16,7 @@ import { showLoader, hideLoader } from '../../actions/index';
 import * as regex from '../../constants/Regex';
 import { Collapse } from 'react-bootstrap';
 import NotLogin from '../NotLogin/NotLogin';
+import {Link} from 'react-router-dom';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -292,7 +293,7 @@ class Payment extends Component {
 
     render() {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
-        const { location, visitorType, loggedUser } = this.props;
+        const { location, visitorType, loggedUser, loader } = this.props;
         console.log(tokenLogin)
         // if(tokenLogin === null){
         //     console.log(tokenLogin)
@@ -308,9 +309,11 @@ class Payment extends Component {
         //     )
         // }
         if (location.state === undefined || loggedUser.id === undefined) {
-            return (
-                <NotLogin />
-            )
+                return (
+                    <div>
+                    <NotLogin />
+                    </div>
+                )
         } else {
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -496,12 +499,10 @@ class Payment extends Component {
                                             </div>
                                             <div className="mrt-30 col-12">
                                                 <div className="row">
-
                                                     <div className="col">
                                                         <label>Họ</label>
                                                         <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
                                                             placeholder="Họ" />
-
                                                     </div>
                                                     <div className="col">
                                                         <label>Tên</label>
@@ -615,19 +616,21 @@ class Payment extends Component {
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="row">
-                                                                    {/* <div className="col-4">
-                                                                        <p>Khi nhấp vào "Thanh toán", bạn đã đọc và đồng ý với Điều khoản sử dụng và Chính sách huỷ trả</p>
-                                                                    </div> */}
-                                                                    <div className="col-4">
+                                                                    <div className="policyPayment col-7">
+                                                                        <p>Khi nhấp vào "Thanh toán sau", bạn đã đọc và đồng ý với 
+                                                                            <Link to="/aboutUs/termsConditions"><span className="pol"> Điều khoản sử dụng </span></Link>và 
+                                                                            <Link to="/aboutUs/policy"><span className="pol"> Chính sách huỷ trả</span></Link></p>
+                                                                    </div>
+                                                                    <div className="col">
                                                                     </div>
                                                                     <div className="col-4">
-                                                                        <span
+                                                                        <div
                                                                             style={{ visibility: !location.state.orderStatus ? "visible" : "hidden" }}
                                                                             className="purchaseLaterBtn"
                                                                             onClick={this.purchaseLater}
                                                                         >
                                                                             Thanh toán sau
-                                                                </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
@@ -647,8 +650,8 @@ class Payment extends Component {
                                                         </Accordion.Toggle>
                                                         <Accordion.Collapse eventKey="1">
                                                             <Card.Body>
-                                                                <div
-                                                                    className="paymentMethodBox row">
+                                                                {/* <div
+                                                                    className="paymentMethodBox row"> */}
                                                                     <div>
                                                                         <CardDemo
                                                                             checkStep1={this.state.myPercen}
@@ -656,7 +659,7 @@ class Payment extends Component {
                                                                             history={this.props.history}
                                                                             orderDetail={myLocation} />
                                                                     </div>
-                                                                </div>
+                                                                {/* </div> */}
 
                                                             </Card.Body>
                                                         </Accordion.Collapse>
@@ -737,7 +740,8 @@ class Payment extends Component {
 const mapStateToProps = state => {
     return {
         loggedUser: state.User,
-        visitorType: state.Ticket
+        visitorType: state.Ticket,
+        loader: state.Loader
     }
 }
 

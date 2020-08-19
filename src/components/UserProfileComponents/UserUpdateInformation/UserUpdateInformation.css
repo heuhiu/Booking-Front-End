@@ -15,7 +15,17 @@
     margin-bottom: 10px;
     padding-bottom: 5px;
 }
-
+.textDisable{
+    border: 2px solid #E3E3E3;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 22px;
+    color: #5B5B5B;
+    padding: 30px;
+    margin-bottom: 10px;
+}
 .labelHolder{
     font-family: "Inter";
     font-style: normal;

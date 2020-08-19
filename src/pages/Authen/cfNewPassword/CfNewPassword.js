@@ -89,7 +89,7 @@ class CfNewPassword extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
+                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa và kí tự đặc biệt'
                     };
                 }
             default:
@@ -376,15 +376,15 @@ class CfNewPassword extends Component {
                                         }
                                     </span>
                                 </div>
-                                <FormError
-                                    type="password"
-                                    isHidden={this.state.password.isInputValid}
-                                    errorMessage={this.state.password.errorMessage} />
-
-
+                                <div className="row">
+                                    <div className="col-12">
+                                        <FormError
+                                            type="password"
+                                            isHidden={this.state.password.isInputValid}
+                                            errorMessage={this.state.password.errorMessage} />
+                                    </div>
+                                </div>
                                 <br></br>
-
-
                                 <div className="wrap-input100">
                                     <input
                                         className="input100"

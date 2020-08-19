@@ -40,9 +40,9 @@ class NotLogin extends Component {
                 <br></br>
                 <br></br>
                 <div className="container"
-                    style={{ fontFamily: 'Inter' }}>
+                    style={{ fontFamily: 'Inter',  }}>
                     <div className='row '>
-                        <div className="col-12">
+                        <div style={{visibility: loader.loading===true?"hidden":"visible"}} className="col-12">
                             <h1>Bạn cần đăng nhập để thực hiện chức năng này</h1>
                         </div>
                     </div>

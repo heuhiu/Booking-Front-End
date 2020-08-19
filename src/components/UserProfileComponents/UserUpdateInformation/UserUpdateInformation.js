@@ -107,7 +107,7 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
+                        errorMessage: 'không chứa khoảng trắng ở đầu và cuối!'
                     };
                 }
             case "lastName":
@@ -122,7 +122,7 @@ class UserUpdateInformation extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Có ít nhất 3 kí tự và không có khoảng trắng ở đầu và cuối'
+                        errorMessage: 'không chứa khoảng trắng ở đầu và cuối!'
                     };
                 }
             case "dob":
@@ -200,7 +200,7 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (lastName.isInputValid === false) {
-            toast.error('Họ có ít nhất 3 kí tự và khác số!', {
+            toast.error('Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -210,7 +210,7 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (myfirstName.isInputValid === false) {
-            toast.error('Tên có ít nhất 3 kí tự và khác số!', {
+            toast.error('Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -313,7 +313,7 @@ class UserUpdateInformation extends Component {
             return this.formatter.format(Date.parse(date));
         }
     }
-    
+
     formatter = new Intl.DateTimeFormat("vi-VN", {
         year: "numeric",
         month: "long",
@@ -545,8 +545,15 @@ d
                                             </div>
                                             <label className="cmt">Số điện thoại sử dụng để xác thực giao dịch</label>
                                         </div>
-
                                         <div className="col">
+                                            <label>Email</label><span className="turnRed"> *</span>
+                                            <input type="text" disabled value={loggedUser.mail} className="textDisable form-control"
+                                                placeholder="Họ" />
+                                            <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
+                                            xin vui lòng kiểm tra kỹ thông tin.)
+                                            </label>
+                                        </div>
+                                        {/* <div className="col">
                                             <span className="labelHolder"> Ngày sinh </span><span className="turnRed">*</span>
                                             <div onClick={this.showDate} className="customWrap-input100">
                                                 <input
@@ -557,19 +564,21 @@ d
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
                                                     placeholder={loggedUser.dob}
+                                                    disabled
                                                 />
-                                                {/* <DatePicker
+                                                
+                                                <DatePicker
                                                     className="input100"
                                                     dateFormat="dd/MM/yyyy"
                                                     selected={this.state.startDate}
                                                     onChange={this.handleChange}
                                                     open={false}
-                                                /> */}
+                                                />
                                             </div>
                                             <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
                                             xin vui lòng kiểm tra kỹ thông tin.)
                                             </label>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className="pdt-30 col-12">

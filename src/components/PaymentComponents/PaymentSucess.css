@@ -39,6 +39,12 @@
   border-radius: 20px;
 }
 
+.detailTicketBox3{
+  margin: 20px;
+  border: 2px solid #E3E3E3;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
 .detailTicketBox2{
   margin: 20px;
 }

@@ -211,13 +211,15 @@ class ListPlaceSearched extends Component {
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = async (pageNumber) => {
         const { searchName, listCtiId, listCatId } = this.state;
-        this.setState({
-            activePage: pageNumber
-        }
-            , () => {
-                this.receivedData(searchName, listCtiId, listCatId);
+        if (pageNumber !== this.state.activePage) {
+            this.setState({
+                activePage: pageNumber
             }
-        )
+                , () => {
+                    this.receivedData(searchName, listCtiId, listCatId);
+                }
+            )
+        }
         // this.forceUpdate();
     }
 
@@ -526,46 +528,22 @@ class ListPlaceSearched extends Component {
         // console.log(unique)
         // return unique
     }
+
     onSelectCat = () => {
         const { catMul, cityMul, listCtiId, listCatId, searchName } = this.state
-        // console.log(listCtiId);
-        // console.log(listCatId);
-        // console.log(cityMul);
-        // console.log(catMul);
         var jointCityID = cityMul.concat(listCtiId)
         var jointCategoryID = catMul.concat(listCatId)
-        // console.log(jointCityID)
-        // console.log(jointCategoryID)
-        // this.removeDublicate(jointCityID)
-        // console.log(this.removeNaN(jointCityID))
-        // console.log(this.removeNaN(jointCategoryID))
         const cityRemoveNaN = this.removeNaN(jointCityID)
         const cateRemoveNaN = this.removeNaN(jointCategoryID)
         const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
         const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
-        // console.log(cityRemoveDub)
-        // console.log(cateRemoveDub)
-
-        // console.log(isNaN(jointCityID[0]))
-        // console.log(isNaN(jointCategoryID[0]))
-        // console.log(jointCityID.length)
-        // console.log(jointCategoryID.length)
-        // var pathLink = this.props.history.location.search;
         var pathLink = `/searchedPlace${searchName ? `?name=${searchName}` : ""}`;
-        // console.log(catMul)
-        // console.log(cityMul)
-        // console.log(this.props.history.location.search);
-        // console.log(this.props.history.location);
-        // const arr = this.props.history.location.search.split('?listCatID=');
-        // const arr2 = this.props.history.location.search.split('?listCityID=');
         const pathListCity = `?listCityID=${cityRemoveDub}`
         const pathListCat = `?listCatID=${cateRemoveDub}`
         this.setState({
             listCtiId: cityRemoveDub,
             listCatId: cateRemoveDub
         })
-        // console.log(pathListCity)
-        // console.log(pathListCat)
         if (cityRemoveDub.length > 0) {
             pathLink += pathListCity;
         }
@@ -575,8 +553,9 @@ class ListPlaceSearched extends Component {
         if (pathLink !== "") {
             this.props.history.push(pathLink);
         }
-        // this.props.history.push(pathLink === "" ? this.props.history.location.search : pathLink);
-        // this.receivedData(this.state.searchName, this.removeNaN(jointCityID), this.removeNaN(jointCategoryID));
+        this.setState({
+            activePage: 1
+        })
         this.receivedData(this.state.searchName, cityRemoveDub, cateRemoveDub);
     }
 

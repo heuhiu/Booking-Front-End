@@ -103,7 +103,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa'
+                        errorMessage: 'Mật khẩu phải từ 8-20 kí tự, bao gồm số và chữ, có ít nhất 1 chữ cái viết hoa và kí tự đặc biệt'
                     };
                 }
             case "RePassword":
@@ -139,7 +139,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không chứa số hoặc kí tự đặc biệt'
+                        errorMessage: 'Không chứa kí tự đặc biệt'
                     };
                 }
             case "lastName":
@@ -154,7 +154,7 @@ class RegisterComp extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'Không chứa số hoặc kí tự đặc biệt'
+                        errorMessage: 'Không chứa kí tự đặc biệt'
                     };
                 }
             case "dob":
@@ -478,10 +478,14 @@ class RegisterComp extends Component {
                                         </span>
 
                                     </div>
-                                    <FormError
+                                    <div className="row">
+                                        <div className="col-12">
+                                        <FormError
                                         type="password"
                                         isHidden={this.state.password.isInputValid}
                                         errorMessage={this.state.password.errorMessage} />
+                                        </div>
+                                    </div>
                                     <br></br>
                                 </div>
                                 {/* End password fiels */}
