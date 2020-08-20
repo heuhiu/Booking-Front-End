@@ -86,6 +86,7 @@ class HomePage extends Component {
                     var listCityId = [];
                     for (let index = 0; index < res.data.length; index++) {
                         const element = res.data[index].id;
+                        // console.log(element)
                         listCityId.push(element);
                     }
                     // console.log(listCityId)
@@ -151,6 +152,7 @@ class HomePage extends Component {
                 <Menu />
                 <Banner />
                 <div style={{ display: this.props.loader.loading === true ? "none" : "" }}>
+                    <br></br>
                     <Slick2 topCity={topCity} />
                     <Slick1
                         listData1={listData1}

@@ -10,6 +10,7 @@ import search from '../../../img/search.png';
 import MyMul from './MyMul';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Fade from 'react-reveal/Fade';
 
 //search
 class Search extends Component {
@@ -23,7 +24,8 @@ class Search extends Component {
             listCategories: [],  //List ID Category filter
             pathLink: "",
             cityMul: [],
-            catMul: []
+            catMul: [],
+            show: false
         }
     }
 
@@ -33,9 +35,11 @@ class Search extends Component {
             toggleFilter: !this.state.toggleFilter
         })
     }
-
+    handleClick = () => {
+        this.setState({ show: !this.state.show });
+    }
     searchPathLink = () => {
-        const { cityMul, catMul } = this.state;
+        // const { cityMul, catMul } = this.state;
         var pathLink = '/searchedPlace';
         // console.log(this.removeSpace(this.state.txtParkName));
         // const pathName = `?name=${this.state.txtParkName}`
@@ -132,8 +136,7 @@ class Search extends Component {
     }
 
     render() {
-        const { toggleFilter, txtParkName } = this.state;
-        const { cityMul, catMul } = this.state;
+        const { toggleFilter } = this.state;
         // console.log(txtParkName);
         this.searchPathLink();
         return (
@@ -160,7 +163,8 @@ class Search extends Component {
                         <div
                             className="select-wrap one-third">
                             <div
-                                onClick={this.toggleFilter}
+                                // onClick={this.toggleFilter}
+                                onClick={this.handleClick}
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
                                 <div className="filterPanel">
@@ -176,7 +180,26 @@ class Search extends Component {
                                 </div>
 
                             </div>
-                            <div
+
+                            <Fade duration={500} when={this.state.show}>
+                                <div 
+                                // style={{ visibility: toggleFilter ? "hidden" : "visible" }}
+                                    className="filterBox">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <MyMul showAnimate={this.state.show} setmMul={this.setmMul} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </Fade>
+                            {/* <button
+                                className="btn btn-success my-5"
+                                type="button"
+                                onClick={this.handleClick}
+                            >
+                                {this.state.show ? 'Hide' : 'Show'} Message
+                            </button> */}
+                            {/* <div
                                 style={{ visibility: toggleFilter ? "hidden" : "visible" }}
                                 className="filterBox">
                                 <div className="row">
@@ -184,7 +207,7 @@ class Search extends Component {
                                         <MyMul setmMul={this.setmMul} />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
@@ -203,8 +226,8 @@ class Search extends Component {
                     <button
                         type="submit"
                         // onClick={this.onSubmitSearch}
-                        className="searchbtn"
-                        className="search-submit"
+                        className="searchbtn search-submit"
+                    // className="search-submit"
                     >
                         <img src={search}
                             alt="Fail !"

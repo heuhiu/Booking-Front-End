@@ -10,6 +10,8 @@ import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from '../../../../actions/index';
+import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
 
 function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -59,7 +61,7 @@ class CarouselCategories extends Component {
                         <div className="owlStyle">
                             <h3 style={{ border: "none" }} className="owlStyleChil">
                                 <div
-                                style={{ height: "170px" }}
+                                    style={{ height: "170px" }}
                                 >
                                     <img
                                         className="coverImg"
@@ -101,11 +103,15 @@ class CarouselCategories extends Component {
 
             <section className="py-5">
                 <div className="container">
-                    <h2 className="headerOwl">Khám phá các danh mục có tại Goboki</h2>
-                    <h2 className="desHeaderOwl">Vui hết sức, chơi hết mình</h2>
-                    <Slider {...settings}>
-                        {this.showAllCategory(this.props.listCategory)}
-                    </Slider>
+                    <Slide left duration={2000} >
+                        <h2 className="headerOwl">Khám phá các danh mục có tại Goboki</h2>
+                        <h2 className="desHeaderOwl">Vui hết sức, chơi hết mình</h2>
+                    </Slide>
+                    <Fade   >
+                        <Slider {...settings}>
+                            {this.showAllCategory(this.props.listCategory)}
+                        </Slider>
+                    </Fade>
                 </div>
             </section>
         );

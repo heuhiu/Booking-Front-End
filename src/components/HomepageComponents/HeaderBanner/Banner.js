@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import './style.css';
 import Search from '../Search/Search';
 // import { Container, Row, Col } from 'react-bootstrap';
+import Flip from 'react-reveal/Flip';
 
 const classes = 'masthead mg-10'
 
@@ -14,16 +15,19 @@ class Banner extends Component {
         }
     }
     render() {
+        const { loader } = this.props;
+        var layer = loader.loading;
         return (
             <header className={classes}>
                 <div className="container h-100">
                     <div className="row h-100 align-items-center ">
                         <div className="col-12 text-center">
-                            <h1 className="introduction">
-                            Tự do khám phá trải nghiệm du lịch 
-                            </h1>
-                            <p className="des">Khám phá và đặt trước các hoạt động du lịch đặc sắc với giá độc quyền
-</p>
+                            <Flip when={layer === false ? true : false} duration={700} top cascade>
+                                <h1 className="introduction">
+                                    Tự do khám phá trải nghiệm du lịch
+                                    </h1>
+                                <p className="des">Khám phá và đặt trước các hoạt động du lịch đặc sắc với giá độc quyền</p>
+                            </Flip>
                             <div className="block-17">
                                 <Search />
                             </div>
@@ -36,4 +40,18 @@ class Banner extends Component {
 
 }
 
-export default Banner;
+// export default Banner;
+
+const mapStateToProps = state => {
+    return {
+        loader: state.Loader,
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Banner);

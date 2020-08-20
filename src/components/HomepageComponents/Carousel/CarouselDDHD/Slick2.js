@@ -7,6 +7,8 @@ import './style.css';
 import callApi from '../../../../config/utils/apiCaller';
 import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
+import Fade from 'react-reveal/Fade';
+import Rotate from 'react-reveal/Rotate';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
@@ -52,27 +54,28 @@ class Slick2 extends Component {
     if (listTopcity.length > 0) {
       result = listTopcity.map((item, index) => {
         return (
-          <Link
-            key={index}
-            className="decoNone"
-            to={`/searchedPlace?listCityID=${item.id}`}>
-            <div className="owlStyle">
-              <h3 style={{ border: "none" }} className="owlStyleChil">
-                <div className="topPlace"
-                  style={{
-                    borderRadius: "10px",
-                    backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
+          <Fade key={index} delay={200} duration={item.id*700} left >
+            <Link
+              className="decoNone"
+              to={`/searchedPlace?listCityID=${item.id}`}>
+              <div className="owlStyle">
+                <h3 style={{ border: "none" }} className="owlStyleChil">
+                  <div className="topPlace"
+                    style={{
+                      borderRadius: "10px",
+                      backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
                   ,url(${item.imageLink ? item.imageLink : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
-                  }}
-                  className="owlCom3">{item.name}</div>
-              </h3>
-            </div >
-          </Link>
+                    }}
+                    className="owlCom3">{item.name}</div>
+                </h3>
+              </div >
+            </Link>
+          </Fade>
         );
       });
     } else {
       return (
-        <div style={{width:"200px", visibility: "hidden" }}>
+        <div style={{ width: "200px", visibility: "hidden" }}>
         </div >
       )
     }
@@ -94,9 +97,14 @@ class Slick2 extends Component {
         <div className="container">
           <h2 className="headerOwl">Điểm đến hàng đầu</h2>
           <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
+
           <Slider {...settings}>
+
             {this.showTopcity(topCity)}
+
           </Slider>
+
+
         </div>
       </section>
     );

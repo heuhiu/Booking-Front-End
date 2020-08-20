@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
-import Rectangle from '../../../../img/Rectangle 17.png';
-import RightOwl from '../../../../img/RightOwl.png';
-import LeftOwl from '../../../../img/LeftOwl.png';
-import './style.css';
+// import Rectangle from '../../../../img/Rectangle 17.png';
+import RightOwl from '../../../img/RightOwl.png';
+import LeftOwl from '../../../img/LeftOwl.png';
+// import './style.css';
 import axios from 'axios';
-import { showLoader, hideLoader } from '../../../../actions/index';
+import { showLoader, hideLoader } from '../../../actions/index';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { id } from 'date-fns/locale';
-import Slide from 'react-reveal/Slide';
-import Fade from 'react-reveal/Fade';
+import * as Config from '../../../constants/ConfigAPI';
 
 function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -49,7 +46,7 @@ function SamplePrevArrow(props) {
 }
 
 
-class Slick1 extends Component {
+class MorePlace extends Component {
 
     constructor(props) {
         super(props);
@@ -69,13 +66,14 @@ class Slick1 extends Component {
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    // console.log(item)
+                    console.log(item)
                     return (
-                        // <Fade  delay={200}  left  >
-                        <Link
+                        <a
+                        href={`/placeDetail/${item.id}`}
                             key={index}
                             className="decoNone"
-                            to={`/placeDetail/${item.id}`}>
+                            // to={`/placeDetail/${item.id}`}
+                            >
                             <div className="owlStyle">
                                 <h3 className="owlStyleChil">
                                     <div
@@ -95,12 +93,10 @@ class Slick1 extends Component {
                                             <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
                                             <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
                                         </div>
-
                                     </div>
                                 </h3>
                             </div >
-                        </Link >
-                        //    </Fade >
+                        </a >
                     );
                 });
             } else {
@@ -109,6 +105,7 @@ class Slick1 extends Component {
                     </div >
                 )
             }
+            // window.location.reload();
         return result;
     }
 
@@ -129,16 +126,11 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div >
-                                    <Slide left duration={2000} >
-                                        <h2 className="headerOwl">{item.shortDescription}</h2>
-                                        <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade   >
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData1)}
-                                        </Slider>
-                                    </Fade>
-                                    {/* </Slide> */}
+                                    <h2 className="headerOwl">{item.shortDescription}</h2>
+                                    <h2 className="desHeaderOwl">{item.name}</h2>
+                                    <Slider {...settings}>
+                                        {this.showPlaceOfTopCity(listData1)}
+                                    </Slider>
                                 </div>
                             </div>
                         </section>
@@ -149,17 +141,11 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div >
-                                    <Slide left duration={2000} >
-                                        <h2 className="headerOwl">{item.shortDescription}</h2>
-                                        <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade  >
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData2)}
-                                        </Slider>
-                                    </Fade>
-                                    {/* </Slide> */}
-
+                                    <h2 className="headerOwl">{item.shortDescription}</h2>
+                                    <h2 className="desHeaderOwl">{item.name}</h2>
+                                    <Slider {...settings}>
+                                        {this.showPlaceOfTopCity(listData2)}
+                                    </Slider>
                                 </div>
                             </div>
                         </section>
@@ -170,16 +156,12 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div>
-                                    <Slide left duration={2000} >
-                                        <h2 className="headerOwl">{item.shortDescription}</h2>
-                                        <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade  >
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData3)}
-                                        </Slider>
-                                    </Fade>
-                                    {/* </Slide> */}
+                                    <h2 className="headerOwl">{item.shortDescription}</h2>
+                                    <h2 className="desHeaderOwl">{item.name}</h2>
+                                    <Slider {...settings}>
+                                        {/* {this.getPlacebyCityId(item.id)} */}
+                                        {this.showPlaceOfTopCity(listData3)}
+                                    </Slider>
                                 </div>
                             </div>
                         </section>
@@ -196,6 +178,25 @@ class Slick1 extends Component {
         return result;
     }
 
+    componentDidMount = () => {
+        this.getLisPlace();
+    }
+    getLisPlace = async () => {
+        const { myPlace } = this.props;
+        await axios.get(`${Config.API_URL}/topPlace`, {
+            params: {
+                cityId: myPlace.cityId
+            }
+        }).then(res => {
+            // console.log(res.data);
+            this.setState({
+                listPlace: res.data
+            })
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
     render() {
 
         const settings = {
@@ -206,20 +207,38 @@ class Slick1 extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
         };
-        const { topCity, listData1, listData2, listData3 } = this.props;
-
+        const { listPlace } = this.state;
+        const { myPlace } = this.props;
+        console.log(myPlace);
+        // address: "xã Hòa Ninh, huyện Hòa Vang"
+        // basicPrice: 750000
+        // cancelPolicy: null
+        // categoryId: (3) [1, 3, 4]
+        // cityId: 3
+        // cityName: "Đà Nẵng"
+        // detailDescription: "Ai đến Đà Nẵng mà không đi du lịch Bà Nà Hills thì thật là thiếu sót đấy! Bà Nà Hills - quần thể du lịch nghỉ dưỡng kết hợp vui chơi giải trí đẳng cấp bậc nhất Việt Nam, được mệnh danh là “chốn bồng lai tiên cảnh”, sở hữu khí hậu tuyệt vời cùng cảnh quan thiên nhiên kỳ thú. Nằm ở đỉnh núi Chúa, cách duy nhất để đến Bà Nà là bạn phải di chuyển bằng cáp treo. Lập 4 kỷ lục thế giới, cáp treo Bà Nà là một điểm thu hút của chính nơi đây. Cáp treo sẽ đưa bạn đi qua, ngắm toàn cảnh núi non hùng vĩ - từ những thác nước cao và những ngọn núi sương mù, đến những cánh rừng dày của thảm thực vật nhiệt đới. Được tạp chí TIME vinh danh trong “Top 10 điểm đến tuyệt vời nhất thế giới năm 2018” và trang The Guardian công nhận là “Cây cầu đi bộ ấn tượng nhất thế giới”."
+        // id: 9
+        // mail: "banahills@gmail.com"
+        // name: "Bà Nà Hills"
+        // openingHours: "7 giờ đến 18 giờ"
+        // phoneNumber: "0988998998"
+        // placeImageLink: (5) ["https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_9_4.jpg", "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_9_3.jpg", "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_9_1.jpg", "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_9_2.jpg", "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_9_5.jpg"]
+        // placeKey: "DN01"
+        // shortDescription: "Trải nghiệm cáp treo Bà Nà Hill, một trong những hệ thống cáp treo dài nhất thế giới, với cảnh đẹp từ trên đỉnh núi Chúa!<br><br>Tham quan Làng Nước Pháp và chiêm ngưỡng lối kiến trúc sang trọng này với một ngôi làng Pháp mô phỏng.<br><br>Khám phá hàng loạt các điểm tham quan không-thể-bỏ-qua, từ Cầu Vàng đến Hầm rượu Debay.<br><br>Trải nghiệm các trò chơi và hoạt động tại những điểm giải trí nổi tiếng: Fantasy Park, Alpine Coaster và Tombstone Temple."
+        // status: "ACTIVE"
+        // weekDays: (7) [0, 2, 1, 4, 3, 5, 6]
+        console.log(listPlace);
         return (
-            this.forByCityId(topCity, listData1, listData2, listData3)
-            // <section className="py-5">
-            //   <div className="container">
-
-            //     {/* <h2 className="headerOwl">Vòng quanh thủ đô</h2>
-            //     <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
-            //     <Slider {...settings}>
-            //       {this.showPlaceOfTopCity(listPlace)}
-            //     </Slider> */}
-            //   </div>
-            // </section>
+            // this.forByCityId(topCity, listData1, listData2, listData3)
+            <section className="py-5">
+                <div className="container">
+                    <h2 className="headerOwl">Những trải nghiệm khác tại {myPlace.cityName}</h2>
+                    <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
+                    <Slider {...settings}>
+                        {this.showPlaceOfTopCity(listPlace)}
+                    </Slider>
+                </div>
+            </section>
         );
 
     }
@@ -244,4 +263,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Slick1);
+export default connect(mapStateToProps, mapDispatchToProps)(MorePlace);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import './MyMul.scss';
 import { showLoader, hideLoader } from '../../../actions';
+import Flip from 'react-reveal/Flip';
 
 class Checkbox extends React.Component {
     static defaultProps = {
@@ -41,11 +42,11 @@ class MyMul extends Component {
     }
 
     //Get all City and Category by API
-    getCitysAndCategories =  async () => {
+    getCitysAndCategories = async () => {
         const { showLoader, hideLoader } = this.props;
         //get City list
         showLoader();
-         await callApi('city', 'GET', null)
+        await callApi('city', 'GET', null)
             .then(res => {
                 this.setState({
                     listCity: res.data
@@ -56,7 +57,7 @@ class MyMul extends Component {
                 }
             });
         //get Categories list
-         await callApi('categories', 'GET', null)
+        await callApi('categories', 'GET', null)
             .then(res => {
                 this.setState({
                     listCategory: res.data
@@ -135,15 +136,17 @@ class MyMul extends Component {
 
 
     render() {
-        const {listCategory, listCity} = this.props;
+        const { listCategory, listCity } = this.props;
         // const checkboxesToRender = this.state.listCity.map(item => {
-            const checkboxesToRender = listCity.map(item => {
+        const checkboxesToRender = listCity.map(item => {
             return (
+
                 <div
                     style={{
                         textAlign: "left",
                     }}
                     key={item.id} className="col-lg-4 col-md-6 col-sm-6 col-sx-12">
+
                     <label key={item.id}>
                         <div className="row no-gutters filterItem">
                             <div
@@ -167,7 +170,7 @@ class MyMul extends Component {
         });
 
         // const checkboxesToRender2 = this.state.listCategory.map(item => {
-            const checkboxesToRender2 = listCategory.map(item => {
+        const checkboxesToRender2 = listCategory.map(item => {
 
             return (
                 <div
@@ -202,18 +205,20 @@ class MyMul extends Component {
 
         return (
             <div>
-                <h6 className="typeFilter"
-                >Thành phố</h6>
-                <div className="row no-gutters">
-                    {checkboxesToRender}
-                    {/* {this.showList(this.state.listCity)} */}
-                </div>
-                <h6 className="typeFilter"
-                >Danh mục</h6>
-                <div className="row no-gutters">
-                    {checkboxesToRender2}
-                    {/* {this.showList(this.state.listCategory)} */}
-                </div>
+                    <h6 className="typeFilter">Thành phố</h6>
+                <Flip top cascade when={this.props.showAnimate}>
+                    <div className="row no-gutters">
+                        {checkboxesToRender}
+                        {/* {this.showList(this.state.listCity)} */}
+                    </div>
+                </Flip>
+                <h6 className="typeFilter">Danh mục</h6>
+                <Flip delay={400} top cascade when={this.props.showAnimate}>
+                    <div className="row no-gutters">
+                        {checkboxesToRender2}
+                        {/* {this.showList(this.state.listCategory)} */}
+                    </div>
+                </Flip>
                 {/* <span
                     style={{ color: "#FF7062", fontWeight: "600" }}
                     type="button"
