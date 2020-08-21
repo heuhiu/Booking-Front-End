@@ -15,7 +15,7 @@ class Footer2 extends Component {
 
     return (
       <footer
-        style={{ fontFamily: "Inter" }}
+        style={{ fontFamily: "Inter"}}
         className="footer">
 
         <svg className="wvSVG" viewBox="0 0 120 28">
@@ -126,7 +126,7 @@ class Footer2 extends Component {
             </div> */}
           </div>
         </div>
-        <div style={{marginTop: "50px", marginBottom: "40px"}} className="container-fluid">
+        <div style={{marginTop: "50px", marginBottom: "20px"}} className="container-fluid">
             <div className="row no-gutters">
               <div
                 className="copyRight col-12">

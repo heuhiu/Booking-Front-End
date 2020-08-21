@@ -66,7 +66,7 @@ class MorePlace extends Component {
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    console.log(item)
+                    // console.log(item)
                     return (
                         <a
                         href={`/placeDetail/${item.id}`}
@@ -209,7 +209,7 @@ class MorePlace extends Component {
         };
         const { listPlace } = this.state;
         const { myPlace } = this.props;
-        console.log(myPlace);
+        // console.log(myPlace);
         // address: "xã Hòa Ninh, huyện Hòa Vang"
         // basicPrice: 750000
         // cancelPolicy: null
@@ -227,7 +227,7 @@ class MorePlace extends Component {
         // shortDescription: "Trải nghiệm cáp treo Bà Nà Hill, một trong những hệ thống cáp treo dài nhất thế giới, với cảnh đẹp từ trên đỉnh núi Chúa!<br><br>Tham quan Làng Nước Pháp và chiêm ngưỡng lối kiến trúc sang trọng này với một ngôi làng Pháp mô phỏng.<br><br>Khám phá hàng loạt các điểm tham quan không-thể-bỏ-qua, từ Cầu Vàng đến Hầm rượu Debay.<br><br>Trải nghiệm các trò chơi và hoạt động tại những điểm giải trí nổi tiếng: Fantasy Park, Alpine Coaster và Tombstone Temple."
         // status: "ACTIVE"
         // weekDays: (7) [0, 2, 1, 4, 3, 5, 6]
-        console.log(listPlace);
+        // console.log(listPlace);
         return (
             // this.forByCityId(topCity, listData1, listData2, listData3)
             <section className="py-5">

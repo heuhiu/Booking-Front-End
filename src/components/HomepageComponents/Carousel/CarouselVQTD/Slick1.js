@@ -132,12 +132,15 @@ class Slick1 extends Component {
                                     <Slide left duration={2000} >
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade   >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData1)}
                                         </Slider>
-                                    </Fade>
+                                    </Slide>
+                                    {/* <Fade   >
+                                        <Slider {...settings}>
+                                            {this.showPlaceOfTopCity(listData1)}
+                                        </Slider>
+                                    </Fade> */}
                                     {/* </Slide> */}
                                 </div>
                             </div>
@@ -152,12 +155,15 @@ class Slick1 extends Component {
                                     <Slide left duration={2000} >
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade  >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData2)}
                                         </Slider>
-                                    </Fade>
+                                    </Slide>
+                                    {/* <Fade  >
+                                        <Slider {...settings}>
+                                            {this.showPlaceOfTopCity(listData2)}
+                                        </Slider>
+                                    </Fade> */}
                                     {/* </Slide> */}
 
                                 </div>
@@ -173,12 +179,15 @@ class Slick1 extends Component {
                                     <Slide left duration={2000} >
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                    </Slide>
-                                    <Fade  >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData3)}
                                         </Slider>
-                                    </Fade>
+                                    </Slide>
+                                    {/* <Fade  >
+                                        <Slider {...settings}>
+                                            {this.showPlaceOfTopCity(listData3)}
+                                        </Slider>
+                                    </Fade> */}
                                     {/* </Slide> */}
                                 </div>
                             </div>

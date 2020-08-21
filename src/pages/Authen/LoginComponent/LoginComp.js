@@ -160,7 +160,19 @@ class LoginComp extends Component {
                             progress: undefined,
                         });
 
-                    } else {
+                    } else if(error.response.data === "NOT_EMAIL_SIGNED_IN"){
+                        hideLoader();
+                        toast.error('Tài khoản chưa được đăng kí!', {
+                            position: "bottom-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    }                    
+                    else {
                         // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
                         // alert("Wrong User Name or Password");
                         hideLoader();

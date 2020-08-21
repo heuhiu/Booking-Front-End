@@ -5,9 +5,11 @@ import '../RightPartDetail/RightPartDetail.css';
 import DetailPic from '../../../img/Detailpic.png';
 import TabDetail from '../TabDetail/TabDetai';
 import { Redirect } from 'react-router-dom';
-import ReTicketType from '../TicketType/ReTicketType';
+import ReTicketType2 from '../TicketType/ReTicketType2';
 import { showLoader, hideLoader } from '../../../actions/index';
 import MorePlace from '../MorePlace/MorePlace';
+import Flip from 'react-reveal/Flip';
+import { Collapse } from 'react-bootstrap';
 
 class Detail extends Component {
 
@@ -18,21 +20,42 @@ class Detail extends Component {
             price: 500,
             ticketTypeArray: [],
             placeChoosed: null,
-            ticketType: []
+            ticketType: [],
+            show1stAnimate: false,
+            open: false,
 
         }
     }
     scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
 
+    handleClick = () => {
+        this.setState({
+            show1stAnimate: !this.state.show1stAnimate
+        });
+    }
+    animateExpan = () => {
+        setTimeout(() => {
+            this.setState({
+                open: !this.state.open,
+
+            });
+        }, 2000);
+    }
+    componentDidMount = () => {
+        this.animateExpan();
+    }
     showShortDescrip = (shortDesCrip) => {
         const splitArray = shortDesCrip.split('<br><br>');
         var result = null;
         if (splitArray.length > 0) {
             result = splitArray.map((item, index) => {
                 return (
-                    <li
-                        key={index}
-                        className="b">{item}</li>
+                    <Flip key={index} top cascade collapse
+                    // when={this.state.show1stAnimate}
+                    >
+                        <li
+                            className="b">{item}</li>
+                    </Flip>
                 );
             });
         }
@@ -66,7 +89,7 @@ class Detail extends Component {
             textAvailableDay = "mọi ngày trong tuần"
         }
 
-            const textAvailableDayVN = textAvailableDay.replace('T1,', 'CN, ')
+        const textAvailableDayVN = textAvailableDay.replace('T1,', 'CN, ')
         var textAvailableDayCNlast = "";
         // console.log(textAvailableDayVN);
         // console.log(textAvailableDayVN.split("CN, "));
@@ -76,7 +99,7 @@ class Detail extends Component {
 
         //  textAvailableDayCNlast = (textAvailableDayVN.split("CN, ")[1]) + "CN.";
         // }
-        console.log(textAvailableDay)
+        // console.log(textAvailableDay)
         if (place !== undefined) {
             return (
                 <div>
@@ -92,29 +115,44 @@ class Detail extends Component {
                             <h3>{place.name}</h3>
                             <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
-                            <div id="inline">
+                            <div
+                                onClick={() => this.setState({ open: !this.state.open })}
+                                aria-controls="example-collapse-text"
+                                aria-expanded={this.state.open}
+                                // onClick={this.handleClick} 
+                                id="inline">
                                 <div className="bulletListCustome"></div>
                                 <div className="content">Điểm nổi bật</div>
                             </div>
-                            <ul className="a">
+                            {/* <Collapse in={this.state.open}> */}
+                                <ul className="a">
+                                    {this.showShortDescrip(place.shortDescription)}
+                                </ul>
+                            {/* </Collapse> */}
+                            {/* <Flip top cascade  collapse when={this.state.show1stAnimate}> */}
+                            {/* <ul className="a">
                                 {this.showShortDescrip(place.shortDescription)}
-                            </ul>
+                            </ul> */}
+                            {/* </Flip> */}
+
+
                             <div id="inline">
                                 <div className="bulletListCustome"></div>
                                 <div className="content">Các lựa chọn vé</div>
                             </div>
-                            <div >
-                                <ReTicketType
+                            <div>
+                                <ReTicketType2
                                     place={place} weekDays={place.weekDays} ticketType={place.ticketTypes} />
                             </div>
-
                             <div id="inline">
                                 <div ref={this.myRef} className="bulletListCustome"></div>
                                 <div className="content">Bạn được trải nghiệm những gì?</div>
                             </div>
-                            <span className="longDescription">
-                                {place.detailDescription}
-                            </span>
+                            <Flip top cascade collapse >
+                                <span className="longDescription">
+                                    {place.detailDescription}
+                                </span>
+                            </Flip>
                             <div
                                 style={{
                                     marginTop: "40px",

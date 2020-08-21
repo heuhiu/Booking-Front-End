@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import './TabDetail.css';
-import { de } from 'date-fns/locale';
+import Roll from 'react-reveal/Roll';
+import Flip from 'react-reveal/Flip';
+import Bounce from 'react-reveal/Bounce';
+import Zoom from 'react-reveal/Zoom';
+import Fade from 'react-reveal/Fade';
+
 const LeftTab = "LeftTab";
 const LeftTabItem = "LeftTabItem";
 const RighTab = "RighTab";
+
 class TabDetail extends Component {
 
     constructor(props) {
@@ -38,13 +44,22 @@ class TabDetail extends Component {
                 <div className={`col ${RighTab}`}>
                     <div className="tab-content" id="v-pills-tabContent">
                         <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                            {place.detailDescription}
+                            Thông tin
+                            <Zoom duration={300} top cascade>
+                                {place.detailDescription}
+                            </Zoom>
                         </div>
                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                             Điều khoản
+                            <Zoom duration={300} top cascade>
+                                {place.detailDescription}
+                            </Zoom>
                         </div>
                         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                             Hướng dẫn
+                            <Zoom duration={300} top cascade>
+                                {place.detailDescription}
+                            </Zoom>
                         </div>
                     </div>
                 </div>

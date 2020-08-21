@@ -428,6 +428,7 @@ class RegisterComp extends Component {
                                             ref={(input) => { this.mailInput = input; }}
                                             type="text"
                                             name="email"
+                                            maxLength="320"
                                             onChange={this.handleInput}
                                             onBlur={this.handleInputValidation}
                                             required

@@ -106,7 +106,7 @@ class TopOrders extends Component {
                                         <div className="col-4">
                                             <p style={{ visibility: item.status === "UNPAID" ? "hidden" : "visible", fontSize: "12px" }}>Thanh toán: &nbsp;
                                             {/* {item.purchaseDay} */}
-                                                {this.formatter.format(Date.parse(item.purchaseDay))}   
+                                                {this.formatter.format(Date.parse(item.purchaseDay))}
                                             </p>
                                         </div>
                                         <div className="col-4">
@@ -133,7 +133,6 @@ class TopOrders extends Component {
                                     <div
                                         className="col-3">
                                         <img className="detailImg"
-                                            height="15px"
                                             src={item.place.imageLink}
                                             alt="FAIL TO LOAD" />
                                     </div>

@@ -106,12 +106,15 @@ class CarouselCategories extends Component {
                     <Slide left duration={2000} >
                         <h2 className="headerOwl">Khám phá các danh mục có tại Goboki</h2>
                         <h2 className="desHeaderOwl">Vui hết sức, chơi hết mình</h2>
-                    </Slide>
-                    <Fade   >
                         <Slider {...settings}>
                             {this.showAllCategory(this.props.listCategory)}
                         </Slider>
-                    </Fade>
+                    </Slide>
+                    {/* <Fade   >
+                        <Slider {...settings}>
+                            {this.showAllCategory(this.props.listCategory)}
+                        </Slider>
+                    </Fade> */}
                 </div>
             </section>
         );

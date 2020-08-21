@@ -120,7 +120,7 @@ class PlaceDetail extends Component {
                 <div >
                     <div
                         className="container"
-                        style={{ marginTop: "100px", padding: "0px" }}>
+                        style={{ marginTop: "60px", padding: "0px" }}>
                         <Menu />
                         <Slider {...settings}>
                             {this.renderSlider(place.placeImageLink)}

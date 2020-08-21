@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserOrder.css';
-import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
 import TopOrders from '../TopOrders/TopOrders';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
 import { Collapse } from 'react-bootstrap';
+import Pagination from "react-js-pagination";
 
 class UserOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -23,25 +23,50 @@ class UserOrders extends Component {
             UserOrders: [],
             open: true,
             open2: true,
-            arrowAnimation: false
+            arrowAnimation: false,
+            limit: 5,
+            activePage: 1,
+            totalPage: 1,
+            totalItems: 0,
+            userId: null
         }
     }
-
+    //Handle changing when user click in button paging "1 2 3 4 ..."
+    handlePageChange = async (pageNumber) => {
+        // const { searchName, listCtiId, listCatId } = this.state;
+        if (pageNumber !== this.state.activePage) {
+            this.setState({
+                activePage: pageNumber
+            }
+                , () => {
+                    // this.receivedData(searchName, listCtiId, listCatId);
+                    this.getAllOrder(this.state.userId)
+                }
+            )
+        }
+        // this.forceUpdate();
+    }
     convertCurrecyToVnd = (currency) => {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
     getAllOrder = async (id) => {
         const { showLoader, hideLoader, loggedUser } = this.props;
+        const { activePage, limit } = this.state;
         showLoader();
         const userId = loggedUser.id;
         let data = new FormData();
         data.append('uid', userId);
+        data.append('limit', limit);
+        data.append('page', activePage);
         await callApi(`order/user/${id}`, 'POST', data)
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 this.setState({
-                    UserOrders: res.data
+                    // UserOrders: res.data,
+                    totalItems: res.data.totalItems,
+                    totalPage: res.data.totalPage,
+                    UserOrders: res.data.listResult,
                 })
                 hideLoader();
             }).catch(function (error) {
@@ -62,6 +87,9 @@ class UserOrders extends Component {
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
                     // console.log(res.data.id);
+                    this.setState({
+                        userId: res.data.id
+                    })
                     this.getAllOrder(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
@@ -87,6 +115,7 @@ class UserOrders extends Component {
         }
         return myStatus;
     }
+
     toggleArrow = () => {
         this.setState({
             arrowAnimation: true
@@ -99,74 +128,73 @@ class UserOrders extends Component {
             result = topOrders.map((item, index) => {
                 return (
                     <div key={index}
-                            className="detailTicketBoxDetail row no-gutters">
-                            <div
-                                className="detailTicketBox2Detail col-12">
-                                <div className={`detailTicketChild${item.status} col-12`}>
-                                    <div className="row no-gutters">
-                                        <div className="col-4">
-                                            <p style={{ fontSize: "12px" }}>Mã đơn hàng: #{item.orderCode} </p>
-                                        </div>
-                                        <div className="col-4">
-                                            <p style={{ visibility: item.status === "UNPAID" ? "hidden" : "visible", fontSize: "12px" }}>Thanh toán: &nbsp;
-                                            {/* {item.purchaseDay} */}
-                                                {this.formatter.format(Date.parse(item.purchaseDay))}   
-                                            </p>
-                                        </div>
-                                        <div className="col-4">
-                                            <p className="pushRight">{this.showStatus(item.status)}</p>
-                                        </div>
+                        className="detailTicketBoxDetail row no-gutters">
+                        <div
+                            className="detailTicketBox2Detail col-12">
+                            <div className={`detailTicketChild${item.status} col-12`}>
+                                <div className="row no-gutters">
+                                    <div className="col-4">
+                                        <p style={{ fontSize: "12px" }}>Mã đơn hàng: #{item.orderCode} </p>
                                     </div>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <p>Số tiền thanh toán: {this.convertCurrecyToVnd(item.totalPayment)}</p>
-                                        </div>
-                                        <div className="col-6">
-                                            <Link to={{
-                                                pathname: `/userProfile/myOrder/${item.id}`
-                                            }}>
-                                                <p className="pushRight2">
-                                                    Xem chi tiết
-                                            </p>
-                                            </Link>
-                                        </div>
+                                    <div className="col-4">
+                                        <p style={{ visibility: item.status === "UNPAID" ? "hidden" : "visible", fontSize: "12px" }}>Thanh toán: &nbsp;
+                                            {/* {item.purchaseDay} */}
+                                            {this.formatter.format(Date.parse(item.purchaseDay))}
+                                        </p>
+                                    </div>
+                                    <div className="col-4">
+                                        <p className="pushRight">{this.showStatus(item.status)}</p>
                                     </div>
                                 </div>
-
-                                <div style={{ margin: "20px 30px 20px 30px" }} className="row no-gutters">
-                                    <div
-                                        className="col-3">
-                                        <img className="detailImg"
-                                            height="15px"
-                                            src={item.place.imageLink}
-                                            alt="FAIL TO LOAD" />
+                                <div className="row">
+                                    <div className="col-6">
+                                        <p>Số tiền thanh toán: {this.convertCurrecyToVnd(item.totalPayment)}</p>
                                     </div>
-                                    <div
-                                        style={{ marginLeft: "20px" }}
-                                        className="col">
-                                        <div className="row">
-                                            <div className="col"><h1 className="nameDetail">Vé {item.place.name}</h1></div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
-                                            <div className="col"><span className="ticketTypeDetail">{item.ticketTypeName}</span></div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <span className="redemDetail">
-                                                    Thời gian:
+                                    <div className="col-6">
+                                        <Link to={{
+                                            pathname: `/userProfile/myOrder/${item.id}`
+                                        }}>
+                                            <p className="pushRight2">
+                                                Xem chi tiết
+                                            </p>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{ margin: "20px 30px 20px 30px" }} className="row no-gutters">
+                                <div
+                                    className="col-3">
+                                    <img className="detailImg"
+                                        src={item.place.imageLink}
+                                        alt="FAIL TO LOAD" />
+                                </div>
+                                <div
+                                    style={{ marginLeft: "20px" }}
+                                    className="col">
+                                    <div className="row">
+                                        <div className="col"><h1 className="nameDetail">Vé {item.place.name}</h1></div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
+                                        <div className="col"><span className="ticketTypeDetail">{item.ticketTypeName}</span></div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-3">
+                                            <span className="redemDetail">
+                                                Thời gian:
                                         </span>
-                                            </div>
-                                            <div className="col">
-                                                <span className="redemDetail">
-                                                    {this.formatter.format(Date.parse(item.redemptionDate))}
-                                                </span>
-                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <span className="redemDetail">
+                                                {this.formatter.format(Date.parse(item.redemptionDate))}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                 );
             });
@@ -184,14 +212,14 @@ class UserOrders extends Component {
         const { UserOrders } = this.state;
         return (
             <div className="col">
-                <div style={{ paddingTop: "0px" }} className="rightBoxUserDetail2">
+                {/* <div style={{ paddingTop: "0px" }} className="rightBoxUserDetail2">
                     <div
                         style={{ padding: "30px" }} >
                         <div
-                         onClick={() => this.setState({ open: !this.state.open })}
-                         aria-controls="example-collapse-text"
-                         aria-expanded={this.state.open}
-                        className="labelPointer row no-gutters">
+                            onClick={() => this.setState({ open: !this.state.open })}
+                            aria-controls="example-collapse-text"
+                            aria-expanded={this.state.open}
+                            className="labelPointer row no-gutters">
                             <div className="col-6">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
@@ -199,7 +227,7 @@ class UserOrders extends Component {
                                 </div>
                             </div>
                             <div className="col">
-                                
+
                             </div>
                         </div>
                         <Collapse in={this.state.open}>
@@ -208,15 +236,15 @@ class UserOrders extends Component {
                             </div>
                         </Collapse>
                     </div>
-                </div>
-                <div style={{ marginTop: "30px" }} className="rightBoxUserDetail2">
+                </div> */}
+                <div className="rightBoxUserDetail2">
                     <div
                         style={{ padding: "30px" }} >
-                        <div 
-                        onClick={() => this.setState({ open2: !this.state.open2 })}
-                        aria-controls="example-collapse-text2"
-                        aria-expanded={this.state.open2}
-                        className="labelPointer row">
+                        <div
+                            onClick={() => this.setState({ open2: !this.state.open2 })}
+                            aria-controls="example-collapse-text2"
+                            aria-expanded={this.state.open2}
+                            className="labelPointer row">
                             <div className="col-6">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
@@ -225,11 +253,30 @@ class UserOrders extends Component {
                             </div>
                         </div>
                         {/* {this.showOrders(UserOrders)} */}
-                        <Collapse in={this.state.open2}>
-                            <div id="example-collapse-text2">
-                                {this.showOrders(UserOrders)}
-                            </div>
-                        </Collapse>
+                        {/* <Collapse in={this.state.open2}> */}
+                        <div id="example-collapse-text2">
+                            {this.showOrders(UserOrders)}
+                        </div>
+                        <div style={{visibility: this.props.loader.loading===false?"visible":"hidden"}}>
+                            <Pagination
+                                hideNavigation
+                                hideFirstLastPages
+                                //What number is selected
+                                activePage={this.state.activePage}
+                                //The number of items each page
+                                itemsCountPerPage={this.state.limit}
+                                //Total of items in list
+                                totalItemsCount={this.state.totalItems}
+                                //Set Css of boostrap 4
+                                itemClass="page-item"
+                                //Set Css of boostrap 4
+                                linkClass="page-link"
+                                //Trigger handle page change
+                                onChange={this.handlePageChange.bind(this)}
+
+                            />
+                        </div>
+                        {/* </Collapse> */}
                     </div>
                 </div>
             </div>

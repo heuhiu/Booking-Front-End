@@ -18,6 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ListFilter from '../ListFilter/ListFilter';
 // import API_URL from '../../../constants/ConfigAPI';
 import * as Config from '../../../constants/ConfigAPI';
+import Slide from 'react-reveal/Slide';
+import Zoom from 'react-reveal/Zoom';
 
 
 class ListPlaceSearched extends Component {
@@ -28,7 +30,7 @@ class ListPlaceSearched extends Component {
             activePage: 1,      //Current page number
             totalPage: 1,       //Total page paging
             totalItems: 0,      //Total item searched
-            limit: 2,          //Number of items appear
+            limit: 5,          //Number of items appear
             searchList: [],     //ListSeached temporary
             searchName: "",
             listCtiId: [],
@@ -50,7 +52,7 @@ class ListPlaceSearched extends Component {
             listCity: [],
             listCategory: [],
             notFoundPage: false,
-            checkSearch: false
+            checkSearch: false,
         }
     }
 
@@ -142,54 +144,52 @@ class ListPlaceSearched extends Component {
             result = searchList.map((data, index) => {
                 // console.log(data);
                 return (
-                    <Link
-                        style={{ textDecoration: "none" }}
-                        key={index}
-                        to={{
-                            pathname: `/placeDetail/${data.id}`
-                        }}>
-                        <div key={data.index} className="col-lg-12 col-md-12">
-                            <div className="single_place">
-                                <div className="row">
-                                    <div
-                                        className="col">
-                                        <div className="thumb">
-                                            <img src={data.placeImageLink[0]}
-                                                width="416px"
-                                                height="250px"
-                                                alt="FAIL TO LOAD" />
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="place_info">
-                                            <div className="row no-gutters">
-                                                {/* <p> */}
-                                                {/* <button>Điểm tham quan</button> */}
-                                                {this.getListCategories(data.categoryId)}
-                                                {/* </p> */}
+                    <Slide left delay={index * 50} >
+                        <Link
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            to={{
+                                pathname: `/placeDetail/${data.id}`
+                            }}>
+                            <div key={data.index} className="col-lg-12 col-md-12">
+                                <div className="single_place">
+                                    <div className="row">
+                                        <div
+                                            className="col">
+                                            <div className="thumb">
+                                                <img src={data.placeImageLink[0]}
+                                                    width="416px"
+                                                    height="250px"
+                                                    alt="FAIL TO LOAD" />
                                             </div>
-                                            <h5>
-                                                {data.name}
-                                            </h5>
-                                            <p className="destination">
-                                                <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                    <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg> &nbsp;
+                                        </div>
+                                        <div className="col">
+                                            <div className="place_info">
+                                                <div className="row no-gutters">
+                                                    {this.getListCategories(data.categoryId)}
+                                                </div>
+                                                <h5>
+                                                    {data.name}
+                                                </h5>
+                                                <p className="destination">
+                                                    <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                        <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" stroke="#A5A5A5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg> &nbsp;
                                                 {data.address}</p>
-                                            {/* <p
+                                                {/* <p
                                         style={{color: "#FF7062"}}
                                         className="destination">{data.detailDescription}</p> */}
-                                            {/* <p className="oldPrice">{this.convertCurrecyToVnd(data.basicPrice)}</p> */}
-                                            <p className="newPrice">{this.convertCurrecyToVnd(data.basicPrice)}</p>
-                                            {/* <p className="available">Có thể đặt ngay hôm nay</p> */}
+                                                {/* <p className="oldPrice">{this.convertCurrecyToVnd(data.basicPrice)}</p> */}
+                                                <p className="newPrice">{this.convertCurrecyToVnd(data.basicPrice)}</p>
+                                                {/* <p className="available">Có thể đặt ngay hôm nay</p> */}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Link>
-
+                        </Link>
+                    </Slide>
                 );
             });
         }
@@ -428,6 +428,7 @@ class ListPlaceSearched extends Component {
     }
 
     componentDidMount = () => {
+        window.scrollTo(0, 0)
         // debugger
         var { location } = this.props;
         // console.log(location);
@@ -528,7 +529,13 @@ class ListPlaceSearched extends Component {
         // console.log(unique)
         // return unique
     }
+    // onSelectCat=()=>{
+    //     this.props.history.replace("/searchedPlace?name=Vin3")
+    //     window.history.pushState("/searchedPlace?name=Ba na");
+    //     this.props.history.replace('/searchedPlace?name=bana')
+    //     window.location.href = window.location.href + '/searchedPlace?name=bana';
 
+    // }
     onSelectCat = () => {
         const { catMul, cityMul, listCtiId, listCatId, searchName } = this.state
         var jointCityID = cityMul.concat(listCtiId)
@@ -590,10 +597,12 @@ class ListPlaceSearched extends Component {
 
     render() {
         // debugger
-        const { activePage, totalItems, searchList, cityMul, catMul,
-            searchName, listCat, listCategory, listCity, listCtiId, listCatId } = this.state;
+        const { activePage, totalItems, searchList,
+            searchName, listCat, listCity, listCtiId, listCatId } = this.state;
         // console.log(cityMul);
         // console.log(catMul);
+        var nameCondition = searchName ? searchName : "mọi địa điểm"
+        var animateSearchName = "Tất cả kết quả với: " + nameCondition
         const listCtiSEND = listCtiId;
         const listCateSEND = listCatId;
         var options = [];
@@ -628,15 +637,16 @@ class ListPlaceSearched extends Component {
                     <Container style={{ fontFamily: 'Inter' }} >
                         <div className="popular_places_area">
                             <div className="container">
-                                <div className="row">
-                                    <div className="col-3">
-                                        <span className="labelName">Tất cả kết quả với: </span>
+                                {/* <div className="row">
+                                    <div className="col-6">
+                                        <Zoom top cascade>
+                                            {animateSearchName}
+                                        </Zoom>
                                     </div>
-                                    <div className="labelName2 col">
-                                        <span className="labelName2"> {searchName ? searchName : "mọi địa điểm"}</span>
-                                    </div>
-                                </div>
-
+                                </div> */}
+                                <Zoom right  cascade >
+                                    <div className="b">{animateSearchName}</div>
+                                </Zoom>
                                 <div
                                     style={{ marginTop: "26px" }}
                                     className="row">
@@ -671,6 +681,7 @@ class ListPlaceSearched extends Component {
                                     </div>
                                     <div className="col-lg-8">
                                         <div className="row no-gutters">
+                                        <Slide left delay={300} >
                                             <div
 
                                                 onClick={this.onTogglePriceRange} className="priceFilter col-5">
@@ -683,6 +694,7 @@ class ListPlaceSearched extends Component {
                                                     </svg>
                                                 </p>
                                             </div>
+                                        </Slide>
                                         </div>
                                         <div
                                             style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }}
@@ -741,10 +753,11 @@ class ListPlaceSearched extends Component {
 
                                             </div>
                                         </div>
-
+                                        {/* <Slide left cascade> */}
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
+                                        {/* </Slide> */}
                                         <div style={{ visibility: loader.loading === false && this.state.checkSearch === true ? "visible" : "hidden" }}>
                                             <Pagination
                                                 hideNavigation
