@@ -178,7 +178,7 @@ class NavBarSearch extends Component {
                             width="14"
                             height="14"
                         /> */}
-                        <svg width="21" height="22" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="svgLOGO" width="17" height="18" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.1111 23.4839C18.2476 23.4839 23.2222 18.6199 23.2222 12.6197C23.2222 6.61961 18.2476 1.75555 12.1111 1.75555C5.97461 1.75555 1 6.61961 1 12.6197C1 18.6199 5.97461 23.4839 12.1111 23.4839Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M26 26.2003L19.9583 20.2929" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>

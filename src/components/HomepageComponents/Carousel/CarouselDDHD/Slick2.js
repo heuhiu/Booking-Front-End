@@ -4,11 +4,9 @@ import Slider from "react-slick";
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
-import callApi from '../../../../config/utils/apiCaller';
-import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
-import Fade from 'react-reveal/Fade';
-import Rotate from 'react-reveal/Rotate';
+import Flip from 'react-reveal/Flip';
+import Bounce from 'react-reveal/Bounce';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
@@ -54,7 +52,7 @@ class Slick2 extends Component {
     if (listTopcity.length > 0) {
       result = listTopcity.map((item, index) => {
         return (
-          <Fade key={index} delay={200} duration={item.id*700} left >
+          <Bounce duration={index*235}>
             <Link
               className="decoNone"
               to={`/searchedPlace?listCityID=${item.id}`}>
@@ -70,7 +68,7 @@ class Slick2 extends Component {
                 </h3>
               </div >
             </Link>
-          </Fade>
+          </Bounce>
         );
       });
     } else {
@@ -81,23 +79,43 @@ class Slick2 extends Component {
     }
     return result;
   }
+  next = () => {
+    this.slider.slickNext();
+};
+previous = () => {
+    this.slider.slickPrev();
+};
+beforeChange = (prev, next) => {
+    this.setState({ index: next });
+};
   render() {
     const { topCity } = this.props;
+    // const settings = {
+    //   dots: true,
+    //   infinite: true,
+    //   slidesToShow: 3,
+    //   slidesToScroll: 3,
+    //   nextArrow: <SampleNextArrow />,
+    //   prevArrow: <SamplePrevArrow />
+    // };
     const settings = {
-      dots: true,
-      infinite: true,
+      infinite: false,
+      speed: 500,
       slidesToShow: 3,
       slidesToScroll: 3,
+      arrows: true,
       nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
+      prevArrow: <SamplePrevArrow />,
+      beforeChange: this.beforeChange
     };
-
     return (
       <section className="py-5">
         <div className="container">
-          <h2 className="headerOwl">Điểm đến hàng đầu</h2>
-          <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
+          <Flip top cascade>
 
+            <h2 className="headerOwl">Điểm đến hàng đầu</h2>
+            <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
+          </Flip>
           <Slider {...settings}>
 
             {this.showTopcity(topCity)}

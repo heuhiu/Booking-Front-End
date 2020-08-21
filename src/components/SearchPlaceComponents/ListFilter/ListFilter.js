@@ -168,9 +168,9 @@ class ListFilter extends Component {
         const checkboxesToRender = listCity.map(item => {
             const checkSelected = listCitySelected.some(temp => temp === item.id)
             return (
-                <Flip top cascade duration={2000}>
+                <Flip key={item.id} top cascade duration={2000}>
                     <label
-                        key={item.id}
+                        
                         style={{
                             textAlign: "left",
                             padding: "10px 10px 10px 0px"
@@ -201,9 +201,9 @@ class ListFilter extends Component {
         const checkboxesToRender2 = listCategory.map(item => {
             const checkSelected2 = listCategorySelected.some(temp => temp === item.id)
             return (
-                <Flip top cascade duration={2000}>
+                <Flip key={item.id} top cascade duration={2000}>
                     <label
-                        key={item.id}
+                        
                         style={{
                             textAlign: "left",
                             padding: "10px 10px 10px 0px"

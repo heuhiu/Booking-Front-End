@@ -425,7 +425,7 @@ class RegisterComp extends Component {
                                     <div className="wrap-input100">
                                         <input
                                             className="input100"
-                                            ref={(input) => { this.mailInput = input; }}
+                                            // ref={(input) => { this.mailInput = input; }}
                                             type="text"
                                             name="email"
                                             maxLength="320"

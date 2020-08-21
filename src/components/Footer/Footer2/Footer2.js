@@ -126,7 +126,7 @@ class Footer2 extends Component {
             </div> */}
           </div>
         </div>
-        <div style={{marginTop: "50px", marginBottom: "20px"}} className="container-fluid">
+        <div style={{marginTop: "50px"}} className="container-fluid">
             <div className="row no-gutters">
               <div
                 className="copyRight col-12">

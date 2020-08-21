@@ -141,8 +141,8 @@ class UserChangePassword extends Component {
         // console.log(password.value);
         // console.log(RePassword.value);
         // console.log(newPassword.value);
-
         e.preventDefault();
+        e.stopPropagation();
         if (true) {
             setTimeout(() => {
                 this.pass.focus();
@@ -186,14 +186,22 @@ class UserChangePassword extends Component {
             const { loggedUser } = this.props;
             // console.log(loggedUser.id);
             // console.log(password.value);
-            // console.log(newPassword.value);
+            console.log(newPassword.value);
             const oldPass = password.value;
             const newPass = newPassword.value
             let data = new FormData();
             data.append('uid', loggedUser.id);
             data.append('old', oldPass);
             data.append('new', newPass);
-
+            // toast.success('Thay đổi mật khẩu thành công!', {
+            //     position: "bottom-right",
+            //     autoClose: 5000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            // });
             callApi('user/changePassword', 'POST', data)
                 .then(res => {
                     if (res) {

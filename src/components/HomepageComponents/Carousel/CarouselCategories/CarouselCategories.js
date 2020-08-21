@@ -10,8 +10,8 @@ import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from '../../../../actions/index';
-import Fade from 'react-reveal/Fade';
-import Slide from 'react-reveal/Slide';
+import Flip from 'react-reveal/Flip';
+import Bounce from 'react-reveal/Bounce';
 
 function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -46,7 +46,9 @@ class CarouselCategories extends Component {
         super(props);
         this.state = {
             selectedOption: null,
+            index: 0,
         }
+
     }
 
     showAllCategory = (listCategory) => {
@@ -54,30 +56,32 @@ class CarouselCategories extends Component {
         if (listCategory.length > 0) {
             result = listCategory.map((item, index) => {
                 return (
-                    <Link
-                        key={index}
-                        className="decoNone"
-                        to={`/searchedPlace?listCatID=${item.id}`}>
-                        <div className="owlStyle">
-                            <h3 style={{ border: "none" }} className="owlStyleChil">
-                                <div
-                                    style={{ height: "170px" }}
-                                >
-                                    <img
-                                        className="coverImg"
-                                        src={item.iconLink}
-                                        alt="FAIL TO LOAD" />
-                                </div>
-                                <div className="containerOwlChil">
-                                    {/* <div style={{height: "5px"}}> */}
-                                    <p className="catOwlStyleChil1">{item.categoryName}</p>
-                                    {/* </div> */}
-                                    <p className="catOwlStyleChil2">{item.description}
-                                    </p>
-                                </div>
-                            </h3>
-                        </div >
-                    </Link>
+                    <Bounce duration={index*235}>
+                        <Link
+                            key={index}
+                            className="decoNone"
+                            to={`/searchedPlace?listCatID=${item.id}`}>
+                            <div className="owlStyle">
+                                <h3 style={{ border: "none" }} className="owlStyleChil">
+                                    <div
+                                        style={{ height: "170px" }}
+                                    >
+                                        <img
+                                            className="coverImg"
+                                            src={item.iconLink}
+                                            alt="FAIL TO LOAD" />
+                                    </div>
+                                    <div className="containerOwlChil">
+                                        {/* <div style={{height: "5px"}}> */}
+                                        <p className="catOwlStyleChil1">{item.categoryName}</p>
+                                        {/* </div> */}
+                                        <p className="catOwlStyleChil2">{item.description}
+                                        </p>
+                                    </div>
+                                </h3>
+                            </div >
+                        </Link>
+                    </Bounce>
                 );
             });
         } else {
@@ -87,29 +91,48 @@ class CarouselCategories extends Component {
         }
         return result;
     }
-
+    next = () => {
+        this.slider.slickNext();
+    };
+    previous = () => {
+        this.slider.slickPrev();
+    };
+    beforeChange = (prev, next) => {
+        this.setState({ index: next });
+    };
     render() {
         const { listCategory } = this.props;
         // console.log(listCategory);
+        // const settings = {
+        //     dots: false,
+        //     infinite: true,
+        //     slidesToShow: 5,
+        //     slidesToScroll: 1,
+        //     nextArrow: <SampleNextArrow />,
+        //     prevArrow: <SamplePrevArrow />,
+        // };
         const settings = {
-            dots: false,
-            infinite: true,
+            infinite: false,
+            speed: 500,
             slidesToShow: 5,
             slidesToScroll: 1,
+            arrows: true,
             nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />
-        };
+            prevArrow: <SamplePrevArrow />,
+            beforeChange: this.beforeChange
+          };
         return (
 
             <section className="py-5">
                 <div className="container">
-                    <Slide left duration={2000} >
+                    <Flip top cascade>
                         <h2 className="headerOwl">Khám phá các danh mục có tại Goboki</h2>
                         <h2 className="desHeaderOwl">Vui hết sức, chơi hết mình</h2>
-                        <Slider {...settings}>
-                            {this.showAllCategory(this.props.listCategory)}
-                        </Slider>
-                    </Slide>
+
+                    </Flip>
+                    <Slider {...settings}>
+                        {this.showAllCategory(this.props.listCategory)}
+                    </Slider>
                     {/* <Fade   >
                         <Slider {...settings}>
                             {this.showAllCategory(this.props.listCategory)}

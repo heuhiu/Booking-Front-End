@@ -18,8 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ListFilter from '../ListFilter/ListFilter';
 // import API_URL from '../../../constants/ConfigAPI';
 import * as Config from '../../../constants/ConfigAPI';
-import Slide from 'react-reveal/Slide';
 import Zoom from 'react-reveal/Zoom';
+import Fade from 'react-reveal/Fade';
 
 
 class ListPlaceSearched extends Component {
@@ -40,6 +40,7 @@ class ListPlaceSearched extends Component {
             listCat: [],
             listCategoryId: [],
             value: { min: 0, max: 1000000 },
+            // value: { min: 99999999, max: 99999999 },
             minValueForSlider: 0,//different usage
             maxValueForSlider: 1000000,
             catName: [],
@@ -144,10 +145,10 @@ class ListPlaceSearched extends Component {
             result = searchList.map((data, index) => {
                 // console.log(data);
                 return (
-                    <Slide left delay={index * 50} >
+                    // <Slide key={index} left delay={index * 50} >
                         <Link
                             style={{ textDecoration: "none" }}
-                            key={index}
+
                             to={{
                                 pathname: `/placeDetail/${data.id}`
                             }}>
@@ -189,7 +190,7 @@ class ListPlaceSearched extends Component {
                                 </div>
                             </div>
                         </Link>
-                    </Slide>
+                    // </Slide>
                 );
             });
         }
@@ -402,7 +403,19 @@ class ListPlaceSearched extends Component {
             listCtiId: listCtiId,
         });
     }
-
+    removeAllfilter = () => {
+        // const {  listCtiId, listCatId,listCity,listCat } = this.state;
+        this.setState({
+            listCatId: [],
+            listCtiId: []
+        }, () => {
+            // alert(this.state.listCtiId)
+            // alert(this.state.listCatId)
+            // console.log("")
+            // this.forceUpdate()
+            this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
+        });
+    }
     removeCategoryID = (id) => {
         const { listCatId } = this.state;
         // console.log(listCatId);
@@ -603,8 +616,8 @@ class ListPlaceSearched extends Component {
         // console.log(catMul);
         var nameCondition = searchName ? searchName : "mọi địa điểm"
         var animateSearchName = "Tất cả kết quả với: " + nameCondition
-        const listCtiSEND = listCtiId;
-        const listCateSEND = listCatId;
+        // const listCtiSEND = listCtiId;
+        // const listCateSEND = listCatId;
         var options = [];
         if (listCat.length > 0) {
             for (let i = 0; i < listCat.length; i++) {
@@ -644,7 +657,7 @@ class ListPlaceSearched extends Component {
                                         </Zoom>
                                     </div>
                                 </div> */}
-                                <Zoom right  cascade >
+                                <Zoom right cascade >
                                     <div className="b">{animateSearchName}</div>
                                 </Zoom>
                                 <div
@@ -664,42 +677,76 @@ class ListPlaceSearched extends Component {
                                             <ListFilter
                                                 listCategory={listCat}
                                                 listCity={listCity}
-                                                listCitySelected={listCtiSEND}
-                                                listCategorySelected={listCateSEND}
+                                                listCitySelected={listCtiId}
+                                                listCategorySelected={listCatId}
                                                 setmMul={this.setmMul}
                                                 removeCityID={this.removeCityID}
                                                 removeCategoryID={this.removeCategoryID}
+                                            // removeAll={this.removeAllfilter}
                                             />
+                                            <br></br>
+                                            <div className="row">
+                                                <div className="col-4">
 
-                                            <button
-                                                onClick={this.onSelectCat}
-                                                type="button"
-                                                className="btn btn-danger">
-                                                Filter by category
-                                            </button>
+                                                </div>
+                                                <div className="col-3">
+                                                    {/* <button
+                                                    style={{ paddingRight: "0px"}}
+                                                        onClick={this.removeAllfilter}
+                                                        type="button"
+                                                        className="resetFilterBtn">
+                                                        Đặt lại
+                                                    </button> */}
+                                                </div>
+                                                <div className="col-5">
+                                                    <button
+                                                        onClick={this.onSelectCat}
+                                                        type="button"
+                                                        className="filterBtn">
+                                                        Lọc kết quả
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div className="col-lg-8">
                                         <div className="row no-gutters">
-                                        <Slide left delay={300} >
-                                            <div
-
-                                                onClick={this.onTogglePriceRange} className="priceFilter col-5">
-                                                <p onClick={this.onTogglePriceRange}>
-                                                    {this.convertCurrecyToVnd(this.state.value.min)} -&nbsp;
-                                                    {this.convertCurrecyToVnd(this.state.value.max)}
-                                                    &nbsp;&nbsp;&nbsp;
-                                                <svg style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                    </svg>
-                                                </p>
+                                            {/* <Slide left delay={300} > */}
+                                            {/* <div  className="priceFilter row"> */}
+                                            <div onClick={this.onTogglePriceRange} className="col-6">
+                                                <div className="priceFilter row no-gutters">
+                                                    <div style={{ boder: "1px solid green" }} className="col">
+                                                        <p>
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    {this.convertCurrecyToVnd(this.state.value.min)}
+                                                                </div>
+                                                                <div className="col-1">
+                                                                    -
+                                                                </div>
+                                                                <div className="col">
+                                                                    {this.convertCurrecyToVnd(this.state.value.max)}
+                                                                </div>
+                                                            </div>
+                                                        </p>
+                                                    </div>
+                                                    <div className="col-2">
+                                                        <p>
+                                                            <svg className="svgLOGO" style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                            </svg>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </Slide>
+                                            {/* </div> */}
+                                            {/* </Slide> */}
                                         </div>
                                         <div
                                             style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }}
                                             className="row no-gutters">
-                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-5">
+                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-6">
                                                 <label className="priceRangeLabel">Khoảng giá</label>
 
                                                 <div className="row no-gutters">
@@ -709,6 +756,8 @@ class ListPlaceSearched extends Component {
                                                             // style={{ border: "5px solid green" }}
                                                             suffix=" đ"
                                                             precision="0"
+                                                            maxlength="12"
+                                                            maxValueForSlider="50"
                                                             decimalSeparator=","
                                                             thousandSeparator="."
                                                             value={this.state.value.min}
@@ -722,6 +771,7 @@ class ListPlaceSearched extends Component {
                                                             suffix=" đ"
                                                             className="maxminBtn"
                                                             precision="0"
+                                                            maxlength="12"
                                                             decimalSeparator=","
                                                             thousandSeparator="."
                                                             value={this.state.value.max}
@@ -736,7 +786,7 @@ class ListPlaceSearched extends Component {
                                                         step={10000}
                                                         value={this.state.value}
                                                         onChange={value => this.onChangeSlider(value)}
-                                                        onChangeComplete={value => this.onChangeSliderSet()}
+                                                    // onChangeComplete={value => this.onChangeSliderSet()}
                                                     />
                                                 </div>
                                                 <div className="row no-gutters">
@@ -754,9 +804,12 @@ class ListPlaceSearched extends Component {
                                             </div>
                                         </div>
                                         {/* <Slide left cascade> */}
+                        
+                                        <Fade cascade>
                                         <div className="row">
                                             {!this.props.loader.loading === true ? this.showSearchList(searchList) : ""}
                                         </div>
+                                        </Fade>
                                         {/* </Slide> */}
                                         <div style={{ visibility: loader.loading === false && this.state.checkSearch === true ? "visible" : "hidden" }}>
                                             <Pagination

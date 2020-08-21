@@ -9,8 +9,8 @@ import { showLoader, hideLoader } from '../../../../actions/index';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { id } from 'date-fns/locale';
-import Slide from 'react-reveal/Slide';
-import Fade from 'react-reveal/Fade';
+import Flip from 'react-reveal/Flip';
+import Bounce from 'react-reveal/Bounce';
 
 function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -70,37 +70,71 @@ class Slick1 extends Component {
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
                     // console.log(item)
+                    if (index > 4) {
+                        return (
+                            <Bounce>
+                                <Link
+                                    key={index}
+                                    className="decoNone"
+                                    to={`/placeDetail/${item.id}`}>
+                                    <div className="owlStyle">
+                                        <h3 className="owlStyleChil">
+                                            <div
+                                                className="owlCom3"
+                                                style={{
+                                                    borderRadius: "10px 10px 0px 0px",
+                                                    backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                                                }}
+                                            >
+                                            </div>
+                                            <div className="containerOwlChil">
+                                                <div style={{ height: "45px" }}>
+                                                    <p className="owlStyleChil1">{item.name}</p>
+                                                </div>
+                                                <div>
+                                                    {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
+                                                    <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
+                                                    <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                                                </div>
+    
+                                            </div>
+                                        </h3>
+                                    </div >
+                                </Link >
+                            </Bounce >
+                        );
+                    } else
                     return (
-                        // <Fade  delay={200}  left  >
-                        <Link
-                            key={index}
-                            className="decoNone"
-                            to={`/placeDetail/${item.id}`}>
-                            <div className="owlStyle">
-                                <h3 className="owlStyleChil">
-                                    <div
-                                        className="owlCom3"
-                                        style={{
-                                            borderRadius: "10px 10px 0px 0px",
-                                            backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
-                                        }}
-                                    >
-                                    </div>
-                                    <div className="containerOwlChil">
-                                        <div style={{ height: "45px" }}>
-                                            <p className="owlStyleChil1">{item.name}</p>
+                        <Bounce duration={index*235}>
+                            <Link
+                                key={index}
+                                className="decoNone"
+                                to={`/placeDetail/${item.id}`}>
+                                <div className="owlStyle">
+                                    <h3 className="owlStyleChil">
+                                        <div
+                                            className="owlCom3"
+                                            style={{
+                                                borderRadius: "10px 10px 0px 0px",
+                                                backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                                            }}
+                                        >
                                         </div>
-                                        <div>
-                                            {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
-                                            <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
-                                            <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
-                                        </div>
+                                        <div className="containerOwlChil">
+                                            <div style={{ height: "45px" }}>
+                                                <p className="owlStyleChil1">{item.name}</p>
+                                            </div>
+                                            <div>
+                                                {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
+                                                <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
+                                                <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                                            </div>
 
-                                    </div>
-                                </h3>
-                            </div >
-                        </Link >
-                        //    </Fade >
+                                        </div>
+                                    </h3>
+                                </div >
+                            </Link >
+                        </Bounce >
                     );
                 });
             } else {
@@ -111,16 +145,34 @@ class Slick1 extends Component {
             }
         return result;
     }
-
+    next = () => {
+        this.slider.slickNext();
+    };
+    previous = () => {
+        this.slider.slickPrev();
+    };
+    beforeChange = (prev, next) => {
+        this.setState({ index: next });
+    };
     forByCityId = (topCity, listData1, listData2, listData3) => {
+        // const settings = {
+        //     // dots: true,
+        //     infinite: true,
+        //     slidesToShow: 4,
+        //     slidesToScroll: 1,
+        //     nextArrow: <SampleNextArrow />,
+        //     prevArrow: <SamplePrevArrow />
+        // };
         const settings = {
-            // dots: true,
-            infinite: true,
+            infinite: false,
+            speed: 500,
             slidesToShow: 4,
             slidesToScroll: 1,
+            arrows: true,
             nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />
-        };
+            prevArrow: <SamplePrevArrow />,
+            beforeChange: this.beforeChange
+          };
         var result = null;
         if (topCity.length > 0) {
             result = topCity.map((item, index) => {
@@ -129,13 +181,14 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div >
-                                    <Slide left duration={2000} >
+                                    <Flip top cascade>
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData1)}
-                                        </Slider>
-                                    </Slide>
+
+                                    </Flip>
+                                    <Slider {...settings}>
+                                        {this.showPlaceOfTopCity(listData1)}
+                                    </Slider>
                                     {/* <Fade   >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData1)}
@@ -152,13 +205,14 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div >
-                                    <Slide left duration={2000} >
+                                    <Flip top cascade>
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData2)}
-                                        </Slider>
-                                    </Slide>
+
+                                    </Flip>
+                                    <Slider {...settings}>
+                                        {this.showPlaceOfTopCity(listData2)}
+                                    </Slider>
                                     {/* <Fade  >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData2)}
@@ -176,13 +230,14 @@ class Slick1 extends Component {
                         <section key={index} className="py-5">
                             <div className="container">
                                 <div>
-                                    <Slide left duration={2000} >
+                                    <Flip top cascade>
                                         <h2 className="headerOwl">{item.shortDescription}</h2>
                                         <h2 className="desHeaderOwl">{item.name}</h2>
-                                        <Slider {...settings}>
-                                            {this.showPlaceOfTopCity(listData3)}
-                                        </Slider>
-                                    </Slide>
+
+                                    </Flip>
+                                    <Slider {...settings}>
+                                        {this.showPlaceOfTopCity(listData3)}
+                                    </Slider>
                                     {/* <Fade  >
                                         <Slider {...settings}>
                                             {this.showPlaceOfTopCity(listData3)}
