@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserProfile.css';
-import Menu from '../Menu/Menu';
-import Footer2 from '../Footer/Footer2/Footer2';
-import testImg from '../../img/Detailpic.png';
-import callApi from '../../config/utils/apiCaller'
+// import Menu from '../Menu/Menu';
+// import Footer2 from '../Footer/Footer2/Footer2';
+// import testImg from '../../img/Detailpic.png';
+// import callApi from '../../config/utils/apiCaller'
 import { showLoader, hideLoader } from '../../actions/index';
 
 
-function FormError(props) {
-    if (props.isHidden) { return null; }
-    return (
-        <div style={{ color: "red", position: 'absolute' }} className="form-warning">
-            {props.errorMessage}
-        </div>
-    )
-}
+// function FormError(props) {
+//     if (props.isHidden) { return null; }
+//     return (
+//         <div style={{ color: "red", position: 'absolute' }} className="form-warning">
+//             {props.errorMessage}
+//         </div>
+//     )
+// }
 class UserProfileComp extends Component {
     constructor(props) {
         super(props);

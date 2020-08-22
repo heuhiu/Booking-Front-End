@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './UserProfile.css';
+// import './UserProfile.css';
+import '../../components/UserProfileComponents/UserProfile.css'
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import UserProfileComp from '../../components/UserProfileComponents/UserProfileComp';
+// import UserProfileComp from '../../components/UserProfileComponents/UserProfileComp';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import subMenu from '../../components/UserProfileComponents/subMenuRouter';
 import UserMenu from '../../components/UserProfileComponents/UserMenu';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
-import callApi from '../../config/utils/apiCaller';
+// import callApi from '../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../actions/index';
 import NotLogin from '../NotLogin/NotLogin';
 

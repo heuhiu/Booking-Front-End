@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './ForgotPassword.css';
 import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -120,7 +120,7 @@ class ForgotPassword extends Component {
 
     onLogin = (e) => {
         e.preventDefault();
-        const { email, password } = this.state;
+        const { email } = this.state;
         // console.log(email.value);
         const myMail = email.value;
         // let data = new FormData();
@@ -179,7 +179,7 @@ class ForgotPassword extends Component {
 
     render() {
         // console.log(this.state.email.value);
-        const { checkResent } = this.state;
+        // const { checkResent } = this.state;
         return (
             <div>
             <Menu />

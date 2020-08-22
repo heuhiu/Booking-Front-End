@@ -14,12 +14,12 @@ class VisitorList extends Component {
 
     showTicketTypes = (arr) => {
         // console.log(arr);
-        const { visitorType, id } = this.props;
+        const { visitorType } = this.props;
         var result = [];
         if (arr !== null) {
             if (arr.length > 0) {
                 result = arr.map((item, index) => {
-                    var updateIndex = visitorType.findIndex(itemUpdate => itemUpdate.visitorTypeId == item.id)
+                    var updateIndex = visitorType.findIndex(itemUpdate => itemUpdate.visitorTypeId === item.id)
                     return (
                         <VisitorTypeItem key={index} visitorType={visitorType[updateIndex]} index={index} item={item} />
                     );
@@ -37,7 +37,7 @@ class VisitorList extends Component {
     }
 
     render() {
-        const { visitorTypeDetail } = this.state;
+        // const { visitorTypeDetail } = this.state;
         const { item } = this.props;
 
         return (

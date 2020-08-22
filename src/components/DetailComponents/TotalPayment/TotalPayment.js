@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './TotalPayment.css';
-import { Link, Redirect } from 'react-router-dom';
+// import { Link, Redirect } from 'react-router-dom';
 // import { vi } from 'date-fns/locale';
 import { removeVisitorType } from '../../../actions/index';
 import callApi from '../../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { showLoader, hideLoader } from '../../../actions';
 
 class TotalPayment extends Component {
     notify = () => toast("Wow so easy !");
@@ -44,50 +45,22 @@ class TotalPayment extends Component {
 
     checkLogin = (e) => {
         e.preventDefault();
-        const { history } = this.props;
-        const { totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
-        // console.log(place);
-            callApi('login/checkToken', 'post', null)
-                .then(res => {
-                    if(totalPayment === 0) {
-                        toast.error('Vui lòng chọn ít nhất một loại vé!', {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    } else if (redemptionDate === null) {
-                        toast.error('Vui lòng chọn ngày sử dụng vé!', {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    } else {
-                        this.props.history.push({
-                            pathname: '/payment',
-                            state: { 
-                                ticketTypeID, 
-                                ticketName, 
-                                totalPayment, 
-                                redemptionDate, 
-                                place }
-                        })
-                    }
-                    
+        // const { history } = this.props;
+        const { totalPayment, ticketTypeID, ticketName, redemptionDate, place, visitorTypeFromRedux } = this.props;
 
-                }).catch(function (error) {
-                    // if (error.response) {
-                    //     console.log(error.response.data);
-                    // }
-                    // toast.error("Vui lòng đăng nhập trước khi đặt vé")
-                    toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
+        // console.log(visitorTypeFromRedux)
+        // var idVisitorTypeList = ""
+        // for (let index = 0; index < visitorTypeFromRedux.length - 1; index++) {
+        //     const element = visitorTypeFromRedux[index].visitorTypeId;
+        //     // console.log(element)
+        //     idVisitorTypeList += element + ","
+        // }
+        // idVisitorTypeList += visitorTypeFromRedux[visitorTypeFromRedux.length - 1].visitorTypeId
+
+        callApi('login/checkToken', 'post', null)
+            .then(res => {
+                if (totalPayment === 0) {
+                    toast.error('Vui lòng chọn ít nhất một loại vé!', {
                         position: "bottom-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -96,17 +69,133 @@ class TotalPayment extends Component {
                         draggable: true,
                         progress: undefined,
                     });
+                } else if (redemptionDate === null) {
+                    toast.error('Vui lòng chọn ngày sử dụng vé!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                } else {
+                    console.log(visitorTypeFromRedux)
+                    var idVisitorTypeList = ""
+                    for (let index = 0; index < visitorTypeFromRedux.length - 1; index++) {
+                        const element = visitorTypeFromRedux[index].visitorTypeId;
+                        // console.log(element)
+                        idVisitorTypeList += element + ","
+                    }
+                    idVisitorTypeList += visitorTypeFromRedux[visitorTypeFromRedux.length - 1].visitorTypeId
+                    this.callVisitorTypeRemainApi(idVisitorTypeList, redemptionDate, ticketTypeID, ticketName, totalPayment, place)
+                    // this.props.history.push({
+                    //     pathname: '/payment',
+                    //     state: {
+                    //         ticketTypeID,
+                    //         ticketName,
+                    //         totalPayment,
+                    //         redemptionDate,
+                    //         place
+                    //     }
+                    // })
+                }
+            }).catch(function (error) {
+                toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
                 });
-        
+            });
+
     }
-    // test=()=>{
-    //     this.setState({
-    //         checkLoginFlag: false
-    //     })
-    // }
+
+    formatDate = (date) => {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        return [day, month, year].join('/');
+    }
+    // ticketTypeID,
+    // ticketName,
+    // totalPayment,
+    // redemptionDate,
+    // place
+    callVisitorTypeRemainApi = async (idVisitorTypeList, redemptionDate, ticketTypeID, ticketName, totalPayment, place) => {
+        const { showLoader, hideLoader, visitorTypeFromRedux } = this.props;
+        let data = new FormData();
+        data.append('idList', idVisitorTypeList);
+        data.append('date', this.formatDate(redemptionDate));
+        showLoader()
+        await callApi('visitorType/remaining', 'POST', data)
+            .then(res => {
+                console.log(res.data);
+                const visitorTypeFromDb = res.data;
+                console.log(visitorTypeFromRedux)
+                for (let index = 0; index < visitorTypeFromDb.length; index++) {
+
+                    const remainDb = visitorTypeFromDb[index].remaining;
+                    const idDb = visitorTypeFromDb[index].id;
+
+                    for (let index = 0; index < visitorTypeFromRedux.length; index++) {
+                        const remainRedux = visitorTypeFromRedux[index].quantity;
+                        const idRedux = visitorTypeFromRedux[index].visitorTypeId;
+                        const nameRedux = visitorTypeFromRedux[index].visitorTypeName;
+
+                        if (idDb === idRedux) {
+                            console.log(idDb)
+                            debugger
+                            if (remainDb >= remainRedux) {
+                                this.props.history.push({
+                                    pathname: '/payment',
+                                    state: {
+                                        ticketTypeID,
+                                        ticketName,
+                                        totalPayment,
+                                        redemptionDate,
+                                        place
+                                    }
+                                })
+                                debugger
+                            } else if (remainDb < remainRedux) {
+                                toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
+                                    position: "bottom-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: true,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                });
+                            }
+                        }
+
+                    }
+
+                }
+                hideLoader();
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response);
+                    hideLoader();
+                }
+            });
+    }
+
     render() {
-        const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
+        // const { visitorType, totalPayment, ticketTypeID, ticketName, redemptionDate, place } = this.props;
         // console.log(ticketTypeID);
+        const { totalPayment } = this.props;
+
         // console.log(ticketName);
         // console.log(redemptionDate);
         // console.log(totalPayment);
@@ -191,14 +280,20 @@ class TotalPayment extends Component {
 
 const mapStateToProps = state => {
     return {
-        visitorType: state.Ticket
+        visitorTypeFromRedux: state.Ticket
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        removeVisitorType: () => {
+        remove: () => {
             dispatch(removeVisitorType())
+        },
+        showLoader: () => {
+            dispatch(showLoader())
+        },
+        hideLoader: () => {
+            dispatch(hideLoader())
         }
     }
 }

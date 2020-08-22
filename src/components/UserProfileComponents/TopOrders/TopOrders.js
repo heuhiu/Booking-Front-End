@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import testImg from '../../../img/Detailpic.png'
+// import testImg from '../../../img/Detailpic.png'
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
-import { Collapse } from 'react-bootstrap';
+// import { Collapse } from 'react-bootstrap';
 
 class TopOrders extends Component {
     formatter = new Intl.DateTimeFormat("vi-VN", {
@@ -179,7 +179,7 @@ class TopOrders extends Component {
     }
 
     render() {
-        const { UserOrders, topOrders } = this.state;
+        const {  topOrders } = this.state;
         // const { topOrders } = this.props;
         return (
             <div>

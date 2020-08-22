@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
-import VisitorTypeList from '../AddSub/VisitorTypeList';
+// import VisitorTypeList from '../AddSub/VisitorTypeList';
 import { removeVisitorType, fetchVisitor2, showLoader, hideLoader } from '../../../actions/index';
 import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
@@ -9,8 +9,8 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import vi from "date-fns/locale/vi";
 import TotalPayment from '../TotalPayment/TotalPayment';
-import axios from 'axios'
-import * as Config from '../../../constants/ConfigAPI';
+// import axios from 'axios'
+// import * as Config from '../../../constants/ConfigAPI';
 import callApi from '../../../config/utils/apiCaller';
 import VisitorTypeItem from '../AddSub/VisitorTypeItem';
 
@@ -47,6 +47,7 @@ class ReTicketType extends Component {
     }
 
     handleChange = date => {
+        this.props.removeVisitorType()
         this.setState({
             startDate: date
         }, () => {
@@ -103,16 +104,17 @@ class ReTicketType extends Component {
 
     setDefaultTicketType = (ticketTypes) => {
         if (ticketTypes.length > 0) {
-            var result = ticketTypes.map((ticketType, index) => {
+            ticketTypes.map((ticketType, index) => {
                 if (index === 0) {
                     this.setState({
                         ticketTypeId: ticketType.id,
-                        // defaultId: ticketType.id,
-                        // ticketName: ticketType.typeName
                     }, () => {
                         this.apiGetTicketTypeByDay()
                     })
                 }
+                return (
+                    null
+                )
             });
         }
     }
@@ -168,11 +170,10 @@ class ReTicketType extends Component {
         var result = null;
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
-                if (index == 0) {
+                if (index === 0) {
                     console.log(ticketType.id)
                     return (
-                        <li key={index} className="nav-item"
-                        >
+                        <li key={index} className="nav-item">
                             <a className="nav-link active"
                                 onClick={this.resetOrder}
                                 href={`#${ticketType.id}`} role="tab" data-toggle="tab">
@@ -235,7 +236,7 @@ class ReTicketType extends Component {
         const { ticketTypeId, ticketName, startDate, listTicketTypeByDay } = this.state;
         const { ticketType, place } = this.props;
         var total = this.getTotalMoney();;
-
+        // console.log(ticketType)
         return (
             <div>
                 <div

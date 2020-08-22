@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserOrder.css';
 import callApi from '../../../config/utils/apiCaller';
-import TopOrders from '../TopOrders/TopOrders';
+// import TopOrders from '../TopOrders/TopOrders';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';
-import { Collapse } from 'react-bootstrap';
+// import { Collapse } from 'react-bootstrap';
 import Pagination from "react-js-pagination";
 
 class UserOrders extends Component {
@@ -122,7 +122,7 @@ class UserOrders extends Component {
         })
     }
     showOrders = (topOrders) => {
-        const topOrd = topOrders.orderItems
+        // const topOrd = topOrders.orderItems
         var result = null;
         if (topOrders.length > 0) {
             result = topOrders.map((item, index) => {

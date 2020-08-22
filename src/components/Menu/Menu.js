@@ -3,42 +3,42 @@ import { Route, Link } from 'react-router-dom';
 import './style.css';
 import logo from '../../img/Logo.png';
 import { connect } from 'react-redux';
-import myPro from '../../img/Ellipse 1.png';
+// import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 import callApi from '../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
 import { showLoader, hideLoader, getUserLogin, removeUserLogin } from '../../actions/index';
-import Search from '../HomepageComponents/Search/Search';
+// import Search from '../HomepageComponents/Search/Search';
 import NavBarSearch from './NavBarSearch/NavBarSearch';
 
-const menus = [
-    // {
-    //     name: 'Trang chu',
-    //     to: '/',
-    //     exact: true
-    // },
-    {
-        name: 'Đặt chỗ của tôi',
-        to: '/userProfile',
-        exact: false,
-        style: 'none1'
-    },
-    {
-        name: 'Đăng nhập',
-        to: '/login',
-        exact: false,
-        style: 'loginbtn'
-    },
-    {
-        name: 'Đăng kí',
-        to: '/register',
-        exact: false,
-        style: 'registerbtn'
-    }
-];
+// const menus = [
+//     // {
+//     //     name: 'Trang chu',
+//     //     to: '/',
+//     //     exact: true
+//     // },
+//     {
+//         name: 'Đặt chỗ của tôi',
+//         to: '/userProfile',
+//         exact: false,
+//         style: 'none1'
+//     },
+//     {
+//         name: 'Đăng nhập',
+//         to: '/login',
+//         exact: false,
+//         style: 'loginbtn'
+//     },
+//     {
+//         name: 'Đăng kí',
+//         to: '/register',
+//         exact: false,
+//         style: 'registerbtn'
+//     }
+// ];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
-    const { hideLoader } = this.props;
+    // const { hideLoader } = this.props;
     return (
         <Route
             path={to}
@@ -203,7 +203,6 @@ class Menu extends Component {
                         </Dropdown>
                     </div>
                     <img
-
                         style=
                         {{
                             borderRadius: "50%",
@@ -214,6 +213,7 @@ class Menu extends Component {
                         src={this.props.UserDetail.avatarLink}
                         width="36.8"
                         height="36.8"
+                        alt="FAILT TO LOAD"
                     />
                 </ul>
 

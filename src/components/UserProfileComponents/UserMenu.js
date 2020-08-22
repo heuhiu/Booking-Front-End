@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import testImg from '../../img/Detailpic.png'
+// import testImg from '../../img/Detailpic.png'
 import callApi from '../../config/utils/apiCaller';
 import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
@@ -156,7 +156,7 @@ class UserMenu extends Component {
 
     changeAvarHandle = (event) => {
         // console.log("yes")
-        const { loggedUser } = this.props;
+        // const { loggedUser } = this.props;
         // console.log(loggedUser.avatarLink);
         this.setState({
             file: event.target.files[0]

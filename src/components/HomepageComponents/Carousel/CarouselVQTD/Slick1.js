@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
-import Rectangle from '../../../../img/Rectangle 17.png';
+// import Rectangle from '../../../../img/Rectangle 17.png';
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
-import axios from 'axios';
+// import axios from 'axios';
 import { showLoader, hideLoader } from '../../../../actions/index';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { id } from 'date-fns/locale';
+// import { id } from 'date-fns/locale';
 import Flip from 'react-reveal/Flip';
 import Bounce from 'react-reveal/Bounce';
 
@@ -105,9 +105,9 @@ class Slick1 extends Component {
                         );
                     } else
                     return (
-                        <Bounce duration={index*235}>
+                        <Bounce key={index} duration={index*235}>
                             <Link
-                                key={index}
+                                
                                 className="decoNone"
                                 to={`/placeDetail/${item.id}`}>
                                 <div className="owlStyle">
@@ -248,6 +248,10 @@ class Slick1 extends Component {
                             </div>
                         </section>
                     );
+                } else {
+                    return (
+                        null
+                    )
                 }
             });
 
@@ -262,14 +266,14 @@ class Slick1 extends Component {
 
     render() {
 
-        const settings = {
-            // dots: true,
-            infinite: true,
-            slidesToShow: 4,
-            slidesToScroll: 1,
-            nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />
-        };
+        // const settings = {
+        //     // dots: true,
+        //     infinite: true,
+        //     slidesToShow: 4,
+        //     slidesToScroll: 1,
+        //     nextArrow: <SampleNextArrow />,
+        //     prevArrow: <SamplePrevArrow />
+        // };
         const { topCity, listData1, listData2, listData3 } = this.props;
 
         return (

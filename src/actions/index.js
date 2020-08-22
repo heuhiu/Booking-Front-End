@@ -72,13 +72,14 @@ export const fetchVisitor = (item) => {
   }
 }
 
-export const fetchVisitor2 = (id, qty ,price, name) => {
+export const fetchVisitor2 = (id, qty ,price, name, remaining) => {
   return {
       type: types.ADD_VISITOR_TYPE_CART,
       id,
       qty,
       price,
-      name
+      name,
+      remaining
   }
 }
 

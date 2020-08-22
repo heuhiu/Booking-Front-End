@@ -5,10 +5,10 @@ import { Container } from 'react-bootstrap';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import './ListPlaceSearched.css';
-import searchPic from '../../../img/searchPic.png';
+// import searchPic from '../../../img/searchPic.png';
 import callApi from '../../../config/utils/apiCaller';
-import MyMul from '../../HomepageComponents/Search/MyMul';
-import CategorySelection from './reactSelect/CategorySelection';
+// import MyMul from '../../HomepageComponents/Search/MyMul';
+// import CategorySelection from './reactSelect/CategorySelection';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { showLoader, hideLoader } from '../../../actions';
@@ -615,7 +615,7 @@ class ListPlaceSearched extends Component {
         // console.log(cityMul);
         // console.log(catMul);
         var nameCondition = searchName ? searchName : "mọi địa điểm"
-        var animateSearchName = "Tất cả kết quả với: " + nameCondition
+        var animateSearchName = "Tất cả kết quả với: " + nameCondition  
         // const listCtiSEND = listCtiId;
         // const listCateSEND = listCatId;
         var options = [];

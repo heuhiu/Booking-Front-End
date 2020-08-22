@@ -3,10 +3,10 @@ import Slider from "react-slick";
 // import Rectangle from '../../../../img/Rectangle 17.png';
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
-import TempPic from '../../../../img/entertainment.png';
+// import TempPic from '../../../../img/entertainment.png';
 import './CarouselCategories.css';
-import callApi from '../../../../config/utils/apiCaller';
-import wtf from '../../../../img/TPHCM.png';
+// import callApi from '../../../../config/utils/apiCaller';
+// import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from '../../../../actions/index';
@@ -56,9 +56,9 @@ class CarouselCategories extends Component {
         if (listCategory.length > 0) {
             result = listCategory.map((item, index) => {
                 return (
-                    <Bounce duration={index*235}>
+                    <Bounce key={index} duration={index*235}>
                         <Link
-                            key={index}
+                            
                             className="decoNone"
                             to={`/searchedPlace?listCatID=${item.id}`}>
                             <div className="owlStyle">
@@ -101,7 +101,7 @@ class CarouselCategories extends Component {
         this.setState({ index: next });
     };
     render() {
-        const { listCategory } = this.props;
+        // const { listCategory } = this.props;
         // console.log(listCategory);
         // const settings = {
         //     dots: false,

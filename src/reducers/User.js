@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionType';
-import { showLoader, hideLoader } from '../actions/index';
-import callApi from '../config/utils/apiCaller';
-import { connect } from 'react-redux';
+// import { showLoader, hideLoader } from '../actions/index';
+// import callApi from '../config/utils/apiCaller';
+// import { connect } from 'react-redux';
 
 // var data = JSON.parse(localStorage.getItem('USER'));
 // var inititalState = ({});

@@ -46,6 +46,7 @@
   justify-content: center;
 }
 .owlCom3{
+  border-radius: 10px;
   height: 100%;
   min-height: 215px;  
   /* background: linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
@@ -76,6 +77,6 @@
   text-decoration: none;
 }
 
-.topPlace{
+/* .topPlace{
   border-radius: 10px;
-}
+} */

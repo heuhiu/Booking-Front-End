@@ -52,7 +52,7 @@ class SearchedPlace extends Component {
     
     render() {
         // debugger
-        const { searchedName, listCtiId, listCatId } = this.state;
+        // const { searchedName, listCtiId, listCatId } = this.state;
         // console.log(searchedName);
         return (
             <div

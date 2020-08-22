@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { connect } from 'react-redux';
-import { getUserLogin, showLoader, hideLoader, checkTokenLogin } from './actions/index';
+import { getUserLogin, showLoader, hideLoader } from './actions/index';
 import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -25,7 +25,9 @@ class App extends Component {
             checkToken: false
         }
     }
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     // callApifechUser = async (id, data) => {
     //     const { showLoader, hideLoader } = this.props;
     //     showLoader()

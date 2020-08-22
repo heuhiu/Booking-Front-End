@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
+// import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
 import './NotLogin.css';
-import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Slick1';
-import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
+// import Slick1 from '../../components/HomepageComponents/Carousel/CarouselVQTD/Slick1';
+// import Slick2 from '../../components/HomepageComponents/Carousel/CarouselDDHD/Slick2';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
 import { getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../actions/index';
-import callApi from '../../config/utils/apiCaller';
+// import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
-import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
-import axios from 'axios';
+// import CarouselCategories from '../../components/HomepageComponents/Carousel/CarouselCategories/CarouselCategories';
+// import axios from 'axios';
 // import API_URL from '../../constants/ConfigAPI';
-import * as Config from '../../constants/ConfigAPI';
+// import * as Config from '../../constants/ConfigAPI';
 
 //Home page
 class NotLogin extends Component {

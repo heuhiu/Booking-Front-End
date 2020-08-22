@@ -206,14 +206,12 @@ class _CardForm extends Component {
   }
 
   render() {
-    const { orderDetail } = this.props;
-    // console.log(this.props.loggedUser);
-    var dateType = {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    };
+    // const { orderDetail } = this.props;
+    // var dateType = {
+    //   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    // };
 
-    const prnDt = orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
-    // showLoader();
+    // const prnDt = orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
     return (
 
       <div className="CardDemo">

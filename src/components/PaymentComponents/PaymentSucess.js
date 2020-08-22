@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
+// import Banner from '../../components/HomepageComponents/HeaderBanner/Banner';
 import './PaymentSucess.css';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
 import Menu from '../Menu/Menu';
 import { ProgressBar, Step } from "react-step-progress-bar";
 import testImg from '../../img/Detailpic.png'
-import { Redirect, Link } from 'react-router-dom';
-import UserOrderDetail from '../UserProfileComponents/UserOrderDetail/UserOrderDetail';
+import { Link } from 'react-router-dom';
+// import UserOrderDetail from '../UserProfileComponents/UserOrderDetail/UserOrderDetail';
 import NotLogin from '../../pages/NotLogin/NotLogin';
 //Home page
 class PaymentSucess extends Component {
@@ -39,6 +39,10 @@ class PaymentSucess extends Component {
                 } else if (type === 2) {
                     return (
                         <span key={index} className="typeDetail2">{item.quantity}x {item.visitorTypeName}<br></br></span>
+                    )
+                } else {
+                    return (
+                        null
                     )
                 }
             });

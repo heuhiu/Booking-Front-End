@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './NavnarSearch.css';
 import { withRouter } from 'react-router-dom';
-import LogoSearch from '../../../img/LogoSearch.png';
-import search from '../../../img/search.png';
+// import LogoSearch from '../../../img/LogoSearch.png';
+// import search from '../../../img/search.png';
 // import MyMul from './MyMul';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,7 +32,7 @@ class NavBarSearch extends Component {
     }
 
     searchPathLink = () => {
-        const { cityMul, catMul } = this.state;
+        // const { cityMul, catMul } = this.state;
         var pathLink = '/searchedPlace';
         const pathName = `?name=${this.state.txtParkName}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
@@ -133,8 +133,8 @@ class NavBarSearch extends Component {
     }
 
     render() {
-        const { toggleFilter, txtParkName } = this.state;
-        const { cityMul, catMul } = this.state;
+        // const { toggleFilter, txtParkName } = this.state;
+        // const { cityMul, catMul } = this.state;
         // var name = '';
         // const answer_array = this.props.location.search.split('?');
         // for (let index = 0; index < answer_array.length; index++) {

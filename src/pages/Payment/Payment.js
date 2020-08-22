@@ -4,10 +4,10 @@ import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import { Accordion, Card, Button } from 'react-bootstrap'
+import { Accordion, Card } from 'react-bootstrap'
 import CardDemo from './cartDemo/CardDemo';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,14 +18,14 @@ import { Collapse } from 'react-bootstrap';
 import NotLogin from '../NotLogin/NotLogin';
 import {Link} from 'react-router-dom';
 
-function FormError(props) {
-    if (props.isHidden) { return null; }
-    return (
-        <div style={{ color: "red", position: 'absolute' }} className="form-warning">
-            {props.errorMessage}
-        </div>
-    )
-}
+// function FormError(props) {
+//     if (props.isHidden) { return null; }
+//     return (
+//         <div style={{ color: "red", position: 'absolute' }} className="form-warning">
+//             {props.errorMessage}
+//         </div>
+//     )
+// }
 
 //Payment
 class Payment extends Component {
@@ -293,7 +293,7 @@ class Payment extends Component {
 
     render() {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
-        const { location, visitorType, loggedUser, loader } = this.props;
+        const { location, visitorType, loggedUser} = this.props;
         console.log(tokenLogin)
         // if(tokenLogin === null){
         //     console.log(tokenLogin)
@@ -323,7 +323,7 @@ class Payment extends Component {
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
             const myLocation = location;
             const ticketName = myLocation.state.ticketName;
-            const { accomplished } = this.state;
+            // const { accomplished } = this.state;
             const { loggedUser } = this.props;
             return (
                 <div

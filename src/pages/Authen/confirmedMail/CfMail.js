@@ -29,7 +29,7 @@ class CfMail extends Component {
             }
         }).then(res => {
             debugger
-            var jwtDecode = require('jwt-decode');
+            // var jwtDecode = require('jwt-decode');
             //set state
             if (res.data) {
                 // console.log(res.data.token);

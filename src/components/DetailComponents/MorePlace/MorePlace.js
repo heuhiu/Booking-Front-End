@@ -166,6 +166,10 @@ class MorePlace extends Component {
                             </div>
                         </section>
                     );
+                } else{
+                    return (
+                        null
+                    )
                 }
             });
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './style.css';
 import { withRouter } from 'react-router-dom';
 import LogoSearch from '../../../img/LogoSearch.png';
@@ -18,7 +18,7 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleFilter: true, //Boolean handle filter appear or not
+            // toggleFilter: true, //Boolean handle filter appear or not
             txtParkName: '',    //Name Seach
             listCity: [],       //List ID City filter
             listCategories: [],  //List ID Category filter
@@ -136,7 +136,7 @@ class Search extends Component {
     }
 
     render() {
-        const { toggleFilter } = this.state;
+        // const { toggleFilter } = this.state;
         // console.log(txtParkName);
         this.searchPathLink();
         return (

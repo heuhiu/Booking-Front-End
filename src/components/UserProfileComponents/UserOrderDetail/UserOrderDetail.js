@@ -4,7 +4,7 @@ import './UserOrderDetail.css';
 import testImg from '../../../img/Detailpic.png';
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
-import { fetchVisitor2, fetchVisitor } from '../../../actions/index';
+// import { fetchVisitor2, fetchVisitor } from '../../../actions/index';
 import { showLoader, hideLoader } from '../../../actions/index';
 
 class UserOrderDetail extends Component {

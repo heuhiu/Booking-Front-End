@@ -235,11 +235,12 @@ class ListFilter extends Component {
             <div>
                 <Slide delay={300} left>
                     <div
+                        className="filterByCityBox">
+                        <h6 
                         onClick={() => this.setState({ open: !this.state.open })}
                         aria-controls="example-collapse-text"
                         aria-expanded={this.state.open}
-                        className="filterByCityBox">
-                        <h6 className="typeFilterCity">Thành phố</h6>
+                        className="typeFilterCity">Thành phố</h6>
                         <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                         {/* <Flip top cascade delay={1000}> */}
                         <Collapse in={this.state.open}>
@@ -255,11 +256,12 @@ class ListFilter extends Component {
                 <br></br>
                 <Slide delay={300} duration={1350} left>
                     <div
+                        className="filterByCityBox">
+                        <h6 
                         onClick={() => this.setState({ open2: !this.state.open2 })}
                         aria-controls="example-collapse-text2"
                         aria-expanded={this.state.open2}
-                        className="filterByCityBox">
-                        <h6 className="typeFilterCity">Danh mục</h6>
+                        className="typeFilterCity">Danh mục</h6>
                         <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                         <Collapse in={this.state.open2}>
                             <div id="example-collapse-text2" className="row no-gutters">

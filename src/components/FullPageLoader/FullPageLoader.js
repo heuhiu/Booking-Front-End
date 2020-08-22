@@ -22,7 +22,7 @@ class FullPageLoader extends Component {
         return (
             <div className="loader-container">
                 <div className="loader">
-                    <img src={loadingLG} />
+                    <img src={loadingLG} alt="FALT TO LOAD"/>
                 </div>
             </div>
         );

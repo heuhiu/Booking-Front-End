@@ -6,26 +6,28 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as regex from '../../../constants/Regex';
 import './UserUpdateInformation.css'
-import DatePicker, { registerLocale } from 'react-datepicker';
+// import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import  { registerLocale } from 'react-datepicker';
+
 import vi from "date-fns/locale/vi";
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 registerLocale("vi", vi);
 
-function FormError(props) {
-    if (props.isHidden) { return null; }
-    return (
-        <div style={{ color: "red", position: 'absolute' }} className="form-warning">
-            {props.errorMessage}
-        </div>
-    )
-}
+// function FormError(props) {
+//     if (props.isHidden) { return null; }
+//     return (
+//         <div style={{ color: "red", position: 'absolute' }} className="form-warning">
+//             {props.errorMessage}
+//         </div>
+//     )
+// }
 
 class UserUpdateInformation extends Component {
 
     constructor(props) {
         super(props);
-        const { loggedUser } = this.props;
+        // const { loggedUser } = this.props;
         this.state = {
             email: {
                 value: '',
@@ -321,7 +323,7 @@ class UserUpdateInformation extends Component {
     });
 
     render() {
-        const { dob, myfirstName, lastName, phoneNumber, startDate } = this.state;
+        // const { dob, myfirstName, lastName, phoneNumber, startDate } = this.state;
         const { loggedUser } = this.props;
         // console.log(loggedUser.dob);
         // console.log(this.convertDateToLocalVN(loggedUser.dob));

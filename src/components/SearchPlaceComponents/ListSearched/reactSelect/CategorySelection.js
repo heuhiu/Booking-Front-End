@@ -37,7 +37,7 @@ const customStyles = {
         // match with the menu
         borderRadius: "8px",
         // Overwrittes the different states of border
-        background: state.isFocused ? "#FFFFFF" : "#FFFFFF",
+        // background: state.isFocused ? "#FFFFFF" : "#FFFFFF",
         border: "2px solid #E3E3E3",
         // Removes weird border around container
         boxShadow: state.isFocused ? null : null,

@@ -275,8 +275,12 @@ class ReTicketType extends Component {
         const { ticketTypeId, ticketName, startDate, listTicketTypeByDay } = this.state;
         // console.log(ticketTypeId);
         // console.log(ticketName);
-        const { ticketType, weekDays, place } = this.props;
-        // console.log(ticketType);
+        const { ticketType, place } = this.props;
+        console.log(ticketType);
+        // for (let index = 0; index < ticketType.length; index++) {
+        //     const element = ticketType[index];
+        //     console.log(element)
+        // }
         // var total = this.getTotalMoney().toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
         // console.log(place);
         var total = this.getTotalMoney();;

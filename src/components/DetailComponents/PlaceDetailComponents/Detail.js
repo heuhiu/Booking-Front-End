@@ -9,7 +9,6 @@ import ReTicketType2 from '../TicketType/ReTicketType2';
 import { showLoader, hideLoader } from '../../../actions/index';
 import MorePlace from '../MorePlace/MorePlace';
 import Flip from 'react-reveal/Flip';
-import { Collapse } from 'react-bootstrap';
 
 class Detail extends Component {
 
@@ -90,7 +89,6 @@ class Detail extends Component {
         }
 
         const textAvailableDayVN = textAvailableDay.replace('T1,', 'CN, ')
-        var textAvailableDayCNlast = "";
         // console.log(textAvailableDayVN);
         // console.log(textAvailableDayVN.split("CN, "));
         // if (textAvailableDayVN.split("CN, ")[0] !== undefined) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Menu from '../../../components/Menu/Menu';
 import Slider from 'react-slick';
-import SliderPic from '../../../img/Slider.png';
+// import SliderPic from '../../../img/Slider.png';
 import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
 import Detail from '../../../components/DetailComponents/PlaceDetailComponents/Detail';
@@ -111,7 +111,7 @@ class PlaceDetail extends Component {
         const { place } = this.state;
         if (place !== null) {
             for (let index = 0; index < place.placeImageLink.length; index++) {
-                const element = place.placeImageLink[index];
+                // const element = place.placeImageLink[index];
             }
         }
         if (place != null) {

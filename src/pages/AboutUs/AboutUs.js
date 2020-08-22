@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './About.css';
 import Menu from '../../components/Menu/Menu';
 import Footer2 from '../../components/Footer/Footer2/Footer2';
-import UserProfileComp from '../../components/UserProfileComponents/UserProfileComp';
+// import UserProfileComp from '../../components/UserProfileComponents/UserProfileComp';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import AboutUsMenu from '../../components/AboutUsComponents/AboutUsMenu';
@@ -84,4 +84,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(mapStateToProps, null)(AboutUs);
+export default connect(mapStateToProps, mapDispatchToProps)(AboutUs);

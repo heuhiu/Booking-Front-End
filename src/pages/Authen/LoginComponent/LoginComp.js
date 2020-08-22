@@ -128,7 +128,7 @@ class LoginComp extends Component {
         }
         else {
             // console.log("GO to susscess")
-            var jwtDecode = require('jwt-decode');
+            // var jwtDecode = require('jwt-decode');
             showLoader();
             await callApi('login', 'POST', {
                 mail: email.value,
@@ -136,7 +136,7 @@ class LoginComp extends Component {
             }).then(res => {
                 // console.log(res);
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data));
-                var decoded = jwtDecode(res.data);
+                // var decoded = jwtDecode(res.data);
                 // console.log(decoded.user);
                 //data will be store in localStorage
                 // this.props.fetchUserDetail(decoded.user);s

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import './cfNewPassword.css';
 import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 // import API_URL from '../../../constants/ConfigAPI';
@@ -389,7 +389,7 @@ class CfNewPassword extends Component {
                                     <input
                                         className="input100"
                                         ref={(input) => { this.repassword = input; }}
-                                        type="text"
+                                        // type="text"
                                         type={this.state.visibility ? "password" : "text"}
                                         name="repassword"
                                         onChange={this.handleInput}

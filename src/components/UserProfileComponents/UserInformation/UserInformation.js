@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import testImg from '../../../img/Detailpic.png';
-import callApi from '../../../config/utils/apiCaller';
+// import testImg from '../../../img/Detailpic.png';
+// import callApi from '../../../config/utils/apiCaller';
 import TopOrders from '../TopOrders/TopOrders';
 import { Link } from 'react-router-dom';
 import { showLoader, hideLoader } from '../../../actions/index';

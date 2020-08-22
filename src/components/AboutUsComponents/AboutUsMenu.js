@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import testImg from '../../img/Detailpic.png'
-import callApi from '../../config/utils/apiCaller';
+// import testImg from '../../img/Detailpic.png'
+// import callApi from '../../config/utils/apiCaller';
 import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 
 const menus = [
