@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserOrderDetail.css';
-import testImg from '../../../img/Detailpic.png';
 import callApi from '../../../config/utils/apiCaller';
 import { Link } from 'react-router-dom';
 // import { fetchVisitor2, fetchVisitor } from '../../../actions/index';
@@ -20,8 +19,8 @@ class UserOrderDetail extends Component {
     componentDidMount = async () => {
         const { match, loggedUser } = this.props;
         var id = match.params.id;
-        // console.log(id);
         const userId = loggedUser.id;
+        // console.log(userId);
         let data = new FormData();
         data.append('uid', userId);
         await callApi(`order/${id}`, 'POST', data)
@@ -32,7 +31,7 @@ class UserOrderDetail extends Component {
                 })
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -77,7 +76,7 @@ class UserOrderDetail extends Component {
         const orderStatus = orderDetail.status;
         // console.log(orderStatus);
         var date = new Date(orderDetail.redemptionDate);
-        console.log(orderDetail);
+        // console.log(orderDetail);
         /* PAID, UNPAID, SENT, EXPIRED */
         // firstName: "Quang"
         // id: 53
@@ -96,6 +95,10 @@ class UserOrderDetail extends Component {
         // ticketTypeName: "Vé vào cổng"
         // totalPayment: 200000
         // userId: 1
+        // place: {id: 1, name: "Công viên Thiên đường Bảo Sơn",…}
+        // id: 1
+        // imageLink: "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_1.jpg"
+        // name: "Công viên Thiên đường Bảo Sơn"
         if (orderStatus === "PAID") {
             return (
                 <div style={{ padding: "20px" }}>
@@ -156,11 +159,11 @@ class UserOrderDetail extends Component {
                                 className="detailTicketBox row">
                                 <div
                                     className="detailTicketBox2 col-12">
-                                    {/* <h3>{ticketName}</h3> */}
+                                    <h3>{orderDetail.place.name}</h3>
                                     <div className="row no-gutters">
                                         <div
                                             className="col-3">
-                                            <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                            <img className="detailImg" src={orderDetail.place.imageLink} alt="FAIL TO LOAD" />
                                         </div>
                                         <div
                                             style={{ marginLeft: "20px" }}
@@ -265,11 +268,11 @@ class UserOrderDetail extends Component {
                                 className="detailTicketBox row">
                                 <div
                                     className="detailTicketBox2 col-12">
-                                    <h3>{orderDetail.ticketTypeName}</h3>
+                                    <h3>{orderDetail.place.name}</h3>
                                     <div className="row no-gutters">
                                         <div
                                             className="col-3">
-                                            <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                            <img className="detailImg" src={orderDetail.place.imageLink} alt="FAIL TO LOAD" />
                                         </div>
                                         <div
                                             style={{ marginLeft: "20px" }}
@@ -355,11 +358,11 @@ class UserOrderDetail extends Component {
                                 className="detailTicketBox row">
                                 <div
                                     className="detailTicketBox2 col-12">
-                                    <h3>{orderDetail.ticketTypeName}</h3>
+                                    <h3>{orderDetail.place.name}</h3>
                                     <div className="row no-gutters">
                                         <div
                                             className="col-3">
-                                            <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                            <img className="detailImg" src={orderDetail.place.imageLink} alt="FAIL TO LOAD" />
                                         </div>
                                         <div
                                             style={{ marginLeft: "20px" }}
@@ -421,7 +424,7 @@ class UserOrderDetail extends Component {
                             style={{ textAlign: "center" }}
                             className="col-12">
                             <p className="mp3">Vé đã hết hạn</p>
-                            <span className="mp1">Vé của bạn đã sử dụng hoặc đã hết hạn </span>
+                            <span className="mp1">Vé của bạn đã hết hạn, hoặc quá thời gian thanh toán </span>
                             {/* <span className="mailSENT">{orderDetail.mail}</span> */}
                             {/* <p className="mp4">Chưa nhận được vé?&nbsp;<button className="reSentBtn">Gửi lại</button></p> */}
                         </div>
@@ -450,26 +453,25 @@ class UserOrderDetail extends Component {
                                 className="detailTicketBox row">
                                 <div
                                     className="detailTicketBox2 col-12">
-                                    <h3>{orderDetail.ticketTypeName}</h3>
+                                    <h3>{orderDetail.place.name}</h3>
                                     <div className="row no-gutters">
                                         <div
                                             className="col-3">
-                                            <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                            <img className="detailImg" src={orderDetail.place.imageLink} alt="FAIL TO LOAD" />
                                         </div>
                                         <div
-                                            style={{ marginLeft: "20px" }}
+                                            style={{ marginLeft: "10px" }}
                                             className="col-7">
-
                                             <div className="row">
-                                                <div className="col-4"><span className="typeDetail">Loại vé: </span></div>
+                                                <div className="col-3"><span className="typeDetail">Loại vé: </span></div>
                                                 <div className="col"><span className="typeDetail2">{orderDetail.ticketTypeName}</span></div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-4"><span className="typeDetail">Thời gian: </span></div>
+                                                <div className="col-3"><span className="typeDetail">Thời gian: </span></div>
                                                 <div className="col"> <span className="typeDetail2">{this.convertDateToLocalVN(orderDetail.redemptionDate)}</span></div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-4"><span className="typeDetail">Số lượng: </span></div>
+                                                <div className="col-3"><span className="typeDetail">Số lượng: </span></div>
                                                 <div className="col">{this.showQtyxType(orderDetail.orderItems)}</div>
                                             </div>
                                         </div>
@@ -487,7 +489,7 @@ class UserOrderDetail extends Component {
 
     render() {
         const { orderDetail } = this.state;
-        console.log(orderDetail);
+        // console.log(orderDetail);
         // console.log(orderDetail.redemptionDate);
         return (
             <div

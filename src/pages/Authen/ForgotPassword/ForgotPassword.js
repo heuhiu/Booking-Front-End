@@ -93,7 +93,7 @@ class ForgotPassword extends Component {
                 toast.success('Vui lòng kiểm tra email!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
@@ -103,11 +103,11 @@ class ForgotPassword extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
-                    console.log(error.response);
+                    // console.log(error.response);
                     toast.success('Something Wrong!', {
                         position: "bottom-right",
                         autoClose: 5000,
-                        hideProgressBar: false,
+                        hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
@@ -222,7 +222,7 @@ class ForgotPassword extends Component {
                                     onBlur={this.handleInputValidation}
                                     required
                                 />
-                                <span className="focus-input100"></span>
+                                {/* <span className="focus-input100"></span> */}
                                 <span className="label-input100">Email</span>
                             </div>
                             <FormError

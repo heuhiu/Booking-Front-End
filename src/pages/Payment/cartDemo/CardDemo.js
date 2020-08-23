@@ -7,7 +7,7 @@ import {
 } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
-import { showLoader, hideLoader } from '../../../actions/index';
+import { showLoader, hideLoader, removeVisitorType } from '../../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from 'react-router-dom';
@@ -43,7 +43,7 @@ class _CardForm extends Component {
         errorMessage: error.message,
         checkWrong: false
       }, () => {
-        console.log(this.state.errorMessage);
+        // console.log(this.state.errorMessage);
       });
     } else {
       this.setState({
@@ -56,14 +56,14 @@ class _CardForm extends Component {
     // debugger
     evt.preventDefault();
 
-    const { orderDetail, visitorType, loggedUser, checkLogin, checkStep1 } = this.props;
-    console.log(this.state.errorMessage);
-    console.log(this.state.checkWrong);
+    const { orderDetail, visitorType, loggedUser, checkLogin, checkStep1, removeVisitorType } = this.props;
+    // console.log(this.state.errorMessage);
+    // console.log(this.state.checkWrong);
     if (checkLogin === false) {
       toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -73,7 +73,7 @@ class _CardForm extends Component {
       toast.error('Bạn cần xác thực thông tin liên lạc!', {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -83,7 +83,7 @@ class _CardForm extends Component {
       toast.error(`Vui lòng điền lại số thẻ`, {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -94,7 +94,7 @@ class _CardForm extends Component {
       toast.error(`Vui lòng điền số thẻ`, {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -143,7 +143,7 @@ class _CardForm extends Component {
       if (this.props.stripe) {
         this.props.stripe.createToken()
           .then(res => {
-            console.log(res.token.id);
+            // console.log(res.token.id);
             // const paymentToken = res.token.id;
             const paymentToken = res.token.id;
             let data = new FormData();
@@ -190,17 +190,19 @@ class _CardForm extends Component {
         // console.log(res);
         hideLoader();
         if (res) {
+          localStorage.removeItem('visitorTypeList');
           this.props.history.push({
             pathname: '/paymentSucess',
             state: { orderDetail: orderDetail }
           })
+          // removeVisitorType();
         }
       })
       .catch(function (error) {
         if (error.response) {
           hideLoader();
           // alert("error")
-          console.log(error.response);
+          // console.log(error.response);
         }
       });
   }
@@ -289,7 +291,7 @@ const CardForm = injectStripe(_CardForm);
 
 class CardDemo extends Component {
   render() {
-    const { orderDetail, visitorType, loggedUser, showLoader, hideLoader, checkLogin, checkStep1 } = this.props;
+    const { removeVisitorType, orderDetail, visitorType, loggedUser, showLoader, hideLoader, checkLogin, checkStep1 } = this.props;
     // console.log(orderDetail.state.place.id);
     // console.log(visitorType);
     // console.log(loggedUser)
@@ -306,6 +308,7 @@ class CardDemo extends Component {
             hideLoader={hideLoader}
             checkLogin={checkLogin}
             checkStep1={checkStep1}
+            removeVisitorType={removeVisitorType}
           />
         </Elements>
       </StripeProvider>
@@ -323,6 +326,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
+    removeVisitorType: () => {
+      dispatch(removeVisitorType())
+  },
     showLoader: () => {
       dispatch(showLoader())
     },

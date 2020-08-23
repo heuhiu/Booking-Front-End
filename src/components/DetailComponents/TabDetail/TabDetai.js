@@ -45,21 +45,21 @@ class TabDetail extends Component {
                     <div className="tab-content" id="v-pills-tabContent">
                         <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                             Thông tin
-                            <Zoom duration={300} top cascade>
+                            {/* <Zoom duration={300} top cascade> */}
                                 {place.detailDescription}
-                            </Zoom>
+                            {/* </Zoom> */}
                         </div>
                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                             Điều khoản
-                            <Zoom duration={300} top cascade>
+                            {/* <Zoom duration={300} top cascade> */}
                                 {place.detailDescription}
-                            </Zoom>
+                            {/* </Zoom> */}
                         </div>
                         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                             Hướng dẫn
-                            <Zoom duration={300} top cascade>
+                            {/* <Zoom duration={300} top cascade> */}
                                 {place.detailDescription}
-                            </Zoom>
+                            {/* </Zoom> */}
                         </div>
                     </div>
                 </div>

@@ -57,7 +57,7 @@ class ListFilter extends Component {
                 })
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
         //get Categories list
@@ -70,7 +70,7 @@ class ListFilter extends Component {
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -147,7 +147,7 @@ class ListFilter extends Component {
                 open: !this.state.open,
 
             });
-        }, 2000);
+        }, 1000);
     }
     animateExpan2 = () => {
         setTimeout(() => {
@@ -155,7 +155,7 @@ class ListFilter extends Component {
 
                 open2: !this.state.open2
             });
-        }, 3000);
+        }, 2000);
     }
     componentDidMount = () => {
         this.animateExpan();
@@ -233,7 +233,7 @@ class ListFilter extends Component {
         return (
 
             <div>
-                <Slide delay={300} left>
+                <Slide  left>
                     <div
                         className="filterByCityBox">
                         <h6 
@@ -254,7 +254,7 @@ class ListFilter extends Component {
                     </div>
                 </Slide>
                 <br></br>
-                <Slide delay={300} duration={1350} left>
+                <Slide duration={1350} left>
                     <div
                         className="filterByCityBox">
                         <h6 

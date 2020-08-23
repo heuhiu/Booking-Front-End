@@ -90,7 +90,7 @@
         font-size: 20px;
     }
 
-    .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+    /* .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
         color: #000;
         display: inline-block;
         width: 5.3rem !important;
@@ -98,7 +98,7 @@
         text-align: center;
         margin: 0.166rem;
         font-family: "Inter";
-    }
+    } */
     .react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover, .react-datepicker__month-text--selected:hover, .react-datepicker__month-text--in-selecting-range:hover, .react-datepicker__month-text--in-range:hover, .react-datepicker__quarter-text--selected:hover, .react-datepicker__quarter-text--in-selecting-range:hover, .react-datepicker__quarter-text--in-range:hover {
         background-color: #FF7062 !important;
         text-decoration: none;

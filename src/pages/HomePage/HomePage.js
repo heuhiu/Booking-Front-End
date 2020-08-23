@@ -46,7 +46,7 @@ class HomePage extends Component {
                             this.props.fetchUserDetail(res.data);
                         }).catch(function (error) {
                             if (error.response) {
-                                console.log(error.response.data);
+                                // console.log(error.response.data);
                             }
                         });
                 }).catch(function (error) {
@@ -69,7 +69,7 @@ class HomePage extends Component {
                     this.props.fetchAllCity(res.data);
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 }),
             //get Categories list
@@ -78,7 +78,7 @@ class HomePage extends Component {
                     this.props.fetchAllCategory(res.data);
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 }),
             await callApi("topCity", 'GET', null)
@@ -100,7 +100,7 @@ class HomePage extends Component {
                     })
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 }),
             await axios.get(`${Config.API_URL}/topPlace`, {
@@ -113,7 +113,7 @@ class HomePage extends Component {
                         listData1: res.data
                     })
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 }),
             await axios.get(`${Config.API_URL}/topPlace`, {
                 params: {
@@ -125,7 +125,7 @@ class HomePage extends Component {
                         listData2: res.data
                     })
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 }),
             await axios.get(`${Config.API_URL}/topPlace`, {
                 params: {
@@ -137,7 +137,7 @@ class HomePage extends Component {
                         listData3: res.data
                     })
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 }),
         ]).then(
             hideLoader()

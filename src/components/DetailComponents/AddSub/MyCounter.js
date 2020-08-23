@@ -33,7 +33,7 @@ class MyCounter extends Component {
     }
 
     render() {
-        debugger
+        // debugger
         var { item } = this.props;
         // console.log(item);
         var data = JSON.parse(localStorage.getItem('visitorTypeList'));

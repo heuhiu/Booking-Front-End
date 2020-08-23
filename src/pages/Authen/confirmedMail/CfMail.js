@@ -28,7 +28,7 @@ class CfMail extends Component {
                 token: myParam
             }
         }).then(res => {
-            debugger
+            // debugger
             // var jwtDecode = require('jwt-decode');
             //set state
             if (res.data) {
@@ -43,7 +43,7 @@ class CfMail extends Component {
             }
 
         }).catch(error => {
-            console.log(error.response);
+            // console.log(error.response);
             this.setState({
                 checkSuccess: false
             })

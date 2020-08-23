@@ -7,16 +7,16 @@ import Footer2 from '../../components/Footer/Footer2/Footer2';
 import { Accordion, Card } from 'react-bootstrap'
 import CardDemo from './cartDemo/CardDemo';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { showLoader, hideLoader } from '../../actions/index';
+import { showLoader, hideLoader, removeVisitorType } from '../../actions/index';
 import * as regex from '../../constants/Regex';
 import { Collapse } from 'react-bootstrap';
 import NotLogin from '../NotLogin/NotLogin';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // function FormError(props) {
 //     if (props.isHidden) { return null; }
@@ -150,7 +150,7 @@ class Payment extends Component {
                 // console.log(item.visitorTypeName);
                 // <p>{item.visitorTypeName}</p>
                 return (
-                    <p key={index} >{item.visitorTypeName}: {item.quantity} vé</p>
+                    <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
                 )
             });
         }
@@ -174,7 +174,7 @@ class Payment extends Component {
             toast.error('Bạn cần xác thực thông tin liên lạc!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -211,7 +211,7 @@ class Payment extends Component {
             toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -235,19 +235,22 @@ class Payment extends Component {
                 placeId: location.state.place.id
             })
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     const paymentToken = this.storeTokenPaymentInLocal(5);
                     localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
                     // var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
                     hideLoader();
+                    localStorage.removeItem('visitorTypeList');
                     this.props.history.push({
                         pathname: '/paymentSucess',
                         state: { orderDetail: res.data }
                     })
+                    // this.props.removeVisitorType();
+
                     // toast.success('Đặt vé trả sau thành công!', {
                     //     position: "bottom-right",
                     //     autoClose: 5000,
-                    //     hideProgressBar: false,
+                    //     hideProgressBar: true,
                     //     closeOnClick: true,
                     //     pauseOnHover: true,
                     //     draggable: true,
@@ -256,7 +259,7 @@ class Payment extends Component {
                 }).catch(function (error) {
                     if (error.response) {
                         hideLoader();
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 });
         }
@@ -283,7 +286,7 @@ class Payment extends Component {
     checkLogin = async () => {
         await callApi('login/checkToken', 'post', null)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     checkLoginPar: true
                 })
@@ -292,28 +295,21 @@ class Payment extends Component {
     }
 
     render() {
-        var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
-        const { location, visitorType, loggedUser} = this.props;
-        console.log(tokenLogin)
-        // if(tokenLogin === null){
-        //     console.log(tokenLogin)
-        //     return (
-        //         <div>a</div>
-        //     )
-        // } else
-
-        // if (this.props.history.action === "POP") {
-        //     // custom back button implementation
-        //     return(
-        //         <Redirect to="/"/>
-        //     )
-        // }
+        var visitorTypeList = JSON.parse(localStorage.getItem('visitorTypeList'));
+        // console.log(visitorTypeList)
+        const { location, visitorType, loggedUser } = this.props;
+        // console.log(visitorType);
+        if (visitorTypeList === null) {
+            return (
+                <Redirect to="/" />
+            )
+        }
         if (location.state === undefined || loggedUser.id === undefined) {
-                return (
-                    <div>
+            return (
+                <div>
                     <NotLogin />
-                    </div>
-                )
+                </div>
+            )
         } else {
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -617,8 +613,8 @@ class Payment extends Component {
                                                                 <br></br>
                                                                 <div className="row">
                                                                     <div className="policyPayment col-7">
-                                                                        <p>Khi nhấp vào "Thanh toán sau", bạn đã đọc và đồng ý với 
-                                                                            <Link to="/aboutUs/termsConditions"><span className="pol"> Điều khoản sử dụng </span></Link>và 
+                                                                        <p>Khi nhấp vào "Thanh toán sau", bạn đã đọc và đồng ý với
+                                                                            <Link to="/aboutUs/termsConditions"><span className="pol"> Điều khoản sử dụng </span></Link>và
                                                                             <Link to="/aboutUs/policy"><span className="pol"> Chính sách huỷ trả</span></Link></p>
                                                                     </div>
                                                                     <div className="col">
@@ -652,13 +648,13 @@ class Payment extends Component {
                                                             <Card.Body>
                                                                 {/* <div
                                                                     className="paymentMethodBox row"> */}
-                                                                    <div>
-                                                                        <CardDemo
-                                                                            checkStep1={this.state.myPercen}
-                                                                            checkLogin={this.state.checkLoginPar}
-                                                                            history={this.props.history}
-                                                                            orderDetail={myLocation} />
-                                                                    </div>
+                                                                <div>
+                                                                    <CardDemo
+                                                                        checkStep1={this.state.myPercen}
+                                                                        checkLogin={this.state.checkLoginPar}
+                                                                        history={this.props.history}
+                                                                        orderDetail={myLocation} />
+                                                                </div>
                                                                 {/* </div> */}
 
                                                             </Card.Body>
@@ -688,10 +684,10 @@ class Payment extends Component {
                                         </div>
                                     </div>
                                     <div className="row no-gutters">
-                                        <div className="col">
+                                        <div className="col-4">
                                             <p>Áp dụng cho: </p>
                                         </div>
-                                        <div style={{ textAlign: "right" }} className="col">
+                                        <div style={{ textAlign: "left" }} className="col">
                                             {/* <p>Người lớn : 2</p> */}
                                             {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"}
                                         </div>
@@ -747,6 +743,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
+        removeVisitorType: () => {
+            dispatch(removeVisitorType())
+        },
         showLoader: () => {
             dispatch(showLoader())
         },

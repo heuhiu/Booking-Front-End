@@ -9,6 +9,8 @@ import testImg from '../../img/Detailpic.png'
 import { Link } from 'react-router-dom';
 // import UserOrderDetail from '../UserProfileComponents/UserOrderDetail/UserOrderDetail';
 import NotLogin from '../../pages/NotLogin/NotLogin';
+import { removeVisitorType } from '../../actions/index';
+
 //Home page
 class PaymentSucess extends Component {
 
@@ -23,18 +25,25 @@ class PaymentSucess extends Component {
     }
 
     componentDidMount = () => {
-        localStorage.removeItem('tokenPayment');
+        // localStorage.removeItem('visitorTypeList');
+        // this.props.removeVisitorType()
     }
 
-    showVisitorTypeNameChoosed = (VisitorTypeArr, type) => {
+    showVisitorTypeNameChoosed = (type) => {
+        const {  visitorType } = this.props;
         var result = null;
+        // console.log(VisitorTypeArr)
+        // console.log(location)
+        // console.log(location.state.orderDetail.orderItems)
+        // var VisitorTypeArr = location.state.orderDetail.orderItems
+        var VisitorTypeArr = visitorType
         if (VisitorTypeArr.length > 0) {
             result = VisitorTypeArr.map((item, index) => {
                 // console.log(item.visitorTypeName);
                 // <p>{item.visitorTypeName}</p>
                 if (type === 1) {
                     return (
-                        <p key={index} >{item.visitorTypeName}: {item.quantity} vé</p>
+                        <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
                     )
                 } else if (type === 2) {
                     return (
@@ -60,7 +69,7 @@ class PaymentSucess extends Component {
     }
 
     render() {
-        const { visitorType, location, loggedUser } = this.props;
+        const {  location, loggedUser } = this.props;
         // console.log(this.props.location);
         // console.log(location);
 
@@ -81,7 +90,7 @@ class PaymentSucess extends Component {
             var totalPayment = '';
             const userEmail = loggedUser.mail;
             const status = location.state.orderDetail.status;
-            console.log(status);
+            // console.log(status);
             if (status === "UNPAID") {
                 // console.log( location.state.orderDetail);
                 // console.log(this.convertDateToLocalVN(location.state.orderDetail.redemptionDate))
@@ -89,7 +98,7 @@ class PaymentSucess extends Component {
                 ticketName = location.state.orderDetail.ticketTypeName;
                 totalPayment = location.state.orderDetail.totalPayment;
             } else {
-                console.log(location.state.orderDetail);
+                // console.log(location.state.orderDetail);
                 ticketName = location.state.orderDetail.state.ticketName;
                 totalPayment = location.state.orderDetail.state.totalPayment;
                 prnDt = location.state.orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
@@ -347,7 +356,7 @@ class PaymentSucess extends Component {
                                                             </div>
                                                             <div className="row">
                                                                 <div className="col-4"><span className="typeDetail">Số lượng: </span></div>
-                                                                <div className="col">{this.showVisitorTypeNameChoosed(visitorType, 2)}</div>
+                                                                <div className="col">{this.showVisitorTypeNameChoosed( 2)}</div>
                                                             </div>
 
 
@@ -391,7 +400,7 @@ class PaymentSucess extends Component {
                                             <p>Áp dụng cho: </p>
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
-                                            {this.showVisitorTypeNameChoosed(visitorType, 1)}
+                                            {this.showVisitorTypeNameChoosed( 1)}
                                         </div>
                                     </div>
 
@@ -440,12 +449,15 @@ const mapStateToProps = state => {
     return {
         loggedUser: state.User,
         visitorType: state.Ticket
+
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        removeVisitorType: () => {
+            dispatch(removeVisitorType())
+        }
     }
 }
 

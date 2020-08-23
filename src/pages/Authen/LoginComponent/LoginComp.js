@@ -146,14 +146,14 @@ class LoginComp extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                     if (error.response.data === "ACCOUNT_NOT_ACTIVATED") {
                         // alert("ACCOUNT_NOT_ACTIVATED");
                         hideLoader();
                         toast.error('Tài khoản chưa được kích hoạt, vui lòng kiểm tra mail!', {
                             position: "bottom-right",
                             autoClose: 5000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
@@ -165,7 +165,7 @@ class LoginComp extends Component {
                         toast.error('Tài khoản chưa được đăng kí!', {
                             position: "bottom-right",
                             autoClose: 5000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
@@ -179,7 +179,7 @@ class LoginComp extends Component {
                         toast.error('Sai mật khẩu hoặc tài khoản!', {
                             position: "bottom-right",
                             autoClose: 5000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
@@ -203,7 +203,7 @@ class LoginComp extends Component {
 
     render() {
         const { UserDetail } = this.props;
-        console.log(UserDetail.id)
+        // console.log(UserDetail.id)
         if (UserDetail.id !== undefined) {
             return (
                 <Redirect to="/" />
@@ -243,7 +243,7 @@ class LoginComp extends Component {
                                             onBlur={this.handleInputValidation}
                                             required
                                         />
-                                        <span className="focus-input100"></span>
+                                        {/* <span className="focus-input100"></span> */}
                                         <span className="label-input100">Email</span>
                                     </div>
                                     <FormError
@@ -263,7 +263,7 @@ class LoginComp extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Mật khẩu</span>
                                             <span
                                                 onClick={this.toggleShow}

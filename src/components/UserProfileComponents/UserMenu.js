@@ -47,12 +47,6 @@ const logoChangeByMark = (mark, myActive) => {
             )
         case 2:
             return (
-                // <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                //     <path d="M19 21.0002V18.7779C19 17.5992 18.5259 16.4687 17.682 15.6352C16.8381 14.8017 15.6935 14.3335 14.5 14.3335H5.5C4.30653 14.3335 3.16193 14.8017 2.31802 15.6352C1.47411 16.4687 1 17.5992 1 18.7779V21.0002"
-                //         stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                //     <path d="M10 9.88889C12.4853 9.88889 14.5 7.89904 14.5 5.44444C14.5 2.98985 12.4853 1 10 1C7.51472 1 5.5 2.98985 5.5 5.44444C5.5 7.89904 7.51472 9.88889 10 9.88889Z"
-                //         stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                // </svg>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 3H3.22222C2.63285 3 2.06762 3.23413 1.65087 3.65087C1.23413 4.06762 1 4.63285 1 5.22222V20.7778C1 21.3671 1.23413 21.9324 1.65087 22.3491C2.06762 22.7659 2.63285 23 3.22222 23H18.7778C19.3671 23 19.9324 22.7659 20.3491 22.3491C20.7659 21.9324 21 21.3671 21 20.7778V13" 
                 stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -163,8 +157,8 @@ class UserMenu extends Component {
         }, () => {
             const { loggedUser } = this.props;
             const { file } = this.state;
-            console.log(file)
-            console.log(file.size)
+            // console.log(file)
+            // console.log(file.size)
             // console.log(file)
             const id = loggedUser.id;
 
@@ -177,7 +171,7 @@ class UserMenu extends Component {
                 toast.error('Dung lượng ảnh quá lớn (<300KB)!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
@@ -201,7 +195,7 @@ class UserMenu extends Component {
                 toast.success('Cập nhật ảnh đại diện thành công!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
@@ -213,7 +207,7 @@ class UserMenu extends Component {
                 // hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response);
+                    // console.log(error.response);
                     hideLoader();
                 }
             });

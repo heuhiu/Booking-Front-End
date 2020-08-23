@@ -193,38 +193,43 @@ class UserChangePassword extends Component {
         ) {
             e.preventDefault();
             e.stopPropagation();
-        } else {
+        } else if(password.value !== '' && RePassword.value !== '' && newPassword.value !== "") {
             const { loggedUser } = this.props;
-            // console.log(loggedUser.id);
+            if(newPassword.value !== RePassword.value) {
+                e.preventDefault();
+                e.stopPropagation();
+                toast.error('Mật khẩu mới và mật khẩu nhập lại không khớp!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else  {
+                        // console.log(loggedUser.id);
             // console.log(password.value);
-            console.log(newPassword.value);
+            // console.log(newPassword.value);
             const oldPass = password.value;
             const newPass = newPassword.value
             let data = new FormData();
             data.append('uid', loggedUser.id);
             data.append('old', oldPass);
             data.append('new', newPass);
-            // toast.success('Thay đổi mật khẩu thành công!', {
-            //     position: "bottom-right",
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            // });
             callApi('user/changePassword', 'POST', data)
                 .then(res => {
                     if (res) {
                         toast.success('Thay đổi mật khẩu thành công!', {
                             position: "bottom-right",
                             autoClose: 5000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
                             progress: undefined,
                         });
+                        this.props.history.push("/userProfile/myProfile")
                     }
                 }).catch(function (error) {
                     if (error.response) {
@@ -232,7 +237,7 @@ class UserChangePassword extends Component {
                         toast.error('Mật khẩu cũ không chính xác!', {
                             position: "bottom-right",
                             autoClose: 5000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
@@ -240,7 +245,7 @@ class UserChangePassword extends Component {
                         });
                     }
                 });
-        }
+        }}
     }
 
     render() {
@@ -280,7 +285,7 @@ class UserChangePassword extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Mật khẩu cũ</span>
                                             <span
                                                 onClick={this.toggleShow}
@@ -333,7 +338,7 @@ class UserChangePassword extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Mật khẩu mới</span>
                                             <span
                                                 onClick={this.toggleShow1}
@@ -378,7 +383,7 @@ class UserChangePassword extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Nhập lại mật khẩu mới</span>
                                             <span
                                                 onClick={this.toggleShow2}

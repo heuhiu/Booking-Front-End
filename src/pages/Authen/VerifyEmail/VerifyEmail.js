@@ -35,7 +35,7 @@ class VerifyEmail extends Component {
                 toast.success('Gửi lại mail xác nhận thành công!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
@@ -43,7 +43,7 @@ class VerifyEmail extends Component {
                 });
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }

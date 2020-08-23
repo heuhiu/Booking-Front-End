@@ -83,6 +83,19 @@ export const fetchVisitor2 = (id, qty ,price, name, remaining) => {
   }
 }
 
+export const removeZeroQuantity2 = () => {
+  return {
+      type: types.REMOVE_ALL_VISITORTYPE_QUANTITY_EQUAL_ZERO,
+  }
+} 
+
+export const removeZeroQuantity = (removeId) => {
+  return {
+      type: types.REMOVE_ALL_VISITORTYPE_QUANTITY_EQUAL_ZERO,
+      removeId
+  }
+} 
+
 export const removeVisitorType = () => {
   return {
       type: types.REMOVE_VISITORTYPE,

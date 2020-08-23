@@ -46,7 +46,7 @@ class Search extends Component {
         const pathName = `?name=${this.removeSpace(this.state.txtParkName)}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
         const pathListCat = `?listCatID=${this.state.catMul.join()}`
-
+        
         if (this.state.txtParkName !== "") {
             pathLink += pathName;
             if (this.state.cityMul.length > 0) {
@@ -64,6 +64,7 @@ class Search extends Component {
                 pathLink += pathListCat;
             }
         }
+        // console.log(pathLink);
         // console.log(pathLink);
         return pathLink;
     }
@@ -99,12 +100,12 @@ class Search extends Component {
             this.props.history.push(`${this.searchPathLink()}`);
         }
         var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
-        console.log(str);
+        // console.log(str);
         if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -115,7 +116,7 @@ class Search extends Component {
             toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,

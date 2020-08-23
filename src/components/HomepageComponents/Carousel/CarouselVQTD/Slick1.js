@@ -69,7 +69,16 @@ class Slick1 extends Component {
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    // console.log(item)
+                    // console.log(item.weekDays)
+                    const availableDay = item.weekDays.sort()
+                    var availableDate = ""
+                    // console.log(new Date().getDay());
+                    const today = new Date().getDay()
+                    if (availableDay.indexOf(today) !== -1) {
+                        availableDate = "Mở cửa ngay hôm nay."
+                    } else {
+                        availableDate = "Không mở cửa ngày hôm nay."
+                    }
                     if (index > 4) {
                         return (
                             <Bounce>
@@ -96,7 +105,7 @@ class Slick1 extends Component {
                                                     <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
                                                     <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
                                                 </div>
-    
+
                                             </div>
                                         </h3>
                                     </div >
@@ -104,38 +113,38 @@ class Slick1 extends Component {
                             </Bounce >
                         );
                     } else
-                    return (
-                        <Bounce key={index} duration={index*235}>
-                            <Link
-                                
-                                className="decoNone"
-                                to={`/placeDetail/${item.id}`}>
-                                <div className="owlStyle">
-                                    <h3 className="owlStyleChil">
-                                        <div
-                                            className="owlCom3"
-                                            style={{
-                                                borderRadius: "10px 10px 0px 0px",
-                                                backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
-                                            }}
-                                        >
-                                        </div>
-                                        <div className="containerOwlChil">
-                                            <div style={{ height: "45px" }}>
-                                                <p className="owlStyleChil1">{item.name}</p>
+                        return (
+                            <Bounce key={index} duration={index * 235}>
+                                <Link
+                                    className="decoNone"
+                                    to={`/placeDetail/${item.id}`}>
+                                    <div className="owlStyle">
+                                        <h3 className="owlStyleChil">
+                                            <div
+                                                className="owlCom3"
+                                                style={{
+                                                    borderRadius: "10px 10px 0px 0px",
+                                                    backgroundImage: `url(${item.placeImageLink ? item.placeImageLink[0] : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                                                }}
+                                            >
                                             </div>
-                                            <div>
-                                                {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
-                                                <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
-                                                <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
-                                            </div>
+                                            <div className="containerOwlChil">
+                                                <div style={{ height: "45px" }}>
+                                                    <p className="owlStyleChil1">{item.name}</p>
+                                                </div>
+                                                <div>
+                                                    {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
+                                                    <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
+                                                    {/* <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p> */}
+                                                    <p style={{color: availableDate==="Mở cửa ngay hôm nay."?"#FF7062":"#A5A5A5"}} className="owlStyleChil4">{availableDate}</p>
+                                                </div>
 
-                                        </div>
-                                    </h3>
-                                </div >
-                            </Link >
-                        </Bounce >
-                    );
+                                            </div>
+                                        </h3>
+                                    </div >
+                                </Link >
+                            </Bounce >
+                        );
                 });
             } else {
                 return (
@@ -172,7 +181,7 @@ class Slick1 extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />,
             beforeChange: this.beforeChange
-          };
+        };
         var result = null;
         if (topCity.length > 0) {
             result = topCity.map((item, index) => {

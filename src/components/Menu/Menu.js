@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import './style.css';
 import logo from '../../img/Logo.png';
 import { connect } from 'react-redux';
-// import myPro from '../../img/Ellipse 1.png';
+import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 import callApi from '../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
@@ -101,7 +101,7 @@ class Menu extends Component {
                 this.props.history.push("/login");
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -121,6 +121,10 @@ class Menu extends Component {
                         height="38.704"
                     />
                 </Link>
+                {/* <div style={{ width: "100px", marginLeft: "-150px" }}
+                >
+                    <NavBarSearch />
+                </div> */}
                 <div style={{display: this.props.location.pathname === "/" 
                 || this.props.location.pathname === "/login" 
                 || this.props.location.pathname === "/register"
@@ -131,7 +135,7 @@ class Menu extends Component {
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
                     <Link
-                        style={{ textDecoration: "none", display: this.props.location.pathname === "/"?"none":"" }} to="/">
+                        style={{ textDecoration: "none", display: this.props.location.pathname === "/" ? "none" : "" }} to="/">
                         <button style={{ display: tokenLogin ? "" : "" }} className="none1 nav-link">
                             <svg className="svgNav" width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 10.625L12.625 1.58337L24.25 10.625V24.8334C24.25 25.5185 23.9778 26.1756 23.4934 26.6601C23.0089 27.1445 22.3518 27.4167 21.6667 27.4167H3.58333C2.89819 27.4167 2.24111 27.1445 1.75664 26.6601C1.27217 26.1756 1 25.5185 1 24.8334V10.625Z" stroke="#5B5B5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -152,11 +156,11 @@ class Menu extends Component {
                             {' '}Đặt chỗ của tôi
                         </button>
                     </Link>
-                    <Link style={{display: this.props.location.pathname === "/login"?"none":""}} to="/login">
+                    <Link style={{ display: this.props.location.pathname === "/login" ? "none" : "" }} to="/login">
                         <button style={{ display: tokenLogin ? "none" : "" }} className="loginbtn">Đăng Nhập
                     </button>
                     </Link>
-                    <Link style={{display: this.props.location.pathname === "/register"?"none":""}} to="/register">
+                    <Link style={{ display: this.props.location.pathname === "/register" ? "none" : "" }} to="/register">
                         <button style={{ display: tokenLogin ? "none" : "" }} className="registerbtn">
                             Đăng kí
                     </button>
@@ -213,13 +217,10 @@ class Menu extends Component {
                         src={this.props.UserDetail.avatarLink}
                         width="36.8"
                         height="36.8"
-                        alt="FAILT TO LOAD"
+                        alt=""
                     />
                 </ul>
-
             </nav>
-
-
         );
     }
     showMenus = (menus) => {
@@ -244,6 +245,7 @@ class Menu extends Component {
 const mapStateToProps = state => {
     return {
         UserDetail: state.User,
+        loader: state.Loader,
     }
 };
 
@@ -258,7 +260,7 @@ const mapDispatchToProps = (dispatch, props) => {
         hideLoader: () => {
             dispatch(hideLoader())
         },
-        removeUserLogin:()=>{
+        removeUserLogin: () => {
             dispatch(removeUserLogin())
         }
     }

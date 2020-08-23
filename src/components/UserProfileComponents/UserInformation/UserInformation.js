@@ -207,14 +207,14 @@ class UserInformation extends Component {
                          aria-expanded={this.state.open}
                         className="labelPointer row">
                             <div
-                                className="col-6">
+                                className="col-8">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
                                     <div className="content">Thông tin tài khoản </div>
                                 </div>
                             </div>
 
-                            <div className="col-6">
+                            <div className="col-4">
                                 <div onClick={this.triggerUpdateUserPart} className="UpdateDetail1" >
                                     <Link className="UpdateDetail1" to="/userProfile/ediProfile">Chỉnh sửa</Link>
                                 </div>
@@ -231,7 +231,7 @@ class UserInformation extends Component {
                                         </span>
                                             </div>
                                             <div className="col">
-                                                <span className="detail1">
+                                                <span className="detail2">
                                                     {loggedUser.firstName} {loggedUser.lastName}
                                                 </span>
                                             </div>
@@ -245,7 +245,7 @@ class UserInformation extends Component {
                                         </span>
                                             </div>
                                             <div className="col">
-                                                <span className="detail1">
+                                                <span className="detail2">
                                                     {loggedUser.mail}
                                                 </span>
                                             </div>
@@ -258,7 +258,7 @@ class UserInformation extends Component {
                                         </span>
                                             </div>
                                             <div className="col">
-                                                <span className="detail1">
+                                                <span className="detail2">
                                                     {loggedUser.phoneNumber}
                                                 </span>
                                             </div>
@@ -280,13 +280,13 @@ class UserInformation extends Component {
                         aria-controls="example-collapse-text2"
                         aria-expanded={this.state.open2}
                         className="labelPointer row">
-                            <div className="col-6">
+                            <div className="col-8">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
                                     <div className="content">Đặt chỗ gần đây</div>
                                 </div>
                             </div>
-                            <div className="col-6">
+                            <div className="col-4">
                                 <div className="UpdateDetail1" ><Link className="UpdateDetail1" to="/userProfile/myOrders">Xem tất cả</Link></div>
                             </div>
                         </div>

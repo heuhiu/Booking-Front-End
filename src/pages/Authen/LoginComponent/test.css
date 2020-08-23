@@ -386,7 +386,6 @@
     transition: .5s;
     visibility: hidden;
     opacity: 0;
-  
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -430,22 +429,33 @@
     border-color: #FF7062;
   }
 
-  .input100:focus + .focus-input100 + .label-input100 {
+  /* .input100:focus + .focus-input100 + .label-input100 {
     top: 14px;
     font-size: 13px;
     color: #FF7062;
     border-color: #FF7062;
+  } */
 
-  }
-
-  .input100:not(:focus):valid + .focus-input100 + .label-input100 {
+  .input100:focus + .label-input100 {
     top: 14px;
     font-size: 13px;
     color: #FF7062;
     border-color: #FF7062;
   }
 
+  .input100:not(:focus):valid  + .label-input100 {
+    top: 14px;
+    font-size: 13px;
+    color: #FF7062;
+    border-color: #FF7062;
+  }
 
+  /* .input100:not(:focus):valid + .focus-input100 + .label-input100 {
+    top: 14px;
+    font-size: 13px;
+    color: #FF7062;
+    border-color: #FF7062;
+  } */
 
   .has-val {
     height: 48px !important;

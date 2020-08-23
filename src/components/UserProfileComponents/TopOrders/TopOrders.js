@@ -32,7 +32,7 @@ class TopOrders extends Component {
         const { showLoader, hideLoader, loggedUser } = this.props;
         showLoader();
         const userId = loggedUser.id;
-        console.log(userId)
+        // console.log(userId)
         let data = new FormData();
         data.append('uid', userId);
         await callApi(`order/top3/${id}`, 'POST', data)
@@ -45,7 +45,7 @@ class TopOrders extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader();
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -59,11 +59,11 @@ class TopOrders extends Component {
             const id = decoded.user.userId;
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
-                    // console.log(res.data.id);
+                    // console.log(res.data);
                     this.getTopThreeOrders(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 });
         }
@@ -130,15 +130,14 @@ class TopOrders extends Component {
                                 </div>
 
                                 <div style={{ margin: "20px 30px 20px 30px" }} className="row no-gutters">
-                                    <div
-                                        className="col-3">
+                                    <div className="col-3">
                                         <img className="detailImg"
                                             src={item.place.imageLink}
                                             alt="FAIL TO LOAD" />
                                     </div>
                                     <div
-                                        style={{ marginLeft: "20px" }}
-                                        className="col">
+                                        style={{ paddingLeft: "10px" }}
+                                        className="col-9">
                                         <div className="row">
                                             <div className="col"><h1 className="nameDetail">Vé {item.place.name}</h1></div>
                                         </div>
@@ -179,7 +178,7 @@ class TopOrders extends Component {
     }
 
     render() {
-        const {  topOrders } = this.state;
+        const { topOrders } = this.state;
         // const { topOrders } = this.props;
         return (
             <div>

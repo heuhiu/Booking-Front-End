@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './test.css';
 import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 // import { Link } from 'react-router-dom';
 // import axios from 'axios';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import backG from '../../../img/LoginPaper.png';
 import Menu from '../../../components/Menu/Menu';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
@@ -24,10 +24,11 @@ class RegisterComp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate: '',
+            // startDate: '',
             check: false,
             visibility: true,
             visibility1: true,
+            startDate: '',
             email: {
                 value: '',
                 isInputValid: false,
@@ -71,6 +72,12 @@ class RegisterComp extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.value = value;
         this.setState({ [name]: newState });
+    }
+
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
     }
 
     validateInput = (type, checkingText) => {
@@ -204,6 +211,42 @@ class RegisterComp extends Component {
             visibility1: !this.state.visibility1
         });
     }
+
+    handleOnBlur = (e) => {
+        // console.log(e.target.value);
+        const regexp = regex.DATE_OF_BIRTH;
+        var checkingResult = regexp.exec(e.target.value.toString());
+        if (checkingResult !== null) {
+            // if (true) {
+            // return {
+            //     isInputValid: true,
+            //     errorMessage: ''
+            // };
+            this.setState({
+                dob: {
+                    value: e.target.value,
+                    isInputValid: true,
+                    errorMessage: ''
+                }
+            })
+        } else {
+            // return {
+            //     isInputValid: false,
+            //     errorMessage: 'Không đúng định dạng'
+            // };
+            this.setState({
+                dob: {
+                    value: '',
+                    isInputValid: false,
+                    errorMessage: 'Không đúng định dạng'
+                }
+            })
+        }
+    }
+    // handleOnBlur = ({ target: { value } }) => {
+    //     const date = new Date(value);
+    //     console.log(date)
+    //   };
     handleInputValidation = event => {
         const { check } = this.state;
         const { name } = event.target;
@@ -229,35 +272,35 @@ class RegisterComp extends Component {
     }
 
     apiRegister = async (email, password, myfirstName, lastName, dob, phoneNumber, mailRegis) => {
-            const { showLoader, hideLoader } = this.props;
-            showLoader()
-            await callApi('user/register', 'POST', {
-                mail: email.value,
-                password: password.value,
-                firstName: myfirstName.value,
-                lastName: lastName.value,
-                dob: dob.value,
-                // dob: 15 - 3 - 1998,
-                phoneNumber: phoneNumber.value
-            }).then(res => {
-                // this.props.history.push("/verify");
-                hideLoader()
-                this.props.history.push({
-                    pathname: '/verify',
-                    state: { mailRegis }
-                })
-            }).catch(function (error) {
+        const { showLoader, hideLoader } = this.props;
+        showLoader()
+        await callApi('user/register', 'POST', {
+            mail: email.value,
+            password: password.value,
+            firstName: myfirstName.value,
+            lastName: lastName.value,
+            dob: dob.value,
+            // dob: 15 - 3 - 1998,
+            phoneNumber: phoneNumber.value
+        }).then(res => {
+            // this.props.history.push("/verify");
+            hideLoader()
+            this.props.history.push({
+                pathname: '/verify',
+                state: { mailRegis }
+            })
+        }).catch(function (error) {
 
-                if (error.response) {
-                    // Request made and server responded
-                    console.log(error.response.data);
-                    if (error.response.data === "EMAIL_EXISTED") {
-                        alert("Email đăng kí đã tồn tại.")
-                    }
+            if (error.response) {
+                // Request made and server responded
+                // console.log(error.response.data);
+                if (error.response.data === "EMAIL_EXISTED") {
+                    alert("Email đăng kí đã tồn tại.")
                 }
-                hideLoader()
-            });
-        }
+            }
+            hideLoader()
+        });
+    }
 
     onClickRegister = (e) => {
         const { email, password, myfirstName,
@@ -430,7 +473,7 @@ class RegisterComp extends Component {
                                     <div className="wrap-input100">
                                         <input
                                             className="input100"
-                                            // ref={(input) => { this.mailInput = input; }}
+                                            ref={(input) => { this.mailInput = input; }}
                                             type="text"
                                             name="email"
                                             maxLength="320"
@@ -438,7 +481,7 @@ class RegisterComp extends Component {
                                             onBlur={this.handleInputValidation}
                                             required
                                         />
-                                        <span className="focus-input100"></span>
+                                        {/* <span className="focus-input100"></span> */}
                                         <span className="label-input100">Email<span className="turnRed"> *</span></span>
                                     </div>
                                     <FormError
@@ -463,7 +506,7 @@ class RegisterComp extends Component {
                                             onBlur={this.handleInputValidation}
                                             required
                                         />
-                                        <span className="focus-input100"></span>
+                                        {/* <span className="focus-input100"></span> */}
                                         <span className="label-input100">Mật khẩu<span className="turnRed"> *</span></span>
                                         <span
                                             onClick={this.toggleShow}
@@ -486,10 +529,10 @@ class RegisterComp extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-12">
-                                        <FormError
-                                        type="password"
-                                        isHidden={this.state.password.isInputValid}
-                                        errorMessage={this.state.password.errorMessage} />
+                                            <FormError
+                                                type="password"
+                                                isHidden={this.state.password.isInputValid}
+                                                errorMessage={this.state.password.errorMessage} />
                                         </div>
                                     </div>
                                     <br></br>
@@ -512,7 +555,7 @@ class RegisterComp extends Component {
                                             onBlur={this.handleInputValidation}
                                             required
                                         />
-                                        <span className="focus-input100"></span>
+                                        {/* <span className="focus-input100"></span> */}
                                         <span className="label-input100">Nhập lại mật khẩu<span className="turnRed"> *</span></span>
                                         <span
                                             onClick={this.toggleShow1}
@@ -558,7 +601,7 @@ class RegisterComp extends Component {
                                                 required
                                             />
 
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Tên<span className="turnRed"> *</span></span>
 
                                         </div>
@@ -586,7 +629,7 @@ class RegisterComp extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Họ<span className="turnRed"> *</span></span>
 
                                         </div>
@@ -617,7 +660,17 @@ class RegisterComp extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <DatePicker
+                                                className="input100"
+                                                dateFormat="dd/MM/yyyy"
+                                                selected={this.state.startDate}
+                                                onChange={this.handleChange}
+                                                // open={true}
+                                                placeholderText="dd/mm/yyyy"
+                                                // onBlur={this.handleInputValidation}
+                                                onBlur={this.handleOnBlur}
+                                            /> */}
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input98">Ngày sinh<span className="turnRed"> *</span></span>
                                         </div>
                                         <FormError
@@ -643,7 +696,7 @@ class RegisterComp extends Component {
                                                 onBlur={this.handleInputValidation}
                                                 required
                                             />
-                                            <span className="focus-input100"></span>
+                                            {/* <span className="focus-input100"></span> */}
                                             <span className="label-input100">Số Điện thoại<span className="turnRed"> *</span></span>
 
                                         </div>

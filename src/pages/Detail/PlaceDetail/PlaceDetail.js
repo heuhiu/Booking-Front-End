@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Menu from '../../../components/Menu/Menu';
 import Slider from 'react-slick';
+import './PlaceDetail.css'
 // import SliderPic from '../../../img/Slider.png';
 import RightOwl from '../../../img/VectorArowRight.png';
 import LeftOwl from '../../../img/VectorArowLeft.png';
@@ -65,7 +66,7 @@ class PlaceDetail extends Component {
         }).catch(error => {
             hideLoader();
             this.props.history.push("/404");
-            console.log(error);
+            // console.log(error);
         });
     }
 
@@ -74,8 +75,8 @@ class PlaceDetail extends Component {
         if (array.length > 0) {
             result = array.map((item, index) => {
                 return (
-                    <div key={index}>
-                        <div>
+                    <div className="sliderBox" key={index}>
+                        <div  >
                             <img
                                 width="100%"
                                 height="600px"
@@ -119,12 +120,17 @@ class PlaceDetail extends Component {
             return (
                 <div >
                     <div
-                        className="container"
-                        style={{ marginTop: "60px", padding: "0px" }}>
+                        className="container containerSliderTOP"
+                        // style={{ marginTop: "100px", padding: "0px" }}
+                        >
                         <Menu />
-                        <Slider {...settings}>
-                            {this.renderSlider(place.placeImageLink)}
-                        </Slider>
+                       
+                            <Slider {...settings}>
+                            {/* <div className="sliderBox"> */}
+                                {this.renderSlider(place.placeImageLink)}
+                                {/* </div> */}
+                            </Slider>
+                      
                         <Detail place={place} />
 
                     </div>

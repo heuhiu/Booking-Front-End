@@ -195,7 +195,7 @@ class UserUpdateInformation extends Component {
             toast.error('Vui lòng điền thông tin bạn muốn thay đổi', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -205,7 +205,7 @@ class UserUpdateInformation extends Component {
             toast.error('Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -215,7 +215,7 @@ class UserUpdateInformation extends Component {
             toast.error('Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -225,7 +225,7 @@ class UserUpdateInformation extends Component {
             toast.error('Số điện thoại chứa 10-11 số!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -235,7 +235,7 @@ class UserUpdateInformation extends Component {
             toast.error('Không đúng định dạng!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -258,7 +258,7 @@ class UserUpdateInformation extends Component {
             //         toast.success('Thay đổi thông tin thành công!', {
             //             position: "bottom-right",
             //             autoClose: 5000,
-            //             hideProgressBar: false,
+            //             hideProgressBar: true,
             //             closeOnClick: true,
             //             pauseOnHover: true,
             //             draggable: true,
@@ -291,16 +291,17 @@ class UserUpdateInformation extends Component {
                 toast.success('Thay đổi thông tin thành công!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                 });
+                this.props.history.push("/userProfile/myProfile")
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader();
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }

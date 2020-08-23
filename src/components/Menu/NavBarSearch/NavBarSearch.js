@@ -34,7 +34,7 @@ class NavBarSearch extends Component {
     searchPathLink = () => {
         // const { cityMul, catMul } = this.state;
         var pathLink = '/searchedPlace';
-        const pathName = `?name=${this.state.txtParkName}`
+        const pathName = `?name=${this.removeSpace(this.state.txtParkName)}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
         const pathListCat = `?listCatID=${this.state.catMul.join()}`
 
@@ -89,12 +89,12 @@ class NavBarSearch extends Component {
             this.props.history.push(`${this.searchPathLink()}`);
         }
         var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
-        console.log(str);
+        // console.log(str);
         if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -105,7 +105,7 @@ class NavBarSearch extends Component {
             toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -114,7 +114,7 @@ class NavBarSearch extends Component {
         } else {
             // this.props.history.push(`${this.searchPathLink()}`);              
             if (this.props.location.pathname === "/searchedPlace") {
-                console.log("lmao");
+                // console.log("lmao");
                 this.props.history.push(`${this.searchPathLink()}`);
                 window.location.reload();
             } else {

@@ -52,12 +52,14 @@
   margin: 30px 30px 0px 30px;
 }
 .detailImg{
-  width: 139.5px; 
-  height: 95px; 
+  width: 100%; 
+  /* height: auto;  */
   object-fit: contain;
   border-radius: 8px;
 }
+.totalPaymentDetail{
 
+}
 .typeDetail{
   font-style: normal;
   font-weight: 500;

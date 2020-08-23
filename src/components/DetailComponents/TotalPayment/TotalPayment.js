@@ -8,7 +8,7 @@ import callApi from '../../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { showLoader, hideLoader } from '../../../actions';
+import { showLoader, hideLoader, removeZeroQuantity } from '../../../actions';
 
 class TotalPayment extends Component {
     notify = () => toast("Wow so easy !");
@@ -45,25 +45,16 @@ class TotalPayment extends Component {
 
     checkLogin = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         // const { history } = this.props;
         const { totalPayment, ticketTypeID, ticketName, redemptionDate, place, visitorTypeFromRedux } = this.props;
-
-        // console.log(visitorTypeFromRedux)
-        // var idVisitorTypeList = ""
-        // for (let index = 0; index < visitorTypeFromRedux.length - 1; index++) {
-        //     const element = visitorTypeFromRedux[index].visitorTypeId;
-        //     // console.log(element)
-        //     idVisitorTypeList += element + ","
-        // }
-        // idVisitorTypeList += visitorTypeFromRedux[visitorTypeFromRedux.length - 1].visitorTypeId
-
         callApi('login/checkToken', 'post', null)
             .then(res => {
                 if (totalPayment === 0) {
                     toast.error('Vui lòng chọn ít nhất một loại vé!', {
                         position: "bottom-right",
                         autoClose: 5000,
-                        hideProgressBar: false,
+                        hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
@@ -73,14 +64,14 @@ class TotalPayment extends Component {
                     toast.error('Vui lòng chọn ngày sử dụng vé!', {
                         position: "bottom-right",
                         autoClose: 5000,
-                        hideProgressBar: false,
+                        hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
                         progress: undefined,
                     });
                 } else {
-                    console.log(visitorTypeFromRedux)
+                    // console.log(visitorTypeFromRedux)
                     var idVisitorTypeList = ""
                     for (let index = 0; index < visitorTypeFromRedux.length - 1; index++) {
                         const element = visitorTypeFromRedux[index].visitorTypeId;
@@ -104,7 +95,7 @@ class TotalPayment extends Component {
                 toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
                     position: "bottom-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
@@ -125,11 +116,6 @@ class TotalPayment extends Component {
             day = '0' + day;
         return [day, month, year].join('/');
     }
-    // ticketTypeID,
-    // ticketName,
-    // totalPayment,
-    // redemptionDate,
-    // place
     callVisitorTypeRemainApi = async (idVisitorTypeList, redemptionDate, ticketTypeID, ticketName, totalPayment, place) => {
         const { showLoader, hideLoader, visitorTypeFromRedux } = this.props;
         let data = new FormData();
@@ -138,9 +124,10 @@ class TotalPayment extends Component {
         showLoader()
         await callApi('visitorType/remaining', 'POST', data)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 const visitorTypeFromDb = res.data;
-                console.log(visitorTypeFromRedux)
+                // console.log(visitorTypeFromRedux)
+                var checkRemainAll = true;
                 for (let index = 0; index < visitorTypeFromDb.length; index++) {
 
                     const remainDb = visitorTypeFromDb[index].remaining;
@@ -152,21 +139,22 @@ class TotalPayment extends Component {
                         const nameRedux = visitorTypeFromRedux[index].visitorTypeName;
 
                         if (idDb === idRedux) {
-                            console.log(idDb)
-                            debugger
+                            // console.log(idDb)
+                            // debugger
                             if (remainDb >= remainRedux) {
-                                this.props.history.push({
-                                    pathname: '/payment',
-                                    state: {
-                                        ticketTypeID,
-                                        ticketName,
-                                        totalPayment,
-                                        redemptionDate,
-                                        place
-                                    }
-                                })
-                                debugger
+                                // this.props.history.push({
+                                //     pathname: '/payment',
+                                //     state: {
+                                //         ticketTypeID,
+                                //         ticketName,
+                                //         totalPayment,
+                                //         redemptionDate,
+                                //         place
+                                //     }
+                                // })
+                                // debugger
                             } else if (remainDb < remainRedux) {
+                                checkRemainAll = false;
                                 toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
                                     position: "bottom-right",
                                     autoClose: 5000,
@@ -182,10 +170,23 @@ class TotalPayment extends Component {
                     }
 
                 }
+                if (checkRemainAll === true) {
+                    // this.props.removeZeroQuantity();
+                    this.props.history.push({
+                        pathname: '/payment',
+                        state: {
+                            ticketTypeID,
+                            ticketName,
+                            totalPayment,
+                            redemptionDate,
+                            place
+                        }
+                    })
+                }
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response);
+                    // console.log(error.response);
                     hideLoader();
                 }
             });
@@ -207,7 +208,7 @@ class TotalPayment extends Component {
                 <ToastContainer />
                 {/* </div> */}
                 <div className="row-12 no-gutters">
-                    <div className="row ">
+                    {/* <div className="row ">
                         <div className="col">
                             <p className="titlePayment">Tổng</p>
                         </div>
@@ -216,7 +217,7 @@ class TotalPayment extends Component {
                                 className="pPayment"
                             > {this.convertCurrecyToVnd(totalPayment)}</p>
                         </div>
-                    </div>
+                    </div> */}
                     {/* <div className="row">
                         <div className="col">
                             <p className="titlePayment">Giảm giá</p>
@@ -232,7 +233,7 @@ class TotalPayment extends Component {
                             <p className="titlePayment">Số tiền thanh toán</p>
                         </div>
                         <div className="col">
-                            <p className="pPayment">
+                            <p className="ppPayment">
                                 {this.convertCurrecyToVnd(totalPayment)}
                             </p>
                         </div>
@@ -294,6 +295,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         hideLoader: () => {
             dispatch(hideLoader())
+        },
+        removeZeroQuantity: ()=>{
+            dispatch(removeZeroQuantity())
         }
     }
 }

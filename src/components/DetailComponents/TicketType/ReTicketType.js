@@ -64,14 +64,14 @@ class ReTicketType extends Component {
         
         await callApi('visitorType/ticketType', 'POST', data)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.setState({
                     listTicketTypeByDay: res.data
                 })
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response);
+                    // console.log(error.response);
                     hideLoader();
                 }
             });
@@ -167,8 +167,8 @@ class ReTicketType extends Component {
         var result = null;
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
-                if (index == 0) {
-                    console.log(ticketType.id)
+                if (index === 0) {
+                    // console.log(ticketType.id)
                     return (
                         <li key={index} className="nav-item"
                         >
@@ -197,9 +197,9 @@ class ReTicketType extends Component {
         var result = null;
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
-                if (index == 0) {
-                    console.log(ticketType.id)
-                    console.log(ticketType.visitorTypes)
+                if (index === 0) {
+                    // console.log(ticketType.id)
+                    // console.log(ticketType.visitorTypes)
                     return (
                         <div key={index} className="tab-pane active" id={`${ticketType.id}`}>
                             <VisitorTypeList id={ticketType.id} item={ticketType.visitorTypes} />
@@ -222,8 +222,8 @@ class ReTicketType extends Component {
         // var result = null;
         // if (ticketTypes.length > 0) {
         //     result = ticketTypes.map((ticketType, index) => {
-        console.log(ticketTypeId)
-        console.log(ticketTypes)
+        // console.log(ticketTypeId)
+        // console.log(ticketTypes)
         //         if (index === 0) {
         return (
             <div className="tab-pane active" id={`${ticketTypeId}`}>
@@ -276,7 +276,7 @@ class ReTicketType extends Component {
         // console.log(ticketTypeId);
         // console.log(ticketName);
         const { ticketType, place } = this.props;
-        console.log(ticketType);
+        // console.log(ticketType);
         // for (let index = 0; index < ticketType.length; index++) {
         //     const element = ticketType[index];
         //     console.log(element)

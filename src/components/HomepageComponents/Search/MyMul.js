@@ -53,7 +53,7 @@ class MyMul extends Component {
                 })
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
         //get Categories list
@@ -66,7 +66,7 @@ class MyMul extends Component {
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -206,14 +206,14 @@ class MyMul extends Component {
         return (
             <div>
                     <h6 className="typeFilter">Thành phố</h6>
-                <Flip top cascade when={this.props.showAnimate}>
+                <Flip duration={500} top cascade when={this.props.showAnimate}>
                     <div className="row no-gutters">
                         {checkboxesToRender}
                         {/* {this.showList(this.state.listCity)} */}
                     </div>
                 </Flip>
                 <h6 className="typeFilter">Danh mục</h6>
-                <Flip delay={400} top cascade when={this.props.showAnimate}>
+                <Flip duration={500} top cascade when={this.props.showAnimate}>
                     <div className="row no-gutters">
                         {checkboxesToRender2}
                         {/* {this.showList(this.state.listCategory)} */}

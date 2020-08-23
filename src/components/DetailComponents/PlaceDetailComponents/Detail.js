@@ -49,12 +49,10 @@ class Detail extends Component {
         if (splitArray.length > 0) {
             result = splitArray.map((item, index) => {
                 return (
-                    <Flip key={index} top cascade collapse
-                    // when={this.state.show1stAnimate}
-                    >
                         <li
-                            className="b">{item}</li>
-                    </Flip>
+                        key={index}
+                            className="b">{item}
+                        </li>
                 );
             });
         }
@@ -132,7 +130,6 @@ class Detail extends Component {
                                 {this.showShortDescrip(place.shortDescription)}
                             </ul> */}
                             {/* </Flip> */}
-
 
                             <div id="inline">
                                 <div className="bulletListCustome"></div>

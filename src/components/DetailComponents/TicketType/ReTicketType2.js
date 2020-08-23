@@ -66,7 +66,7 @@ class ReTicketType extends Component {
 
         await callApi('visitorType/ticketType', 'POST', data)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 // alert("Id: " + this.state.ticketTypeId + ", date: " + this.formatDate(this.state.startDate))
                 this.setState({
                     listTicketTypeByDay: res.data
@@ -74,7 +74,7 @@ class ReTicketType extends Component {
                 hideLoader();
             }).catch(function (error) {
                 if (error.response) {
-                    console.log(error.response);
+                    // console.log(error.response);
                     hideLoader();
                 }
             });
@@ -105,9 +105,11 @@ class ReTicketType extends Component {
     setDefaultTicketType = (ticketTypes) => {
         if (ticketTypes.length > 0) {
             ticketTypes.map((ticketType, index) => {
+                // console.log(ticketType)
                 if (index === 0) {
                     this.setState({
                         ticketTypeId: ticketType.id,
+                        ticketName: ticketType.typeName
                     }, () => {
                         this.apiGetTicketTypeByDay()
                     })
@@ -118,12 +120,44 @@ class ReTicketType extends Component {
             });
         }
     }
-
+    
+    getNearestDate(weekdays) {
+        weekdays.sort();
+        var i;
+        for (i = 1; i <= 7; i++) {
+            var nextday = new Date();
+            // var nextday =  new Date("Sun Aug 26 2020 GMT+0700 (Indochina Time)")
+            nextday.setDate(nextday.getDate() + i)
+            if (weekdays.includes(nextday.getDay())) {
+                return nextday
+            }
+        }
+    }
+    
     componentDidMount = () => {
         var { ticketType, weekDays } = this.props;
         // console.log(ticketType);
         this.setState({
             activeDay: weekDays
+        }, () => {
+            var activeDay = this.state.activeDay.sort();
+            // console.log(activeDay)
+            // const tomorrow = new Date()
+            // tomorrow.setDate(new Date().getDate() + activeDay[0])
+            // for (let index = 0; index < activeDay.length; index++) {
+            //     const element = activeDay[index];
+            // }
+            // console.log(new Date());
+            const today = new Date().getDay()
+            if (activeDay.indexOf(today) !== -1) {
+                this.setState({
+                    startDate: new Date()
+                  })
+            } else {
+                this.setState({
+                    startDate: this.getNearestDate(this.state.activeDay)
+                  })
+            }
         })
         this.props.removeVisitorType();
         this.setDefaultTicketType(ticketType);
@@ -137,12 +171,12 @@ class ReTicketType extends Component {
         })
         var ticketTypeId = e.target.href.split('#')[1];
         var ticketName = e.target.innerHTML + "";
-        console.log(ticketName);
+        // console.log(ticketName);
         if (ticketTypeId) {
             this.setState({
                 ticketTypeId: ticketTypeId,
                 ticketName: ticketName
-            }, ()=>{
+            }, () => {
                 this.apiGetTicketTypeByDay();
             })
         }
@@ -161,17 +195,14 @@ class ReTicketType extends Component {
     changeTicketType = (ticketTypeId) => {
         this.apiGetTicketTypeByDay(ticketTypeId);
     }
-    
-    wtf = (ticketType) => {
-        alert(ticketType)
-    }
-    
+
+
     showTicketTypeName = (ticketTypes) => {
         var result = null;
         if (ticketTypes.length > 0) {
             result = ticketTypes.map((ticketType, index) => {
                 if (index === 0) {
-                    console.log(ticketType.id)
+                    // console.log(ticketType.id)
                     return (
                         <li key={index} className="nav-item">
                             <a className="nav-link active"
@@ -196,8 +227,8 @@ class ReTicketType extends Component {
     }
     showVisitorType = (listVisitorType) => {
         var result = null;
-        const {reduxVisitorType} = this.props;
-        
+        const { reduxVisitorType } = this.props;
+
         if (listVisitorType !== null)
             if (listVisitorType.length > 0) {
                 result = listVisitorType.map((item, index) => {
@@ -221,6 +252,8 @@ class ReTicketType extends Component {
     }
 
     render() {
+        const { ticketTypeId, ticketName, startDate, listTicketTypeByDay } = this.state;
+        const { ticketType, place } = this.props;
         const ExampleCustomInput = ({ value, onClick }) => (
             <button className="example-custom-input" onClick={onClick}>
                 {value}
@@ -230,11 +263,12 @@ class ReTicketType extends Component {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         };
 
-        if (this.state.startDate !== null)
+        if (this.state.startDate !== null) {
             var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
+        }
+        // const dateTemp = startDate;
 
-        const { ticketTypeId, ticketName, startDate, listTicketTypeByDay } = this.state;
-        const { ticketType, place } = this.props;
+
         var total = this.getTotalMoney();;
         // console.log(ticketType)
         return (
@@ -287,7 +321,7 @@ class ReTicketType extends Component {
                                             className="myTitle"
                                             style={{ marginBottom: "0px", color: "#FF7062", textAlign: "center" }}
                                         >
-                                            {prnDt === undefined ? "Bấm để chọn" : prnDt}
+                                            {prnDt}
                                         </h6>
                                     </div>
                                     <div className="col-1">
@@ -344,7 +378,7 @@ class ReTicketType extends Component {
                                 </div> */}
                                 <div className="col-12">
                                     <ul className="nav nav-pills" role="tablist">
-                                    {this.showTicketTypeName(ticketType)}
+                                        {this.showTicketTypeName(ticketType)}
                                     </ul>
                                     {this.showVisitorType(listTicketTypeByDay)}
                                 </div>

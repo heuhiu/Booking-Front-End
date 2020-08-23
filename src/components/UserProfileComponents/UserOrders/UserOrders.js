@@ -61,7 +61,7 @@ class UserOrders extends Component {
         data.append('page', activePage);
         await callApi(`order/user/${id}`, 'POST', data)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     // UserOrders: res.data,
                     totalItems: res.data.totalItems,
@@ -72,7 +72,7 @@ class UserOrders extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader();
-                    console.log(error.response.data);
+                    // console.log(error.response.data);
                 }
             });
     }
@@ -93,7 +93,7 @@ class UserOrders extends Component {
                     this.getAllOrder(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
-                        console.log(error.response.data);
+                        // console.log(error.response.data);
                     }
                 });
         }
@@ -170,7 +170,7 @@ class UserOrders extends Component {
                                         alt="FAIL TO LOAD" />
                                 </div>
                                 <div
-                                    style={{ marginLeft: "20px" }}
+                                    style={{ marginLeft: "10px" }}
                                     className="col">
                                     <div className="row">
                                         <div className="col"><h1 className="nameDetail">Vé {item.place.name}</h1></div>
@@ -245,7 +245,7 @@ class UserOrders extends Component {
                             aria-controls="example-collapse-text2"
                             aria-expanded={this.state.open2}
                             className="labelPointer row">
-                            <div className="col-6">
+                            <div className="col-12">
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
                                     <div className="content">Lịch sử đặt chỗ</div>

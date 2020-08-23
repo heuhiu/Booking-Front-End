@@ -237,7 +237,6 @@ class MorePlace extends Component {
             <section className="py-5">
                 <div className="container">
                     <h2 className="headerOwl">Những trải nghiệm khác tại {myPlace.cityName}</h2>
-                    <h2 className="desHeaderOwl">Khám phá mọi nẻo đường thủ đô</h2>
                     <Slider {...settings}>
                         {this.showPlaceOfTopCity(listPlace)}
                     </Slider>
