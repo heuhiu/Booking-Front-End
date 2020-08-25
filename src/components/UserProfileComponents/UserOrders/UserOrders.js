@@ -51,6 +51,7 @@ class UserOrders extends Component {
     }
 
     getAllOrder = async (id) => {
+        window.scrollTo(0, 0)
         const { showLoader, hideLoader, loggedUser } = this.props;
         const { activePage, limit } = this.state;
         showLoader();

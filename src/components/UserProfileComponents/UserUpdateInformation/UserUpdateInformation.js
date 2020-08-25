@@ -192,33 +192,35 @@ class UserUpdateInformation extends Component {
         const id = loggedUser.id;
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
+                console.log("LMAo")
             toast.error('Vui lòng điền thông tin bạn muốn thay đổi', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
-                draggable: true,
+                draggable: false,
                 progress: undefined,
             });
-        } else if (lastName.isInputValid === false) {
-            toast.error('Không chứa kí tự đặc biệt!', {
+        } 
+        else if (lastName.isInputValid === false) {
+            toast.error('Họ không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
-                draggable: true,
+                draggable: false,
                 progress: undefined,
             });
         } else if (myfirstName.isInputValid === false) {
-            toast.error('Không chứa kí tự đặc biệt!', {
+            toast.error('Tên Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
-                draggable: true,
+                draggable: false,
                 progress: undefined,
             });
         } else if (phoneNumber.isInputValid === false) {
@@ -228,47 +230,12 @@ class UserUpdateInformation extends Component {
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        } else if (dob.isInputValid === false) {
-            toast.error('Không đúng định dạng!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
+                draggable: false,
                 progress: undefined,
             });
         }
         else {
             this.callAPIChangeUserInfor(id);
-            // id, mail, password, firstName, lastName, dob, phoneNumber, status, roleKey, userType
-            // callApi(`userClient/${id}`, 'PUT',
-            //     {
-            //         firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
-            //         lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
-            //         dob: dob.value ? dob.value !== '' : loggedUser.dob,
-            //         phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
-            //     })
-            //     .then(res => {
-            //         console.log(res);
-            //         this.props.fetchUserDetail(res.data);
-            //         toast.success('Thay đổi thông tin thành công!', {
-            //             position: "bottom-right",
-            //             autoClose: 5000,
-            //             hideProgressBar: true,
-            //             closeOnClick: true,
-            //             pauseOnHover: true,
-            //             draggable: true,
-            //             progress: undefined,
-            //         });
-            //     }).catch(function (error) {
-            //         if (error.response) {
-            //             console.log(error.response.data);
-            //         }
-            //     });
         }
     }
 
@@ -324,169 +291,10 @@ class UserUpdateInformation extends Component {
     });
 
     render() {
-        // const { dob, myfirstName, lastName, phoneNumber, startDate } = this.state;
         const { loggedUser } = this.props;
-        // console.log(loggedUser.dob);
-        // console.log(this.convertDateToLocalVN(loggedUser.dob));
-        // console.log(new Date())
-        // console.log(format(new Date(), 'yyyy/MM/dd'))
-
-
-        // console.log(myfirstName.value);
-        // console.log(lastName.value);
-        // console.log(phoneNumber.value);
-        // console.log(dob.value);
-        // console.log(lastName.isInputValid);
         return (
             <div
                 className="col">
-                {/* <form
-                onSubmit={this.updateUserDetail}
-                > */}
-                <ToastContainer />
-                {/* <div className="rightBoxUserDetail">
-                    <div style={{ padding: "30px" }} >
-                        <div className="row">
-                            <div className="col-12">
-                                <div id="inline">
-                                    <div className="bulletListCustome"></div>
-                                    <div className="content">Chỉnh sửa tài khoản</div>
-                                </div>
-                                <div className="col-12">
-                                    <p className="attention">Thông tin này sẽ được tự động nhập vào đơn hàng của bạn. Thông tin của bạn sẽ được mã hoá và không chia sẻ với bên thứ 3</p>
-                                </div>
-                                <div className="mrt-30 col-12">
-                                    <div className="row">
-    
-                                        <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    type="text"
-                                                    name="lastName"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.lastName}
-
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Họ</span>
-                                            </div>
-                                            <FormError
-                                                type="lastName"
-                                                isHidden={this.state.lastName.isInputValid}
-                                                errorMessage={this.state.lastName.errorMessage} />
-                                        </div>
-                                        <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-
-                                                    ref={(input) => { this.myfirstName = input; }}
-                                                    type="text"
-                                                    name="myfirstName"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.firstName}
-                                                />
-
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Tên</span>
-
-                                            </div>
-                                            <FormError
-                                                type="myfirstName"
-                                                isHidden={this.state.myfirstName.isInputValid}
-                                                errorMessage={this.state.myfirstName.errorMessage} />
-                                            <br></br>
-                                        </div>
-
-                                    </div>
-                                    <div className="mrt-30 row">
-                                        <div className="col">
-                                            <label className="cmt">Như trên CMND (không dấu)</label>
-                                        </div>
-                                        <div className="col">
-                                            <label className="cmt">Như trên CMND (không dấu)</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mrt-30 col-12">
-                                    <div className="row">
-
-                                        <div className="col">
-                                            <div className="wrap-input100">
-                                                <input
-                                                    className="input100"
-d
-                                                    ref={(input) => { this.phoneNumber = input; }}
-                                                    type="text"
-                                                    name="phoneNumber"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.phoneNumber}
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input100">Số Điện thoại</span>
-
-                                            </div>
-                                            <FormError
-                                                type="phoneNumber"
-                                                isHidden={this.state.phoneNumber.isInputValid}
-                                                errorMessage={this.state.phoneNumber.errorMessage} />
-                                        </div>
-                                      
-                                        <div className="col">
-                                            <div onClick={this.showDate} className="wrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    ref={(input) => { this.dob = input; }}
-                                                    type="date"
-                                                    name="dob"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.dob}
-                                                // required
-                                                />
-                                                <span className="focus-input100"></span>
-                                                <span className="label-input98">Ngày sinh</span>
-                                            </div>
-                                            <FormError
-                                                type="dob"
-                                                isHidden={this.state.dob.isInputValid}
-                                                errorMessage={this.state.dob.errorMessage} />
-                                        </div>
-
-                                    </div>
-                                    <div className="mrt-30 row">
-                                        <div className="col">
-                                            <label className="cmt">Số điện thoại sử dụng để xác thực giao dịch</label>
-                                        </div>
-                                        <div className="col">
-                                            <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
-                                            xin vui lòng kiểm tra kỹ thông tin.)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="pdt-30 col-12">
-                                    <div className="row">
-                                        <div className="col">
-                                        </div>
-                                        <div className="col">
-                                            <button type="submit"
-                                                onClick={this.updateUserDetail}
-                                                className="proceedPaymentBtn">Lưu thông tin</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
                 <div className="rightBoxUserDetail">
                     <div style={{ padding: "30px" }} >
                         <div className="row">
@@ -556,32 +364,7 @@ d
                                             xin vui lòng kiểm tra kỹ thông tin.)
                                             </label>
                                         </div>
-                                        {/* <div className="col">
-                                            <span className="labelHolder"> Ngày sinh </span><span className="turnRed">*</span>
-                                            <div onClick={this.showDate} className="customWrap-input100">
-                                                <input
-                                                    className="input100"
-                                                    // ref={(input) => { this.dob = input; }}
-                                                    type="date"
-                                                    name="dob"
-                                                    onChange={this.handleInput}
-                                                    onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.dob}
-                                                    disabled
-                                                />
-                                                
-                                                <DatePicker
-                                                    className="input100"
-                                                    dateFormat="dd/MM/yyyy"
-                                                    selected={this.state.startDate}
-                                                    onChange={this.handleChange}
-                                                    open={false}
-                                                />
-                                            </div>
-                                            <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
-                                            xin vui lòng kiểm tra kỹ thông tin.)
-                                            </label>
-                                        </div> */}
+                                      
                                     </div>
                                 </div>
                                 <div className="pdt-30 col-12">

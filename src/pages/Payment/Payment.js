@@ -236,11 +236,11 @@ class Payment extends Component {
             })
                 .then(res => {
                     // console.log(res.data);
-                    const paymentToken = this.storeTokenPaymentInLocal(5);
-                    localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
+                    // const paymentToken = this.storeTokenPaymentInLocal(5);
+                    // localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
                     // var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
                     hideLoader();
-                    localStorage.removeItem('visitorTypeList');
+                    localStorage.removeItem('tokenPayment');
                     this.props.history.push({
                         pathname: '/paymentSucess',
                         state: { orderDetail: res.data }
@@ -266,11 +266,9 @@ class Payment extends Component {
     }
 
     onActiveRadio1 = () => {
-        // alert("lmao1")
         this.setState({
             activeRadius1: !this.state.activeRadius1,
             activeRadius2: false,
-            // open: true
         })
 
     }
@@ -295,11 +293,11 @@ class Payment extends Component {
     }
 
     render() {
-        var visitorTypeList = JSON.parse(localStorage.getItem('visitorTypeList'));
+        var tokenPayment = JSON.parse(localStorage.getItem('tokenPayment'));
         // console.log(visitorTypeList)
         const { location, visitorType, loggedUser } = this.props;
         // console.log(visitorType);
-        if (visitorTypeList === null) {
+        if (tokenPayment === null) {
             return (
                 <Redirect to="/" />
             )
@@ -327,7 +325,7 @@ class Payment extends Component {
                 >
                     {/* {this.scrollToStep1()} */}
                     <Menu />
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     <br></br>
                     <br></br>
                     <br></br>

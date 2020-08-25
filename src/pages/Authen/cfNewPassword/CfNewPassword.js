@@ -6,7 +6,7 @@ import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 // import API_URL from '../../../constants/ConfigAPI';
@@ -110,8 +110,7 @@ class CfNewPassword extends Component {
     onResetPassword = (e) => {
         const { repassword, password, uid } = this.state;
         e.preventDefault();
-
-
+        e.stopPropagation();
         if (this.password && repassword.isInputValid === false) {
             setTimeout(() => {
                 this.password.focus();
@@ -133,7 +132,22 @@ class CfNewPassword extends Component {
             let data = new FormData();
             data.append('uid', myId);
             data.append('newPassword', newPass);
-            this.apiChangePassword(data);
+            if (password.value !== repassword.value) {
+                toast.error('Mật khẩu nhập lại chưa chính xác!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                // console.log("susscess")
+                this.apiChangePassword(data);
+            }
             // callApi('user/changePasswordAfterReset', 'POST', data)
             //     .then(res => {
             //         console.log(res);
@@ -231,7 +245,7 @@ class CfNewPassword extends Component {
             return (
                 <div>
                     <div className="limiter">
-                        <ToastContainer />
+                        {/* <ToastContainer /> */}
                         <div className="container-login100">
                             <div className="wrap-login100">
                                 <div
@@ -321,7 +335,7 @@ class CfNewPassword extends Component {
         } else if (checktoken === true)
             return (
                 <div className="limiter">
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     <div className="container-login100">
                         <div className="wrap-login100">
 

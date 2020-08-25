@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './NavnarSearch.css';
+import './SearchNameBox.css';
 import { withRouter } from 'react-router-dom';
 // import LogoSearch from '../../../img/LogoSearch.png';
 // import search from '../../../img/search.png';
@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //search
-class NavBarSearch extends Component {
+class SearchNameBox extends Component {
 
     constructor(props) {
         super(props);
@@ -64,6 +64,7 @@ class NavBarSearch extends Component {
             [name]: value,
         })
     }
+
     isValid = (str) => {
         return /^[a-zA-Z0-9 ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]{0,225}$/g.test(str);
         // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
@@ -72,16 +73,9 @@ class NavBarSearch extends Component {
     removeSpace = (str) => {
         return str.replace(/\s+/gi, " ");
     }
-    // if (this.props.location.pathname === "/searchedPlace") {
-    //     console.log("lmao");
-    //     this.props.history.push(`${this.searchPathLink()}`);
-    //     window.location.reload();
-    // } else {
-    //     this.props.history.push(`${this.searchPathLink()}`);
-    // }
+
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
-
         e.preventDefault();
         // console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
@@ -206,4 +200,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBarSearch));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchNameBox));

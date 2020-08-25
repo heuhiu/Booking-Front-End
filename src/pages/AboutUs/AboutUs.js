@@ -16,40 +16,42 @@ class AboutUs extends Component {
         this.state = {
         }
     }
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     render() {
         // console.log(this.props.UserDetail)
-        if(false) {
+        if (false) {
             return (
                 <Redirect to="/"></Redirect>
             )
         } else
-        return (
-            <div style={{background: "#F2F2F2"}}>
-                <Menu />
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                {/* <UserProfileComp /> */}
-                <div className="container"
-                style={{ fontFamily: 'Inter' }}>
-                <div className='row '>
-                    {/* Left part */}
-                    <div className="col-4">
-                        <AboutUsMenu />
+            return (
+                <div style={{ background: "#F2F2F2" }}>
+                    <Menu />
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    {/* <UserProfileComp /> */}
+                    <div className="container"
+                        style={{ fontFamily: 'Inter' }}>
+                        <div className='row '>
+                            {/* Left part */}
+                            <div className="col-4">
+                                <AboutUsMenu />
+                            </div>
+                            {/* Right part */}
+                            <div className={`col`}>
+                                {this.showContentMenus(SubMenuAboutUs)}
+                            </div>
+                        </div>
                     </div>
-                    {/* Right part */}
-                    <div className={`col`}>
-                       {this.showContentMenus(SubMenuAboutUs)}
-                    </div>
+
+                    <Footer2 />
+                    <FullPageLoader />
                 </div>
-            </div>
-      
-                <Footer2 />
-                <FullPageLoader />
-            </div>
-        );
+            );
     }
 
     showContentMenus = (routes) => {

@@ -18,7 +18,9 @@ class AboutUsComp extends Component {
         }
     }
 
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     render() {
         // const data = this.props.location.state.data[0];
         // const label = this.props.location.state.label
@@ -43,12 +45,12 @@ class AboutUsComp extends Component {
                     <label className="abUsLabel">CAM KẾT</label>
                     <h3>Luôn cam kết giá tốt nhất</h3>
                     <p>
-                    Là đối tác chính thức của các điểm tham quan hàng đầu và các nhà cung cấp trong cả nước, Goboki luôn đảm bảo tất cả các dịch vụ sẽ mang lại trải nghiệm chất lượng với mức giá tốt nhất. Nếu bạn phát hiện mức giá thấp hơn, Goboki sẽ hoàn lại khoản chênh lệch.
+                        Là đối tác chính thức của các điểm tham quan hàng đầu và các nhà cung cấp trong cả nước, Goboki luôn đảm bảo tất cả các dịch vụ sẽ mang lại trải nghiệm chất lượng với mức giá tốt nhất. Nếu bạn phát hiện mức giá thấp hơn, Goboki sẽ hoàn lại khoản chênh lệch.
                     </p>
                     <br></br>
                     <h3>Dịch vụ nhanh chóng & an toàn</h3>
                     <p>
-                    Giao diện trực quan của Goboki và các biện pháp bảo mật nghiêm ngặt đảm bảo mọi người đều có trải nghiệm đặt dịch vụ an toàn và nhanh chóng.
+                        Giao diện trực quan của Goboki và các biện pháp bảo mật nghiêm ngặt đảm bảo mọi người đều có trải nghiệm đặt dịch vụ an toàn và nhanh chóng.
                     </p>
                 </div>
                 <FullPageLoader />

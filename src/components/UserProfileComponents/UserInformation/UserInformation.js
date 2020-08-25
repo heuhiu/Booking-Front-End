@@ -27,175 +27,12 @@ class UserInformation extends Component {
         }
     }
 
-    // showTopOrder = (topOrders) => {
-    //     const topOrd= topOrders.orderItems
-    //     var result = null;
-    //     if (topOrders.length > 0) {
-    //         result = topOrders.map((item, index) => {
-    //             console.log(item);
-    //             // var dateType = {
-    //             //     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    //             // };
-    //             // console.log(item.redemptionDate);
-    //             // console.log(new Date())
-    //             // var prnDt = item.redemptionDate.toLocaleDateString('vi', dateType);
-    //             // console.log(prnDt);
-    //             // console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 
-    //             // '2-digit',day: '2-digit'}).format(new Date()));
-
-    //             return (
-    //                 <div key={index}
-    //                 className="detailTicketBoxDetail row no-gutters">
-    //                 <div
-    //                     className="detailTicketBox2Detail col-12">
-
-    //                     <div className="detailTicketChild col-12">
-    //                         <div className="row">
-    //                             <div className="col-4">
-    //                                 <p>Mã đơn hàng: : 3485970104 </p>
-    //                             </div>
-    //                             <div className="col-4">
-    //                                 <p>Thời gian: (thanh toán?) : 
-    //                                 {this.formatter.format(Date.parse(item.purchaseDay))} 
-    //                                 </p>
-    //                                 <p>Temp: {item.status}</p>
-    //                             </div>
-    //                             <div className="col-4">
-    //                                 <p className="pushRight">Thành công</p>
-    //                             </div>
-    //                         </div>
-    //                         <div className="row">
-    //                             <div className="col-6">
-    //                                 <p>Số tiền thanh toán: {item.totalPayment}</p>
-    //                             </div>
-    //                             <div className="col-6">
-    //                                 <p className="pushRight2">Xem chi tiết</p>
-    //                                 {/* <Link to={{
-    //                                             pathname: `/userProfile/myOrder/${item.id}`
-    //                                         }}>
-    //                                             <p className="pushRight2">
-    //                                                 Xem chi tiết
-    //                                         </p>
-    //                                 </Link> */}
-    //                             </div>
-    //                         </div>
-    //                     </div>
-
-    //                     <div style={{ margin: "30px" }} className="row no-gutters">
-    //                         <div
-    //                             className="col-3">
-    //                             <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
-    //                         </div>
-    //                         <div
-    //                             style={{ marginLeft: "20px" }}
-    //                             className="col">
-    //                             <div className="row">
-    //                             <div className="col"><span className="nameDetail">{item.ticketTypeName}</span></div>
-    //                             </div>
-    //                             <div className="row">
-    //                                 <div className="col-3"><span className="ticketTypeDetail">Loại vé: </span></div>
-    //                                 <div className="col"><span className="ticketTypeDetail">[Vé cứng] vé tiêu chuẩn</span></div>
-    //                             </div>
-    //                             <div className="row">
-    //                                 <div className="col-3">
-    //                                     <span className="redemDetail">
-    //                                     Thời gian:  
-    //                                     </span>
-    //                                 </div>
-    //                                 <div className="col">
-    //                                     <span className="redemDetail">
-    //                                     {this.formatter.format(Date.parse(item.redemptionDate))} 
-    //                                     </span>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-
-    //            );
-    //         });
-    //     }
-    //     else if (topOrders.length === 0) {
-    //         return (
-    //             <p>Not Found</p>
-    //         );
-    //     }
-    //     return result;
-    // }
-
-    // getTop3Order = async (id) =>{
-    //     const {showLoader, hideLoader} = this.props;
-    //     showLoader();
-    //     await callApi(`order/top3/${id}`, 'GET', null)
-    //     .then(res => {
-    //         console.log(res);
-    //         this.setState({
-    //             topOrders: res.data
-    //         })
-    //         hideLoader();
-    //     }).catch(function (error) {
-    //         if (error.response) {
-    //             hideLoader();
-    //             console.log(error.response.data);
-    //         }
-    //     });
-    // }
-
-    // componentDidMount = async () => {
-    //     const {showLoader, hideLoader} = this.props;
-    //     showLoader();
-    //     var jwtDecode = require('jwt-decode');
-    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-    //     if (tokenLogin) {
-    //         var decoded = jwtDecode(tokenLogin);
-    //         console.log(decoded);
-    //         const id = decoded.user.userId;
-    //         showLoader();
-    //         await callApi(`userClient/${id}`, 'GET', null)
-    //             .then(res => {
-    //                 console.log(res.data.id);
-    //                 this.getTop3Order(res.data.is);
-    //                 //  callApi(`order/top3/${res.data.id}`, 'GET', null)
-    //                 //     .then(res => {
-    //                 //         console.log(res);
-    //                 //         this.setState({
-    //                 //             topOrders: res.data
-    //                 //         })
-    //                 //         hideLoader();
-    //                 //     }).catch(function (error) {
-    //                 //         if (error.response) {
-    //                 //             console.log(error.response.data);
-    //                 //         }
-    //                 //     });
-    //             }).catch(function (error) {
-    //                 if (error.response) {
-    //                     hideLoader();
-    //                     console.log(error.response.data);
-    //                 }
-    //             });
-    //     }
-    // }
-
+  
     render() {
         const { loggedUser } = this.props;
-        // console.log(this.state.topOrders);
+        
         return (
-            // <div
-            //                     className="datepickerBtn"
-            //                     onClick={() => this.setState({ open: !this.state.open })}
-            //                     aria-controls="example-collapse-text"
-            //                     aria-expanded={this.state.open}
-            //                 >
-
-
-            //             </div>
-            //     <Collapse in={this.state.open}>
-            //     <div
-            //         id="example-collapse-text">
-
-            //     </div>
-            // </Collapse>
+           
             <div
                 className="col">
                 <div className="rightBoxUserDetail">
@@ -230,7 +67,7 @@ class UserInformation extends Component {
                                                 <span className="detail1">Họ tên:
                                         </span>
                                             </div>
-                                            <div className="col">
+                                            <div className="detailFlow col">
                                                 <span className="detail2">
                                                     {loggedUser.firstName} {loggedUser.lastName}
                                                 </span>
@@ -244,7 +81,7 @@ class UserInformation extends Component {
 
                                         </span>
                                             </div>
-                                            <div className="col">
+                                            <div className="detailFlow col">
                                                 <span className="detail2">
                                                     {loggedUser.mail}
                                                 </span>
@@ -257,7 +94,7 @@ class UserInformation extends Component {
                                                 <span className="detail1">Điện thoại:
                                         </span>
                                             </div>
-                                            <div className="col">
+                                            <div className="detailFlow col">
                                                 <span className="detail2">
                                                     {loggedUser.phoneNumber}
                                                 </span>

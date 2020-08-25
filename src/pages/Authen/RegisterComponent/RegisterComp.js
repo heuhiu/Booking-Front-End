@@ -9,6 +9,8 @@ import backG from '../../../img/LoginPaper.png';
 import Menu from '../../../components/Menu/Menu';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
 import * as regex from '../../../constants/Regex';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -295,7 +297,16 @@ class RegisterComp extends Component {
                 // Request made and server responded
                 // console.log(error.response.data);
                 if (error.response.data === "EMAIL_EXISTED") {
-                    alert("Email đăng kí đã tồn tại.")
+                    // alert("Email đăng kí đã tồn tại.")
+                    toast.error(`Email đăng kí đã tồn tại`, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 }
             }
             hideLoader()
@@ -403,7 +414,19 @@ class RegisterComp extends Component {
             //     pathname: '/verify',
             //     state: { mailRegis }
             // })
-            this.apiRegister(email, password, myfirstName, lastName, dob, phoneNumber, mailRegis);
+            if (password.value !== RePassword.value) {
+                toast.error(`Mật khẩu nhập lại chưa chính xác`, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                this.apiRegister(email, password, myfirstName, lastName, dob, phoneNumber, mailRegis);
+            }
             // showLoader()
             // await callApi('user/register', 'POST', {
             //     mail: email.value,
@@ -655,7 +678,6 @@ class RegisterComp extends Component {
                                                 // type={this.state.check ? "date" : "text"}
                                                 type="date"
                                                 name="dob"
-
                                                 onChange={this.handleInput}
                                                 onBlur={this.handleInputValidation}
                                                 required
@@ -665,7 +687,7 @@ class RegisterComp extends Component {
                                                 dateFormat="dd/MM/yyyy"
                                                 selected={this.state.startDate}
                                                 onChange={this.handleChange}
-                                                // open={true}
+                                                open={false}
                                                 placeholderText="dd/mm/yyyy"
                                                 // onBlur={this.handleInputValidation}
                                                 onBlur={this.handleOnBlur}

@@ -257,7 +257,7 @@ class UserChangePassword extends Component {
                     onSubmit={this.changePassword}
                     noValidate
                 >
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     <div className="rightBoxUserDetail">
                         <div style={{ padding: "30px" }} >
                             <div className="row">

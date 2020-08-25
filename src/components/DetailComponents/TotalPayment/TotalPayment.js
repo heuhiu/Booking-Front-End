@@ -9,6 +9,8 @@ import { withRouter } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showLoader, hideLoader, removeZeroQuantity } from '../../../actions';
+import axios from 'axios';
+import * as Config from '../../../constants/ConfigAPI';
 
 class TotalPayment extends Component {
     notify = () => toast("Wow so easy !");
@@ -116,80 +118,139 @@ class TotalPayment extends Component {
             day = '0' + day;
         return [day, month, year].join('/');
     }
+    storeTokenPaymentInLocal = (length) => {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
     callVisitorTypeRemainApi = async (idVisitorTypeList, redemptionDate, ticketTypeID, ticketName, totalPayment, place) => {
         const { showLoader, hideLoader, visitorTypeFromRedux } = this.props;
         let data = new FormData();
         data.append('idList', idVisitorTypeList);
         data.append('date', this.formatDate(redemptionDate));
         showLoader()
-        await callApi('visitorType/remaining', 'POST', data)
-            .then(res => {
-                // console.log(res.data);
-                const visitorTypeFromDb = res.data;
-                // console.log(visitorTypeFromRedux)
-                var checkRemainAll = true;
-                for (let index = 0; index < visitorTypeFromDb.length; index++) {
+        // await callApi('visitorType/remaining', 'POST', data)
+        //     .then(res => {
+        //         // console.log(res.data);
+        //         const visitorTypeFromDb = res.data;
+        //         // console.log(visitorTypeFromRedux)
+        //         var checkRemainAll = true;
+        //         for (let index = 0; index < visitorTypeFromDb.length; index++) {
 
-                    const remainDb = visitorTypeFromDb[index].remaining;
-                    const idDb = visitorTypeFromDb[index].id;
+        //             const remainDb = visitorTypeFromDb[index].remaining;
+        //             const idDb = visitorTypeFromDb[index].id;
 
-                    for (let index = 0; index < visitorTypeFromRedux.length; index++) {
-                        const remainRedux = visitorTypeFromRedux[index].quantity;
-                        const idRedux = visitorTypeFromRedux[index].visitorTypeId;
-                        const nameRedux = visitorTypeFromRedux[index].visitorTypeName;
+        //             for (let index = 0; index < visitorTypeFromRedux.length; index++) {
+        //                 const remainRedux = visitorTypeFromRedux[index].quantity;
+        //                 const idRedux = visitorTypeFromRedux[index].visitorTypeId;
+        //                 const nameRedux = visitorTypeFromRedux[index].visitorTypeName;
 
-                        if (idDb === idRedux) {
-                            // console.log(idDb)
-                            // debugger
-                            if (remainDb >= remainRedux) {
-                                // this.props.history.push({
-                                //     pathname: '/payment',
-                                //     state: {
-                                //         ticketTypeID,
-                                //         ticketName,
-                                //         totalPayment,
-                                //         redemptionDate,
-                                //         place
-                                //     }
-                                // })
-                                // debugger
-                            } else if (remainDb < remainRedux) {
-                                checkRemainAll = false;
-                                toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
-                                    position: "bottom-right",
-                                    autoClose: 5000,
-                                    hideProgressBar: true,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                });
-                            }
+        //                 if (idDb === idRedux) {
+
+        //                     if (remainDb >= remainRedux) {
+        //                     } else if (remainDb < remainRedux) {
+        //                         checkRemainAll = false;
+        //                         toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
+        //                             position: "bottom-right",
+        //                             autoClose: 5000,
+        //                             hideProgressBar: true,
+        //                             closeOnClick: true,
+        //                             pauseOnHover: true,
+        //                             draggable: true,
+        //                             progress: undefined,
+        //                         });
+        //                     }
+        //                 }
+
+        //             }
+
+        //         }
+        //         if (checkRemainAll === true) {
+        //             // this.props.removeZeroQuantity();
+        //             const paymentToken = this.storeTokenPaymentInLocal(5);
+        //             localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
+        //             this.props.history.push({
+        //                 pathname: '/payment',
+        //                 state: {
+        //                     ticketTypeID,
+        //                     ticketName,
+        //                     totalPayment,
+        //                     redemptionDate,
+        //                     place
+        //                 }
+        //             })
+        //         }
+        //         hideLoader();
+        //     }).catch(function (error) {
+        //         if (error.response) {
+        //             hideLoader();
+        //         }
+        //     });
+
+        await axios.get(`${Config.API_URL}/visitorType/remaining`, {
+            params: {
+                idList: idVisitorTypeList,
+                date: this.formatDate(redemptionDate)
+            }
+        }).then(res => {
+            // console.log(res.data);
+            const visitorTypeFromDb = res.data;
+            // console.log(visitorTypeFromRedux)
+            var checkRemainAll = true;
+            for (let index = 0; index < visitorTypeFromDb.length; index++) {
+
+                const remainDb = visitorTypeFromDb[index].remaining;
+                const idDb = visitorTypeFromDb[index].id;
+
+                for (let index = 0; index < visitorTypeFromRedux.length; index++) {
+                    const remainRedux = visitorTypeFromRedux[index].quantity;
+                    const idRedux = visitorTypeFromRedux[index].visitorTypeId;
+                    const nameRedux = visitorTypeFromRedux[index].visitorTypeName;
+
+                    if (idDb === idRedux) {
+
+                        if (remainDb >= remainRedux) {
+                        } else if (remainDb < remainRedux) {
+                            checkRemainAll = false;
+                            toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
+                                position: "bottom-right",
+                                autoClose: 5000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
                         }
-
                     }
 
                 }
-                if (checkRemainAll === true) {
-                    // this.props.removeZeroQuantity();
-                    this.props.history.push({
-                        pathname: '/payment',
-                        state: {
-                            ticketTypeID,
-                            ticketName,
-                            totalPayment,
-                            redemptionDate,
-                            place
-                        }
-                    })
-                }
-                hideLoader();
-            }).catch(function (error) {
-                if (error.response) {
-                    // console.log(error.response);
-                    hideLoader();
-                }
-            });
+
+            }
+            if (checkRemainAll === true) {
+                // this.props.removeZeroQuantity();
+                const paymentToken = this.storeTokenPaymentInLocal(5);
+                localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
+                this.props.history.push({
+                    pathname: '/payment',
+                    state: {
+                        ticketTypeID,
+                        ticketName,
+                        totalPayment,
+                        redemptionDate,
+                        place
+                    }
+                })
+            }
+            hideLoader();
+        }).catch(error => {
+            hideLoader()
+        });
     }
 
     render() {
@@ -205,7 +266,7 @@ class TotalPayment extends Component {
             <div>
                 {/* <div>
         <button onClick={this.notify}>Notify !</button> */}
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {/* </div> */}
                 <div className="row-12 no-gutters">
                     {/* <div className="row ">
@@ -296,7 +357,7 @@ const mapDispatchToProps = (dispatch, props) => {
         hideLoader: () => {
             dispatch(hideLoader())
         },
-        removeZeroQuantity: ()=>{
+        removeZeroQuantity: () => {
             dispatch(removeZeroQuantity())
         }
     }

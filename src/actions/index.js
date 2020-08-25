@@ -108,12 +108,23 @@ export const showLoader = () => {
   }
 }
 
-export const hideLoader = () => {
+export const hideLoader= () => {
   return {
       type: types.HIDE_LOADER,
   }
 }
 
+export const showLoaderPart = () => {
+  return {
+      type: types.SHOW_LOADER_PART,
+  }
+}
+
+export const hideLoaderPart  = () => {
+  return {
+      type: types.HIDE_LOADER_PART,
+  }
+}
 export const fetchAllCategory = (listCategory) => {
   return {
       type: types.GET_ALL_CATEGORY,

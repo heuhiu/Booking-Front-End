@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './ReTicketType.css';
 // import VisitorTypeList from '../AddSub/VisitorTypeList';
-import { removeVisitorType, fetchVisitor2, showLoader, hideLoader } from '../../../actions/index';
+import { removeVisitorType, fetchVisitor2, showLoader, hideLoader, showLoaderPart, hideLoaderPart } from '../../../actions/index';
 import './TicketType.css';
 import { Collapse } from 'react-bootstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -13,6 +13,8 @@ import TotalPayment from '../TotalPayment/TotalPayment';
 // import * as Config from '../../../constants/ConfigAPI';
 import callApi from '../../../config/utils/apiCaller';
 import VisitorTypeItem from '../AddSub/VisitorTypeItem';
+import Flip from 'react-reveal/Flip';
+import PartLoader from '../../FullPageLoader/PartLoader';
 
 // import format from 'react';
 registerLocale("vi", vi);
@@ -49,7 +51,8 @@ class ReTicketType extends Component {
     handleChange = date => {
         this.props.removeVisitorType()
         this.setState({
-            startDate: date
+            startDate: date,
+            open: false
         }, () => {
             // alert(this.formatDate(this.state.startDate) + ", TKid: " + this.state.ticketTypeId)
             this.apiGetTicketTypeByDay();
@@ -58,24 +61,21 @@ class ReTicketType extends Component {
     };
 
     apiGetTicketTypeByDay = async () => {
-        const { showLoader, hideLoader } = this.props;
-        showLoader();
+        const { showLoaderPart, hideLoaderPart } = this.props;
+        showLoaderPart();
         let data = new FormData();
         data.append('ticketTypeId', this.state.ticketTypeId);
         data.append('date', this.formatDate(this.state.startDate));
-
         await callApi('visitorType/ticketType', 'POST', data)
             .then(res => {
-                // console.log(res.data);
-                // alert("Id: " + this.state.ticketTypeId + ", date: " + this.formatDate(this.state.startDate))
                 this.setState({
                     listTicketTypeByDay: res.data
                 })
-                hideLoader();
+                hideLoaderPart();
             }).catch(function (error) {
                 if (error.response) {
                     // console.log(error.response);
-                    hideLoader();
+                    hideLoaderPart();
                 }
             });
     }
@@ -105,7 +105,6 @@ class ReTicketType extends Component {
     setDefaultTicketType = (ticketTypes) => {
         if (ticketTypes.length > 0) {
             ticketTypes.map((ticketType, index) => {
-                // console.log(ticketType)
                 if (index === 0) {
                     this.setState({
                         ticketTypeId: ticketType.id,
@@ -120,43 +119,34 @@ class ReTicketType extends Component {
             });
         }
     }
-    
+
     getNearestDate(weekdays) {
         weekdays.sort();
         var i;
         for (i = 1; i <= 7; i++) {
             var nextday = new Date();
-            // var nextday =  new Date("Sun Aug 26 2020 GMT+0700 (Indochina Time)")
             nextday.setDate(nextday.getDate() + i)
             if (weekdays.includes(nextday.getDay())) {
                 return nextday
             }
         }
     }
-    
+
     componentDidMount = () => {
         var { ticketType, weekDays } = this.props;
-        // console.log(ticketType);
         this.setState({
             activeDay: weekDays
         }, () => {
             var activeDay = this.state.activeDay.sort();
-            // console.log(activeDay)
-            // const tomorrow = new Date()
-            // tomorrow.setDate(new Date().getDate() + activeDay[0])
-            // for (let index = 0; index < activeDay.length; index++) {
-            //     const element = activeDay[index];
-            // }
-            // console.log(new Date());
             const today = new Date().getDay()
             if (activeDay.indexOf(today) !== -1) {
                 this.setState({
                     startDate: new Date()
-                  })
+                })
             } else {
                 this.setState({
                     startDate: this.getNearestDate(this.state.activeDay)
-                  })
+                })
             }
         })
         this.props.removeVisitorType();
@@ -181,7 +171,6 @@ class ReTicketType extends Component {
             })
         }
     }
-
 
     getTotalMoney = () => {
         var result = 0;
@@ -225,6 +214,7 @@ class ReTicketType extends Component {
         }
         return result;
     }
+
     showVisitorType = (listVisitorType) => {
         var result = null;
         const { reduxVisitorType } = this.props;
@@ -238,13 +228,11 @@ class ReTicketType extends Component {
                         // <div key={index} className="tab-pane active" id={`${ticketType.id}`}>
                         //     <VisitorTypeList id={ticketType.id} item={ticketType.visitorTypes} />
                         // </div>
-                        <div key={index}>
-                            {/* {item.typeName} */}
-                            {/* <VisitorTypeItem key={index} index={index} item={item} /> */}
-                            <VisitorTypeItem key={index} visitorType={reduxVisitorType[updateIndex]} index={index} item={item} />
-
-                        </div>
-
+                            <div key={index}>
+                                {/* {item.typeName} */}
+                                {/* <VisitorTypeItem key={index} index={index} item={item} /> */}
+                                <VisitorTypeItem key={index} visitorType={reduxVisitorType[updateIndex]} index={index} item={item} />
+                            </div>
                     );
                 });
             }
@@ -380,7 +368,9 @@ class ReTicketType extends Component {
                                     <ul className="nav nav-pills" role="tablist">
                                         {this.showTicketTypeName(ticketType)}
                                     </ul>
+                                    <PartLoader />
                                     {this.showVisitorType(listTicketTypeByDay)}
+
                                 </div>
                             </div>
 
@@ -430,6 +420,12 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         hideLoader: () => {
             dispatch(hideLoader())
+        },
+        showLoaderPart: () => {
+            dispatch(showLoaderPart())
+        },
+        hideLoaderPart: () => {
+            dispatch(hideLoaderPart())
         }
     }
 }

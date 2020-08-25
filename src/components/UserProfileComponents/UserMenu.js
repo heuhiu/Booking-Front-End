@@ -230,7 +230,7 @@ class UserMenu extends Component {
             <div className="leftPartUserDetail">
                 <div className="outer row no-gutters">
                     <div className="inner circleCamera">
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
 
                         {/* <div className="CameraLogo">
                             <svg width="62" height="53" viewBox="0 0 62 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -268,7 +268,9 @@ class UserMenu extends Component {
                 </div>
                 <div style={{ paddingTop: "0px" }} className="outer row no-gutters">
                     <div className="inner circleCamera">
-                        <span className="detail3">{loggedUser.firstName} {loggedUser.lastName}</span>
+                        <span className="detail3">
+                            {loggedUser.firstName} {loggedUser.lastName}
+                        </span>
                     </div>
                 </div>
                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />

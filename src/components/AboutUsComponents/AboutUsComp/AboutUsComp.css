@@ -43,7 +43,11 @@
     border-radius: 20px;
     padding: 20px 50px 50px 50px;
 }
-
+.howToOrderBox1{
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 20px 50px 50px 50px;
+}
 .howToOrderBox li{
     color: #FF7062;
     margin: 30px 0px 30px 0px;
@@ -54,8 +58,25 @@
     line-height: 20px;
     margin-bottom: 0px;
 }
-
+.howToOrderBox1 li{
+    color: #FF7062;
+    margin: 30px 0px 30px 0px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 0px;
+}
 .howToOrderBox li p{
+    color: black;
+    font-family: "Inter";
+    font-size: 15px;
+    line-height: 18px;
+    font-style: normal;
+    font-weight: 400;
+}
+.howToOrderBox1 li p{
     color: black;
     font-family: "Inter";
     font-size: 15px;

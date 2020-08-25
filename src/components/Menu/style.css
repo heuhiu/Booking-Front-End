@@ -97,6 +97,10 @@
     background-color: inherit;
     cursor: pointer;  
     padding-top: 0px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    width: 150px; 
 }
 
 .userNamebefore{
@@ -110,9 +114,11 @@
     text-align: center;
     border: none;
     background-color: inherit;
-    cursor: pointer;  
+    cursor: context-menu;
 }
-
+.nav-link .userNamebefore:hover {
+    cursor: context-menu;
+}
 #dropdown-item:hover{
     /* cursor: pointer; */
     background-color: #F2F2F2;  

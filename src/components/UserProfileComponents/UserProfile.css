@@ -5,6 +5,7 @@
     font-size: 14px;
     line-height: 16px;
     color: #5B5B5B;
+    
 }
 .detail2{
   font-style: normal;
@@ -13,7 +14,12 @@
   line-height: 16px;
   color: #5B5B5B;
 }
-
+.detailFlow {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  /* width: 100px;  */
+}
 .UpdateDetail1{
     font-style: normal;
     font-weight: 500;
@@ -58,7 +64,9 @@
     height: auto;
     vertical-align: middle;
     text-align: center;
-  
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   

@@ -31,6 +31,7 @@ class HomePage extends Component {
     }
 
     componentDidMount = async () => {
+        window.scrollTo(0, 0)
         var jwtDecode = require('jwt-decode');
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {

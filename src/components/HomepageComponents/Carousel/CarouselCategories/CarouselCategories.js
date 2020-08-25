@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from '../../../../actions/index';
 import Flip from 'react-reveal/Flip';
-import Bounce from 'react-reveal/Bounce';
+import Fade from 'react-reveal/Fade';
 
 function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -56,7 +56,7 @@ class CarouselCategories extends Component {
         if (listCategory.length > 0) {
             result = listCategory.map((item, index) => {
                 return (
-                    <Bounce key={index} duration={index*235}>
+                    <Fade key={index} duration={index*235}>
                         <Link
                             
                             className="decoNone"
@@ -81,7 +81,7 @@ class CarouselCategories extends Component {
                                 </h3>
                             </div >
                         </Link>
-                    </Bounce>
+                    </Fade>
                 );
             });
         } else {

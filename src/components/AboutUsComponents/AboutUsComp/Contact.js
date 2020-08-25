@@ -18,7 +18,9 @@ class Contact extends Component {
         }
     }
 
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     render() {
         // const data = this.props.location.state.data[0];
         // const label = this.props.location.state.label

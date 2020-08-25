@@ -71,6 +71,21 @@ class UserOrderDetail extends Component {
         // console.log(orderDetail.orderItems);
         fetchVisitor(orderDetail.orderItems);
     }
+    storeTokenPaymentInLocal = (length) => {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
+
+    createTokenOrder=()=>{
+        const paymentToken = this.storeTokenPaymentInLocal(5);
+        localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
+    }
 
     showOrderByStatus = (orderDetail) => {
         const orderStatus = orderDetail.status;
@@ -193,6 +208,7 @@ class UserOrderDetail extends Component {
         }
 
         if (orderStatus === "UNPAID") {
+          
             return (
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
@@ -226,7 +242,7 @@ class UserOrderDetail extends Component {
                             {/* <p className="mp2">{orderDetail.mail}</p> */}
                             <br></br>
                             <Link
-                                // onClick={this.fetchOrders}
+                                onClick={this.createTokenOrder}
                                 className="btnRequestPayment"
                                 to={{
                                     pathname: "/payment",

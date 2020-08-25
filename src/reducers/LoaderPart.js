@@ -1,17 +1,16 @@
 import * as types from '../constants/ActionType';
 
-var initialState = {
+var initialStatePart = {
     loading: false
 }
 
-var Loader = (state = initialState, action) => {
+var LoaderPart = (state = initialStatePart, action) => {
     switch (action.type) {
-        case types.SHOW_LOADER:
+        case types.SHOW_LOADER_PART:
             return { ...state, loading: true };
-        case types.HIDE_LOADER:
+        case types.HIDE_LOADER_PART:
             return { ...state, loading: false };
         default: return state;
     }
 }
-
-export default Loader;
+export default LoaderPart;

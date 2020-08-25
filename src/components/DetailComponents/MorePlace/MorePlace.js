@@ -62,11 +62,24 @@ class MorePlace extends Component {
     }
 
     showPlaceOfTopCity = (topCity) => {
+        const { myPlace } = this.props;
+        const placeid = myPlace.id;
         var result = null;
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    // console.log(item)
+                    // console.log(item);
+                    const availableDay = item.weekDays.sort()
+                    var availableDate = ""
+                    const today = new Date().getDay()
+                    if (availableDay.indexOf(today) !== -1) {
+                        availableDate = "Mở cửa ngay hôm nay."
+                    } else {
+                        availableDate = "Không mở cửa ngày hôm nay."
+                    }
+                    if (item.id === placeid) {
+                        return null;
+                    }
                     return (
                         <a
                         href={`/placeDetail/${item.id}`}
@@ -91,7 +104,8 @@ class MorePlace extends Component {
                                         <div>
                                             {/* <p className="owlStyleChil2">{item.basicPrice}</p> */}
                                             <p className="owlStyleChil3">{this.convertCurrecyToVnd(item.basicPrice)}</p>
-                                            <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p>
+                                            {/* <p className="owlStyleChil4">Có thể đặt ngay hôm nay</p> */}
+                                            <p style={{color: availableDate==="Mở cửa ngay hôm nay."?"#FF7062":"#A5A5A5"}} className="owlStyleChil4">{availableDate}</p>
                                         </div>
                                     </div>
                                 </h3>

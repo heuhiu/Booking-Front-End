@@ -72,7 +72,7 @@ class VerifyEmail extends Component {
                 <div>
                 
                 <div className="limiter">
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     <div className="container-login100">
                         <div className="wrap-login100">
                             <div

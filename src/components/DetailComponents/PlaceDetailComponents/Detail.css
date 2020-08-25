@@ -15,12 +15,6 @@ ul.a{
        display:flex;
     }
 
-    #inline:hover{
-       cursor: pointer;
-        width:100%;
-        height:auto;
-        display:flex;
-     }
    .bulletListCustome{
     width: 9px;
     height: 26px;

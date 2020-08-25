@@ -190,7 +190,7 @@ class _CardForm extends Component {
         // console.log(res);
         hideLoader();
         if (res) {
-          localStorage.removeItem('visitorTypeList');
+          localStorage.removeItem('tokenPayment');
           this.props.history.push({
             pathname: '/paymentSucess',
             state: { orderDetail: orderDetail }
@@ -219,7 +219,7 @@ class _CardForm extends Component {
       <div className="CardDemo">
         {/* <FullPageLoader /> */}
         {/* <form onSubmit={this.handleSubmit.bind(this)}> */}
-        <ToastContainer />
+        {/* <ToastContainer /> */}
 
         {/* <CardElement
           onChange={this.handleChange}

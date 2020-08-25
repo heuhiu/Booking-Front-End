@@ -44,22 +44,41 @@ class TabDetail extends Component {
                 <div className={`col ${RighTab}`}>
                     <div className="tab-content" id="v-pills-tabContent">
                         <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                            Thông tin
-                            {/* <Zoom duration={300} top cascade> */}
-                                {place.detailDescription}
-                            {/* </Zoom> */}
+                            {place.detailDescription}
                         </div>
                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            Điều khoản
-                            {/* <Zoom duration={300} top cascade> */}
-                                {place.detailDescription}
-                            {/* </Zoom> */}
+
+                            Bằng cách truy cập và/hoặc sử dụng Website www.goboki.com (“Trang Web”), bạn thừa nhận rằng bạn đã đọc, hiểu và đồng ý chịu sự ràng buộc bởi các Điều Khoản Sử Dụng được quy định dưới đây và các điều khoản và điều kiện khác liên quan đến Trang Web, bao gồm nhưng không giới hạn ở các điều khoản và điều kiện về bảo mật và Các Câu Hỏi Thường Gặp, mà chúng cấu thành các thành phần không thể tách rời của các Điều Khoản Sử Dụng (“Điều Khoản”) này. Bạn phải đủ mười tám (18) tuổi trở lên để được phép sử dụng Trang Web. Xin lưu ý rằng chúng tôi có thể thay đổi, sửa đổi, bổ sung và loại bỏ các Điều Khoản này vào bất cứ thời điểm nào mà không cần thông báo trước. Bạn phải đọc các Điều Khoản này một cách định kỳ. Bằng việc tiếp tục sử dụng Trang Web này sau khi đã có những thay đổi như vậy đối với các Điều Khoản, người truy cập, người dùng hoặc Người Dùng Đã Đăng Ký (“bạn” hay “Người Dùng”) đồng ý và chấp thuận với những thay đổi đó. Nếu bạn sử dụng bất kỳ dịch vụ nào khác của chúng tôi, thì việc sử dụng của bạn được dựa trên sự chấp thuận và tuân thủ các điều khoản và điều kiện được áp dụng đối với các dịch vụ đó.
                         </div>
                         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                            Hướng dẫn
-                            {/* <Zoom duration={300} top cascade> */}
-                                {place.detailDescription}
-                            {/* </Zoom> */}
+                            <div className="howToOrderBox1">
+                                <ol>
+                                    <li>
+                                        Tìm công viên
+                          <p>Bắt đầu tìm công viên bằng cách điền thông tin điểm đến, địa danh hoặc tên công viên.</p>
+                                    </li>
+                                    <li>
+                                        Chọn công viên
+                           <p>Trên trang kết quả tìm kiếm, bạn chọn công viên mong muốn. Nhấn tiêu đề để xem thông tin chi tiết công viên.</p>
+                                    </li>
+                                    <li>
+                                        Đặt vé
+                          <p>Trên trang thông tin công viên, chọn loại vé và số lượng vé bạn muốn đặt. Thông tin vé (tên công viên, ngày sử dụng, giá vé, v.v.)</p>
+                                    </li>
+                                    <li>
+                                        Xác nhận thông tin liên lạc
+                          <p>Thông tin liên hệ của khách hàng đã được hiển thị theo đúng thông tin cá nhân được đăng ký tài khoản trước đó. Hãy chắc chắn rằng tất cả thông tin đều chính xác, sau đó tiến hành thanh toán.</p>
+                                    </li>
+                                    <li>
+                                        Thực hiện thanh toán
+                          <p>Chọn phương thức thanh toán mong muốn. Chú ý không thanh toán vượt quá thời gian quy định.</p>
+                                    </li>
+                                    <li>
+                                        Nhận vé
+                          <p>Chúng tôi sẽ gửi vé vào email của bạn trong vòng 60 phút sau khi nhận được số tiền thanh toán.</p>
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>

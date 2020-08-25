@@ -6,7 +6,7 @@ import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
 import { Link } from 'react-router-dom';
 import Flip from 'react-reveal/Flip';
-import Bounce from 'react-reveal/Bounce';
+import Fade from 'react-reveal/Fade';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
@@ -52,7 +52,7 @@ class Slick2 extends Component {
     if (listTopcity.length > 0) {
       result = listTopcity.map((item, index) => {
         return (
-          <Bounce key={index} duration={index*235}>
+          <Fade key={index}>
             <Link
               className="decoNone"
               to={`/searchedPlace?listCityID=${item.id}`}>
@@ -67,7 +67,7 @@ class Slick2 extends Component {
                 </h3>
               </div >
             </Link>
-          </Bounce>
+          </Fade>
         );
       });
     } else {

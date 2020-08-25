@@ -21,7 +21,9 @@ class UserProfile extends Component {
             UserDetail: []
         }
     }
-
+    componentDidMount = () => {
+        window.scrollTo(0, 0)
+    }
     render() {
         // console.log(this.props.UserDetail.id)
         // console.log(this.props.history.action);

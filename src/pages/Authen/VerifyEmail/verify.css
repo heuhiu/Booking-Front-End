@@ -13,6 +13,12 @@
 .leftPart{
     width: 35.57291667%;
 }
+/* [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  } */
+  [type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
 .resent{
     border: 1px solid #FF7062;
     box-sizing: border-box;

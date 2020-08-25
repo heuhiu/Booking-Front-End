@@ -90,14 +90,14 @@ class ListFilter extends Component {
                 ListIDFoSend: [...this.state.ListIDFoSend, id]
             }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
-
+                this.props.callApiSearchPlace(this.state.ListIDFoSend, this.state.ListIDFoSendCat)
             });
         } else {
             this.setState({
                 ListIDFoSend: this.state.ListIDFoSend.filter(temp => temp !== id)
             }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
-
+                this.props.callApiSearchPlace(this.state.ListIDFoSend, this.state.ListIDFoSendCat)
             })
         }
         this.setState({
@@ -116,6 +116,7 @@ class ListFilter extends Component {
                 ListIDFoSendCat: [...this.state.ListIDFoSendCat, id]
             }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+                this.props.callApiSearchPlace(this.state.ListIDFoSend, this.state.ListIDFoSendCat)
             });
 
         } else {
@@ -123,6 +124,7 @@ class ListFilter extends Component {
                 ListIDFoSendCat: this.state.ListIDFoSendCat.filter(temp => temp !== id)
             }, () => {
                 this.props.setmMul(this.state.ListIDFoSend, this.state.ListIDFoSendCat);
+                this.props.callApiSearchPlace(this.state.ListIDFoSend, this.state.ListIDFoSendCat)
             })
         }
         this.setState({

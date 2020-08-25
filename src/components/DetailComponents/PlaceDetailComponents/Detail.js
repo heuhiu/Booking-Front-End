@@ -67,6 +67,7 @@ class Detail extends Component {
 
     render() {
         var { place } = this.props
+        // console.log(place.id)
         // console.log(place);
         // console.log(place.weekDays);
         // console.log(place.weekDays.sort())
@@ -143,11 +144,9 @@ class Detail extends Component {
                                 <div ref={this.myRef} className="bulletListCustome"></div>
                                 <div className="content">Bạn được trải nghiệm những gì?</div>
                             </div>
-                            <Flip top cascade collapse >
                                 <span className="longDescription">
                                     {place.detailDescription}
                                 </span>
-                            </Flip>
                             <div
                                 style={{
                                     marginTop: "40px",

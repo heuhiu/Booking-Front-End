@@ -125,12 +125,15 @@ class Menu extends Component {
                 >
                     <NavBarSearch />
                 </div> */}
-                <div style={{display: this.props.location.pathname === "/" 
-                || this.props.location.pathname === "/login" 
-                || this.props.location.pathname === "/register"
-                || this.props.location.pathname === "/forgotPassword"
-                ?"none":""}} >
-                <NavBarSearch />
+                <div style={{
+                    display: this.props.location.pathname === "/"
+                        || this.props.location.pathname === "/login"
+                        || this.props.location.pathname === "/searchedPlace"
+                        || this.props.location.pathname === "/register"
+                        || this.props.location.pathname === "/forgotPassword"
+                        ? "none" : ""
+                }} >
+                    <NavBarSearch />
                 </div>
                 <ul className="nav navbar-expand-lg">
                     {/* {this.showMenus(menus)} */}
@@ -162,7 +165,7 @@ class Menu extends Component {
                     </Link>
                     <Link style={{ display: this.props.location.pathname === "/register" ? "none" : "" }} to="/register">
                         <button style={{ display: tokenLogin ? "none" : "" }} className="registerbtn">
-                            Đăng kí
+                            Đăng ký
                     </button>
                     </Link>
                     <div
@@ -179,7 +182,7 @@ class Menu extends Component {
                         className="nav-link">
                         <Dropdown style={{ display: tokenLogin ? "" : "none" }}>
                             <Dropdown.Toggle id="userName">
-                                {this.props.UserDetail.firstName} {this.props.UserDetail.lastName}
+                                {this.props.UserDetail.firstName}&nbsp;{this.props.UserDetail.lastName}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {/* <Dropdown.Item href="/userProfile/myProfile" id="dropdown-item"> */}

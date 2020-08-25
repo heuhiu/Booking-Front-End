@@ -212,7 +212,7 @@ class LoginComp extends Component {
             return (
                 <div>
                     <Menu />
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     <div className="limiter">
                         <div className="container-login100">
                             <div className="wrap-login100">

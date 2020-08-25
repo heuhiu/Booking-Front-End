@@ -241,7 +241,7 @@ class ForgotPassword extends Component {
                         </form>
                     </div>
                 </div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 <FullPageLoader />
             </div>
             </div>

@@ -7,6 +7,7 @@ import './AddSub.css';
 // const radioToolbar = "radio-toolbar";
 // import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Flip from 'react-reveal/Flip';
 
 // var quantity = 0;
 
@@ -20,12 +21,13 @@ class VisitorTypeItem extends Component {
     }
 
     render() {
-        const { item, index, visitorType } = this.props;
+        const { item, index, visitorType, loaderPart } = this.props;
         var myQuan = 0
         if (visitorType !== undefined) {
             myQuan = visitorType.quantity
         }
         return (
+            <Flip duration={index*500} top when={loaderPart.loading === false}>
             <div key={index} style={{ paddingTop: "40px" }} className="row no-gutters">
                 <div className="col-12">
                     <div className="row no-gutters" style={{
@@ -63,6 +65,7 @@ class VisitorTypeItem extends Component {
                     </div>
                 </div>
             </div>
+            </Flip>
         );
     }
 
@@ -100,6 +103,7 @@ class VisitorTypeItem extends Component {
 const mapStateToProps = state => {
     return {
         // visitorType: state.Ticket
+        loaderPart: state.LoaderPart
     }
 }
 

@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { getUserLogin, showLoader, hideLoader } from './actions/index';
 import callApi from './config/utils/apiCaller';
 import routers from './config/routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import {
@@ -16,7 +18,6 @@ import {
     isBrowser,
     isMobile,
 } from "react-device-detect";
-import FullPageLoader from './components/FullPageLoader/FullPageLoader';
 class App extends Component {
 
     constructor(props) {
@@ -95,6 +96,7 @@ class App extends Component {
                             <Row noGutters={true}>
                                 <Col md={12}>{this.showContentMenus(routers)}</Col>
                             </Row>
+                            <ToastContainer />
                         </Container>
                     </Router >
                 </BrowserView>

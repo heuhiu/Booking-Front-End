@@ -92,16 +92,13 @@ class Search extends Component {
 
     //After click search set Name Seached to local storage
     onSubmitSearch = (e) => {
-
         e.preventDefault();
-        // console.log(this.state.cityMul.length);
         if (this.state.cityMul.length !== 0 || this.state.catMul.length !== 0) {
-            // console.log(this.searchPathLink());
             this.props.history.push(`${this.searchPathLink()}`);
         }
-        var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
-        // console.log(str);
-        if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
+        // var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
+
+         else if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -111,8 +108,7 @@ class Search extends Component {
                 draggable: true,
                 progress: undefined,
             });
-        }
-        else if (this.isValid(this.state.txtParkName) === false) {
+        } else if (this.isValid(this.state.txtParkName) === false) {
             toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -142,7 +138,7 @@ class Search extends Component {
         this.searchPathLink();
         return (
             <div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 <form
                     onSubmit={this.onSubmitSearch}
                     className="d-block d-flex">

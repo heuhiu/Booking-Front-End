@@ -13,14 +13,12 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { showLoader, hideLoader } from '../../../actions';
 import CurrencyInput from 'react-currency-input';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ListFilter from '../ListFilter/ListFilter';
 // import API_URL from '../../../constants/ConfigAPI';
 import * as Config from '../../../constants/ConfigAPI';
-import Zoom from 'react-reveal/Zoom';
 import Fade from 'react-reveal/Fade';
-
 
 class ListPlaceSearched extends Component {
 
@@ -33,6 +31,7 @@ class ListPlaceSearched extends Component {
             limit: 5,          //Number of items appear
             searchList: [],     //ListSeached temporary
             searchName: "",
+            txtParkName: "",
             listCtiId: [],
             listCatId: [],
             listCatName: [],
@@ -201,7 +200,7 @@ class ListPlaceSearched extends Component {
                     <div className="row">
                         <div className="col-12">
                             {/* <h1>Không tìm thấy địa điểm phù hợp</h1> */}
-                            <img src={failToSearchPic} width="100%" height="auto" alt="FALT TO LOAD"/>
+                            <img src={failToSearchPic} width="100%" height="auto" alt="FALT TO LOAD" />
                         </div>
                     </div>
                     {/* </div> */}
@@ -280,34 +279,15 @@ class ListPlaceSearched extends Component {
 
     //Received data from API
     receivedData = async (searchName, IDCityFilter, IDCategoryFilter,) => {
+        window.scrollTo(0, 0)
         const { activePage, value } = this.state;
         const { showLoader, hideLoader } = this.props;
-        // console.log(searchName);
-        // console.log(isNaN(IDCityFilter[0]));
-        // console.log(isNaN(IDCategoryFilter[0]));
-        // console.log(value.min);
-        // console.log(String(value.min));
-        // if(searchName === "!"){
-        //     this.setState({
-        //         searchList: [],
-        //         checkSearch: false
-        //     }, () => {
-        //         toast.error('URL không hợp lệ!', {
-        //             position: "bottom-right",
-        //             autoClose: 5000,
-        //             hideProgressBar: true,
-        //             closeOnClick: true,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined,
-        //         });
-        //     })
-        // }
         if (searchName === "" && isNaN(IDCityFilter[0]) === true && isNaN(IDCategoryFilter[0]) === true) {
             // if (false) {
             this.setState({
                 searchList: [],
-                checkSearch: false
+                checkSearch: false,
+
             }, () => {
                 toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục !', {
                     position: "bottom-right",
@@ -348,7 +328,8 @@ class ListPlaceSearched extends Component {
                     searchList: res.data.listResult,
                     totalItems: res.data.totalItems,
                     checkApiListSearched: true,
-                    checkSearch: true
+                    checkSearch: true,
+                    searchName,
                 }, () => {
                     if (this.state.checkApiCat === true && this.state.checkApiListSearched === true)
                         hideLoader();
@@ -390,43 +371,101 @@ class ListPlaceSearched extends Component {
         });
     }
 
+    callApiSearchPlace = (cityMul, catMul) => {
+        const { listCtiId, listCatId, searchName, txtParkName } = this.state
+        var jointCityID = cityMul.concat(listCtiId)
+        var jointCategoryID = catMul.concat(listCatId)
+        const cityRemoveNaN = this.removeNaN(jointCityID)
+        const cateRemoveNaN = this.removeNaN(jointCategoryID)
+        const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
+        const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
+
+        if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
+            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else
+            if (this.isValid(this.state.txtParkName) === false) {
+                toast.error('Vui lòng không điền kí tự đặc biệt!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                var pathLink = ""
+                if (txtParkName !== '') {
+                    pathLink = `/searchedPlace${txtParkName ? `?name=${txtParkName}` : ""}`;
+                } else {
+                    pathLink = `/searchedPlace${searchName ? `?name=${searchName}` : ""}`;
+                }
+                const pathListCity = `?listCityID=${cityRemoveDub}`
+                const pathListCat = `?listCatID=${cateRemoveDub}`
+                this.setState({
+                    listCtiId: cityRemoveDub,
+                    listCatId: cateRemoveDub,
+
+                })
+                if (cityRemoveDub.length > 0) {
+                    pathLink += pathListCity;
+                }
+                if (cateRemoveDub.length > 0) {
+                    pathLink += pathListCat;
+                }
+                if (pathLink !== "") {
+                    this.props.history.push(pathLink);
+                }
+
+                this.setState({
+                    activePage: 1,
+                    // searchName: 
+                }, () => {
+                    // if (txtParkName !== '') {
+                    //     this.receivedData(this.state.txtParkName, cityRemoveDub, cateRemoveDub);
+                    // } else {
+                    this.receivedData(this.state.searchName, cityRemoveDub, cateRemoveDub);
+                    // }
+                    this.forceUpdate()
+                })
+            }
+
+    }
+
     removeCityID = (id) => {
         const { listCtiId } = this.state;
-        // console.log(listCtiId);
         const index = listCtiId.indexOf(id);
         if (index > -1) {
             listCtiId.splice(index, 1);
         }
-        // array = [2, 9]
-        // console.log(listCtiId);
-
         this.setState({
             listCtiId: listCtiId,
         });
     }
+
     removeAllfilter = () => {
-        // const {  listCtiId, listCatId,listCity,listCat } = this.state;
         this.setState({
             listCatId: [],
             listCtiId: []
         }, () => {
-            // alert(this.state.listCtiId)
-            // alert(this.state.listCatId)
-            // console.log("")
-            // this.forceUpdate()
             this.receivedData(this.state.searchName, this.state.listCtiId, this.state.listCatId);
         });
     }
+
     removeCategoryID = (id) => {
         const { listCatId } = this.state;
-        // console.log(listCatId);
         const index = listCatId.indexOf(id);
         if (index > -1) {
             listCatId.splice(index, 1);
         }
-        // array = [2, 9]
-        // console.log(listCatId);
-
         this.setState({
             listCatId: listCatId,
         });
@@ -436,19 +475,23 @@ class ListPlaceSearched extends Component {
         return oldArray.filter(value => !Number.isNaN(value));
     }
 
+    onChangeSearchName = (e) => {
+        var target = e.target;
+        var name = target.name;
+        var value = target.value;
+        this.setState({
+            [name]: value,
+        })
+    }
+
     isValid = (str) => {
         return /^[a-zA-Z0-9]{0,225}$/g.test(str);
-        // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
     }
 
     componentDidMount = () => {
         window.scrollTo(0, 0)
-        // debugger
+        // this.props.history.action === 'POP'
         var { location } = this.props;
-        // console.log(location);
-        // if (location !== undefined) {
-        // console.log(location.search);
-
         if (location.search !== "") {
             const answer_array = location.search.split('?');
             var name = '';
@@ -527,44 +570,210 @@ class ListPlaceSearched extends Component {
 
     removeDublicate = (list) => {
         return [...new Set(list)];
-        // console.log(unique)
-        // return unique
     }
-    // onSelectCat=()=>{
-    //     this.props.history.replace("/searchedPlace?name=Vin3")
-    //     window.history.pushState("/searchedPlace?name=Ba na");
-    //     this.props.history.replace('/searchedPlace?name=bana')
-    //     window.location.href = window.location.href + '/searchedPlace?name=bana';
 
-    // }
-    onSelectCat = () => {
-        const { catMul, cityMul, listCtiId, listCatId, searchName } = this.state
+    isValid = (str) => {
+        return /^[a-zA-Z0-9 ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]{0,225}$/g.test(str);
+        // ~!@#$%^&*()-_=+[]\{}|;':",./<>?
+    }
+
+    removeSpace = (str) => {
+        return str.replace(/\s+/gi, " ");
+    }
+
+    componentDidUpdate() {
+        window.onpopstate = e => {
+            // window.location.reload();
+            if (this.mainInput !== null) {
+                this.mainInput.value = "";
+            }
+            var { location } = this.props;
+            if (location.search !== "") {
+                const answer_array = location.search.split('?');
+                var name = '';
+                var listCtiId = '';
+                var listCatId = '';
+                for (let index = 0; index < answer_array.length; index++) {
+                    const element = answer_array[index];
+                    if (element.split("=")[0] === "name") {
+                        name = element.split("=")[1]
+                    }
+                    if (element.split("=")[0] === "listCityID") {
+                        listCtiId = element.split("=")[1]
+                    }
+                    if (element.split("=")[0] === "listCatID") {
+                        listCatId = element.split("=")[1]
+                    }
+                }
+                var listCtiIdNumber = listCtiId.split(',').map(function (item) {
+                    return parseInt(item, 10);
+                });
+                var listCatIdNumber = listCatId.split(',').map(function (item) {
+                    return parseInt(item, 10);
+                });
+                var newDecode = decodeURIComponent(name);
+                this.setState({
+                    searchName: newDecode,
+                    listCtiId: listCtiIdNumber,
+                    listCatId: listCatIdNumber,
+
+                }, () => {
+                    this.getCategoriesnCity();
+                    this.receivedData(newDecode, listCtiIdNumber, listCatIdNumber);
+                })
+            } else {
+                this.setState({
+                    searchList: [],
+                    checkSearch: false
+                }, () => {
+                    this.getCategoriesnCity();
+                    toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục !', {
+                        position: "bottom-right",
+                        autoClose: 4000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                })
+            }
+        }
+    }
+
+    onSubmitSearch = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.mainInput.value = "";
+        const { catMul, cityMul, listCtiId, listCatId, searchName, txtParkName } = this.state
         var jointCityID = cityMul.concat(listCtiId)
         var jointCategoryID = catMul.concat(listCatId)
         const cityRemoveNaN = this.removeNaN(jointCityID)
         const cateRemoveNaN = this.removeNaN(jointCategoryID)
         const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
         const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
-        var pathLink = `/searchedPlace${searchName ? `?name=${searchName}` : ""}`;
-        const pathListCity = `?listCityID=${cityRemoveDub}`
-        const pathListCat = `?listCatID=${cateRemoveDub}`
-        this.setState({
-            listCtiId: cityRemoveDub,
-            listCatId: cateRemoveDub
-        })
-        if (cityRemoveDub.length > 0) {
-            pathLink += pathListCity;
-        }
-        if (cateRemoveDub.length > 0) {
-            pathLink += pathListCat;
-        }
-        if (pathLink !== "") {
-            this.props.history.push(pathLink);
-        }
-        this.setState({
-            activePage: 1
-        })
-        this.receivedData(this.state.searchName, cityRemoveDub, cateRemoveDub);
+
+        if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
+            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else
+            if (this.isValid(this.state.txtParkName) === false) {
+                toast.error('Vui lòng không điền kí tự đặc biệt!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                var pathLink = ""
+                if (txtParkName !== '') {
+                    pathLink = `/searchedPlace${txtParkName ? `?name=${this.removeSpace(txtParkName)}` : ""}`;
+                } else {
+                    pathLink = `/searchedPlace${searchName ? `?name=${this.removeSpace(searchName)}` : ""}`;
+                }
+                const pathListCity = `?listCityID=${cityRemoveDub}`
+                const pathListCat = `?listCatID=${cateRemoveDub}`
+                this.setState({
+                    listCtiId: cityRemoveDub,
+                    listCatId: cateRemoveDub
+                })
+                if (cityRemoveDub.length > 0) {
+                    pathLink += pathListCity;
+                }
+                if (cateRemoveDub.length > 0) {
+                    pathLink += pathListCat;
+                }
+                if (pathLink !== "") {
+                    this.props.history.push(pathLink);
+                }
+
+                this.setState({
+                    activePage: 1
+                }, () => {
+                    if (txtParkName !== '') {
+                        this.receivedData(this.removeSpace(this.state.txtParkName), cityRemoveDub, cateRemoveDub);
+                    } else {
+                        this.receivedData(this.removeSpace(this.state.searchName), cityRemoveDub, cateRemoveDub);
+                    }
+                })
+            }
+
+    }
+
+    onSelectCat = () => {
+        const { catMul, cityMul, listCtiId, listCatId, searchName, txtParkName } = this.state
+        var jointCityID = cityMul.concat(listCtiId)
+        var jointCategoryID = catMul.concat(listCatId)
+        const cityRemoveNaN = this.removeNaN(jointCityID)
+        const cateRemoveNaN = this.removeNaN(jointCategoryID)
+        const cityRemoveDub = this.removeDublicate(cityRemoveNaN);
+        const cateRemoveDub = this.removeDublicate(cateRemoveNaN);
+
+        if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
+            toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else
+            if (this.isValid(this.state.txtParkName) === false) {
+                toast.error('Vui lòng không điền kí tự đặc biệt!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                var pathLink = ""
+                if (txtParkName !== '') {
+                    pathLink = `/searchedPlace${txtParkName ? `?name=${txtParkName}` : ""}`;
+                } else {
+                    pathLink = `/searchedPlace${searchName ? `?name=${searchName}` : ""}`;
+                }
+                const pathListCity = `?listCityID=${cityRemoveDub}`
+                const pathListCat = `?listCatID=${cateRemoveDub}`
+                this.setState({
+                    listCtiId: cityRemoveDub,
+                    listCatId: cateRemoveDub
+                })
+                if (cityRemoveDub.length > 0) {
+                    pathLink += pathListCity;
+                }
+                if (cateRemoveDub.length > 0) {
+                    pathLink += pathListCat;
+                }
+                if (pathLink !== "") {
+                    this.props.history.push(pathLink);
+                }
+
+                this.setState({
+                    activePage: 1
+                }, () => {
+                    if (txtParkName !== '') {
+                        this.receivedData(this.state.txtParkName, cityRemoveDub, cateRemoveDub);
+                    } else {
+                        this.receivedData(this.state.searchName, cityRemoveDub, cateRemoveDub);
+                    }
+                })
+            }
+
     }
 
     onResetSliderSet = () => {
@@ -596,15 +805,11 @@ class ListPlaceSearched extends Component {
         }
     }
 
+
     render() {
-        // debugger
         const { activePage, totalItems, searchList,
             searchName, listCat, listCity, listCtiId, listCatId } = this.state;
-        // console.log(cityMul);
-        // console.log(catMul);
-        var nameCondition = searchName ? searchName : "mọi địa điểm"
-        // const listCtiSEND = listCtiId;
-        // const listCateSEND = listCatId;
+        var nameCondition = searchName ? searchName.trim() : "mọi địa điểm";
         var options = [];
         if (listCat.length > 0) {
             for (let i = 0; i < listCat.length; i++) {
@@ -635,39 +840,85 @@ class ListPlaceSearched extends Component {
         } else
             return (
                 <div>
+                    {/* <SearchBanner /> */}
+                    <div className="container">
+                        {/* <div className="row">
+                            <div style={{boder: "2px solid green"}} className="col">
+                                <input
+                                    type="text"
+                                    maxLength="225"
+                                    className="searchFilter"
+                                    placeholder="Tìm hoạt động hoặc điểm đến mới"
+                                    name="txtParkName"
+                                    onChange={this.onChangeSearchName}
+                                />
+                            </div>
+                            <div className="col">
+                                <button
+                                    onClick={this.onSelectCat}
+                                    type="button"
+                                    className="filterBtn">
+                                    Lọc kết quả
+                                                </button>
+                            </div>
+                        </div>
+                    */}
+                        <div className="row">
+                            <div className="fiterSearchClassDiv col-12">
+                                <div className="fiterSearchClass">
+                                    <form
+                                        onSubmit={this.onSubmitSearch}
+                                        className="d-flex">
+                                        <div className="">
+                                            <div >
+                                                <input
+                                                    ref={(ref) => this.mainInput = ref}
+                                                    type="text"
+                                                    maxLength="225"
+                                                    className="searchFilter"
+                                                    placeholder="Tìm hoạt động hoặc điểm đến"
+                                                    name="txtParkName"
+                                                    onChange={this.onChangeSearchName}
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className="subNabSearchBtn1"
+                                        >
+                                            <svg className="svgLOGO" width="17" height="18" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.1111 23.4839C18.2476 23.4839 23.2222 18.6199 23.2222 12.6197C23.2222 6.61961 18.2476 1.75555 12.1111 1.75555C5.97461 1.75555 1 6.61961 1 12.6197C1 18.6199 5.97461 23.4839 12.1111 23.4839Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M26 26.2003L19.9583 20.2929" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </button>
+                                        {/* </Link> */}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <Container style={{ fontFamily: 'Inter' }} >
                         <div className="popular_places_area">
                             <div className="container">
-                                {/* <div className="row">
-                                    <div className="col-6">
-                                        <Zoom top cascade>
-                                            {animateSearchName}
-                                        </Zoom>
-                                    </div>
-                                </div> */}
-                                <Zoom duration={300} right cascade >
-                                    <div className="b">Tất cả kết quả với: &quot;{nameCondition}&quot;</div>
-                                </Zoom>
+
+                                <div className="b">Tất cả kết quả với: &quot;{nameCondition}&quot;
+                                {/* <div className="b">Tất cả kết quả với:/ &quot;{searchName===""?searchName:txtParkName}&quot; */}
+
+                                </div>
+                                {/* <NavBarSearch /> */}
+                                {/* <SearchNameBox /> */}
                                 <div
                                     style={{ marginTop: "26px" }}
                                     className="row">
                                     <div className="col-lg-4">
                                         <div className="filter_result_wrap">
-                                            {/* <CategorySelection
-                                                options={options}
-                                                catSelect={listCatId}
-                                                onChangeCallback={response => this.onChangeCate(response)} /> */}
-                                            {/* <ListFilter 
-                                            listCategory={listCat} 
-                                            listCity={listCity} 
-                                            setmMul={this.setmMul}/> 
-                                            */}
                                             <ListFilter
                                                 listCategory={listCat}
                                                 listCity={listCity}
                                                 listCitySelected={listCtiId}
                                                 listCategorySelected={listCatId}
                                                 setmMul={this.setmMul}
+                                                callApiSearchPlace={this.callApiSearchPlace}
                                                 removeCityID={this.removeCityID}
                                                 removeCategoryID={this.removeCategoryID}
                                             // removeAll={this.removeAllfilter}
@@ -687,18 +938,19 @@ class ListPlaceSearched extends Component {
                                                     </button> */}
                                                 </div>
                                                 <div className="col-5">
-                                                    <button
+                                                    {/* <button
                                                         onClick={this.onSelectCat}
                                                         type="button"
                                                         className="filterBtn">
                                                         Lọc kết quả
-                                                    </button>
+                                                    </button> */}
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
                                     <div className="col-lg-8">
+
                                         <div className="row no-gutters">
                                             {/* <Slide left delay={300} > */}
                                             {/* <div  className="priceFilter row"> */}
@@ -744,7 +996,7 @@ class ListPlaceSearched extends Component {
                                                             // style={{ border: "5px solid green" }}
                                                             suffix=" đ"
                                                             precision="0"
-                                                            maxlength="12"
+                                                            maxLength="12"
                                                             maxValueForSlider="50"
                                                             decimalSeparator=","
                                                             thousandSeparator="."
@@ -759,7 +1011,7 @@ class ListPlaceSearched extends Component {
                                                             suffix=" đ"
                                                             className="maxminBtn"
                                                             precision="0"
-                                                            maxlength="12"
+                                                            maxLength="12"
                                                             decimalSeparator=","
                                                             thousandSeparator="."
                                                             value={this.state.value.max}
@@ -822,7 +1074,7 @@ class ListPlaceSearched extends Component {
                                 </div>
                             </div>
                         </div>
-                        <ToastContainer />
+                        {/* <ToastContainer /> */}
                     </Container>
 
                 </div>
