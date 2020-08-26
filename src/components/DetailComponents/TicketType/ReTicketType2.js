@@ -89,10 +89,10 @@ class ReTicketType extends Component {
             this.setState({
                 listTicketTypeByDay: res.data
             })
-            hideLoader()
+            hideLoaderPart();
         }).catch(error => {
             // console.log(error.response);
-            hideLoader()
+            hideLoaderPart();
         });
     }
 
