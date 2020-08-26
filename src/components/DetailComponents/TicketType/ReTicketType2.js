@@ -13,8 +13,9 @@ import TotalPayment from '../TotalPayment/TotalPayment';
 // import * as Config from '../../../constants/ConfigAPI';
 import callApi from '../../../config/utils/apiCaller';
 import VisitorTypeItem from '../AddSub/VisitorTypeItem';
-import Flip from 'react-reveal/Flip';
 import PartLoader from '../../FullPageLoader/PartLoader';
+import axios from 'axios'
+import * as Config from '../../../constants/ConfigAPI';
 
 // import format from 'react';
 registerLocale("vi", vi);
@@ -63,21 +64,36 @@ class ReTicketType extends Component {
     apiGetTicketTypeByDay = async () => {
         const { showLoaderPart, hideLoaderPart } = this.props;
         showLoaderPart();
-        let data = new FormData();
-        data.append('ticketTypeId', this.state.ticketTypeId);
-        data.append('date', this.formatDate(this.state.startDate));
-        await callApi('visitorType/ticketType', 'POST', data)
-            .then(res => {
-                this.setState({
-                    listTicketTypeByDay: res.data
-                })
-                hideLoaderPart();
-            }).catch(function (error) {
-                if (error.response) {
-                    // console.log(error.response);
-                    hideLoaderPart();
-                }
-            });
+        // let data = new FormData();
+        // data.append('ticketTypeId', this.state.ticketTypeId);
+        // data.append('date', this.formatDate(this.state.startDate));
+        // await callApi('visitorType/ticketType', 'POST', data)
+        //     .then(res => {
+        //         this.setState({
+        //             listTicketTypeByDay: res.data
+        //         })
+        //         hideLoaderPart();
+        //     }).catch(function (error) {
+        //         if (error.response) {
+        //             // console.log(error.response);
+        //             hideLoaderPart();
+        //         }
+        //     });
+        await axios.get(`${Config.API_URL}/visitorType/ticketType`, {
+            params: {
+                ticketTypeId: this.state.ticketTypeId,
+                date: this.formatDate(this.state.startDate)
+            }
+        }).then(res => {
+            console.log(res.data);
+            this.setState({
+                listTicketTypeByDay: res.data
+            })
+            hideLoader()
+        }).catch(error => {
+            // console.log(error.response);
+            hideLoader()
+        });
     }
 
 
@@ -228,11 +244,11 @@ class ReTicketType extends Component {
                         // <div key={index} className="tab-pane active" id={`${ticketType.id}`}>
                         //     <VisitorTypeList id={ticketType.id} item={ticketType.visitorTypes} />
                         // </div>
-                            <div key={index}>
-                                {/* {item.typeName} */}
-                                {/* <VisitorTypeItem key={index} index={index} item={item} /> */}
-                                <VisitorTypeItem key={index} visitorType={reduxVisitorType[updateIndex]} index={index} item={item} />
-                            </div>
+                        <div key={index}>
+                            {/* {item.typeName} */}
+                            {/* <VisitorTypeItem key={index} index={index} item={item} /> */}
+                            <VisitorTypeItem key={index} visitorType={reduxVisitorType[updateIndex]} index={index} item={item} />
+                        </div>
                     );
                 });
             }
