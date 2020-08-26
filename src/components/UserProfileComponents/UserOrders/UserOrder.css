@@ -20,8 +20,23 @@
     line-height: 14px;
     color: #FFFFFF;
   }
+.notFoundOrderh1{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  color: #5B5B5B;
+}
 
-
+.notFoundOrder{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 14px;
+  color: #5B5B5B;
+}
 .detailTicketChildSENT{
     border: 1px solid #19CF78;
     border-radius: 20px 20px 0px 0px;

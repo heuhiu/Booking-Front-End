@@ -169,7 +169,12 @@ class TopOrders extends Component {
 
             else if (topOrders.length === 0) {
                 return (
-                    <p style={{ visibility: this.props.loader === false ? "visible" : "hidden" }}>Not Found</p>
+                    <p style={{ visibility: this.props.loader.loading === false ? "visible" : "hidden" }}>
+                   <div>
+                        <p className="notFoundOrderh1">Không tìm thấy đặt chỗ</p>
+                        <p className="notFoundOrder">Hiện bạn chưa có bất kỳ đặt chỗ nào, hãy đặt trên trang chủ ngay!</p>
+                    </div>
+                </p>
                 );
             }
 
