@@ -6,6 +6,9 @@ import callApi from '../../config/utils/apiCaller';
 import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swing from 'react-reveal/Swing';
+import Pulse from 'react-reveal/Pulse';
+import Jump from 'react-reveal/Jump';
 
 const menus = [
     {
@@ -38,22 +41,24 @@ const logoChangeByMark = (mark, myActive) => {
     switch (mark) {
         case 1:
             return (
+
                 <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 21.0002V18.7779C19 17.5992 18.5259 16.4687 17.682 15.6352C16.8381 14.8017 15.6935 14.3335 14.5 14.3335H5.5C4.30653 14.3335 3.16193 14.8017 2.31802 15.6352C1.47411 16.4687 1 17.5992 1 18.7779V21.0002"
                         stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M10 9.88889C12.4853 9.88889 14.5 7.89904 14.5 5.44444C14.5 2.98985 12.4853 1 10 1C7.51472 1 5.5 2.98985 5.5 5.44444C5.5 7.89904 7.51472 9.88889 10 9.88889Z"
                         stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
+
             )
         case 2:
             return (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 3H3.22222C2.63285 3 2.06762 3.23413 1.65087 3.65087C1.23413 4.06762 1 4.63285 1 5.22222V20.7778C1 21.3671 1.23413 21.9324 1.65087 22.3491C2.06762 22.7659 2.63285 23 3.22222 23H18.7778C19.3671 23 19.9324 22.7659 20.3491 22.3491C20.7659 21.9324 21 21.3671 21 20.7778V13" 
-                stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M19.1533 1.65998C19.5759 1.2374 20.1491 1 20.7467 1C21.3443 1 21.9174 1.2374 22.34 1.65998C22.7626 2.08256 23 2.6557 23 3.25332C23 3.85093 22.7626 4.42407 22.34 4.84665L12.2489 14.9378L8 16L9.06222 11.7511L19.1533 1.65998Z" 
-                stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M11 3H3.22222C2.63285 3 2.06762 3.23413 1.65087 3.65087C1.23413 4.06762 1 4.63285 1 5.22222V20.7778C1 21.3671 1.23413 21.9324 1.65087 22.3491C2.06762 22.7659 2.63285 23 3.22222 23H18.7778C19.3671 23 19.9324 22.7659 20.3491 22.3491C20.7659 21.9324 21 21.3671 21 20.7778V13"
+                        stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M19.1533 1.65998C19.5759 1.2374 20.1491 1 20.7467 1C21.3443 1 21.9174 1.2374 22.34 1.65998C22.7626 2.08256 23 2.6557 23 3.25332C23 3.85093 22.7626 4.42407 22.34 4.84665L12.2489 14.9378L8 16L9.06222 11.7511L19.1533 1.65998Z"
+                        stroke={myActive === "labelPointer" ? "#5B5B5B" : "#FF7062"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                
+
             )
         case 3:
             return (
@@ -93,15 +98,18 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, mark }) => {
                     //         {label}
                     //     </Link>
                     // </li>
-                    <Link className={`${myActive}`} to={to}>
-                        <div className="mr-20 col-12">
-                            <p >
-                                {logoChangeByMark(mark, myActive)}
-                                    &nbsp;  {label}
-                                {/* Hồ sơ của tôi */}
-                            </p>
-                        </div>
-                    </Link>
+                    <Jump duration={640} when={myActive === "myActive" ? true : false}>
+                        <Link className={`${myActive}`} to={to}>
+                            <div className="mr-20 col-12">
+                                <p >
+                                    {logoChangeByMark(mark, myActive)}
+                                    &nbsp;
+                                    {label}
+                                    {/* Hồ sơ của tôi */}
+                                </p>
+                            </div>
+                        </Link>
+                    </Jump>
                 );
             }}
         />
@@ -112,7 +120,8 @@ class UserMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: null
+            file: null,
+            showAnimation: false
         }
     }
 
@@ -152,34 +161,42 @@ class UserMenu extends Component {
         // console.log("yes")
         // const { loggedUser } = this.props;
         // console.log(loggedUser.avatarLink);
-        this.setState({
-            file: event.target.files[0]
-        }, () => {
-            const { loggedUser } = this.props;
-            const { file } = this.state;
-            // console.log(file)
-            // console.log(file.size)
-            // console.log(file)
-            const id = loggedUser.id;
+        console.log(this.isFileImage(event.target.files[0]));
 
-            let data = new FormData();
-            data.append('file', file);
-            // console.log(file);
-            if(file.size<300000) {
-            this.callApiChangeAvar(id, data);
-            } else {
-                toast.error('Dung lượng ảnh quá lớn (<300KB)!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
-        })
-
+        if (this.isFileImage(event.target.files[0]) === true) {
+            this.setState({
+                file: event.target.files[0]
+            }, () => {
+                const { loggedUser } = this.props;
+                const { file } = this.state;
+                const id = loggedUser.id;
+                let data = new FormData();
+                data.append('file', file);
+                if (file.size < 300000) {
+                    this.callApiChangeAvar(id, data);
+                } else {
+                    toast.error('Dung lượng ảnh quá lớn (<300KB)!', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            })
+        } else {
+            toast.error('Không đúng định dạng ảnh jpg/png!', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
 
     }
     callApiChangeAvar = async (id, data) => {
@@ -187,24 +204,24 @@ class UserMenu extends Component {
         showLoader();
         await callApi(`user/avatar/${id}`, 'POST', data)
             .then(res => {
-                // console.log(res.data);
-                // window.location.reload();
                 this.props.fetchUserDetail(res.data);
-                // setTimeout(() => {  console.log("World!"); }, 2000);
-                hideLoader();
-                toast.success('Cập nhật ảnh đại diện thành công!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-                // this.fetchUserDetailAgain();
-                // this.forceUpdate();
-                // console.log("wtf");
-                // hideLoader();
+                setTimeout(() => {
+                    
+                    hideLoader();
+                    toast.success('Cập nhật ảnh đại diện thành công!', {
+                        position: "bottom-right",
+                        autoClose: 2000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                }, 2500);
             }).catch(function (error) {
                 if (error.response) {
                     // console.log(error.response);
@@ -213,24 +230,23 @@ class UserMenu extends Component {
             });
     }
 
+    // isFileImage = (file) => {
+    //     return file && file['type'].split('/')[0] === 'image';
+    // }
+
+    isFileImage = (file) => {
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+
+        return file && acceptedImageTypes.includes(file['type'])
+    }
 
     render() {
         const { loggedUser } = this.props;
-        // console.log(loggedUser.avatarLink);
-        // console.log(this.state.file?this.state.file:"");
-        // console.log(this.state.file);
-        // console.log(file2);
-        // console.log(file2 !== undefined);
-
-        // if (file) {
-        //     const myCut = file.split("b:");
-        //     console.log(myCut[1]);
-        // }
         return (
             <div className="leftPartUserDetail">
                 <div className="outer row no-gutters">
                     <div className="inner circleCamera">
-                    {/* <ToastContainer /> */}
+                        {/* <ToastContainer /> */}
 
                         {/* <div className="CameraLogo">
                             <svg width="62" height="53" viewBox="0 0 62 53" fill="none" xmlns="http://www.w3.org/2000/svg">

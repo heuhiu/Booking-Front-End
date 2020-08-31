@@ -49,13 +49,13 @@ class VisitorTypeItem extends Component {
                             <div className="row no-gutter quantityBox">
                                 <div style={{ textAlign: "center" }} className="row no-gutters">
                                     <div className="quantityBtn col"
-                                        onClick={() => this.onUpdateQuantity(item, myQuan - 1)}><p>-</p>
+                                        onClick={() => this.onUpdateQuantity(item, myQuan - 1)}><button>-</button>
                                     </div>
                                     <div className="quantityBtn2 col">
                                         <p> {myQuan} </p>
                                     </div>
                                     <div className="quantityBtn col"
-                                        onClick={() => this.onUpdateQuantity(item, myQuan + 1)}><p>+</p>
+                                        onClick={() => this.onUpdateQuantity(item, myQuan + 1)}><button>+</button>
                                     </div>
                                 </div>
                             </div >
@@ -77,7 +77,7 @@ class VisitorTypeItem extends Component {
         // if (item.remaining - quantity === -1 ) {
         //     toast.error(`Loại vé dành cho ${item.typeName} đã hết`, {
         //         position: "bottom-right",
-        //         autoClose: 5000,
+        //         autoClose: 3000,
         //         hideProgressBar: true,
         //         closeOnClick: true,
         //         pauseOnHover: true,

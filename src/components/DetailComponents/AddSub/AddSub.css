@@ -28,10 +28,11 @@
     color: #ffffff;
     transition: 1s;
 }
-.quantityBtn p {
+.quantityBtn button {
     -ms-user-select: none;
     text-align: center;
     line-height: 35px;
+    color: #FF7062;
 }
 
 .quantityBtn2 p {

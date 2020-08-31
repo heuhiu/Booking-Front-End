@@ -173,7 +173,7 @@ class Payment extends Component {
         if (this.state.myPercen === 0) {
             toast.error('Bạn cần xác thực thông tin liên lạc!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -210,7 +210,7 @@ class Payment extends Component {
         if (this.state.checkLoginPar === false) {
             toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -220,7 +220,6 @@ class Payment extends Component {
         } else {
             showLoader();
             await callApi('order', 'post', {
-                // them id order
                 ticketTypeId: ticketTypeId,
                 ticketTypeName: ticketTypeName,
                 userId: userId,
@@ -235,7 +234,7 @@ class Payment extends Component {
                 placeId: location.state.place.id
             })
                 .then(res => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     // const paymentToken = this.storeTokenPaymentInLocal(5);
                     // localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
                     // var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
@@ -249,7 +248,7 @@ class Payment extends Component {
 
                     // toast.success('Đặt vé trả sau thành công!', {
                     //     position: "bottom-right",
-                    //     autoClose: 5000,
+                    //     autoClose: 3000,
                     //     hideProgressBar: true,
                     //     closeOnClick: true,
                     //     pauseOnHover: true,

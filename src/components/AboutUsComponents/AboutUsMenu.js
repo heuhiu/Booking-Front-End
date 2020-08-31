@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import testImg from '../../img/Detailpic.png'
 // import callApi from '../../config/utils/apiCaller';
 import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
+import Jump from 'react-reveal/Jump';
 
 const menus = [
     {
@@ -56,14 +57,17 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
             children={({ match }) => {
                 var myActive = match ? 'myActive' : 'labelPointer';
                 return (
+
                     <div className="mr-20 col-12">
-                        <Link className={`${myActive}`}
-                            to={{
-                                pathname: to
-                            }}
-                        >
-                            <li >{label}</li>
-                        </Link>
+                        {/* <Jump> */}
+                            <Link className={`${myActive}`}
+                                to={{
+                                    pathname: to
+                                }}
+                            >
+                                <li >{label}</li>
+                            </Link>
+                        {/* </Jump> */}
                     </div>
 
                 );

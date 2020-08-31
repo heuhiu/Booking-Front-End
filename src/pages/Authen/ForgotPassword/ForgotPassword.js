@@ -92,7 +92,7 @@ class ForgotPassword extends Component {
                 hideLoader()
                 toast.success('Vui lòng kiểm tra email!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -106,7 +106,7 @@ class ForgotPassword extends Component {
                     // console.log(error.response);
                     toast.success('Something Wrong!', {
                         position: "bottom-right",
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,

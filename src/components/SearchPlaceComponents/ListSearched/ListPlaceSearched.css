@@ -618,7 +618,7 @@
   cursor: pointer;
 }
 
-.priceFilter p{
+.subFilter{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;

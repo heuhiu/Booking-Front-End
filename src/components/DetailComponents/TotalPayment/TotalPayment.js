@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { showLoader, hideLoader, removeZeroQuantity } from '../../../actions';
 import axios from 'axios';
 import * as Config from '../../../constants/ConfigAPI';
+import Shake from 'react-reveal/Shake';
 
 class TotalPayment extends Component {
     notify = () => toast("Wow so easy !");
@@ -20,7 +21,8 @@ class TotalPayment extends Component {
         this.state = {
             totalPrice: 0,
             discount: 0,
-            checkLoginFlag: true
+            checkLoginFlag: true,
+            shake: false
         }
     }
 
@@ -53,9 +55,12 @@ class TotalPayment extends Component {
         callApi('login/checkToken', 'post', null)
             .then(res => {
                 if (totalPayment === 0) {
+                    this.setState({
+                        shake: true
+                    })
                     toast.error('Vui lòng chọn ít nhất một loại vé!', {
                         position: "bottom-right",
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -63,9 +68,12 @@ class TotalPayment extends Component {
                         progress: undefined,
                     });
                 } else if (redemptionDate === null) {
+                    this.setState({
+                        shake: true
+                    })
                     toast.error('Vui lòng chọn ngày sử dụng vé!', {
                         position: "bottom-right",
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -73,11 +81,9 @@ class TotalPayment extends Component {
                         progress: undefined,
                     });
                 } else {
-                    // console.log(visitorTypeFromRedux)
                     var idVisitorTypeList = ""
                     for (let index = 0; index < visitorTypeFromRedux.length - 1; index++) {
                         const element = visitorTypeFromRedux[index].visitorTypeId;
-                        // console.log(element)
                         idVisitorTypeList += element + ","
                     }
                     idVisitorTypeList += visitorTypeFromRedux[visitorTypeFromRedux.length - 1].visitorTypeId
@@ -93,18 +99,38 @@ class TotalPayment extends Component {
                     //     }
                     // })
                 }
-            }).catch(function (error) {
-                toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
+            })
+            .catch(error => {
+                this.setState({
+                     shake: true
+                 })
+                     toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                 });
-            });
-
+              });
+            // .catch(function (error) {
+            //     // this.setState({
+            //     //     shake: true
+            //     // })
+            //     toast.error('Vui lòng đăng nhập trước khi đặt vé!', {
+            //         position: "bottom-right",
+            //         autoClose: 3000,
+            //         hideProgressBar: true,
+            //         closeOnClick: true,
+            //         pauseOnHover: true,
+            //         draggable: true,
+            //         progress: undefined,
+            //     });
+            // });
+            this.setState({
+                shake: false
+            })
     }
 
     formatDate = (date) => {
@@ -157,7 +183,7 @@ class TotalPayment extends Component {
         //                         checkRemainAll = false;
         //                         toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
         //                             position: "bottom-right",
-        //                             autoClose: 5000,
+        //                             autoClose: 3000,
         //                             hideProgressBar: true,
         //                             closeOnClick: true,
         //                             pauseOnHover: true,
@@ -217,9 +243,12 @@ class TotalPayment extends Component {
                         if (remainDb >= remainRedux) {
                         } else if (remainDb < remainRedux) {
                             checkRemainAll = false;
-                            toast.error(`Số lượng vé còn lại của loại vé ${nameRedux} không đủ!`, {
+                            this.setState({
+                                shake: true
+                            })
+                            toast.error(`Số lượng vé có thể đặt của loại vé ${nameRedux} không đủ!`, {
                                 position: "bottom-right",
-                                autoClose: 5000,
+                                autoClose: 3000,
                                 hideProgressBar: true,
                                 closeOnClick: true,
                                 pauseOnHover: true,
@@ -324,12 +353,14 @@ class TotalPayment extends Component {
                             </Link> */}
                             <form onSubmit={this.checkLogin}>
                                 <span style={{ visibility: this.state.checkLoginFlag === true ? "hidden" : "visible" }} >Vui Lòng đăng nhập trước khi đặt vé</span>
-                                <button
-                                    // onClick={this.checkLogin}
-                                    type="submit"
-                                    className="bookingBtn">
-                                    Đặt vé ngay
-                            </button>
+                                <Shake duration={1000} when={this.state.shake}>
+                                    <button
+                                        // onClick={this.checkLogin}
+                                        type="submit"
+                                        className="bookingBtn">
+                                        Đặt vé ngay
+                                    </button>
+                                </Shake>
                             </form>
                         </div>
                     </div>

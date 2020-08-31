@@ -135,7 +135,7 @@ class CfNewPassword extends Component {
             if (password.value !== repassword.value) {
                 toast.error('Mật khẩu nhập lại chưa chính xác!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -153,7 +153,7 @@ class CfNewPassword extends Component {
             //         console.log(res);
             //         toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
             //             position: "bottom-right",
-            //             autoClose: 5000,
+            //             autoClose: 3000,
             //             hideProgressBar: true,
             //             closeOnClick: true,
             //             pauseOnHover: true,

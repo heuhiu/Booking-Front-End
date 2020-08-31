@@ -152,7 +152,7 @@ class LoginComp extends Component {
                         hideLoader();
                         toast.error('Tài khoản chưa được kích hoạt, vui lòng kiểm tra mail!', {
                             position: "bottom-right",
-                            autoClose: 5000,
+                            autoClose: 3000,
                             hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
@@ -164,7 +164,7 @@ class LoginComp extends Component {
                         hideLoader();
                         toast.error('Tài khoản chưa được đăng kí!', {
                             position: "bottom-right",
-                            autoClose: 5000,
+                            autoClose: 3000,
                             hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
@@ -178,7 +178,7 @@ class LoginComp extends Component {
                         hideLoader();
                         toast.error('Sai mật khẩu hoặc tài khoản!', {
                             position: "bottom-right",
-                            autoClose: 5000,
+                            autoClose: 3000,
                             hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,

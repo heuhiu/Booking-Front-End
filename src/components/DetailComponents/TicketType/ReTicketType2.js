@@ -16,6 +16,7 @@ import VisitorTypeItem from '../AddSub/VisitorTypeItem';
 import PartLoader from '../../FullPageLoader/PartLoader';
 import axios from 'axios'
 import * as Config from '../../../constants/ConfigAPI';
+import Fade from 'react-reveal/Fade';
 
 // import format from 'react';
 registerLocale("vi", vi);
@@ -281,70 +282,74 @@ class ReTicketType extends Component {
                     className="ticketBox"
                     style={{ fontFamily: 'Inter' }}
                 >
-
-                    <div className="row no-gutters">
-                        <div className="col-5">
-                            <div
-                                className="datepickerBtn"
-                                onClick={() => this.setState({ open: !this.state.open })}
-                                aria-controls="example-collapse-text"
-                                aria-expanded={this.state.open}
-                            >
+                    <Fade>
+                        <div className="row no-gutters">
+                            <div className="col-5">
                                 <div
-                                    style={{ padding: "10px" }}
-                                    className="row no-gutters">
-                                    <div className="col">
-                                        <h6
-                                            className="myTitle"
-                                            style={{ marginBottom: "0px" }}
-                                        >
-                                            Vui Lòng chọn ngày tham quan
+                                    className="datepickerBtn"
+                                    // onClick={() => this.setState({ open: !this.state.open })}
+                                    aria-controls="example-collapse-text"
+                                    aria-expanded={this.state.open}
+                                >
+                                    <div
+                                        style={{ padding: "10px" }}
+                                        className="row no-gutters">
+                                        <div className="col">
+                                            <h6
+                                                className="myTitle1"
+                                                style={{ marginBottom: "0px" }}
+                                            >
+                                                Vui Lòng chọn ngày tham quan
                                     </h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col-5"
-                            style={{
-                                border: "2px solid #E3E3E3",
-                                borderRadius: "10px"
-                            }}
-                        >
-                            <div
-                                className="datepickerBtn"
-                                onClick={() => this.setState({ open: !this.state.open })}
-                                aria-controls="example-collapse-text"
-                                aria-expanded={this.state.open}
+                            <div className="col-5"
+                                style={{
+                                    border: "2px solid #E3E3E3",
+                                    borderRadius: "10px"
+                                }}
                             >
                                 <div
-                                    style={{ padding: "10px" }}
-                                    className="row no-gutters">
-                                    <div className="col myTitle">
-                                        <h6
-                                            className="myTitle"
-                                            style={{ marginBottom: "0px", color: "#FF7062", textAlign: "center" }}
-                                        >
-                                            {prnDt}
-                                        </h6>
-                                    </div>
-                                    <div className="col-1">
+                                    className="datepickerBtn"
+                                    onClick={() => this.setState({ open: !this.state.open })}
+                                    aria-controls="example-collapse-text"
+                                    aria-expanded={this.state.open}
+                                >
+                                    <div
+                                        style={{ padding: "10px" }}
+                                        className="row no-gutters">
+                                        <div className="col myTitle">
+                                            <h6
+                                                className="myTitle"
+                                                style={{ marginBottom: "0px", color: "#FF7062", textAlign: "center" }}
+                                            >
+                                                {prnDt}
+                                            </h6>
+                                        </div>
+                                        <div className="col-2">
+                                            &nbsp;
                                         <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
+                                                <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
 
+
                         </div>
-
-
-                    </div>
+                    </Fade>
                     <div className="row no-gutters"
                         style={{ marginTop: "10px" }}>
                         <div className="col-4">
                         </div>
-                        <div>
+                        <div
+
+                        >
                             <Collapse in={this.state.open}>
                                 <div
                                     id="example-collapse-text">

@@ -300,7 +300,7 @@ class RegisterComp extends Component {
                     // alert("Email đăng kí đã tồn tại.")
                     toast.error(`Email đăng kí đã tồn tại`, {
                         position: "bottom-right",
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: true,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -417,7 +417,7 @@ class RegisterComp extends Component {
             if (password.value !== RePassword.value) {
                 toast.error(`Mật khẩu nhập lại chưa chính xác`, {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,

@@ -195,7 +195,7 @@ class UserUpdateInformation extends Component {
                 console.log("LMAo")
             toast.error('Vui lòng điền thông tin bạn muốn thay đổi', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -206,7 +206,7 @@ class UserUpdateInformation extends Component {
         else if (lastName.isInputValid === false) {
             toast.error('Họ không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -216,7 +216,7 @@ class UserUpdateInformation extends Component {
         } else if (myfirstName.isInputValid === false) {
             toast.error('Tên Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -226,7 +226,7 @@ class UserUpdateInformation extends Component {
         } else if (phoneNumber.isInputValid === false) {
             toast.error('Số điện thoại chứa 10-11 số!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -257,7 +257,7 @@ class UserUpdateInformation extends Component {
                 hideLoader();
                 toast.success('Thay đổi thông tin thành công!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,

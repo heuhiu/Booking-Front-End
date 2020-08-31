@@ -34,7 +34,7 @@ class VerifyEmail extends Component {
                 hideLoader()
                 toast.success('Gửi lại mail xác nhận thành công!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,

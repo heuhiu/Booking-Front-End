@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
-// import Rectangle from '../../../../img/Rectangle 17.png';
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
-// import TempPic from '../../../../img/entertainment.png';
 import './CarouselCategories.css';
-// import callApi from '../../../../config/utils/apiCaller';
-// import wtf from '../../../../img/TPHCM.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showLoader, hideLoader } from '../../../../actions/index';
@@ -38,7 +34,7 @@ function SamplePrevArrow(props) {
     );
 }
 
-
+//Home page's owl carousel of all Categories
 
 class CarouselCategories extends Component {
 
@@ -56,9 +52,8 @@ class CarouselCategories extends Component {
         if (listCategory.length > 0) {
             result = listCategory.map((item, index) => {
                 return (
-                    <Fade key={index} duration={index*235}>
+                    <Fade key={index} duration={index * 235}>
                         <Link
-                            
                             className="decoNone"
                             to={`/searchedPlace?listCatID=${item.id}`}>
                             <div className="owlStyle">
@@ -101,16 +96,6 @@ class CarouselCategories extends Component {
         this.setState({ index: next });
     };
     render() {
-        // const { listCategory } = this.props;
-        // console.log(listCategory);
-        // const settings = {
-        //     dots: false,
-        //     infinite: true,
-        //     slidesToShow: 5,
-        //     slidesToScroll: 1,
-        //     nextArrow: <SampleNextArrow />,
-        //     prevArrow: <SamplePrevArrow />,
-        // };
         const settings = {
             infinite: false,
             speed: 500,
@@ -120,24 +105,17 @@ class CarouselCategories extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />,
             beforeChange: this.beforeChange
-          };
+        };
         return (
-
             <section className="py-5">
                 <div className="container">
                     <Flip top cascade>
                         <h2 className="headerOwl">Khám phá các danh mục có tại Goboki</h2>
                         <h2 className="desHeaderOwl">Vui hết sức, chơi hết mình</h2>
-
                     </Flip>
                     <Slider {...settings}>
                         {this.showAllCategory(this.props.listCategory)}
                     </Slider>
-                    {/* <Fade   >
-                        <Slider {...settings}>
-                            {this.showAllCategory(this.props.listCategory)}
-                        </Slider>
-                    </Fade> */}
                 </div>
             </section>
         );
@@ -145,7 +123,6 @@ class CarouselCategories extends Component {
     }
 }
 
-// export default CarouselCategories;
 const mapStateToProps = state => {
     return {
         listCategory: state.Categories
@@ -164,5 +141,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-// export default MyCounter;
 export default connect(mapStateToProps, mapDispatchToProps)(CarouselCategories);

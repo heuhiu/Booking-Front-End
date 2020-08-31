@@ -24,23 +24,12 @@ class PaymentSucess extends Component {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }
 
-    componentDidMount = () => {
-        // localStorage.removeItem('visitorTypeList');
-        // this.props.removeVisitorType()
-    }
-
     showVisitorTypeNameChoosed = (type) => {
-        const {  visitorType } = this.props;
+        const { visitorType } = this.props;
         var result = null;
-        // console.log(VisitorTypeArr)
-        // console.log(location)
-        // console.log(location.state.orderDetail.orderItems)
-        // var VisitorTypeArr = location.state.orderDetail.orderItems
         var VisitorTypeArr = visitorType
         if (VisitorTypeArr.length > 0) {
             result = VisitorTypeArr.map((item, index) => {
-                // console.log(item.visitorTypeName);
-                // <p>{item.visitorTypeName}</p>
                 if (type === 1) {
                     return (
                         <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
@@ -69,19 +58,12 @@ class PaymentSucess extends Component {
     }
 
     render() {
-        const {  location, loggedUser } = this.props;
-        // console.log(this.props.location);
-        // console.log(location);
-
-        // console.log(location.state.orderDetail.state.ticketName);
-        // console.log(location.state.orderDetail.state.totalPayment);
-
+        const { location, loggedUser } = this.props;
         if (location.state === undefined || loggedUser.id === undefined) {
             return (
                 <NotLogin to="/" />
             )
         } else {
-            // console.log(location.state.orderDetail.state.redemptionDate);
             var dateType = {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             };
@@ -90,15 +72,21 @@ class PaymentSucess extends Component {
             var totalPayment = '';
             const userEmail = loggedUser.mail;
             const status = location.state.orderDetail.status;
-            // console.log(status);
+            var orderPicture = "";
             if (status === "UNPAID") {
-                // console.log( location.state.orderDetail);
+                console.log(location.state.orderDetail);
                 // console.log(this.convertDateToLocalVN(location.state.orderDetail.redemptionDate))
+                orderPicture = location.state.orderDetail.place.imageLink;
                 prnDt = this.convertDateToLocalVN(location.state.orderDetail.redemptionDate);
                 ticketName = location.state.orderDetail.ticketTypeName;
                 totalPayment = location.state.orderDetail.totalPayment;
             } else {
-                // console.log(location.state.orderDetail);
+                console.log(location.state.orderDetail);
+                if (location.state.orderDetail.state.place === undefined) {
+                    orderPicture = location.state.orderDetail.state.imageLink;
+                } else {
+                    orderPicture = location.state.orderDetail.state.place.placeImageLink[0];
+                }
                 ticketName = location.state.orderDetail.state.ticketName;
                 totalPayment = location.state.orderDetail.state.totalPayment;
                 prnDt = location.state.orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
@@ -107,7 +95,6 @@ class PaymentSucess extends Component {
                 <div
                     style={{ backgroundColor: "#F2F2F2", fontFamily: "Inter" }}
                 >
-                    {/* {this.scrollToStep1()} */}
                     <Menu />
                     <br></br>
                     <br></br>
@@ -166,11 +153,6 @@ class PaymentSucess extends Component {
                                             </Step>
                                             <Step transition="scale">
                                                 {({ accomplished }) => (
-                                                    // <img
-                                                    //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-                                                    //     width="30"
-                                                    //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
-                                                    // />
                                                     <div onClick={this.scrollToStep2}>
                                                         <div
 
@@ -254,24 +236,11 @@ class PaymentSucess extends Component {
                                         </div>
                                     </div>
                                     <div className="row">
-
                                         <div className="col-4" >
                                             <div className="circleCoffee">
-
                                             </div>
                                         </div>
                                         <div className="col-4" >
-
-                                            {/* <div className="circleCoffee"> */}
-                                            {/* <div className="coffeLogo"> */}
-                                            {/* <svg
-                                                        width="112" height="106" viewBox="0 0 112 106" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M82.667 38.3003H87.5837C92.7996 38.3003 97.8019 40.3653 101.49 44.041C105.178 47.7167 107.25 52.702 107.25 57.9002C107.25 63.0985 105.178 68.0838 101.49 71.7595C97.8019 75.4352 92.7996 77.5002 87.5837 77.5002H82.667" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                        <path d="M4 38.3003H82.6667V82.4001C82.6667 87.5984 80.5946 92.5837 76.9064 96.2594C73.2182 99.9351 68.2159 102 63 102H23.6667C18.4507 102 13.4484 99.9351 9.76023 96.2594C6.07202 92.5837 4 87.5984 4 82.4001V38.3003Z" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                        <path d="M23.667 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                        <path d="M43.334 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                        <path d="M63 4V18.7" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                                                    </svg> */}
                                             {status === "UNPAID"
                                                 ?
                                                 <svg className="svgLG" width="150" height="150" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -289,21 +258,14 @@ class PaymentSucess extends Component {
                                                     <path d="M63.6992 24V33.175" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
                                             }
-
-
-
-                                            {/* </div> */}
-                                            {/* </div> */}
                                         </div>
                                         <div className="col-4" >
                                             <div className="circleCoffee">
-
                                             </div>
                                         </div>
                                         <div
                                             style={{ textAlign: "center" }}
                                             className="col-12">
-
                                             <p className="mrt-30 mp1">
                                                 {status === "UNPAID"
                                                     ? "Bạn cần thanh toán trong vòng 2 giờ kể từ khi hoàn thành thông tin đơn hàng"
@@ -311,7 +273,6 @@ class PaymentSucess extends Component {
                                             </p>
                                             <p className="mp2">{status === "UNPAID" ? "" : userEmail}</p>
                                         </div>
-
                                         <div className="col-12"
                                         >
                                             <div
@@ -320,7 +281,6 @@ class PaymentSucess extends Component {
                                                     <span >Chi tiết đơn hàng</span>
                                                 </div>
                                                 <div className="col-4">
-
                                                 </div>
                                                 <div
                                                     style={{ textAlign: "right" }}
@@ -340,7 +300,9 @@ class PaymentSucess extends Component {
                                                     <div className="row no-gutters">
                                                         <div
                                                             className="col-3">
-                                                            <img className="detailImg" src={testImg} alt="FAIL TO LOAD" />
+                                                            {/* <img className="detailImg" src={testImg} alt="FAIL TO LOAD" /> */}
+                                                            <img className="detailImg" src={orderPicture} alt="FAIL TO LOAD" />
+
                                                         </div>
                                                         <div
                                                             style={{ marginLeft: "20px" }}
@@ -356,7 +318,7 @@ class PaymentSucess extends Component {
                                                             </div>
                                                             <div className="row">
                                                                 <div className="col-4"><span className="typeDetail">Số lượng: </span></div>
-                                                                <div className="col">{this.showVisitorTypeNameChoosed( 2)}</div>
+                                                                <div className="col">{this.showVisitorTypeNameChoosed(2)}</div>
                                                             </div>
 
 
@@ -400,7 +362,7 @@ class PaymentSucess extends Component {
                                             <p>Áp dụng cho: </p>
                                         </div>
                                         <div style={{ textAlign: "right" }} className="col">
-                                            {this.showVisitorTypeNameChoosed( 1)}
+                                            {this.showVisitorTypeNameChoosed(1)}
                                         </div>
                                     </div>
 

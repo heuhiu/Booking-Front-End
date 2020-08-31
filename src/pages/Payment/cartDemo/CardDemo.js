@@ -62,7 +62,7 @@ class _CardForm extends Component {
     if (checkLogin === false) {
       toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -72,7 +72,7 @@ class _CardForm extends Component {
     } else if (checkStep1 !== 50) {
       toast.error('Bạn cần xác thực thông tin liên lạc!', {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -82,7 +82,7 @@ class _CardForm extends Component {
     } else if (this.state.checkWrong === false) {
       toast.error(`Vui lòng điền lại số thẻ`, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -93,7 +93,7 @@ class _CardForm extends Component {
     else if (this.state.checkWrong === true) {
       toast.error(`Vui lòng điền số thẻ`, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

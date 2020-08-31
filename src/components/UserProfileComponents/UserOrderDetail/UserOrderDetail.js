@@ -208,7 +208,6 @@ class UserOrderDetail extends Component {
         }
 
         if (orderStatus === "UNPAID") {
-          
             return (
                 <div style={{ padding: "20px" }}>
                     <div id="inline">
@@ -253,7 +252,8 @@ class UserOrderDetail extends Component {
                                         redemptionDate: date,
                                         orderStatus: orderDetail.status,
                                         orderId: orderDetail.id,
-                                        placeId: orderDetail.placeId
+                                        placeId: orderDetail.placeId,
+                                        imageLink: orderDetail.place.imageLink
                                     }
                                 }} >
                                 Thanh toán ngay

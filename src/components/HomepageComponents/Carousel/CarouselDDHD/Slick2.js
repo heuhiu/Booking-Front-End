@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
-// import Rectangle from '../../../../img/Rectangle 17.png';
 import RightOwl from '../../../../img/RightOwl.png';
 import LeftOwl from '../../../../img/LeftOwl.png';
 import './style.css';
@@ -8,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Flip from 'react-reveal/Flip';
 import Fade from 'react-reveal/Fade';
 
-function SampleNextArrow(props) {
+function SampleNextArrow(props) { //custom Owl Carousel next arrow
   const { className, onClick } = props;
   return (
     <img
@@ -20,14 +19,9 @@ function SampleNextArrow(props) {
   );
 }
 
-function SamplePrevArrow(props) {
+function SamplePrevArrow(props) { //custom Owl Carousel prev arrow
   const { className, style, onClick } = props;
   return (
-    // <div
-    //     className={className}
-    //     style={{ ...style, display: "block" }}
-    //     onClick={onClick}
-    // />
     <img
       onClick={onClick}
       className={className}
@@ -37,7 +31,7 @@ function SamplePrevArrow(props) {
     </img>
   );
 }
-
+//Home page's Owl Carousel place of top city
 class Slick2 extends Component {
 
   constructor(props) {
@@ -61,8 +55,7 @@ class Slick2 extends Component {
                   <div className="owlCom3"
                     style={{
                       borderRadius: "10px",
-                      backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%)
-                  ,url(${item.imageLink ? item.imageLink : "https://toandqse05372-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_2.jpg"})`
+                      backgroundImage: `linear-gradient(180deg, rgba(255, 112, 98, 0.0677083) 0%, #FF7062 140.38%),url(${item.imageLink ? item.imageLink : ""})`
                     }}>{item.name}</div>
                 </h3>
               </div >
@@ -78,25 +71,21 @@ class Slick2 extends Component {
     }
     return result;
   }
-  next = () => {
+
+  next = () => { //active next arrow
     this.slider.slickNext();
-};
-previous = () => {
+  };
+
+  previous = () => { //active prev arrow
     this.slider.slickPrev();
-};
-beforeChange = (prev, next) => {
+  };
+
+  beforeChange = (prev, next) => {
     this.setState({ index: next });
-};
+  };
+
   render() {
     const { topCity } = this.props;
-    // const settings = {
-    //   dots: true,
-    //   infinite: true,
-    //   slidesToShow: 3,
-    //   slidesToScroll: 3,
-    //   nextArrow: <SampleNextArrow />,
-    //   prevArrow: <SamplePrevArrow />
-    // };
     const settings = {
       infinite: false,
       speed: 500,
@@ -111,17 +100,12 @@ beforeChange = (prev, next) => {
       <section className="py-5">
         <div className="container">
           <Flip top cascade>
-
             <h2 className="headerOwl">Điểm đến hàng đầu</h2>
             <h2 className="desHeaderOwl">Bạn đã sẵn sàng khám phá những địa điểm tốt nhất cùng chúng tôi?</h2>
           </Flip>
           <Slider {...settings}>
-
             {this.showTopcity(topCity)}
-
           </Slider>
-
-
         </div>
       </section>
     );

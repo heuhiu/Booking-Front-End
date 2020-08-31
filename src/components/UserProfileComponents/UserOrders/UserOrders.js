@@ -219,31 +219,6 @@ class UserOrders extends Component {
         const { UserOrders } = this.state;
         return (
             <div className="col">
-                {/* <div style={{ paddingTop: "0px" }} className="rightBoxUserDetail2">
-                    <div
-                        style={{ padding: "30px" }} >
-                        <div
-                            onClick={() => this.setState({ open: !this.state.open })}
-                            aria-controls="example-collapse-text"
-                            aria-expanded={this.state.open}
-                            className="labelPointer row no-gutters">
-                            <div className="col-6">
-                                <div id="inline">
-                                    <div className="bulletListCustome"></div>
-                                    <div className="content">Đặt chỗ gần đây </div>
-                                </div>
-                            </div>
-                            <div className="col">
-
-                            </div>
-                        </div>
-                        <Collapse in={this.state.open}>
-                            <div id="example-collapse-text">
-                                <TopOrders UserOrders={UserOrders} />
-                            </div>
-                        </Collapse>
-                    </div>
-                </div> */}
                 <div className="rightBoxUserDetail2">
                     <div
                         style={{ padding: "30px" }} >

@@ -193,59 +193,69 @@ class UserChangePassword extends Component {
         ) {
             e.preventDefault();
             e.stopPropagation();
-        } else if(password.value !== '' && RePassword.value !== '' && newPassword.value !== "") {
+        } else if (password.value !== '' && RePassword.value !== '' && newPassword.value !== "") {
             const { loggedUser } = this.props;
-            if(newPassword.value !== RePassword.value) {
+            if (newPassword.value !== RePassword.value) {
                 e.preventDefault();
                 e.stopPropagation();
                 toast.error('Mật khẩu mới và mật khẩu nhập lại không khớp!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                 });
-            } else  {
-                        // console.log(loggedUser.id);
-            // console.log(password.value);
-            // console.log(newPassword.value);
-            const oldPass = password.value;
-            const newPass = newPassword.value
-            let data = new FormData();
-            data.append('uid', loggedUser.id);
-            data.append('old', oldPass);
-            data.append('new', newPass);
-            callApi('user/changePassword', 'POST', data)
-                .then(res => {
-                    if (res) {
-                        toast.success('Thay đổi mật khẩu thành công!', {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                        this.props.history.push("/userProfile/myProfile")
-                    }
-                }).catch(function (error) {
-                    if (error.response) {
-                        // console.log(error.response.data = "WRONG_OLD_PASSWORD");
-                        toast.error('Mật khẩu cũ không chính xác!', {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    }
+            } else if (newPassword.value === password.value) {
+                e.preventDefault();
+                e.stopPropagation();
+                toast.error('Mật khẩu mới và mật khẩu cũ không được trùng nhau!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
                 });
-        }}
+            } else {
+                const oldPass = password.value;
+                const newPass = newPassword.value
+                let data = new FormData();
+                data.append('uid', loggedUser.id);
+                data.append('old', oldPass);
+                data.append('new', newPass);
+                callApi('user/changePassword', 'POST', data)
+                    .then(res => {
+                        if (res) {
+                            toast.success('Thay đổi mật khẩu thành công!', {
+                                position: "bottom-right",
+                                autoClose: 3000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                            this.props.history.push("/userProfile/myProfile")
+                        }
+                    }).catch(function (error) {
+                        if (error.response) {
+                            // console.log(error.response.data = "WRONG_OLD_PASSWORD");
+                            toast.error('Mật khẩu cũ không chính xác!', {
+                                position: "bottom-right",
+                                autoClose: 3000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        }
+                    });
+            }
+        }
     }
 
     render() {
@@ -257,7 +267,6 @@ class UserChangePassword extends Component {
                     onSubmit={this.changePassword}
                     noValidate
                 >
-                    {/* <ToastContainer /> */}
                     <div className="rightBoxUserDetail">
                         <div style={{ padding: "30px" }} >
                             <div className="row">
@@ -361,10 +370,10 @@ class UserChangePassword extends Component {
                                         </div>
                                         <div className="row">
                                             <div className="col-12">
-                                            <FormError
-                                            type="newPassword"
-                                            isHidden={this.state.newPassword.isInputValid}
-                                            errorMessage={this.state.newPassword.errorMessage} />
+                                                <FormError
+                                                    type="newPassword"
+                                                    isHidden={this.state.newPassword.isInputValid}
+                                                    errorMessage={this.state.newPassword.errorMessage} />
                                             </div>
                                         </div>
                                         <br></br>

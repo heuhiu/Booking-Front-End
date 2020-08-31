@@ -87,7 +87,7 @@ class SearchNameBox extends Component {
         if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -98,7 +98,7 @@ class SearchNameBox extends Component {
         else if (this.isValid(this.state.txtParkName) === false) {
             toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,

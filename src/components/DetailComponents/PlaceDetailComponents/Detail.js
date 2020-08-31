@@ -8,6 +8,8 @@ import { Redirect } from 'react-router-dom';
 import ReTicketType2 from '../TicketType/ReTicketType2';
 import { showLoader, hideLoader } from '../../../actions/index';
 import MorePlace from '../MorePlace/MorePlace';
+import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
 import Flip from 'react-reveal/Flip';
 
 class Detail extends Component {
@@ -25,34 +27,24 @@ class Detail extends Component {
 
         }
     }
-    scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop - 300, behavior: 'smooth' });
+    scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop + 300 , behavior: 'smooth' });
 
     handleClick = () => {
         this.setState({
             show1stAnimate: !this.state.show1stAnimate
         });
     }
-    animateExpan = () => {
-        setTimeout(() => {
-            this.setState({
-                open: !this.state.open,
 
-            });
-        }, 2000);
-    }
-    componentDidMount = () => {
-        this.animateExpan();
-    }
     showShortDescrip = (shortDesCrip) => {
         const splitArray = shortDesCrip.split('<br><br>');
         var result = null;
         if (splitArray.length > 0) {
             result = splitArray.map((item, index) => {
                 return (
-                        <li
+                    <li
                         key={index}
-                            className="b">{item}
-                        </li>
+                        className="b">{item}
+                    </li>
                 );
             });
         }
@@ -75,28 +67,41 @@ class Detail extends Component {
 
         const availableDay = place.weekDays.sort()
         var textAvailableDay = "";
-        for (let index = 0; index < availableDay.length; index++) {
+        // for (let index = 0; index < availableDay.length; index++) {
+        //     const element = availableDay[index] + 1;
+        //     if (availableDay.length === availableDay[index]) {
+        //         textAvailableDay += "T" + element
+        //     } else {
+        //         textAvailableDay += "T" + element + ", "
+        //     }
+        // }
+        // if (availableDay.length === 7) {
+        //     textAvailableDay = "mọi ngày trong tuần"
+        // }
+        for (let index = 0; index < availableDay.length - 1; index++) {
             const element = availableDay[index] + 1;
-            if (availableDay.length === availableDay[index]) {
-                textAvailableDay += "T" + element
-            } else {
-                textAvailableDay += "T" + element + ", "
-            }
+            textAvailableDay += "T" + element + ", "
+        }
+        if (textAvailableDay.includes("T1") === true) {
+            textAvailableDay += "T" + (availableDay[availableDay.length - 1] + 1) + ", "
+        } else {
+            textAvailableDay += "T" + (availableDay[availableDay.length - 1] + 1) 
         }
         if (availableDay.length === 7) {
             textAvailableDay = "mọi ngày trong tuần"
         }
-
         const textAvailableDayVN = textAvailableDay.replace('T1,', 'CN, ')
-        // console.log(textAvailableDayVN);
-        // console.log(textAvailableDayVN.split("CN, "));
-        // if (textAvailableDayVN.split("CN, ")[0] !== undefined) {
-        // console.log((textAvailableDayVN.split("CN, ")[1]?textAvailableDayVN.split("CN, ")[0]:"") + "CN.")
-        // textAvailableDayCNlast = (textAvailableDayVN.split("CN, ")[1]?textAvailableDayVN.split("CN, ")[0]:"") + "CN.";
+        // console.log(textAvailableDayVN.includes("CN, "))
 
-        //  textAvailableDayCNlast = (textAvailableDayVN.split("CN, ")[1]) + "CN.";
-        // }
-        // console.log(textAvailableDay)
+        if (textAvailableDayVN.includes("CN, ") === true) {
+            console.log("YES")
+            console.log(textAvailableDayVN.split("CN, ")[1] + "CN")
+            textAvailableDay = textAvailableDayVN.split("CN, ")[1] + "CN"
+        }
+        // console.log(textAvailableDayVN.includes("CN, "))
+        // console.log(textAvailableDayVN.split("CN, "))
+        // console.log(textAvailableDayVN.split("CN, ")[1] + "CN")
+
         if (place !== undefined) {
             return (
                 <div>
@@ -106,47 +111,57 @@ class Detail extends Component {
                             fontFamily: 'Inter'
                         }}
                         className="row" >
+
                         <div
                             className="col-8">
 
                             <h3>{place.name}</h3>
                             <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
-                            <div
-                                onClick={() => this.setState({ open: !this.state.open })}
-                                aria-controls="example-collapse-text"
-                                aria-expanded={this.state.open}
-                                // onClick={this.handleClick} 
-                                id="inline">
-                                <div className="bulletListCustome"></div>
-                                <div className="content">Điểm nổi bật</div>
-                            </div>
+                            <Flip top>
+                                <div
+                                    aria-controls="example-collapse-text"
+                                    aria-expanded={this.state.open}
+                                    // onClick={this.handleClick} 
+                                    id="inline">
+                                    <div className="bulletListCustome"></div>
+                                    <div className="content">Điểm nổi bật</div>
+                                </div>
+                            </Flip>
                             {/* <Collapse in={this.state.open}> */}
-                                <ul className="a">
-                                    {this.showShortDescrip(place.shortDescription)}
-                                </ul>
+                            <ul className="a">
+                                {this.showShortDescrip(place.shortDescription)}
+                            </ul>
                             {/* </Collapse> */}
                             {/* <Flip top cascade  collapse when={this.state.show1stAnimate}> */}
                             {/* <ul className="a">
                                 {this.showShortDescrip(place.shortDescription)}
                             </ul> */}
                             {/* </Flip> */}
-
-                            <div id="inline">
-                                <div className="bulletListCustome"></div>
-                                <div className="content">Các lựa chọn vé</div>
-                            </div>
+                             <div ref={this.myRef}></div>
+                            <Flip top>
+                                <div id="inline">
+                                    <div className="bulletListCustome"></div>
+                                    <div className="content">Các lựa chọn vé</div>
+                                </div>
+                            </Flip>
                             <div>
                                 <ReTicketType2
                                     place={place} weekDays={place.weekDays} ticketType={place.ticketTypes} />
                             </div>
-                            <div id="inline">
-                                <div ref={this.myRef} className="bulletListCustome"></div>
-                                <div className="content">Bạn được trải nghiệm những gì?</div>
-                            </div>
+                           
+                            <Flip top>
+                                <div id="inline">
+                                    <div  className="bulletListCustome"></div>
+                                    <div className="content">Bạn được trải nghiệm những gì?</div>
+                                </div>
+                            </Flip>
+                            
+                            <Flip top>
                                 <span className="longDescription">
                                     {place.detailDescription}
                                 </span>
+                            </Flip>
                             <div
                                 style={{
                                     marginTop: "40px",
@@ -157,13 +172,15 @@ class Detail extends Component {
                             >
                                 <img src={place.placeImageLink ? place.placeImageLink[0] : DetailPic} alt="FAIL TO LOAD" width="100%" height="auto" />
                             </div>
+                            <Flip top>
+                                <div
+                                    style={{ paddingTop: "40px" }}
+                                    id="inline">
+                                    <div className="bulletListCustome"></div>
+                                    <div className="content">Chi tiết</div>
+                                </div>
+                            </Flip>
 
-                            <div
-                                style={{ paddingTop: "40px" }}
-                                id="inline">
-                                <div className="bulletListCustome"></div>
-                                <div className="content">Chi tiết</div>
-                            </div>
                             <div className="placeDetail">
                                 <TabDetail place={place} />
                             </div>
@@ -179,6 +196,7 @@ class Detail extends Component {
                         </div> */}
 
                         </div>
+
                         <div
                             className="col">
                             {/* <RightPartDetail /> */}
@@ -207,7 +225,8 @@ class Detail extends Component {
                                     </div>
                                     <div className="col">
                                         <p className="p3">
-                                            Thời gian mở cửa: {textAvailableDayVN}
+                                            {/* Thời gian mở cửa: {textAvailableDayVN} */}
+                                            Thời gian mở cửa: {textAvailableDay}
                                         </p>
                                     </div>
                                 </div>

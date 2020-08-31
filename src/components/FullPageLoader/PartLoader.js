@@ -20,10 +20,13 @@ class PartLoader extends Component {
         if (!loaderPart.loading) return null
 
         return (
-            <div className="loader2-container">
-                <div className="loader2">
-                    {/* <img src={loadingLG} alt="FALT TO LOAD"/> */}
-                </div>
+            // <div className="loader2-container">
+            //     <div className="loader2">
+            //         <img src={loadingLG} alt="FALT TO LOAD"/>
+            //     </div>
+            // </div>
+            <div>
+
             </div>
         );
     }

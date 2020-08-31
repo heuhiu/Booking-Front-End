@@ -46,7 +46,7 @@ class Search extends Component {
         const pathName = `?name=${this.removeSpace(this.state.txtParkName)}`
         const pathListCity = `?listCityID=${this.state.cityMul.join()}`
         const pathListCat = `?listCatID=${this.state.catMul.join()}`
-        
+
         if (this.state.txtParkName !== "") {
             pathLink += pathName;
             if (this.state.cityMul.length > 0) {
@@ -98,10 +98,10 @@ class Search extends Component {
         }
         // var str = this.state.txtParkName.replace(/ +(?= )/g, ' ');
 
-         else if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
+        else if (this.state.txtParkName === "" || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -111,7 +111,7 @@ class Search extends Component {
         } else if (this.isValid(this.state.txtParkName) === false) {
             toast.error('Vui lòng không điền kí tự đặc biệt!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -130,6 +130,22 @@ class Search extends Component {
         }, () => {
         });
 
+    }
+
+    componentWillMount() {
+        document.addEventListener('mousedown', this.handleClickDropDown, false)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickDropDown, false)
+    }
+    handleClickDropDown = (e) => {
+        if (this.node.contains(e.target)) {
+            //u click
+            return;
+        }
+        this.setState({
+            show: false
+        })
     }
 
     render() {
@@ -157,14 +173,14 @@ class Search extends Component {
                                 onChange={this.onChange}
                             />
                         </div>
-                        <div
+                        <div ref={node => this.node = node}
                             className="select-wrap one-third">
-                            <div
+                            <div 
                                 // onClick={this.toggleFilter}
                                 onClick={this.handleClick}
                                 style={{ paddingLeft: "0px" }}
                                 className="form-control">
-                                <div className="filterPanel">
+                                <div  className="filterPanel">
                                     <span>
                                         Bộ lọc
                                     </span>
@@ -173,14 +189,11 @@ class Search extends Component {
                                             <path d="M1.34546 1L7.34546 7L13.3455 1" stroke="#A5A5A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                     </span>
-
                                 </div>
-
                             </div>
-
                             <Fade duration={500} when={this.state.show}>
                                 <div 
-                                // style={{ visibility: toggleFilter ? "hidden" : "visible" }}
+                                    style={{ display: this.state.show ? "" : "none" }}
                                     className="filterBox">
                                     <div className="row">
                                         <div className="col-12">

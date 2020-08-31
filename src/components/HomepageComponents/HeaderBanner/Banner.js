@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './style.css';
 import Search from '../Search/Search';
-// import { Container, Row, Col } from 'react-bootstrap';
 import Flip from 'react-reveal/Flip';
 
 const classes = 'masthead mg-10'
 
+//Home Page's banner
 class Banner extends Component {
 
     constructor(props) {
@@ -14,6 +14,7 @@ class Banner extends Component {
         this.state = {
         }
     }
+
     render() {
         const { loader } = this.props;
         var layer = loader.loading;
@@ -40,7 +41,6 @@ class Banner extends Component {
 
 }
 
-// export default Banner;
 
 const mapStateToProps = state => {
     return {

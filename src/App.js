@@ -18,6 +18,7 @@ import {
     isBrowser,
     isMobile,
 } from "react-device-detect";
+import FullPageLoader from './components/FullPageLoader/FullPageLoader';
 class App extends Component {
 
     constructor(props) {
@@ -99,6 +100,7 @@ class App extends Component {
                             <ToastContainer />
                         </Container>
                     </Router >
+                    {/* <FullPageLoader /> */}
                 </BrowserView>
             );
         } else if (isMobile) {

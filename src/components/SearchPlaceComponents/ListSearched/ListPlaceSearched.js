@@ -53,6 +53,8 @@ class ListPlaceSearched extends Component {
             listCategory: [],
             notFoundPage: false,
             checkSearch: false,
+            flag: false
+
         }
     }
 
@@ -145,13 +147,13 @@ class ListPlaceSearched extends Component {
                 // console.log(data);
                 return (
                     // <Slide key={index} left delay={index * 50} >
-                    <Link
+                    <Link key={index}
                         style={{ textDecoration: "none" }}
 
                         to={{
                             pathname: `/placeDetail/${data.id}`
                         }}>
-                        <div key={data.index} className="col-lg-12 col-md-12">
+                        <div className="col-lg-12 col-md-12">
                             <div className="single_place">
                                 <div className="row">
                                     <div
@@ -225,6 +227,9 @@ class ListPlaceSearched extends Component {
     }
 
     onTogglePriceRange = () => {
+        // document.removeEventListener('mousedown', this.handleClickDropDown, false)
+        // document.addEventListener('mousedown', this.handleClickDropDown, false)
+
         this.setState({
             toggleDropdown: !this.state.toggleDropdown
         })
@@ -291,7 +296,7 @@ class ListPlaceSearched extends Component {
             }, () => {
                 toast.error('Cần chọn ít nhất 1 Thành phố hoặc Danh mục !', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -383,7 +388,7 @@ class ListPlaceSearched extends Component {
         if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -394,7 +399,7 @@ class ListPlaceSearched extends Component {
             if (this.isValid(this.state.txtParkName) === false) {
                 toast.error('Vui lòng không điền kí tự đặc biệt!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -481,6 +486,7 @@ class ListPlaceSearched extends Component {
         var value = target.value;
         this.setState({
             [name]: value,
+            flag: true
         })
     }
 
@@ -544,18 +550,16 @@ class ListPlaceSearched extends Component {
     }
 
     onChangeSlider = (value) => {
-
         this.setState({
             value
         })
-
     }
 
     onChangeSliderSet = () => {
         if (this.state.value.min >= this.state.value.max) {
             toast.error('Giá nhỏ nhất phải nhỏ hơn giá lớn nhất, vui lòng nhập lại!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -584,9 +588,12 @@ class ListPlaceSearched extends Component {
     componentDidUpdate() {
         window.onpopstate = e => {
             // window.location.reload();
-            if (this.mainInput !== null) {
-                this.mainInput.value = "";
-            }
+            // if (this.mainInput !== null) {
+            //     this.mainInput.value = "";
+            this.setState({
+                flag: false
+            })
+            // }
             var { location } = this.props;
             if (location.search !== "") {
                 const answer_array = location.search.split('?');
@@ -644,7 +651,6 @@ class ListPlaceSearched extends Component {
     onSubmitSearch = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.mainInput.value = "";
         const { catMul, cityMul, listCtiId, listCatId, searchName, txtParkName } = this.state
         var jointCityID = cityMul.concat(listCtiId)
         var jointCategoryID = catMul.concat(listCatId)
@@ -656,7 +662,7 @@ class ListPlaceSearched extends Component {
         if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -667,7 +673,7 @@ class ListPlaceSearched extends Component {
             if (this.isValid(this.state.txtParkName) === false) {
                 toast.error('Vui lòng không điền kí tự đặc biệt!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -700,10 +706,14 @@ class ListPlaceSearched extends Component {
                 this.setState({
                     activePage: 1
                 }, () => {
-                    if (txtParkName !== '') {
-                        this.receivedData(this.removeSpace(this.state.txtParkName), cityRemoveDub, cateRemoveDub);
-                    } else {
+                    if (this.state.flag === false) {
                         this.receivedData(this.removeSpace(this.state.searchName), cityRemoveDub, cateRemoveDub);
+                    } else {
+                        if (txtParkName !== '') {
+                            this.receivedData(this.removeSpace(this.state.txtParkName), cityRemoveDub, cateRemoveDub);
+                        } else {
+                            this.receivedData(this.removeSpace(this.state.searchName), cityRemoveDub, cateRemoveDub);
+                        }
                     }
                 })
             }
@@ -722,7 +732,7 @@ class ListPlaceSearched extends Component {
         if (this.state.txtParkName === " " || this.removeSpace(this.state.txtParkName) === " ") {
             toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
                 position: "bottom-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -733,7 +743,7 @@ class ListPlaceSearched extends Component {
             if (this.isValid(this.state.txtParkName) === false) {
                 toast.error('Vui lòng không điền kí tự đặc biệt!', {
                     position: "bottom-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -805,7 +815,23 @@ class ListPlaceSearched extends Component {
         }
     }
 
-
+    componentWillMount() {
+        document.addEventListener('mousedown', this.handleClickDropDown, false)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickDropDown, false)
+    }
+    handleClickDropDown = (e) => {
+        if (this.node.contains(e.target)) {
+            // this.setState({
+            //     toggleDropdown: true
+            // })
+            return;
+        }
+        this.setState({
+            toggleDropdown: false
+        })
+    }
     render() {
         const { activePage, totalItems, searchList,
             searchName, listCat, listCity, listCtiId, listCatId } = this.state;
@@ -842,27 +868,7 @@ class ListPlaceSearched extends Component {
                 <div>
                     {/* <SearchBanner /> */}
                     <div className="container">
-                        {/* <div className="row">
-                            <div style={{boder: "2px solid green"}} className="col">
-                                <input
-                                    type="text"
-                                    maxLength="225"
-                                    className="searchFilter"
-                                    placeholder="Tìm hoạt động hoặc điểm đến mới"
-                                    name="txtParkName"
-                                    onChange={this.onChangeSearchName}
-                                />
-                            </div>
-                            <div className="col">
-                                <button
-                                    onClick={this.onSelectCat}
-                                    type="button"
-                                    className="filterBtn">
-                                    Lọc kết quả
-                                                </button>
-                            </div>
-                        </div>
-                    */}
+
                         <div className="row">
                             <div className="fiterSearchClassDiv col-12">
                                 <div className="fiterSearchClass">
@@ -872,12 +878,14 @@ class ListPlaceSearched extends Component {
                                         <div className="">
                                             <div >
                                                 <input
-                                                    ref={(ref) => this.mainInput = ref}
+                                                    // ref={(ref) => this.mainInput = ref}
                                                     type="text"
                                                     maxLength="225"
                                                     className="searchFilter"
                                                     placeholder="Tìm hoạt động hoặc điểm đến"
                                                     name="txtParkName"
+                                                    // value={this.state.searchName}
+                                                    value={this.state.flag === true ? this.state.txtParkName : this.state.searchName}
                                                     onChange={this.onChangeSearchName}
                                                 />
                                             </div>
@@ -950,100 +958,98 @@ class ListPlaceSearched extends Component {
                                         </div>
                                     </div>
                                     <div className="col-lg-8">
+                                        <div ref={node => this.node = node}>
 
-                                        <div className="row no-gutters">
-                                            {/* <Slide left delay={300} > */}
-                                            {/* <div  className="priceFilter row"> */}
-                                            <div onClick={this.onTogglePriceRange} className="col-6">
-                                                <div className="priceFilter row no-gutters">
-                                                    <div style={{ boder: "1px solid green" }} className="col">
-                                                        <p>
-                                                            <div className="row">
-                                                                <div className="col">
-                                                                    {this.convertCurrecyToVnd(this.state.value.min)}
+                                            <div className="row no-gutters">
+                                                {/* <Slide left delay={300} > */}
+                                                {/* <div  className="priceFilter row"> */}
+                                                <div onClick={this.onTogglePriceRange} className="col-6">
+                                                    <div className="priceFilter row no-gutters">
+                                                        <div style={{ boder: "1px solid green" }} className="col-10">
+                                                            <div className="subFilter">
+                                                                <div className="row">
+                                                                    <div className="col">
+                                                                        {this.convertCurrecyToVnd(this.state.value.min)}
+                                                                    </div>
+                                                                    <div className="col-1">
+                                                                        -
                                                                 </div>
-                                                                <div className="col-1">
-                                                                    -
-                                                                </div>
-                                                                <div className="col">
-                                                                    {this.convertCurrecyToVnd(this.state.value.max)}
+                                                                    <div className="col">
+                                                                        {this.convertCurrecyToVnd(this.state.value.max)}
+                                                                    </div>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <svg className="" style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                                    </svg>
                                                                 </div>
                                                             </div>
-                                                        </p>
-                                                    </div>
-                                                    <div className="col-2">
-                                                        <p>
-                                                            <svg className="svgLOGO" style={{ marginLeft: "0px" }} width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M1 0.999999L11 12L21 1" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                            </svg>
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                {/* </Slide> */}
                                             </div>
-                                            {/* </div> */}
-                                            {/* </Slide> */}
-                                        </div>
-                                        <div
-                                            style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }}
-                                            className="row no-gutters">
-                                            <div style={{ padding: "20px" }} className="dropBoxPriceRange col-6">
-                                                <label className="priceRangeLabel">Khoảng giá</label>
 
-                                                <div className="row no-gutters">
-                                                    <div className="col-5">
-                                                        <CurrencyInput
-                                                            className="maxminBtn"
-                                                            // style={{ border: "5px solid green" }}
-                                                            suffix=" đ"
-                                                            precision="0"
-                                                            maxLength="12"
-                                                            maxValueForSlider="50"
-                                                            decimalSeparator=","
-                                                            thousandSeparator="."
-                                                            value={this.state.value.min}
-                                                            onChange={this.handleChange} />
+                                            <div
+                                                // style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible" }}
+                                                className="row no-gutters">
+                                                <Fade when={this.state.toggleDropdown}>
+                                                    <div style={{ visibility: this.state.toggleDropdown === false ? "hidden" : "visible", padding: "20px" }} className="dropBoxPriceRange col-6">
+                                                        <label className="priceRangeLabel">Khoảng giá</label>
+                                                        <div className="row no-gutters">
+                                                            <div className="col-5">
+                                                                <CurrencyInput
+                                                                    className="maxminBtn"
+                                                                    // style={{ border: "5px solid green" }}
+                                                                    suffix=" đ"
+                                                                    precision="0"
+                                                                    maxLength="12"
+                                                                    maxvalueforslider="50"
+                                                                    decimalSeparator=","
+                                                                    thousandSeparator="."
+                                                                    value={this.state.value.min}
+                                                                    onChange={this.handleChange} />
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
+                                                            </div>
+                                                            <div className="col-5">
+                                                                <CurrencyInput
+                                                                    suffix=" đ"
+                                                                    className="maxminBtn"
+                                                                    precision="0"
+                                                                    maxLength="12"
+                                                                    decimalSeparator=","
+                                                                    thousandSeparator="."
+                                                                    value={this.state.value.max}
+                                                                    onChange={this.handleChange2} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="mrtb-30">
+                                                            <InputRange
+                                                                maxValue={this.state.maxValueForSlider}
+                                                                minValue={this.state.minValueForSlider}
+                                                                step={10000}
+                                                                value={this.state.value}
+                                                                onChange={value => this.onChangeSlider(value)}
+                                                            // onChangeComplete={value => this.onChangeSliderSet()}
+                                                            />
+                                                        </div>
+                                                        <div className="row no-gutters">
+                                                            <div className="col">
+                                                            </div>
+                                                            <div className="col-5">
+                                                                <button className="resetFilterPricebtn" onClick={this.onResetSliderSet}>Đặt lại</button>
+                                                            </div>
+                                                            <div className="col-6">
+                                                                <button className="filterPricebtn" onClick={this.onChangeSliderSet}>Xếp giá</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="col-2">
-                                                        <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
-                                                    </div>
-                                                    <div className="col-5">
-                                                        <CurrencyInput
-                                                            suffix=" đ"
-                                                            className="maxminBtn"
-                                                            precision="0"
-                                                            maxLength="12"
-                                                            decimalSeparator=","
-                                                            thousandSeparator="."
-                                                            value={this.state.value.max}
-                                                            onChange={this.handleChange2} />
-                                                    </div>
-                                                </div>
-
-                                                <div className="mrtb-30">
-                                                    <InputRange
-                                                        maxValue={this.state.maxValueForSlider}
-                                                        minValue={this.state.minValueForSlider}
-                                                        step={10000}
-                                                        value={this.state.value}
-                                                        onChange={value => this.onChangeSlider(value)}
-                                                    // onChangeComplete={value => this.onChangeSliderSet()}
-                                                    />
-                                                </div>
-                                                <div className="row no-gutters">
-                                                    <div className="col">
-                                                    </div>
-                                                    <div className="col-5">
-                                                        <button className="resetFilterPricebtn" onClick={this.onResetSliderSet}>Đặt lại</button>
-                                                    </div>
-                                                    <div className="col-6">
-                                                        <button className="filterPricebtn" onClick={this.onChangeSliderSet}>Xếp giá</button>
-                                                    </div>
-                                                </div>
-
-
+                                                </Fade>
                                             </div>
+                                            {/* <Slide left cascade> */}
+
                                         </div>
-                                        {/* <Slide left cascade> */}
 
                                         <Fade cascade>
                                             <div className="row">

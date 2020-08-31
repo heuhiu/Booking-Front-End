@@ -1,118 +1,40 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './style.css';
 import logo from '../../img/Logo.png';
 import { connect } from 'react-redux';
-import myPro from '../../img/Ellipse 1.png';
 import { Dropdown } from 'react-bootstrap';
 import callApi from '../../config/utils/apiCaller';
 import { withRouter } from 'react-router-dom';
 import { showLoader, hideLoader, getUserLogin, removeUserLogin } from '../../actions/index';
-// import Search from '../HomepageComponents/Search/Search';
 import NavBarSearch from './NavBarSearch/NavBarSearch';
-
-// const menus = [
-//     // {
-//     //     name: 'Trang chu',
-//     //     to: '/',
-//     //     exact: true
-//     // },
-//     {
-//         name: 'Đặt chỗ của tôi',
-//         to: '/userProfile',
-//         exact: false,
-//         style: 'none1'
-//     },
-//     {
-//         name: 'Đăng nhập',
-//         to: '/login',
-//         exact: false,
-//         style: 'loginbtn'
-//     },
-//     {
-//         name: 'Đăng kí',
-//         to: '/register',
-//         exact: false,
-//         style: 'registerbtn'
-//     }
-// ];
-
-const MenuLink = ({ label, to, activeOnlyWhenExact, style }) => {
-    // const { hideLoader } = this.props;
-    return (
-        <Route
-            path={to}
-            exact={activeOnlyWhenExact}
-            children={({ match }) => {
-                var active = match ? 'active' : '';
-                if (style !== 'none' && style !== 'none1') {
-                    return (
-                        <li className={active}>
-                            <Link to={to}>
-
-                                <button className={style}>
-                                    {label}
-                                </button>
-                            </Link>
-                        </li>
-                    );
-                }
-                if (style === 'none') {
-                    return (
-                        <li className={active}>
-                            <Link className={style + " nav-link"} to={to}>
-                                <i className="fas fa-shopping-cart"></i> {label}
-                            </Link>
-                        </li>
-                    );
-                } else {
-                    return (
-                        <li className={active}>
-                            <Link className={style + " nav-link"} to={to}>
-                                <i className="far fa-file-alt"></i> {label}
-                            </Link>
-                        </li>
-                    );
-                }
-            }}
-        />
-    )
-}
-
 
 class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
         }
     }
 
 
     logOut = () => {
-        // this.props.history.push("/");
         callApi("login/logout", 'POST', null)
             .then(res => {
-                // console.log(res);
-                localStorage.removeItem('tokenLogin');
-                localStorage.removeItem('USER');
-                this.props.removeUserLogin();
-                // window.location.reload();
-                this.props.history.push("/login");
+                localStorage.removeItem('tokenLogin');  //remove tokenLogin store in local Storage
+                localStorage.removeItem('USER');        //remove User infor store in local Storage
+                this.props.removeUserLogin();           //remove User infor from redux store
+                this.props.history.push("/login");      //redirect to login page
             }).catch(function (error) {
-                if (error.response) {
-                    // console.log(error.response.data);
-                }
+
             });
     }
 
     render() {
-        // console.log(this.props.location.pathname === "/")
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         return (
             <nav
-                style={{ paddingTop: "0px", paddingBottom: "0px" }}
-                className="navbar navbar-light bg-light bg-white fixed-top">
+                style={{ paddingTop: "0px", paddingBottom: "0px", zIndex: this.props.loader.loading === false ? "1000" : "0" }}
+                className={`navbar navbar-light bg-light bg-white fixed-top`}>
                 <Link className="navbar-brand" to='/'>
                     <img className="navLogo"
                         src={logo}
@@ -121,11 +43,8 @@ class Menu extends Component {
                         height="38.704"
                     />
                 </Link>
-                {/* <div style={{ width: "100px", marginLeft: "-150px" }}
-                >
-                    <NavBarSearch />
-                </div> */}
                 <div style={{
+                    //Decide which path search box in navbar will appear.
                     display: this.props.location.pathname === "/"
                         || this.props.location.pathname === "/login"
                         || this.props.location.pathname === "/searchedPlace"
@@ -136,7 +55,6 @@ class Menu extends Component {
                     <NavBarSearch />
                 </div>
                 <ul className="nav navbar-expand-lg">
-                    {/* {this.showMenus(menus)} */}
                     <Link
                         style={{ textDecoration: "none", display: this.props.location.pathname === "/" ? "none" : "" }} to="/">
                         <button style={{ display: tokenLogin ? "" : "" }} className="none1 nav-link">
@@ -185,7 +103,6 @@ class Menu extends Component {
                                 {this.props.UserDetail.firstName}&nbsp;{this.props.UserDetail.lastName}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {/* <Dropdown.Item href="/userProfile/myProfile" id="dropdown-item"> */}
                                 <Link className="itemDrop" to="/userProfile/myProfile">
                                     <svg width="14.4" height="16" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 21V18.7778C19 17.599 18.5259 16.4686 17.682 15.6351C16.8381 14.8016 15.6935 14.3333 14.5 14.3333H5.5C4.30653 14.3333 3.16193 14.8016 2.31802 15.6351C1.47411 16.4686 1 17.599 1 18.7778V21" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -193,11 +110,6 @@ class Menu extends Component {
                                     </svg> &nbsp;
                                     Hồ sơ của tôi
                                     </Link>
-                                {/* </Dropdown.Item> */}
-
-                                {/* <Dropdown.Item
-                                    onClick={this.logOut}
-                                > */}
                                 <button className="itemDrop" onClick={this.logOut}>
                                     <svg width="14.4" height="16" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M16.365 5.64001C17.6234 6.8988 18.4803 8.50246 18.8273 10.2482C19.1743 11.994 18.9959 13.8034 18.3146 15.4478C17.6334 17.0921 16.4798 18.4976 14.9998 19.4864C13.5199 20.4752 11.7799 21.0029 10 21.0029C8.2201 21.0029 6.48016 20.4752 5.00018 19.4864C3.5202 18.4976 2.36664 17.0921 1.68537 15.4478C1.00409 13.8034 0.825693 11.994 1.17272 10.2482C1.51975 8.50246 2.37663 6.8988 3.635 5.64001" stroke="#FF7062" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -205,7 +117,6 @@ class Menu extends Component {
                                     </svg> &nbsp;
                                     Đăng xuất
                                     </button>
-                                {/* </Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -226,23 +137,7 @@ class Menu extends Component {
             </nav>
         );
     }
-    showMenus = (menus) => {
-        var result = null;
-        if (menus.length > 0) {
-            result = menus.map((menu, index) => {
-                return (
-                    <MenuLink
-                        key={index}
-                        label={menu.name}
-                        to={menu.to}
-                        activeOnlyWhenExact={menu.exact}
-                        style={menu.style}
-                    />
-                );
-            });
-        }
-        return result;
-    }
+
 }
 
 const mapStateToProps = state => {
