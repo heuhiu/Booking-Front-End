@@ -56,7 +56,6 @@ class ReTicketType extends Component {
             startDate: date,
             open: false
         }, () => {
-            // alert(this.formatDate(this.state.startDate) + ", TKid: " + this.state.ticketTypeId)
             this.apiGetTicketTypeByDay();
         });
 
@@ -65,21 +64,7 @@ class ReTicketType extends Component {
     apiGetTicketTypeByDay = async () => {
         const { showLoaderPart, hideLoaderPart } = this.props;
         showLoaderPart();
-        // let data = new FormData();
-        // data.append('ticketTypeId', this.state.ticketTypeId);
-        // data.append('date', this.formatDate(this.state.startDate));
-        // await callApi('visitorType/ticketType', 'POST', data)
-        //     .then(res => {
-        //         this.setState({
-        //             listTicketTypeByDay: res.data
-        //         })
-        //         hideLoaderPart();
-        //     }).catch(function (error) {
-        //         if (error.response) {
-        //             // console.log(error.response);
-        //             hideLoaderPart();
-        //         }
-        //     });
+       
         await axios.get(`${Config.API_URL}/visitorType/ticketType`, {
             params: {
                 ticketTypeId: this.state.ticketTypeId,
@@ -92,12 +77,11 @@ class ReTicketType extends Component {
             })
             hideLoaderPart();
         }).catch(error => {
-            // console.log(error.response);
             hideLoaderPart();
         });
     }
 
-
+    //hide day of calender
     isWeekday = (Date) => {
         const { activeDay } = this.state;
         const day = Date.getDay();
@@ -171,6 +155,7 @@ class ReTicketType extends Component {
         // this.apiGetTicketTypeByDay();
     }
 
+    //reset order when click
     resetOrder = (e) => {
         this.props.removeVisitorType()
         this.setState({
@@ -201,7 +186,6 @@ class ReTicketType extends Component {
     changeTicketType = (ticketTypeId) => {
         this.apiGetTicketTypeByDay(ticketTypeId);
     }
-
 
     showTicketTypeName = (ticketTypes) => {
         var result = null;
@@ -271,11 +255,8 @@ class ReTicketType extends Component {
         if (this.state.startDate !== null) {
             var prnDt = this.state.startDate.toLocaleDateString('vi', dateType);
         }
-        // const dateTemp = startDate;
-
 
         var total = this.getTotalMoney();;
-        // console.log(ticketType)
         return (
             <div>
                 <div
@@ -287,7 +268,6 @@ class ReTicketType extends Component {
                             <div className="col-5">
                                 <div
                                     className="datepickerBtn"
-                                    // onClick={() => this.setState({ open: !this.state.open })}
                                     aria-controls="example-collapse-text"
                                     aria-expanded={this.state.open}
                                 >
@@ -381,10 +361,6 @@ class ReTicketType extends Component {
                         </div>
                         <div className={`col-12 ${radioToolbar}`}>
                             <div className="row">
-                                {/* <div className="col-12">
-                                    {this.showTicketTypeName(ticketType)}
-                                    {this.showVisitorType(listTicketTypeByDay)}
-                                </div> */}
                                 <div className="col-12">
                                     <ul className="nav nav-pills" role="tablist">
                                         {this.showTicketTypeName(ticketType)}

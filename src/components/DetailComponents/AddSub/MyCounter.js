@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchVisitor2 } from '../../../actions/index';
 import './AddSub.css';
-// const radioToolbar = "radio-toolbar";
 class MyCounter extends Component {
 
     constructor(props) {
@@ -17,8 +16,6 @@ class MyCounter extends Component {
 
     getMyList = (data) => {
         var { item } = this.props;
-        // console.log(item);
-        // var element = [];
         var qty = 0;
         if (data !== null) {
             const index = data.findIndex(myItem => myItem.visitorTypeId == item.id)
@@ -33,9 +30,7 @@ class MyCounter extends Component {
     }
 
     render() {
-        // debugger
         var { item } = this.props;
-        // console.log(item);
         var data = JSON.parse(localStorage.getItem('visitorTypeList'));
         if (data !== null) {
             // console.log(data);

@@ -23,14 +23,12 @@ class VerifyEmail extends Component {
         const{showLoader, hideLoader} = this.props;
         e.preventDefault();
         const { myMail } = this.state;
-        // console.log(myMail);
         
         let data = new FormData();
         data.append('mail', myMail);
         showLoader();
         callApi("user/resent-email", 'POST', data)
             .then(res => {
-                // console.log(res);
                 hideLoader()
                 toast.success('Gửi lại mail xác nhận thành công!', {
                     position: "bottom-right",
@@ -43,16 +41,13 @@ class VerifyEmail extends Component {
                 });
             }).catch(function (error) {
                 if (error.response) {
-                    // console.log(error.response.data);
                 }
             });
     }
 
     componentDidMount = () => {
         const { location } = this.props;
-        // console.log(location);
         if (location.state !== undefined) {
-            // console.log(location.state.mailRegis);
             this.setState({
                 myMail: location.state.mailRegis
             })
@@ -62,7 +57,6 @@ class VerifyEmail extends Component {
     render() {
         const { location } = this.props;
         const { myMail } = this.state;
-        // console.log(location.state);
         if (location.state === undefined) {
             return (
                 <Redirect to="/" />
@@ -72,7 +66,6 @@ class VerifyEmail extends Component {
                 <div>
                 
                 <div className="limiter">
-                    {/* <ToastContainer /> */}
                     <div className="container-login100">
                         <div className="wrap-login100">
                             <div
@@ -144,4 +137,3 @@ const mapDispatchToProps = (dispatch, props) => {
 
 export default connect(null, mapDispatchToProps)(VerifyEmail);
 
-// export default Login;

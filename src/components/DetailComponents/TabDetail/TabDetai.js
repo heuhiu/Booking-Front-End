@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import './TabDetail.css';
-// import Roll from 'react-reveal/Roll';
-// import Flip from 'react-reveal/Flip';
-// import Bounce from 'react-reveal/Bounce';
 import Zoom from 'react-reveal/Zoom';
-// import Fade from 'react-reveal/Fade';
 
 const LeftTab = "LeftTab";
 const LeftTabItem = "LeftTabItem";

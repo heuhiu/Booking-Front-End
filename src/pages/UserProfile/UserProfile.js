@@ -25,10 +25,7 @@ class UserProfile extends Component {
         window.scrollTo(0, 0)
     }
     render() {
-        // console.log(this.props.UserDetail.id)
-        // console.log(this.props.history.action);
         if (this.props.history.action === "POP") {
-            // console.log(this.props.history.action);
             if (this.props.UserDetail.id === undefined) {
                 return (
                     <NotLogin />

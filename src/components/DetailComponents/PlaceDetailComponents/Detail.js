@@ -27,7 +27,7 @@ class Detail extends Component {
 
         }
     }
-    scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop + 300 , behavior: 'smooth' });
+    scrollToMyRef = () => window.scrollTo({ top: this.myRef.current.offsetTop + 300, behavior: 'smooth' });
 
     handleClick = () => {
         this.setState({
@@ -59,25 +59,11 @@ class Detail extends Component {
 
     render() {
         var { place } = this.props
-        // console.log(place.id)
-        // console.log(place);
-        // console.log(place.weekDays);
-        // console.log(place.weekDays.sort())
-        // console.log(place.weekDays.sort().indexOf(1, 1));
+        
 
         const availableDay = place.weekDays.sort()
         var textAvailableDay = "";
-        // for (let index = 0; index < availableDay.length; index++) {
-        //     const element = availableDay[index] + 1;
-        //     if (availableDay.length === availableDay[index]) {
-        //         textAvailableDay += "T" + element
-        //     } else {
-        //         textAvailableDay += "T" + element + ", "
-        //     }
-        // }
-        // if (availableDay.length === 7) {
-        //     textAvailableDay = "mọi ngày trong tuần"
-        // }
+        
         for (let index = 0; index < availableDay.length - 1; index++) {
             const element = availableDay[index] + 1;
             textAvailableDay += "T" + element + ", "
@@ -85,22 +71,19 @@ class Detail extends Component {
         if (textAvailableDay.includes("T1") === true) {
             textAvailableDay += "T" + (availableDay[availableDay.length - 1] + 1) + ", "
         } else {
-            textAvailableDay += "T" + (availableDay[availableDay.length - 1] + 1) 
+            textAvailableDay += "T" + (availableDay[availableDay.length - 1] + 1)
         }
         if (availableDay.length === 7) {
             textAvailableDay = "mọi ngày trong tuần"
         }
         const textAvailableDayVN = textAvailableDay.replace('T1,', 'CN, ')
-        // console.log(textAvailableDayVN.includes("CN, "))
 
         if (textAvailableDayVN.includes("CN, ") === true) {
             console.log("YES")
             console.log(textAvailableDayVN.split("CN, ")[1] + "CN")
             textAvailableDay = textAvailableDayVN.split("CN, ")[1] + "CN"
         }
-        // console.log(textAvailableDayVN.includes("CN, "))
-        // console.log(textAvailableDayVN.split("CN, "))
-        // console.log(textAvailableDayVN.split("CN, ")[1] + "CN")
+    
 
         if (place !== undefined) {
             return (
@@ -122,23 +105,15 @@ class Detail extends Component {
                                 <div
                                     aria-controls="example-collapse-text"
                                     aria-expanded={this.state.open}
-                                    // onClick={this.handleClick} 
                                     id="inline">
                                     <div className="bulletListCustome"></div>
                                     <div className="content">Điểm nổi bật</div>
                                 </div>
                             </Flip>
-                            {/* <Collapse in={this.state.open}> */}
                             <ul className="a">
                                 {this.showShortDescrip(place.shortDescription)}
                             </ul>
-                            {/* </Collapse> */}
-                            {/* <Flip top cascade  collapse when={this.state.show1stAnimate}> */}
-                            {/* <ul className="a">
-                                {this.showShortDescrip(place.shortDescription)}
-                            </ul> */}
-                            {/* </Flip> */}
-                             <div ref={this.myRef}></div>
+                            <div ref={this.myRef}></div>
                             <Flip top>
                                 <div id="inline">
                                     <div className="bulletListCustome"></div>
@@ -149,14 +124,14 @@ class Detail extends Component {
                                 <ReTicketType2
                                     place={place} weekDays={place.weekDays} ticketType={place.ticketTypes} />
                             </div>
-                           
+
                             <Flip top>
                                 <div id="inline">
-                                    <div  className="bulletListCustome"></div>
+                                    <div className="bulletListCustome"></div>
                                     <div className="content">Bạn được trải nghiệm những gì?</div>
                                 </div>
                             </Flip>
-                            
+
                             <Flip top>
                                 <span className="longDescription">
                                     {place.detailDescription}
@@ -184,16 +159,6 @@ class Detail extends Component {
                             <div className="placeDetail">
                                 <TabDetail place={place} />
                             </div>
-
-                            {/* <div
-                            style={{ paddingTop: "40px" }}
-                            id="inline">
-                            <div className="bulletListCustome"></div>
-                            <div className="content">Bản đồ "DEMO" </div>
-                        </div>
-                        <div className="mapComp">
-                            <MapComponent />
-                        </div> */}
 
                         </div>
 
@@ -246,7 +211,23 @@ class Detail extends Component {
                                         </p>
                                     </div>
                                 </div>
-
+                                <div
+                                    style={{ marginBottom: "10px" }}
+                                    className="row no-gutters">
+                                    <div className="col-1">
+                                        <svg width="22" height="22" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" 
+                                            stroke="#FF7062" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" 
+                                            stroke="#FF7062" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <div className="col">
+                                        <p className="p6">
+                                            {place.address}
+                                        </p>
+                                    </div>
+                                </div>
                                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
 
                                 <div
@@ -280,11 +261,12 @@ class Detail extends Component {
                                     <div className="col">
                                         <p className="p6">
                                             Xuất trình vé điện tử hoặc in voucher
-                        </p>
+                                        </p>
                                     </div>
-                                </div>
-                            </div>
 
+                                </div>
+                                
+                            </div>
                         </div>
 
                     </div >

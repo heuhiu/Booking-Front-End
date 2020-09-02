@@ -20,18 +20,15 @@ class UserOrderDetail extends Component {
         const { match, loggedUser } = this.props;
         var id = match.params.id;
         const userId = loggedUser.id;
-        // console.log(userId);
         let data = new FormData();
         data.append('uid', userId);
         await callApi(`order/${id}`, 'POST', data)
             .then(res => {
-                // console.log(res);
                 this.setState({
                     orderDetail: res.data
                 })
             }).catch(function (error) {
                 if (error.response) {
-                    // console.log(error.response.data);
                 }
             });
     }
@@ -68,7 +65,6 @@ class UserOrderDetail extends Component {
     fetchOrders = () => {
         const { orderDetail } = this.state;
         const { fetchVisitor } = this.props;
-        // console.log(orderDetail.orderItems);
         fetchVisitor(orderDetail.orderItems);
     }
     storeTokenPaymentInLocal = (length) => {
@@ -89,31 +85,7 @@ class UserOrderDetail extends Component {
 
     showOrderByStatus = (orderDetail) => {
         const orderStatus = orderDetail.status;
-        // console.log(orderStatus);
         var date = new Date(orderDetail.redemptionDate);
-        // console.log(orderDetail);
-        /* PAID, UNPAID, SENT, EXPIRED */
-        // firstName: "Quang"
-        // id: 53
-        // lastName: "Đào"
-        // mail: "test@test.com"
-        // orderCode: "ORDER53"
-        // orderItems: Array(1)
-        // 0: {id: 77, visitorTypeId: 1, visitorTypeName: "Trẻ con 1", visitorTypeKey: "Kid1", quantity: 1}
-        // length: 1
-        // __proto__: Array(0)
-        // phoneNumber: "0123456789"
-        // purchaseDay: "2020-07-23T16:38:59.000+0000"
-        // redemptionDate: "2020-07-24T17:00:00.000+0000"
-        // status: "PAID"
-        // ticketTypeId: 1
-        // ticketTypeName: "Vé vào cổng"
-        // totalPayment: 200000
-        // userId: 1
-        // place: {id: 1, name: "Công viên Thiên đường Bảo Sơn",…}
-        // id: 1
-        // imageLink: "https://dman-bucket.s3-ap-southeast-1.amazonaws.com/Place_1_1.jpg"
-        // name: "Công viên Thiên đường Bảo Sơn"
         if (orderStatus === "PAID") {
             return (
                 <div style={{ padding: "20px" }}>
@@ -238,7 +210,6 @@ class UserOrderDetail extends Component {
                             className="col-12">
                             <p className="mp3"> Chờ thanh toán</p>
                             <p className="mp1">Bạn cần thanh toán trong vòng 2 giờ kể từ khi hoàn thành thông tin đơn hàng</p>
-                            {/* <p className="mp2">{orderDetail.mail}</p> */}
                             <br></br>
                             <Link
                                 onClick={this.createTokenOrder}

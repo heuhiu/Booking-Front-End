@@ -20,7 +20,6 @@ class CfMail extends Component {
     componentDidMount = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
-        // console.log(myParam);
         const{showLoader, hideLoader} = this.props;
         showLoader()
         await axios.get(`${Config.API_URL}/user/active`, {
@@ -28,22 +27,13 @@ class CfMail extends Component {
                 token: myParam
             }
         }).then(res => {
-            // debugger
-            // var jwtDecode = require('jwt-decode');
-            //set state
             if (res.data) {
-                // console.log(res.data.token);
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
-                // var decoded = jwtDecode(res.data.token);
-                // this.props.fetchUserDetail(decoded.user);
-                // console.log(decoded.user);
-                // alert("will push to home page if sucess");
                 hideLoader()
                 this.props.history.push("/");
             }
 
         }).catch(error => {
-            // console.log(error.response);
             this.setState({
                 checkSuccess: false
             })

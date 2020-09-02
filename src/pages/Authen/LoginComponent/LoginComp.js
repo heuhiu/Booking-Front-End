@@ -6,7 +6,7 @@ import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import backG from '../../../img/LoginPaper.png';
 import Menu from '../../../components/Menu/Menu';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader'
 import * as regex from '../../../constants/Regex';
@@ -95,17 +95,9 @@ class LoginComp extends Component {
     }
 
     onLogin = async (e) => {
-        // showLoader();
         const { email, password } = this.state;
         const { showLoader, hideLoader } = this.props;
         e.preventDefault();
-        // if (true) {
-        //     setTimeout(() => {
-        //         this.mailInput.focus();
-        //         this.pass.focus();
-        //         this.mailInput.focus();
-        //     }, 1);
-        // }
         if (this.mailInput && email.isInputValid === false) {
             setTimeout(() => {
 
@@ -127,28 +119,19 @@ class LoginComp extends Component {
             e.stopPropagation();
         }
         else {
-            // console.log("GO to susscess")
-            // var jwtDecode = require('jwt-decode');
             showLoader();
             await callApi('login', 'POST', {
                 mail: email.value,
                 password: password.value
             }).then(res => {
-                // console.log(res);
                 localStorage.setItem('tokenLogin', JSON.stringify(res.data));
-                // var decoded = jwtDecode(res.data);
-                // console.log(decoded.user);
-                //data will be store in localStorage
-                // this.props.fetchUserDetail(decoded.user);s
-                // console.log(this.props.history);
+            
                 hideLoader();
                 this.props.history.push("/");
             }).catch(function (error) {
                 if (error.response) {
                     // Request made and server responded
-                    // console.log(error.response.data);
                     if (error.response.data === "ACCOUNT_NOT_ACTIVATED") {
-                        // alert("ACCOUNT_NOT_ACTIVATED");
                         hideLoader();
                         toast.error('Tài khoản chưa được kích hoạt, vui lòng kiểm tra mail!', {
                             position: "bottom-right",
@@ -173,8 +156,6 @@ class LoginComp extends Component {
                         });
                     }                    
                     else {
-                        // if (error.response.data.toString() === 'WRONG_USERNAME_PASSWORD') {
-                        // alert("Wrong User Name or Password");
                         hideLoader();
                         toast.error('Sai mật khẩu hoặc tài khoản!', {
                             position: "bottom-right",
@@ -187,8 +168,6 @@ class LoginComp extends Component {
                         });
                     }
                     hideLoader();
-                    // }
-                    // history.push("/login");
                 }
             });
         }
@@ -203,7 +182,6 @@ class LoginComp extends Component {
 
     render() {
         const { UserDetail } = this.props;
-        // console.log(UserDetail.id)
         if (UserDetail.id !== undefined) {
             return (
                 <Redirect to="/" />
@@ -212,7 +190,6 @@ class LoginComp extends Component {
             return (
                 <div>
                     <Menu />
-                    {/* <ToastContainer /> */}
                     <div className="limiter">
                         <div className="container-login100">
                             <div className="wrap-login100">
@@ -296,18 +273,7 @@ class LoginComp extends Component {
                                             Đăng nhập
 						        </button>
                                     </div>
-                                    {/* <div className="text-center p-t-46 p-b-20">
-                                <button
-                                    formnovaidate="true"
-                                    className="fbBtn1"
-                                    type="">
-                                    <svg width="8" height="16" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10 0H7.27273C6.0672 0 4.91104 0.526784 4.05861 1.46447C3.20617 2.40215 2.72727 3.67392 2.72727 5V8H0V12H2.72727V20H6.36364V12H9.09091L10 8H6.36364V5C6.36364 4.73478 6.45942 4.48043 6.6299 4.29289C6.80039 4.10536 7.03162 4 7.27273 4H10V0Z" fill="#197ACF" />
-                                    </svg>
-                                        &emsp;
-                                            Đăng nhập với FaceBook
-                                        </button>
-                            </div> */}
+                                   
                                     <div className="mrt-30 row det">
                                         <div className="col">
                                             <p className="det1">Chưa có tài khoản? &emsp;

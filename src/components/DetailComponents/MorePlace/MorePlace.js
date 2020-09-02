@@ -30,11 +30,6 @@ function SampleNextArrow(props) {
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-        // <div
-        //     className={className}
-        //     style={{ ...style, display: "block" }}
-        //     onClick={onClick}
-        // />
         <img
             onClick={onClick}
             className={className}
@@ -68,7 +63,6 @@ class MorePlace extends Component {
         if (topCity !== undefined)
             if (topCity.length > 0) {
                 result = topCity.map((item, index) => {
-                    // console.log(item);
                     const availableDay = item.weekDays.sort()
                     var availableDate = ""
                     const today = new Date().getDay()
@@ -85,7 +79,6 @@ class MorePlace extends Component {
                         href={`/placeDetail/${item.id}`}
                             key={index}
                             className="decoNone"
-                            // to={`/placeDetail/${item.id}`}
                             >
                             <div className="owlStyle">
                                 <h3 className="owlStyleChil">
@@ -119,7 +112,6 @@ class MorePlace extends Component {
                     </div >
                 )
             }
-            // window.location.reload();
         return result;
     }
 

@@ -22,6 +22,7 @@ class Menu extends Component {
             .then(res => {
                 localStorage.removeItem('tokenLogin');  //remove tokenLogin store in local Storage
                 localStorage.removeItem('USER');        //remove User infor store in local Storage
+                localStorage.removeItem('visitorTypeList');
                 this.props.removeUserLogin();           //remove User infor from redux store
                 this.props.history.push("/login");      //redirect to login page
             }).catch(function (error) {

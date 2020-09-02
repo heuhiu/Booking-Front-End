@@ -20,7 +20,6 @@ class AboutUs extends Component {
         window.scrollTo(0, 0)
     }
     render() {
-        // console.log(this.props.UserDetail)
         if (false) {
             return (
                 <Redirect to="/"></Redirect>
@@ -33,7 +32,6 @@ class AboutUs extends Component {
                     <br></br>
                     <br></br>
                     <br></br>
-                    {/* <UserProfileComp /> */}
                     <div className="container"
                         style={{ fontFamily: 'Inter' }}>
                         <div className='row '>

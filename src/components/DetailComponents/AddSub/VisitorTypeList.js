@@ -13,7 +13,6 @@ class VisitorList extends Component {
     }
 
     showTicketTypes = (arr) => {
-        // console.log(arr);
         const { visitorType } = this.props;
         var result = [];
         if (arr !== null) {
@@ -37,7 +36,6 @@ class VisitorList extends Component {
     }
 
     render() {
-        // const { visitorTypeDetail } = this.state;
         const { item } = this.props;
 
         return (

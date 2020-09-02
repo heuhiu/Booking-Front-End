@@ -145,27 +145,8 @@ class CfNewPassword extends Component {
                 e.preventDefault();
                 e.stopPropagation();
             } else {
-                // console.log("susscess")
                 this.apiChangePassword(data);
             }
-            // callApi('user/changePasswordAfterReset', 'POST', data)
-            //     .then(res => {
-            //         console.log(res);
-            //         toast.error('Vui lòng điền nơi bạn muốn tìm kiếm!', {
-            //             position: "bottom-right",
-            //             autoClose: 3000,
-            //             hideProgressBar: true,
-            //             closeOnClick: true,
-            //             pauseOnHover: true,
-            //             draggable: true,
-            //             progress: undefined,
-            //         });
-            //         this.props.history.push("/login")
-            //     }).catch(function (error) {
-            //         if (error.response) {
-            //             console.log(error.response.data);
-            //         }
-            //     });
         }
     }
 
@@ -174,28 +155,22 @@ class CfNewPassword extends Component {
         showLoader()
         await callApi('user/changePasswordAfterReset', 'POST', data)
             .then(res => {
-                // console.log(res);
                 this.setState({
                     success: true
                 })
                 hideLoader()
-                // this.props.history.push("/login")
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader()
-                    // console.log(error.response.data);
                 }
             });
     }
 
     componentWillMount = async () => {
-        // debugger
         const { showLoader, hideLoader } = this.props;
 
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
-        // console.log(myParam);
-        // debugger
         showLoader()
         await axios.get(`${Config.API_URL}/user/verifyChangePasswordToken`, {
             params: {
@@ -203,25 +178,14 @@ class CfNewPassword extends Component {
             }
         }).then(res => {
             if (res.data) {
-                // debugger
-                // console.log(res.data);
-                // alert(res.data);
                 this.setState({
                     uid: res.data,
                     checktoken: true
                 })
                 hideLoader()
-                // this.setState({
-                //     show: true
-                // })
-
-                // localStorage.setItem('tokenLogin', JSON.stringify(res.data.token));
-                // this.props.history.push("/");
             }
         }).catch(function (error) {
-            // debugger
             hideLoader()
-            // console.log(error.response.data);
             if (error.response.data === "INVALID_TOKEN") {
 
             }
@@ -233,11 +197,13 @@ class CfNewPassword extends Component {
             visibility: !this.state.visibility
         });
     }
+    
     toggleShow1 = () => {
         this.setState({
             visibility1: !this.state.visibility1
         });
     }
+
     render() {
         const { checktoken, success } = this.state;
 

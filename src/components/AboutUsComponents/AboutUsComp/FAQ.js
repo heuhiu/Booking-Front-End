@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './AboutUsComp.css';
-// import Menu from '../../../components/Menu/Menu';
 import { getUserLogin, showLoader, hideLoader, fetchAllCategory, fetchAllCity } from '../../../actions/index';
-// import callApi from '../../../config/utils/apiCaller';
 import FullPageLoader from '../../../components/FullPageLoader/FullPageLoader';
-// import axios from 'axios';
-// import * as Config from '../../../constants/ConfigAPI';
 
 //Home page
 class FAQ extends Component {
@@ -22,8 +18,6 @@ class FAQ extends Component {
         window.scrollTo(0, 0)
     }
     render() {
-        // const data = this.props.location.state.data[0];
-        // const label = this.props.location.state.label
         return (
             <div className="FAQbox">
                 <div id="inline">

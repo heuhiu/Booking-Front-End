@@ -9,7 +9,7 @@ import './UserUpdateInformation.css'
 // import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import  { registerLocale } from 'react-datepicker';
-
+import Shake from 'react-reveal/Shake';
 import vi from "date-fns/locale/vi";
 // import { format } from 'date-fns';
 registerLocale("vi", vi);
@@ -28,7 +28,12 @@ class UserUpdateInformation extends Component {
     constructor(props) {
         super(props);
         // const { loggedUser } = this.props;
+        
         this.state = {
+            checkChangeFirstName: false,
+            checkChangeLastname: false,
+            checkChangePhoneNumb: false,
+            shake: false,
             email: {
                 value: '',
                 isInputValid: false,
@@ -72,7 +77,25 @@ class UserUpdateInformation extends Component {
         const { name, value } = event.target;
         const newState = { ...this.state[name] }; /* dummy object */
         newState.value = value;
-        this.setState({ [name]: newState });
+        // this.setState({ [name]: newState });
+        if (name === "myfirstName") {
+            this.setState({
+                [name]: newState,
+                checkChangeFirstName: true,
+            });
+        }
+        if (name === "lastName") {
+            this.setState({
+                [name]: newState,
+                checkChangeLastname: true
+            });
+        }
+        if (name === "phoneNumber") {
+            this.setState({
+                [name]: newState,
+                checkChangePhoneNumb: true,
+            });
+        }
     }
 
     componentDidMount = () => {
@@ -192,7 +215,9 @@ class UserUpdateInformation extends Component {
         const id = loggedUser.id;
         if (myfirstName.value === '' && lastName.value === '' &&
             phoneNumber.value === '' && dob.value === '') {
-                console.log("LMAo")
+            this.setState({
+                shake: true
+            })
             toast.error('Vui lòng điền thông tin bạn muốn thay đổi', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -204,6 +229,9 @@ class UserUpdateInformation extends Component {
             });
         } 
         else if (lastName.isInputValid === false) {
+            this.setState({
+                shake: true
+            })
             toast.error('Họ không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -214,6 +242,9 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (myfirstName.isInputValid === false) {
+            this.setState({
+                shake: true
+            })
             toast.error('Tên Không chứa kí tự đặc biệt!', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -224,6 +255,9 @@ class UserUpdateInformation extends Component {
                 progress: undefined,
             });
         } else if (phoneNumber.isInputValid === false) {
+            this.setState({
+                shake: true
+            })
             toast.error('Số điện thoại chứa 10-11 số!', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -317,7 +351,9 @@ class UserUpdateInformation extends Component {
                                                     name="myfirstName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.firstName}
+                                                    // placeholder={loggedUser.firstName}
+                                                    value={this.state.checkChangeFirstName === false ? loggedUser.firstName : this.state.myfirstName.value}
+
                                                 />
                                             </div>
                                             <label className="cmt">Như trên CMND (không dấu)</label>
@@ -331,7 +367,9 @@ class UserUpdateInformation extends Component {
                                                     name="lastName"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.lastName}
+                                                    // placeholder={loggedUser.lastName}
+                                                    value={this.state.checkChangeLastname === false ? loggedUser.lastName : this.state.lastName.value}
+
                                                 />
                                             </div>
                                             <label className="cmt">Như trên CMND (không dấu)</label>
@@ -351,7 +389,9 @@ class UserUpdateInformation extends Component {
                                                     name="phoneNumber"
                                                     onChange={this.handleInput}
                                                     onBlur={this.handleInputValidation}
-                                                    placeholder={loggedUser.phoneNumber}
+                                                    // placeholder={loggedUser.phoneNumber}
+                                                    value={this.state.checkChangePhoneNumb === false ? loggedUser.phoneNumber : this.state.phoneNumber.value}
+
                                                 />
                                             </div>
                                             <label className="cmt">Số điện thoại sử dụng để xác thực giao dịch</label>
@@ -367,12 +407,16 @@ class UserUpdateInformation extends Component {
                                       
                                     </div>
                                 </div>
+                                
                                 <div className="pdt-30 col-12">
                                     <div className="row">
                                         <div className="col-3">
+                                        <Shake duration={700} when={this.state.shake}>
+
                                             <button type="submit"
                                                 onClick={this.updateUserDetail}
                                                 className="proceedPaymentBtn">Lưu</button>
+                                        </Shake>
                                         </div>
                                     </div>
                                 </div>

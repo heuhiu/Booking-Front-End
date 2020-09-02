@@ -33,18 +33,15 @@ class UserOrders extends Component {
     }
     //Handle changing when user click in button paging "1 2 3 4 ..."
     handlePageChange = async (pageNumber) => {
-        // const { searchName, listCtiId, listCatId } = this.state;
         if (pageNumber !== this.state.activePage) {
             this.setState({
                 activePage: pageNumber
             }
                 , () => {
-                    // this.receivedData(searchName, listCtiId, listCatId);
                     this.getAllOrder(this.state.userId)
                 }
             )
         }
-        // this.forceUpdate();
     }
     convertCurrecyToVnd = (currency) => {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
@@ -62,9 +59,7 @@ class UserOrders extends Component {
         data.append('page', activePage);
         await callApi(`order/user/${id}`, 'POST', data)
             .then(res => {
-                // console.log(res);
                 this.setState({
-                    // UserOrders: res.data,
                     totalItems: res.data.totalItems,
                     totalPage: res.data.totalPage,
                     UserOrders: res.data.listResult,
@@ -73,7 +68,6 @@ class UserOrders extends Component {
             }).catch(function (error) {
                 if (error.response) {
                     hideLoader();
-                    // console.log(error.response.data);
                 }
             });
     }
@@ -83,18 +77,15 @@ class UserOrders extends Component {
         var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
         if (tokenLogin) {
             var decoded = jwtDecode(tokenLogin);
-            // console.log(decoded);
             const id = decoded.user.userId;
             callApi(`userClient/${id}`, 'GET', null)
                 .then(res => {
-                    // console.log(res.data.id);
                     this.setState({
                         userId: res.data.id
                     })
                     this.getAllOrder(res.data.id);
                 }).catch(function (error) {
                     if (error.response) {
-                        // console.log(error.response.data);
                     }
                 });
         }
@@ -234,8 +225,6 @@ class UserOrders extends Component {
                                 </div>
                             </div>
                         </div>
-                        {/* {this.showOrders(UserOrders)} */}
-                        {/* <Collapse in={this.state.open2}> */}
                         <div id="example-collapse-text2">
                             {this.showOrders(UserOrders)}
                         </div>

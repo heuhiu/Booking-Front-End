@@ -39,7 +39,7 @@ class UserInformation extends Component {
                     <div
                         style={{ padding: "30px" }} >
                         <div
-                         onClick={() => this.setState({ open: !this.state.open })}
+                        //  onClick={() => this.setState({ open: !this.state.open })}
                          aria-controls="example-collapse-text"
                          aria-expanded={this.state.open}
                         className="labelPointer row">
@@ -113,7 +113,7 @@ class UserInformation extends Component {
                     <div
                         style={{ padding: "30px" }} >
                         <div 
-                        onClick={() => this.setState({ open2: !this.state.open2 })}
+                        // onClick={() => this.setState({ open2: !this.state.open2 })}
                         aria-controls="example-collapse-text2"
                         aria-expanded={this.state.open2}
                         className="labelPointer row">

@@ -109,7 +109,9 @@
     line-height: 41px;
     color: #FF7062;
 }
-
+.step1h:hover{
+    cursor: pointer;
+}
 .step2h{
     font-style: normal;
     font-weight: 600;
@@ -117,7 +119,9 @@
     line-height: 41px;
     color: #A5A5A5;
 }
-
+.step2h:hover{
+    cursor: pointer;
+}
 #cardHeade{
     border: none;
 }
@@ -241,13 +245,16 @@
     text-decoration: underline;
     color: #FF7062;
 }
+.poiterHover:hover{
+    cursor: pointer;
+}
 .purchaseLaterBox{
     background: #FFFFFF;
     border: 2px solid #F2F2F2;
     box-sizing: border-box;
     border-radius: 10px;
     padding: 20px;
-    margin-left: 50px;
+    /* margin-left: 50px; */
 }
 
 .purchaseLaterBox h1{

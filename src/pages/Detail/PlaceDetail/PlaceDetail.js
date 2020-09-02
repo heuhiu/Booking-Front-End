@@ -54,19 +54,16 @@ class PlaceDetail extends Component {
     }
 
     componentDidMount = async () => {
-        // debugger
         const { showLoader, hideLoader } = this.props;
         const { match } = this.props;
         var id = match.params.id;
         showLoader();
         await callApi(`placeClient/${id}`, 'GET', null).then(res => {
-            // console.log(res);
             this.setState({ place: res.data })
             hideLoader();
         }).catch(error => {
             hideLoader();
             this.props.history.push("/404");
-            // console.log(error);
         });
     }
 
@@ -112,23 +109,18 @@ class PlaceDetail extends Component {
         const { place } = this.state;
         if (place !== null) {
             for (let index = 0; index < place.placeImageLink.length; index++) {
-                // const element = place.placeImageLink[index];
             }
         }
         if (place != null) {
-            // console.log(place);
             return (
                 <div >
                     <div
                         className="container containerSliderTOP"
-                        // style={{ marginTop: "100px", padding: "0px" }}
                         >
                         <Menu />
                        
                             <Slider {...settings}>
-                            {/* <div className="sliderBox"> */}
                                 {this.renderSlider(place.placeImageLink)}
-                                {/* </div> */}
                             </Slider>
                       
                         <Detail place={place} />

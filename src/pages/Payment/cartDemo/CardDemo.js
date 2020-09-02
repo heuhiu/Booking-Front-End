@@ -43,7 +43,6 @@ class _CardForm extends Component {
         errorMessage: error.message,
         checkWrong: false
       }, () => {
-        // console.log(this.state.errorMessage);
       });
     } else {
       this.setState({
@@ -53,12 +52,9 @@ class _CardForm extends Component {
   };
 
   handleSubmit = (evt) => {
-    // debugger
     evt.preventDefault();
 
     const { orderDetail, visitorType, loggedUser, checkLogin, checkStep1, removeVisitorType } = this.props;
-    // console.log(this.state.errorMessage);
-    // console.log(this.state.checkWrong);
     if (checkLogin === false) {
       toast.error('Bạn cần đăng nhập để thực hiện chức năng này!', {
         position: "bottom-right",
@@ -102,10 +98,8 @@ class _CardForm extends Component {
       });
     } else {
       if (orderDetail.state.orderStatus) {
-        // console.log(orderDetail.state.orderStatus);
 
       } else {
-        // console.log("khong ton tai status");
       }
 
       var orderItems = [];
@@ -137,44 +131,17 @@ class _CardForm extends Component {
         id: orderDetail.state.orderStatus ? orderDetail.state.orderId : null,
         placeId: orderDetail.state.place !== undefined ? orderDetail.state.place.id : orderDetail.state.placeId
       }
-
-
-
       if (this.props.stripe) {
         this.props.stripe.createToken()
           .then(res => {
-            // console.log(res.token.id);
-            // const paymentToken = res.token.id;
             const paymentToken = res.token.id;
             let data = new FormData();
             const myStatus = "existed";
             const myNewStatus = "new";
-            // if(orderDetail.state.orderStatus) {
-            //   data.append('action', myStatus);
-            //   } else {
-            //   data.append('action', "new");
-            //   }
             data.append('order', JSON.stringify(order));
             data.append('token', paymentToken);
             data.append('action', orderDetail.state.orderStatus ? myStatus : myNewStatus);
-
-            //  callApi('payment', 'POST', data) 
-            //   .then (res => {
-            //     console.log(res);
-            //     if (res) {
-            //       this.props.history.push({
-            //         pathname: '/paymentSucess',
-            //         state: { orderDetail: orderDetail }
-            //       })
-            //     }
-            //   })
-            //   .catch(function (error) {
-            //     if (error.response) {
-            //       console.log(error.response);
-            //     }
-            //   });
             this.callPayment(data, orderDetail);
-            // console.log(orderDetail);
           })
       } else {
         console.log("Stripe.js hasn't loaded yet.");
@@ -187,7 +154,6 @@ class _CardForm extends Component {
     showLoader();
     await callApi('payment', 'POST', data)
       .then(res => {
-        // console.log(res);
         hideLoader();
         if (res) {
           localStorage.removeItem('tokenPayment');
@@ -195,37 +161,20 @@ class _CardForm extends Component {
             pathname: '/paymentSucess',
             state: { orderDetail: orderDetail }
           })
-          // removeVisitorType();
         }
       })
       .catch(function (error) {
         if (error.response) {
           hideLoader();
-          // alert("error")
-          // console.log(error.response);
         }
       });
   }
 
   render() {
-    // const { orderDetail } = this.props;
-    // var dateType = {
-    //   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    // };
 
-    // const prnDt = orderDetail.state.redemptionDate.toLocaleDateString('vi', dateType);
+
     return (
-
       <div className="CardDemo">
-        {/* <FullPageLoader /> */}
-        {/* <form onSubmit={this.handleSubmit.bind(this)}> */}
-        {/* <ToastContainer /> */}
-
-        {/* <CardElement
-          onChange={this.handleChange}
-          {...createOptions()}
-        /> */}
-
         <div className="error" role="alert">
           {this.state.errorMessage}
         </div>
@@ -236,18 +185,14 @@ class _CardForm extends Component {
             <div className="row">
               <div className="col">
                 <label>Số thẻ</label>
-
               </div>
             </div>
             <div className="row">
-
               <div className="col-12">
-                {/* <input type="number" className="inputPayment form-control" placeholder="Số thẻ" /> */}
                 <CardElement
                   onChange={this.handleChange}
                   {...createOptions()}
                 />
-                {/* <span style={{color: "red"}}>{this.state.errorMessage}</span> */}
               </div>
               <br></br>
               <br></br>
@@ -292,9 +237,7 @@ const CardForm = injectStripe(_CardForm);
 class CardDemo extends Component {
   render() {
     const { removeVisitorType, orderDetail, visitorType, loggedUser, showLoader, hideLoader, checkLogin, checkStep1 } = this.props;
-    // console.log(orderDetail.state.place.id);
-    // console.log(visitorType);
-    // console.log(loggedUser)
+    
     return (
 
       <StripeProvider apiKey='pk_test_51Gs1CYGtpdysubsWvXC2vynpAmqeGq1vGggeXCHQsepXXX5TOxNBKlLFHBsar57TIkYsMYWuTSFg5H40uHBL4TW200nIV10yG5'>

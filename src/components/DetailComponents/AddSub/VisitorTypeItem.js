@@ -9,8 +9,6 @@ import './AddSub.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Flip from 'react-reveal/Flip';
 
-// var quantity = 0;
-
 class VisitorTypeItem extends Component {
 
     constructor(props) {
@@ -72,31 +70,12 @@ class VisitorTypeItem extends Component {
 
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, removeZeroQuantity } = this.props;
-        // console.log(item)
-        // console.log(quantity)
-        // if (item.remaining - quantity === -1 ) {
-        //     toast.error(`Loại vé dành cho ${item.typeName} đã hết`, {
-        //         position: "bottom-right",
-        //         autoClose: 3000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //     });
-        // }
-        // else 
-        // window.scrollTo(0, 0)
         if (quantity >= 0
-            // && (item.remaining - quantity) >=0 
         ) {
             fetchVisitor2(item.id, quantity, item.price, item.typeName, item.remaining);
-            // removeZeroQuantity();
             this.forceUpdate()
         }
-        // else if(quantity === 0) {
-        //     removeZeroQuantity(item.id);
-        // }
+       
     }
 
 }
@@ -111,15 +90,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchVisitor2: (id, qty, price, name, remaining) => {
             dispatch(fetchVisitor2(id, qty, price, name, remaining))
-        },
-        // removeZeroQuantity: (removeId) => {
-        //     dispatch(removeZeroQuantity(removeId))
-        // },
-        // removeZeroQuantity2: (removeId) => {
-        //     dispatch(removeZeroQuantity2(removeId))
-        // }
+        }
+       
     }
 }
 
-// export default MyCounter;
 export default connect(mapStateToProps, mapDispatchToProps)(VisitorTypeItem);

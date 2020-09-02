@@ -33,7 +33,6 @@ class AddSub extends Component {
             this.setState({ clicks: this.state.clicks });
 
         } else {
-            // this.setState({ clicks: this.state.clicks - 1 });
             this.setState({
                 clicks: this.state.clicks - 1,
             }, () => {
@@ -47,9 +46,6 @@ class AddSub extends Component {
     }
 
     render() {
-        // console.log("==")
-        // console.log("Adult: " + this.state.adultTicketTotalPrice);
-        // console.log("***")
         return (
             <div className="quantityBox">
                 <div

@@ -6,9 +6,7 @@ import callApi from '../../config/utils/apiCaller';
 import { showLoader, hideLoader, getUserLogin } from '../../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Swing from 'react-reveal/Swing';
 import Pulse from 'react-reveal/Pulse';
-import Jump from 'react-reveal/Jump';
 
 const menus = [
     {
@@ -93,12 +91,8 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, mark }) => {
             children={({ match }) => {
                 var myActive = match ? 'myActive' : 'labelPointer';
                 return (
-                    // <li className={active}>
-                    //     <Link to={to}>
-                    //         {label}
-                    //     </Link>
-                    // </li>
-                    <Jump duration={640} when={myActive === "myActive" ? true : false}>
+
+                    <Pulse duration={640} when={myActive === "myActive" ? true : false}>
                         <Link className={`${myActive}`} to={to}>
                             <div className="mr-20 col-12">
                                 <p >
@@ -109,7 +103,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, mark }) => {
                                 </p>
                             </div>
                         </Link>
-                    </Jump>
+                    </Pulse>
                 );
             }}
         />
@@ -125,42 +119,7 @@ class UserMenu extends Component {
         }
     }
 
-    // fetchUserDetailAgain = async () => {
-    //     const {showLoader, hideLoader} = this.props;
-    //     var jwtDecode = require('jwt-decode');
-    //     var tokenLogin = JSON.parse(localStorage.getItem('tokenLogin'));
-    //     showLoader();
-    //     if (tokenLogin) {
-    //         var decoded = jwtDecode(tokenLogin);
-    //         // console.log(decoded);
-    //         const id = decoded.user.userId;
-    //         // this.props.fetchUserDetail(decoded.user);
-    //         await callApi("login/checkToken", 'POST', null)
-    //             .then(res => {
-    //                 // console.log(res);
-    //                 callApi(`userClient/${id}`, 'GET', null)
-    //                     .then(res => {
-    //                         console.log(res.data);
-    //                         this.props.fetchUserDetail(res.data);
-    //                         hideLoader();
-    //                     }).catch(function (error) {
-    //                         if (error.response) {
-    //                             console.log(error.response.data);
-    //                         }
-    //                     });
-    //             }).catch(function (error) {
-    //                 if (error.response) {
-    //                     localStorage.removeItem('tokenLogin');
-    //                     window.location.reload();
-    //                 }
-    //             });
-    //     }
-    // }
-
     changeAvarHandle = (event) => {
-        // console.log("yes")
-        // const { loggedUser } = this.props;
-        // console.log(loggedUser.avatarLink);
         console.log(this.isFileImage(event.target.files[0]));
 
         if (this.isFileImage(event.target.files[0]) === true) {
@@ -224,15 +183,11 @@ class UserMenu extends Component {
                 }, 2500);
             }).catch(function (error) {
                 if (error.response) {
-                    // console.log(error.response);
                     hideLoader();
                 }
             });
     }
 
-    // isFileImage = (file) => {
-    //     return file && file['type'].split('/')[0] === 'image';
-    // }
 
     isFileImage = (file) => {
         const acceptedImageTypes = ['image/jpeg', 'image/png'];
@@ -248,16 +203,9 @@ class UserMenu extends Component {
                     <div className="inner circleCamera">
                         {/* <ToastContainer /> */}
 
-                        {/* <div className="CameraLogo">
-                            <svg width="62" height="53" viewBox="0 0 62 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M59.4173 44.875C59.4173 46.2674 58.873 47.6027 57.904 48.5873C56.9351 49.5719 55.6209 50.125 54.2506 50.125H7.75065C6.38037 50.125 5.0662 49.5719 4.09727 48.5873C3.12833 47.6027 2.58398 46.2674 2.58398 44.875V16C2.58398 14.6076 3.12833 13.2723 4.09727 12.2877C5.0662 11.3031 6.38037 10.75 7.75065 10.75H18.084L23.2507 2.875H38.7506L43.9173 10.75H54.2506C55.6209 10.75 56.9351 11.3031 57.904 12.2877C58.873 13.2723 59.4173 14.6076 59.4173 16V44.875Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M30.9993 39.625C36.7063 39.625 41.3327 34.924 41.3327 29.125C41.3327 23.326 36.7063 18.625 30.9993 18.625C25.2924 18.625 20.666 23.326 20.666 29.125C20.666 34.924 25.2924 39.625 30.9993 39.625Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </div> */}
                         <div>
                             {/* <form enctype="multipart/form-data"> */}
                             <label
-                                // style={{ backgroundImage: "url(" + checkUpdatAva ? file2 : loggedUser.avatarLink + ")" }}
                                 style={{ backgroundImage: "url(" + loggedUser.avatarLink + ")" }}
 
                                 className="logoAvar">

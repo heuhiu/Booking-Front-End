@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import callApi from '../../../config/utils/apiCaller';
 import { getUserLogin, showLoader, hideLoader } from '../../../actions/index';
-// import { Link } from 'react-router-dom';
-// import axios from 'axios';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import backG from '../../../img/LoginPaper.png';
 import Menu from '../../../components/Menu/Menu';
@@ -245,10 +243,7 @@ class RegisterComp extends Component {
             })
         }
     }
-    // handleOnBlur = ({ target: { value } }) => {
-    //     const date = new Date(value);
-    //     console.log(date)
-    //   };
+
     handleInputValidation = event => {
         const { check } = this.state;
         const { name } = event.target;
@@ -256,12 +251,10 @@ class RegisterComp extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        // console.log(check);
         if (name === "dob" && check === false) {
             this.setState({
                 check: true
             })
-            // console.log(check);
         } else if (name === "dob" && check === true) {
             this.setState({
                 check: false
@@ -270,7 +263,6 @@ class RegisterComp extends Component {
         this.setState({
             [name]: newState,
         })
-        // console.log(check);
     }
 
     apiRegister = async (email, password, myfirstName, lastName, dob, phoneNumber, mailRegis) => {
@@ -282,10 +274,8 @@ class RegisterComp extends Component {
             firstName: myfirstName.value,
             lastName: lastName.value,
             dob: dob.value,
-            // dob: 15 - 3 - 1998,
             phoneNumber: phoneNumber.value
         }).then(res => {
-            // this.props.history.push("/verify");
             hideLoader()
             this.props.history.push({
                 pathname: '/verify',
@@ -295,9 +285,7 @@ class RegisterComp extends Component {
 
             if (error.response) {
                 // Request made and server responded
-                // console.log(error.response.data);
                 if (error.response.data === "EMAIL_EXISTED") {
-                    // alert("Email đăng kí đã tồn tại.")
                     toast.error(`Email đăng kí đã tồn tại`, {
                         position: "bottom-right",
                         autoClose: 3000,
@@ -318,22 +306,7 @@ class RegisterComp extends Component {
             lastName, RePassword, dob, phoneNumber } = this.state;
         e.preventDefault();
 
-        // this.props.history.push({
-        //     pathname: '/verify',
-        //     state: { mailRegis }
-        // })
-        // if (true) {
-        //     setTimeout(() => {
-        //         this.mailInput.focus();
-        //         this.pass.focus();
-        //         this.RePassword.focus();
-        //         this.lastName.focus();
-        //         this.myfirstName.focus();
-        //         this.dob.focus();
-        //         this.phoneNumber.focus();
-        //         this.mailInput.focus();
-        //     }, 1);
-        // }
+        
         if (email.isInputValid === false ||
             password.isInputValid === false ||
             RePassword.isInputValid === false ||
@@ -408,12 +381,8 @@ class RegisterComp extends Component {
             e.preventDefault();
             e.stopPropagation();
         } else {
-            // console.log("GO to susscess");
             const mailRegis = email.value;
-            // this.props.history.push({
-            //     pathname: '/verify',
-            //     state: { mailRegis }
-            // })
+           
             if (password.value !== RePassword.value) {
                 toast.error(`Mật khẩu nhập lại chưa chính xác`, {
                     position: "bottom-right",
@@ -427,50 +396,19 @@ class RegisterComp extends Component {
             } else {
                 this.apiRegister(email, password, myfirstName, lastName, dob, phoneNumber, mailRegis);
             }
-            // showLoader()
-            // await callApi('user/register', 'POST', {
-            //     mail: email.value,
-            //     password: password.value,
-            //     firstName: myfirstName.value,
-            //     lastName: lastName.value,
-            //     dob: dob.value,
-            //     // dob: 15 - 3 - 1998,
-            //     phoneNumber: phoneNumber.value
-            // }).then(res => {
-            //     // this.props.history.push("/verify");
-            //     hideLoader()
-            //     this.props.history.push({
-            //         pathname: '/verify',
-            //         state: { mailRegis }
-            //     })
-            // }).catch(function (error) {
-
-            //     if (error.response) {
-            //         // Request made and server responded
-            //         console.log(error.response.data);
-            //         if (error.response.data === "EMAIL_EXISTED") {
-            //             alert("Email đăng kí đã tồn tại.")
-            //         }
-            //     }
-            //     hideLoader()
-            // });
+           
         }
     }
 
     showDate = () => {
         const { check } = this.state;
-        // console.log('show date' + check);
         this.setState({
             check: !check
         })
-        // if (check === false)
-        //     this.setState({
-        //         check: !check
-        //     })
+
     }
 
     render() {
-        // const { loader } = this.props;;
         showLoader();
         return (
             <div>
@@ -567,12 +505,9 @@ class RegisterComp extends Component {
                                     <div className="wrap-input100">
                                         <input
                                             className="input100"
-                                            // type="text"
-                                            // name="email"
-                                            // required
+
                                             ref={(input) => { this.RePassword = input; }}
                                             type={this.state.visibility1 ? "password" : "text"}
-                                            // type="password"
                                             name="RePassword"
                                             onChange={this.handleInput}
                                             onBlur={this.handleInputValidation}
@@ -613,9 +548,7 @@ class RegisterComp extends Component {
                                         <div className="wrap-input100">
                                             <input
                                                 className="input100"
-                                                // type="text"
-                                                // name="email"
-                                                // required
+
                                                 ref={(input) => { this.myfirstName = input; }}
                                                 type="text"
                                                 name="myfirstName"
@@ -642,9 +575,7 @@ class RegisterComp extends Component {
                                         <div className="wrap-input100">
                                             <input
                                                 className="input100"
-                                                // type="text"
-                                                // name="email"
-                                                // required
+
                                                 ref={(input) => { this.lastName = input; }}
                                                 type="text"
                                                 name="lastName"
@@ -672,10 +603,8 @@ class RegisterComp extends Component {
                                     <div className="col">
                                         <div onClick={this.showDate} className="wrap-input100">
                                             <input
-                                                // style={{visibility: this.state.check ? "hidden" : "visible"}}
                                                 className="input100"
                                                 ref={(input) => { this.dob = input; }}
-                                                // type={this.state.check ? "date" : "text"}
                                                 type="date"
                                                 name="dob"
                                                 onChange={this.handleInput}
@@ -689,7 +618,7 @@ class RegisterComp extends Component {
                                                 onChange={this.handleChange}
                                                 open={false}
                                                 placeholderText="dd/mm/yyyy"
-                                                // onBlur={this.handleInputValidation}
+                                                 onBlur={this.handleInputValidation}
                                                 onBlur={this.handleOnBlur}
                                             /> */}
                                             {/* <span className="focus-input100"></span> */}
@@ -708,9 +637,7 @@ class RegisterComp extends Component {
                                         <div className="wrap-input100">
                                             <input
                                                 className="input100"
-                                                // type="text"
-                                                // name="email"
-                                                // required
+                                               
                                                 ref={(input) => { this.phoneNumber = input; }}
                                                 type="text"
                                                 name="phoneNumber"
@@ -736,17 +663,7 @@ class RegisterComp extends Component {
 
 
                                 <div className="flex-sb-m w-full p-t-3 p-b-32">
-                                    {/* <div className="contact100-form-checkbox">
-                                    <input className="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
-                                    <label className="label-checkbox100" htmlFor="ckb1">
-                                        Remember me
-							        </label>
-                                </div>
-                                <div>
-                                    <a href="/#" className="txt1">
-                                        Forgot Password?
-							        </a>
-                                </div> */}
+                                   
                                 </div>
 
                                 <div className="container-login100-form-btn">

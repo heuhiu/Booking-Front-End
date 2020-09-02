@@ -12,20 +12,12 @@ import callApi from '../../config/utils/apiCaller';
 import FullPageLoader from '../../components/FullPageLoader/FullPageLoader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { showLoader, hideLoader, removeVisitorType } from '../../actions/index';
+import { showLoader, hideLoader, removeVisitorType, getUserLogin } from '../../actions/index';
 import * as regex from '../../constants/Regex';
 import { Collapse } from 'react-bootstrap';
 import NotLogin from '../NotLogin/NotLogin';
 import { Link } from 'react-router-dom';
 
-// function FormError(props) {
-//     if (props.isHidden) { return null; }
-//     return (
-//         <div style={{ color: "red", position: 'absolute' }} className="form-warning">
-//             {props.errorMessage}
-//         </div>
-//     )
-// }
 
 //Payment
 class Payment extends Component {
@@ -39,7 +31,25 @@ class Payment extends Component {
             activeRadius1: false,
             activeRadius2: true,
             checkLoginPar: false,
-            open: true
+            checkChangeFirstName: false,
+            checkChangeLastname: false,
+            checkChangePhoneNumb: false,
+            open: true,
+            lastName: {
+                value: '',
+                isInputValid: true,
+                errorMessage: ''
+            },
+            phoneNumber: {
+                value: '',
+                isInputValid: true,
+                errorMessage: ''
+            },
+            myfirstName: {
+                value: '',
+                isInputValid: true,
+                errorMessage: ''
+            },
         }
     }
     scrollToStep1 = () => window.scrollTo({ top: this.myRef1.current.offsetTop, behavior: 'smooth' });
@@ -57,63 +67,35 @@ class Payment extends Component {
         const { name, value } = event.target;
         const newState = { ...this.state[name] }; /* dummy object */
         newState.value = value;
-        this.setState({ [name]: newState });
+        if (name === "myfirstName") {
+            this.setState({
+                [name]: newState,
+                checkChangeFirstName: true,
+            });
+        }
+        if (name === "lastName") {
+            this.setState({
+                [name]: newState,
+                checkChangeLastname: true
+            });
+        }
+        if (name === "phoneNumber") {
+            this.setState({
+                [name]: newState,
+                checkChangePhoneNumb: true,
+            });
+        }
     }
+
     componentDidMount = () => {
         window.scrollTo(0, 0)
         this.checkLogin();
-        // const paymentToken = this.storeTokenPaymentInLocal(5);
-        // localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
     }
+
     validateInput = (type, checkingText) => {
         var regexp = '';
         var checkingResult = '';
         switch (type) {
-            case "firstName":
-                // regexp = /^^[^\s].+[^\s]$/;
-                regexp = regex.FIRST_NAME;
-                checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                } else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'firstName format wrong'
-                    };
-                }
-            case "lastName":
-                // regexp = /^^[^\s].+[^\s]$/;
-                regexp = regex.LAST_NAME;
-                checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                } else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'lastName not null'
-                    };
-                }
-            case "phoneNumb":
-                // regexp = /^\d{10,11}$/;
-                regexp = regex.PHONE_NUMBER;
-                checkingResult = regexp.exec(checkingText);
-                if (checkingResult !== null) {
-                    return {
-                        isInputValid: true,
-                        errorMessage: ''
-                    };
-                } else {
-                    return {
-                        isInputValid: false,
-                        errorMessage: 'phoneNumb format wrong'
-                    };
-                }
             case "email":
                 // regexp = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})$/;
                 regexp = regex.EMAIL;
@@ -126,7 +108,66 @@ class Payment extends Component {
                 } else {
                     return {
                         isInputValid: false,
-                        errorMessage: 'email not null'
+                        errorMessage: 'Email có dạng abc@xyz.ghi(.xnh)'
+                    };
+                }
+            case "myfirstName":
+                regexp = regex.FIRST_NAME;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null || this.state.myfirstName.value === '') {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'không chứa khoảng trắng ở đầu và cuối!'
+                    };
+                }
+            case "lastName":
+                // regexp = /^[^\s].+[^\s]$/;
+                regexp = regex.LAST_NAME;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null || this.state.lastName.value === '') {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'không chứa khoảng trắng ở đầu và cuối!'
+                    };
+                }
+            case "dob":
+                regexp = regex.DATE_OF_BIRTH;
+                checkingResult = regexp.exec(checkingText.toString());
+                if (checkingResult !== null || this.state.dob.value === '') {
+                    // if (true) {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Không đúng định dạng'
+                    };
+                }
+            case "phoneNumber":
+                // regexp = /^\d{10,11}$/;
+                regexp = regex.PHONE_NUMBER;
+                checkingResult = regexp.exec(checkingText);
+                if (checkingResult !== null || this.state.phoneNumber.value === '') {
+                    return {
+                        isInputValid: true,
+                        errorMessage: ''
+                    };
+                } else {
+                    return {
+                        isInputValid: false,
+                        errorMessage: 'Số điện thoại chứa 10-11 số'
                     };
                 }
             default:
@@ -135,20 +176,30 @@ class Payment extends Component {
     }
 
     handleInputValidation = event => {
+        const { check } = this.state;
         const { name } = event.target;
         const { isInputValid, errorMessage } = this.validateInput(name, this.state[name].value);
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        this.setState({ [name]: newState })
+        if (name === "dob" && check === false) {
+            this.setState({
+                check: true
+            })
+        } else if (name === "dob" && check === true) {
+            this.setState({
+                check: false
+            })
+        }
+        this.setState({
+            [name]: newState,
+        })
     }
 
     showVisitorTypeNameChoosed = (VisitorTypeArr) => {
         var result = null;
         if (VisitorTypeArr.length > 0) {
             result = VisitorTypeArr.map((item, index) => {
-                // console.log(item.visitorTypeName);
-                // <p>{item.visitorTypeName}</p>
                 return (
                     <p key={index} >{item.visitorTypeName}: {item.quantity}</p>
                 )
@@ -166,6 +217,83 @@ class Payment extends Component {
         }
 
         return result;
+    }
+
+    updateUserDetail = () => {
+        const { myfirstName, lastName, phoneNumber } = this.state;
+        const { loggedUser } = this.props;
+        const id = loggedUser.id;
+        if (myfirstName.value === '' && lastName.value === '' &&
+            phoneNumber.value === '') {
+            this.scrollToStep2();
+        }
+        else
+            if (lastName.isInputValid === false) {
+                toast.error('Họ không chứa kí tự đặc biệt!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+            } else if (myfirstName.isInputValid === false) {
+                toast.error('Tên Không chứa kí tự đặc biệt!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+            } else if (phoneNumber.isInputValid === false) {
+                toast.error('Số điện thoại chứa 10-11 số!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+            }
+            else {
+                this.callAPIChangeUserInfor(id);
+            }
+    }
+
+
+    callAPIChangeUserInfor = async (id) => {
+        const { dob, myfirstName, lastName, phoneNumber } = this.state;
+        const { loggedUser, showLoader, hideLoader } = this.props;
+        showLoader();
+        await callApi(`userClient/${id}`, 'PUT',
+            {
+                firstName: myfirstName.value !== '' ? myfirstName.value : loggedUser.firstName,
+                lastName: lastName.value !== '' ? lastName.value : loggedUser.lastName,
+                dob: loggedUser.dob,
+                phoneNumber: phoneNumber.value !== '' ? phoneNumber.value : loggedUser.phoneNumber,
+            })
+            .then(res => {
+                this.props.fetchUserDetail(res.data);
+                hideLoader();
+                toast.success('Thay đổi thông tin thành công!', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                this.scrollToStep2();
+            }).catch(function (error) {
+                if (error.response) {
+                    hideLoader();
+                }
+            });
     }
 
     purchaseLater = () => {
@@ -199,8 +327,6 @@ class Payment extends Component {
                 }
                 orderItems.push(item)
             }
-            // const paymentToken = this.storeTokenPaymentInLocal(5);
-            // console.log(paymentToken);
             this.callApiPurchaseLater(location.state.ticketTypeID, location.state.ticketName, loggedUser.id, loggedUser.firstName, loggedUser.lastName, loggedUser.mail, loggedUser.phoneNumber, location.state.totalPayment, location.state.redemptionDate, orderItems)
         }
     }
@@ -235,30 +361,16 @@ class Payment extends Component {
             })
                 .then(res => {
                     console.log(res.data);
-                    // const paymentToken = this.storeTokenPaymentInLocal(5);
-                    // localStorage.setItem('tokenPayment', JSON.stringify(paymentToken));
-                    // var tokenLogin = JSON.parse(localStorage.getItem('tokenPayment'));
                     hideLoader();
                     localStorage.removeItem('tokenPayment');
                     this.props.history.push({
                         pathname: '/paymentSucess',
                         state: { orderDetail: res.data }
                     })
-                    // this.props.removeVisitorType();
-
-                    // toast.success('Đặt vé trả sau thành công!', {
-                    //     position: "bottom-right",
-                    //     autoClose: 3000,
-                    //     hideProgressBar: true,
-                    //     closeOnClick: true,
-                    //     pauseOnHover: true,
-                    //     draggable: true,
-                    //     progress: undefined,
-                    // });
+                   
                 }).catch(function (error) {
                     if (error.response) {
                         hideLoader();
-                        // console.log(error.response.data);
                     }
                 });
         }
@@ -283,7 +395,6 @@ class Payment extends Component {
     checkLogin = async () => {
         await callApi('login/checkToken', 'post', null)
             .then(res => {
-                // console.log(res);
                 this.setState({
                     checkLoginPar: true
                 })
@@ -291,11 +402,10 @@ class Payment extends Component {
             });
     }
 
+
     render() {
         var tokenPayment = JSON.parse(localStorage.getItem('tokenPayment'));
-        // console.log(visitorTypeList)
         const { location, visitorType, loggedUser } = this.props;
-        // console.log(visitorType);
         if (tokenPayment === null) {
             return (
                 <Redirect to="/" />
@@ -316,15 +426,12 @@ class Payment extends Component {
             const totalPayment = location.state.totalPayment.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
             const myLocation = location;
             const ticketName = myLocation.state.ticketName;
-            // const { accomplished } = this.state;
             const { loggedUser } = this.props;
             return (
                 <div
                     style={{ backgroundColor: "#F2F2F2" }}
                 >
-                    {/* {this.scrollToStep1()} */}
                     <Menu />
-                    {/* <ToastContainer /> */}
                     <br></br>
                     <br></br>
                     <br></br>
@@ -357,7 +464,6 @@ class Payment extends Component {
                                             <Step transition="scale">
                                                 {({ accomplished }) => (
                                                     <div
-                                                    // onClick={this.scrollToStep1}
                                                     >
                                                         <div
                                                             // onClick={this.scrollToStep1, () => { this.setState({ myPercen: 0 }) }}
@@ -386,16 +492,10 @@ class Payment extends Component {
                                             </Step>
                                             <Step transition="scale">
                                                 {({ accomplished }) => (
-                                                    // <img
-                                                    //     style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-                                                    //     width="30"
-                                                    //     src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
-                                                    // />
+                                                   
                                                     <div
-                                                    // onClick={this.scrollToStep2}
                                                     >
                                                         <div
-                                                            // onClick={() => { this.setState({ myPercen: 50 }) }}
                                                             style={{
                                                                 filter: `grayscale(${accomplished ? 0 : 80}%)`,
                                                                 border: "1px solid",
@@ -466,11 +566,10 @@ class Payment extends Component {
                                 <div
                                     className="borderBox col-12">
                                     <div
-                                        onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
                                         aria-controls="example-collapse-text"
                                         aria-expanded={this.state.open}
                                         id="tries" className="col-12">
-                                        <h1 style={{ color: this.state.open === true ? "#FF7062" : "#A5A5A5" }} className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
+                                        <h1 style={{ color: this.state.open === true ? "#FF7062" : "#19CF78" }} className="step1h">Bước 1:Xác nhận thông tin khách du lịch</h1>
                                     </div>
                                     <hr style={{ border: "1.2px solid #E3E3E3", borderRadius: "2px" }} />
                                     <Collapse in={this.state.open}>
@@ -482,74 +581,99 @@ class Payment extends Component {
                                         </p>
                                             </div>
                                             <div className="col-12">
-                                                <div id="inline">
-                                                    <div className="bulletListCustome"></div>
-                                                    <div className="content">Thông tin liên lạc</div>
+                                                <div className="row no-gutters">
+                                                    <div className="col-8">
+                                                        <div id="inline">
+                                                            <div className="bulletListCustome"></div>
+                                                            <div className="content">Thông tin liên lạc</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-4">
+                                                        <div className="UpdateDetail2" >
+                                                            <Link className="UpdateDetail2" to="/userProfile/ediProfile">Chỉnh sửa</Link>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+
+
                                             <div className="col-12">
                                                 <p className="attention">Chúng tôi sẽ thông báo mọi thay đổi về đơn hàng cho bạn</p>
                                             </div>
+                                            
                                             <div className="mrt-30 col-12">
                                                 <div className="row">
                                                     <div className="col">
-                                                        <label>Họ</label>
-                                                        <input type="text" disabled value={loggedUser.lastName} className="inputPayment form-control"
-                                                            placeholder="Họ" />
+                                                        <span className="labelHolder"> Tên </span><span className="turnRed">*</span>
+                                                        <div className="customWrap-input100">
+                                                            <input
+                                                                className="input100"
+                                                                type="text"
+                                                                name="myfirstName"
+                                                                onChange={this.handleInput}
+                                                                onBlur={this.handleInputValidation}
+                                                                value={this.state.checkChangeFirstName === false ? loggedUser.firstName : this.state.myfirstName.value}
+                                                            // placeholder={loggedUser.firstName}
+                                                            />
+                                                        </div>
+                                                        <label className="cmt">Như trên CMND (không dấu)</label>
                                                     </div>
                                                     <div className="col">
-                                                        <label>Tên</label>
-                                                        <input type="text"
-                                                            disabled
-                                                            value={loggedUser.firstName ? loggedUser.firstName : ""}
-                                                            className="inputPayment form-control" placeholder="Tên" />
+                                                        <span className="labelHolder"> Họ </span><span className="turnRed">*</span>
+                                                        <div className="customWrap-input100">
+                                                            <input
+                                                                className="input100"
+                                                                type="text"
+                                                                name="lastName"
+                                                                onChange={this.handleInput}
+                                                                onBlur={this.handleInputValidation}
+                                                                // placeholder={loggedUser.lastName}
+                                                                value={this.state.checkChangeLastname === false ? loggedUser.lastName : this.state.lastName.value}
+                                                            />
+                                                        </div>
+                                                        <label className="cmt">Như trên CMND (không dấu)</label>
                                                     </div>
-
                                                 </div>
-
                                             </div>
 
                                             <div className="mrt-30 col-12">
                                                 <div className="row">
-                                                    <div className="col">
-                                                        <label>Số điện thoại</label>
-                                                        <input type="number"
-                                                            disabled
-                                                            value={loggedUser.phoneNumber}
-                                                            className="inputPayment form-control" />
-                                                    </div>
 
                                                     <div className="col">
-                                                        <label>Địa chỉ Email</label>
-                                                        <input type="text"
-                                                            disabled
-                                                            value={loggedUser.mail}
-                                                            className="inputPayment form-control" placeholder="Email" />
+                                                        <span className="labelHolder"> Số điện thoại </span><span className="turnRed">*</span>
+                                                        <div className="customWrap-input100">
+                                                            <input
+                                                                className="input100"
+                                                                type="text"
+                                                                name="phoneNumber"
+                                                                onChange={this.handleInput}
+                                                                onBlur={this.handleInputValidation}
+                                                                // placeholder={loggedUser.phoneNumber}
+                                                                value={this.state.checkChangePhoneNumb === false ? loggedUser.phoneNumber : this.state.phoneNumber.value}
+                                                            />
+                                                        </div>
+                                                        <label className="cmt">Số điện thoại sử dụng để xác thực giao dịch</label>
                                                     </div>
-
-                                                </div>
-                                                <div className="mrt-30 row">
                                                     <div className="col">
-                                                        <label className="cmt">Số điện thoại xác thực</label>
-                                                    </div>
-                                                    <div className="col">
+                                                        <label>Email</label><span className="turnRed"> *</span>
+                                                        <input type="text" disabled value={loggedUser.mail} className="textDisable form-control"
+                                                            placeholder="Họ" />
                                                         <label className="cmt">(Vé của bạn sẽ được gửi về địa chỉ email trên,
                                                         xin vui lòng kiểm tra kỹ thông tin.)
-                                                </label>
+                                            </label>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div className="pdt-30 col-12">
                                                 <div className="row">
                                                     <div className="col">
                                                     </div>
                                                     <div className="col">
-                                                        <button onClick={this.scrollToStep2} className="proceedPaymentBtn">Tiến hành thanh toán</button>
+                                                        {/* <button onClick={this.scrollToStep2} className="proceedPaymentBtn">Tiến hành thanh toán</button> */}
+                                                        <button onClick={this.updateUserDetail} className="proceedPaymentBtn">Tiến hành thanh toán</button>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </Collapse>
 
@@ -565,7 +689,7 @@ class Payment extends Component {
                                         }}
                                         className="borderBox col-12">
                                         <div
-                                            onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
+                                            // onClick={() => this.setState({ open: !this.state.open, open2: !this.state.open2 })}
                                             aria-controls="example-collapse-text2"
                                             aria-expanded={this.state.open2}
                                             className="col-12">
@@ -591,7 +715,7 @@ class Payment extends Component {
                                                                 <div className="col-1">
                                                                     <p className={this.state.activeRadius1 === false ? "circleBtn2" : "circle"}></p>
                                                                 </div>
-                                                                <div className="col">
+                                                                <div className="poiterHover col">
                                                                     <span>Chuyển khoản qua ngân hàng</span>
                                                                 </div>
                                                             </div>
@@ -636,7 +760,7 @@ class Payment extends Component {
                                                                 <div className="col-1">
                                                                     <p className={this.state.activeRadius2 === false ? "circleBtn2" : "circle"}></p>
                                                                 </div>
-                                                                <div className="col">
+                                                                <div className="poiterHover col">
                                                                     <span> Thẻ Credit/Debit</span>
                                                                 </div>
                                                             </div>
@@ -685,7 +809,6 @@ class Payment extends Component {
                                             <p>Áp dụng cho: </p>
                                         </div>
                                         <div style={{ textAlign: "left" }} className="col">
-                                            {/* <p>Người lớn : 2</p> */}
                                             {visitorType.length !== 0 ? this.showVisitorTypeNameChoosed(visitorType) : "Chưa đặt"}
                                         </div>
                                     </div>
@@ -699,14 +822,7 @@ class Payment extends Component {
                                             <p> {totalPayment}</p>
                                         </div>
                                     </div>
-                                    {/* <div className="row no-gutters">
-                                        <div className="col-5">
-                                            <p>Giảm giá: </p>
-                                        </div>
-                                        <div style={{ textAlign: "right" }} className="col">
-                                            <p>đ 0</p>
-                                        </div>
-                                    </div> */}
+
                                     <div className="row no-gutters">
                                         <div className="col">
                                             <p>Số tiền thanh toán: </p>
@@ -740,6 +856,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
+        fetchUserDetail: (user) => {
+            dispatch(getUserLogin(user))
+        },
         removeVisitorType: () => {
             dispatch(removeVisitorType())
         },

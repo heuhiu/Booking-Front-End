@@ -20,6 +20,9 @@ class PaymentSucess extends Component {
             myPercen: 100,
         }
     }
+    componentDidMount=()=>{
+        window.scrollTo(0, 0)
+    }
     convertCurrecyToVnd = (currency) => {
         return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
     }

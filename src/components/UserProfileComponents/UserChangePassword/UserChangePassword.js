@@ -5,6 +5,7 @@ import callApi from '../../../config/utils/apiCaller';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as regex from '../../../constants/Regex';
+import Shake from 'react-reveal/Shake';
 
 function FormError(props) {
     if (props.isHidden) { return null; }
@@ -23,6 +24,7 @@ class UserChangePassword extends Component {
             visibility: true,
             visibility1: true,
             visibility2: true,
+            shake: false,
             password: {
                 value: '',
                 isInputValid: false,
@@ -130,12 +132,10 @@ class UserChangePassword extends Component {
         const newState = { ...this.state[name] }; /* dummy object */
         newState.isInputValid = isInputValid;
         newState.errorMessage = errorMessage;
-        // console.log(check);
         if (name === "dob" && check === false) {
             this.setState({
                 check: true
             })
-            // console.log(check);
         } else if (name === "dob" && check === true) {
             this.setState({
                 check: false
@@ -144,14 +144,11 @@ class UserChangePassword extends Component {
         this.setState({
             [name]: newState,
         })
-        // console.log(check);
     }
 
     changePassword = (e) => {
         const { password, RePassword, newPassword } = this.state;
-        // console.log(password.value);
-        // console.log(RePassword.value);
-        // console.log(newPassword.value);
+        
         e.preventDefault();
         e.stopPropagation();
         if (true) {
@@ -198,6 +195,9 @@ class UserChangePassword extends Component {
             if (newPassword.value !== RePassword.value) {
                 e.preventDefault();
                 e.stopPropagation();
+                this.setState({
+                    shake: true
+                })
                 toast.error('Mật khẩu mới và mật khẩu nhập lại không khớp!', {
                     position: "bottom-right",
                     autoClose: 3000,
@@ -210,6 +210,9 @@ class UserChangePassword extends Component {
             } else if (newPassword.value === password.value) {
                 e.preventDefault();
                 e.stopPropagation();
+                this.setState({
+                    shake: true
+                })
                 toast.error('Mật khẩu mới và mật khẩu cũ không được trùng nhau!', {
                     position: "bottom-right",
                     autoClose: 3000,
@@ -242,7 +245,9 @@ class UserChangePassword extends Component {
                         }
                     }).catch(function (error) {
                         if (error.response) {
-                            // console.log(error.response.data = "WRONG_OLD_PASSWORD");
+                            this.setState({
+                                shake: true
+                            })
                             toast.error('Mật khẩu cũ không chính xác!', {
                                 position: "bottom-right",
                                 autoClose: 3000,
@@ -259,7 +264,6 @@ class UserChangePassword extends Component {
     }
 
     render() {
-        // const { loggedUser } = this.props;
         return (
             <div
                 className="col">
@@ -426,11 +430,14 @@ class UserChangePassword extends Component {
                             <div className="pdt-30 col-12">
                                 <div className="row">
                                     <div className="col-3">
+                                    <Shake duration={700} when={this.state.shake}>
+
                                         <button
                                             type="submit"
                                             className="proceedPaymentBtn">
                                             Thay đổi
                                         </button>
+                                    </Shake>
                                     </div>
                                 </div>
                             </div>

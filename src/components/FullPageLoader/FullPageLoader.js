@@ -29,8 +29,6 @@ class FullPageLoader extends Component {
 
 }
 
-// export default HomePage;
-
 const mapStateToProps = state => {
     return {
         loader: state.Loader
@@ -43,5 +41,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-// export default MyCounter;
 export default connect(mapStateToProps, mapDispatchToProps)(FullPageLoader);
