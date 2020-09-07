@@ -22,7 +22,7 @@
     transition: ease-in-out 0.5s;
   }
 
-  .quantityBtn p:hover {
+  .quantityBtn button:hover {
     text-align: center;
     line-height: 35px;
     color: #ffffff;

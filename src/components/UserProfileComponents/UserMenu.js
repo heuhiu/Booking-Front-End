@@ -165,7 +165,7 @@ class UserMenu extends Component {
             .then(res => {
                 this.props.fetchUserDetail(res.data);
                 setTimeout(() => {
-                    
+
                     hideLoader();
                     toast.success('Cập nhật ảnh đại diện thành công!', {
                         position: "bottom-right",
@@ -179,7 +179,7 @@ class UserMenu extends Component {
                     setTimeout(() => {
                         window.location.reload();
                     }, 2000);
-                    
+
                 }, 2500);
             }).catch(function (error) {
                 if (error.response) {
@@ -231,11 +231,17 @@ class UserMenu extends Component {
                     </div>
                 </div>
                 <div style={{ paddingTop: "0px" }} className="outer row no-gutters">
-                    <div className="inner circleCamera">
+                    {/* <div className="inner circleCamera">
                         <span className="detail3">
                             {loggedUser.firstName} {loggedUser.lastName}
                         </span>
+                    </div> */}
+                    <div class="inner overFlowText">
+                    <span className="detail3">
+                            {loggedUser.firstName} {loggedUser.lastName}
+                        </span>
                     </div>
+
                 </div>
                 <hr style={{ border: "1.5px solid #E3E3E3", borderRadius: "2px" }} />
                 <div className="row">

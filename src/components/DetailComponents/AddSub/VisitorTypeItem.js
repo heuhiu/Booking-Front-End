@@ -17,9 +17,12 @@ class VisitorTypeItem extends Component {
             quantity: 0
         }
     }
-
+    convertCurrecyToVnd = (currency) => {
+        return currency.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+    }
     render() {
         const { item, index, visitorType, loaderPart } = this.props;
+        console.log(item);
         var myQuan = 0
         if (visitorType !== undefined) {
             myQuan = visitorType.quantity
@@ -40,6 +43,7 @@ class VisitorTypeItem extends Component {
                                 {item.typeName}
                             </p>
                             {/* <span className="myTitleType">Còn lại: {item.remaining - myQuan} vé</span> */}
+                            <span className="myTitleType">{this.convertCurrecyToVnd(item.price)}</span>
                         </div>
                         <div className="responsivetable col-lg-3 col-md-4 col-sm-3 col-xs-1" style={{  }} >
                         </div>
@@ -70,8 +74,7 @@ class VisitorTypeItem extends Component {
 
     onUpdateQuantity = (item, quantity) => {
         const { fetchVisitor2, removeZeroQuantity } = this.props;
-        if (quantity >= 0
-        ) {
+        if (quantity >= 0 && quantity <= 10) {
             fetchVisitor2(item.id, quantity, item.price, item.typeName, item.remaining);
             this.forceUpdate()
         }

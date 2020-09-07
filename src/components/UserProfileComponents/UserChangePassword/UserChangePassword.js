@@ -245,9 +245,6 @@ class UserChangePassword extends Component {
                         }
                     }).catch(function (error) {
                         if (error.response) {
-                            this.setState({
-                                shake: true
-                            })
                             toast.error('Mật khẩu cũ không chính xác!', {
                                 position: "bottom-right",
                                 autoClose: 3000,

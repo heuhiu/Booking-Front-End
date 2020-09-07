@@ -217,9 +217,9 @@ class Detail extends Component {
                                     <div className="col-1">
                                         <svg width="22" height="22" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M14 7.5C14 12.5556 7.5 16.8889 7.5 16.8889C7.5 16.8889 1 12.5556 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" 
-                                            stroke="#FF7062" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            stroke="#FF7062" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                             <path d="M7.50016 9.66683C8.69678 9.66683 9.66683 8.69678 9.66683 7.50016C9.66683 6.30355 8.69678 5.3335 7.50016 5.3335C6.30355 5.3335 5.3335 6.30355 5.3335 7.50016C5.3335 8.69678 6.30355 9.66683 7.50016 9.66683Z" 
-                                            stroke="#FF7062" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            stroke="#FF7062" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                     </div>
                                     <div className="col">

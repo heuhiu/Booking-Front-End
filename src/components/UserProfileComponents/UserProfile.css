@@ -90,7 +90,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  div.overFlowText {
+    white-space: nowrap; 
+    /* width: 50px;  */
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    border: none;
 
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
   
 .inner {
     display: table;
@@ -109,6 +119,9 @@
     line-height: 28px;
     color: #5B5B5B;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    width: 100px;
   }
 
   .mr-20{
